@@ -21,7 +21,8 @@ const useStyles = createStyles((theme) => { console.log(theme); return StyleShee
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {...theme.text.xlBold
+  title: {
+    ...theme.text.xlBold
   },
   separator: {
     marginVertical: 30,
