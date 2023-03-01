@@ -1,7 +1,10 @@
 /**
  * Learn more about Light and Dark modes:
  * https://docs.expo.io/guides/color-schemes/
+ *
  */
+
+type test = {};
 
 import {
   Text as DefaultText,
