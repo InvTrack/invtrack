@@ -1,16 +1,17 @@
 {
   "extends": [
     "eslint:recommended",
-    "@react-native-community",
-    "eslint-config-prettier",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react/recommended",
+    "universe/native",
+    "universe/web"
   ],
-  "plugins": ["@typescript-eslint", "react-hooks"],
   "overrides": [],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "linebreak-style": "error",
-    "semi": ["error", "always"]
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always"],
+    "import/order": "off",
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off"
   }
 }
