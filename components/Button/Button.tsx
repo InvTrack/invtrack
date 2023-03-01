@@ -22,7 +22,8 @@ type ButtonProps = {
 };
 
 const useStyles = createStyles((theme) =>
-  StyleSheet.create({ buttonStyle: {} })
+  // placeholder to turn off eslint error
+  StyleSheet.create({ buttonStyle: { borderBottomWidth: theme.spacing } })
 );
 
 const debouncedOnPress = (onPress: onPress) => debounce(onPress, 50);

@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "@react-native-community",
+    "eslint-config-prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "react-hooks"],
+  "overrides": [],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "linebreak-style": "error",
+    "semi": ["error", "always"]
+  }
+}
