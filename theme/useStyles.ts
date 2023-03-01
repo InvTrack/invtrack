@@ -8,7 +8,7 @@ export const createStyles = <T extends object>(
 ) => {
   const useStyles = (): T => {
     const theme = useTheme();
-    return creatorFunction(theme);
+    return creatorFunction(theme as MainTheme);
   };
   return useStyles;
 };

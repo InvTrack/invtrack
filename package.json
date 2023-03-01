@@ -7,7 +7,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install",
-    "typecheck": "eslint . --cache && bash -c tsc --project tsconfig.json --noEmit",
+    "typecheck": "eslint . && bash -c tsc --noEmit",
     "format": "prettier --write ."
   },
   "jest": {
@@ -39,6 +39,7 @@
     "@types/react": "~18.0.14",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "eslint": "^8.35.0",
+    "eslint-config-universe": "^11.2.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-native": "^4.0.0",
     "husky": "^8.0.3",

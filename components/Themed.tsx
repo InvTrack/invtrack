@@ -1,11 +1,9 @@
 /**
  * Learn more about Light and Dark modes:
  * https://docs.expo.io/guides/color-schemes/
- *
  */
 
-type test = {};
-
+import React from "react";
 import {
   Text as DefaultText,
   useColorScheme,
