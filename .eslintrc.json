@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "universe/native",
+    "universe/web"
+  ],
+  "overrides": [],
+  "rules": {
+    "linebreak-style": ["error", "unix"],
+    "semi": ["error", "always"],
+    "import/order": "off",
+    "quotes": ["error", "double", { "allowTemplateLiterals": true }],
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off"
+  }
+}
