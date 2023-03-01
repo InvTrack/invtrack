@@ -1,0 +1,13 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    // "skipLibCheck": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": [],
+    "maxNodeModuleJsDepth": 0
+  },
+  "exclude": ["node_modules", "./node_modules", "./node_modules/**/**"]
+}
