@@ -2,8 +2,14 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
+// import 'react-native-url-polyfill/auto'
+import { useState, useEffect } from 'react'
+import { supabase } from '../db/supebase.ts'
+import Auth from '../components/Auth'
+import Account from '../components/Account'
+import { View } from 'react-native'
+import { Session } from '@supabase/supabase-js'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -26,12 +32,27 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
+  const [session, setSession] = useState<Session | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
   return (
-    <>
-      {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-      {!loaded && <SplashScreen />}
-      {loaded && <RootLayoutNav />}
-    </>
+    <View>
+      {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
+    </View>
+    // <>
+    //   {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
+    //   {!loaded && <SplashScreen />}
+    //   {loaded && <RootLayoutNav />}
+    // </>
   );
 }
 
