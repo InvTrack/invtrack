@@ -1,25 +1,25 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import { mainTheme } from '../theme';
+import React, { useEffect } from "react";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { ThemeProvider } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import { useColorScheme } from "react-native";
+import { mainTheme } from "../theme";
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: "(tabs)",
 };
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    latoBold: require('../assets/fonts/Lato-Bold.ttf'),
-    latoRegular: require('../assets/fonts/Lato-Regular.ttf'),
+    latoBold: require("../assets/fonts/Lato-Bold.ttf"),
+    latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
     ...FontAwesome.font,
   });
 
@@ -42,10 +42,10 @@ function RootLayoutNav() {
 
   return (
     <>
-      <ThemeProvider value={colorScheme === 'dark' ? mainTheme : mainTheme}>
+      <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
       </ThemeProvider>
     </>
