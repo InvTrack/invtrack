@@ -1,26 +1,27 @@
 import { DefaultTheme } from "@react-navigation/native";
 
+export type ThemeFontSize = typeof fontSize;
 const fontSize = {
   xl: 0,
   l: 0,
   m: 0,
   s: 0,
   xs: 0,
-};
+} as const;
 
-const colors = {
+export type ThemeColors = keyof typeof themeColors;
+const themeColors = {
   ...DefaultTheme.colors,
-  colors: {
-    // all of these keys are required. change the values to hex?
-    primary: "rgb(0, 122, 255)",
-    background: "rgb(242, 242, 242)",
-    card: "rgb(255, 255, 255)",
-    text: "rgb(28, 28, 30)",
-    border: "rgb(216, 216, 216)",
-    notification: "rgb(255, 59, 48)",
-  },
-};
+  // all of these keys are required. change the values to hex?
+  primary: "rgb(0, 122, 255)",
+  background: "rgb(242, 242, 242)",
+  card: "rgb(255, 255, 255)",
+  text: "rgb(28, 28, 30)",
+  border: "rgb(216, 216, 216)",
+  notification: "rgb(255, 59, 48)",
+} as const;
 
+export type MainTheme = typeof mainTheme;
 export const mainTheme = {
   ...DefaultTheme,
   dark: false,
@@ -53,8 +54,6 @@ export const mainTheme = {
   },
   spacing: 0,
 
-  colors,
+  colors: themeColors,
   fontSize,
 } as const;
-
-export type MainTheme = typeof mainTheme;
