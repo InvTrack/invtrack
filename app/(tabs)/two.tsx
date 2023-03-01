@@ -2,8 +2,10 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
+import { createStyles } from '../../theme/useStyles';
 
 export default function TabTwoScreen() {
+  const styles = useStyles()
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
@@ -13,19 +15,17 @@ export default function TabTwoScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = createStyles((theme) => { console.log(theme); return StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  title: {...theme.text.xlBold
   },
   separator: {
     marginVertical: 30,
     height: 1,
     width: '80%',
   },
-});
+})});
