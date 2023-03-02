@@ -21,7 +21,7 @@ type TypographyProps = {
 };
 // Consider adding variants to a StyleSheets, then using them as style[variant]
 
-const Typography = ({
+export const Typography = ({
   children,
   color,
   textStyle,
@@ -65,5 +65,3 @@ const useStyles = createStyles((theme) =>
     xlBold: { ...theme.text.xlBold },
   })
 );
-
-export default Typography;
