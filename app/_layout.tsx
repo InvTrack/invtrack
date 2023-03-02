@@ -1,8 +1,4 @@
-import { supabase } from "../db/supabase";
-import Auth from "../components/Auth";
-import Account from "../components/Account";
-import { Session } from "@supabase/supabase-js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -12,6 +8,12 @@ import {
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { useColorScheme, View } from "react-native";
+import { SessionContext, useSession } from "../db";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { AccountDetails } from "../components/AccountDetails";
+import { LoginPage } from "../components/LoginPage";
+
+const queryClient = new QueryClient();
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -34,26 +36,20 @@ export default function RootLayout() {
     if (error) throw error;
   }, [error]);
 
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const session = useSession();
 
   return (
-    <View>
-      {session && session.user ? (
-        <Account key={session.user.id} session={session} />
-      ) : (
-        <Auth />
-      )}
-    </View>
+    <SessionContext.Provider value={session}>
+      <QueryClientProvider client={queryClient}>
+        <View>
+          {session && session.user ? (
+            <AccountDetails key={session.user.id} />
+          ) : (
+            <LoginPage />
+          )}
+        </View>
+      </QueryClientProvider>
+    </SessionContext.Provider>
     // <>
     //   {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
     //   {!loaded && <SplashScreen />}
@@ -62,17 +58,17 @@ export default function RootLayout() {
   );
 }
 
-// function RootLayoutNav() {
-//   const colorScheme = useColorScheme();
+export function RootLayoutNav() {
+  const colorScheme = useColorScheme();
 
-//   return (
-//     <>
-//       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-//         <Stack>
-//           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-//           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-//         </Stack>
-//       </ThemeProvider>
-//     </>
-//   );
-// }
+  return (
+    <>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </ThemeProvider>
+    </>
+  );
+}
