@@ -4,16 +4,16 @@ import {
   StyleProp,
   Text,
   TextProps,
-  ViewStyle,
+  TextStyle,
   StyleSheet,
 } from "react-native";
 import { MainTheme, ThemeColors } from "../../theme";
 import { createStyles } from "../../theme/useStyles";
 
-type TypographyProps = {
+export type TypographyProps = {
   children: React.ReactNode;
   color?: ThemeColors;
-  textStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
   textProps?: Omit<TextProps, keyof TypographyProps>;
   variant?: keyof MainTheme["text"];
   numberOfLines?: number;
@@ -21,10 +21,10 @@ type TypographyProps = {
 };
 // Consider adding variants to a StyleSheets, then using them as style[variant]
 
-const Typography = ({
+export const Typography = ({
   children,
   color,
-  textStyle,
+  style,
   textProps,
   variant = "l",
   numberOfLines,
@@ -41,7 +41,7 @@ const Typography = ({
         {
           textAlign: align,
         },
-        textStyle,
+        style,
       ]}
       numberOfLines={numberOfLines}
       {...textProps}
@@ -65,5 +65,3 @@ const useStyles = createStyles((theme) =>
     xlBold: { ...theme.text.xlBold },
   })
 );
-
-export default Typography;

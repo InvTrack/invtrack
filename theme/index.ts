@@ -12,6 +12,7 @@ const fontSize = {
   xsBold: 17,
 } as const;
 
+// TODO add a grey color for skeletons
 export type ThemeColors = keyof typeof themeColors;
 const themeColors = {
   black: "#000000",
@@ -19,6 +20,16 @@ const themeColors = {
   lightBlue: "#EDF6FF",
   mediumBlue: "#C9E0F6",
   darkBlue: "#4A6D90",
+} as const;
+
+export type Breakpoints = typeof breakpoints;
+const breakpoints = {
+  base: 0,
+  sm: 480,
+  md: 768,
+  lg: 992,
+  xl: 1280,
+  "2xl": 1536,
 } as const;
 
 export type MainTheme = typeof mainTheme;
@@ -77,7 +88,7 @@ export const mainTheme = {
     },
   },
   spacing: 0,
-
+  breakpoints,
   colors: themeColors,
   fontSize,
 } as const;
