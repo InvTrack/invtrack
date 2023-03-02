@@ -36,7 +36,7 @@ const Button = ({
   containerStyle,
   labelStyle,
   // labelColor, TODO
-  color = "primary",
+  color = "lightBlue",
   disabled = false,
 }: ButtonProps) => {
   const styles = useStyles();
@@ -55,5 +55,4 @@ const Button = ({
     </TouchableOpacity>
   );
 };
-
 export default Button;

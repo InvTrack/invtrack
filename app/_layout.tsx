@@ -1,19 +1,14 @@
 import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
 import { useColorScheme, View } from "react-native";
 import { SessionContext, useSession } from "../db";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AccountDetails } from "../components/AccountDetails";
 import { LoginPage } from "../components/LoginPage";
-
-const queryClient = new QueryClient();
+import { SplashScreen, Stack } from "expo-router";
+import { mainTheme } from "../theme";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -25,36 +20,32 @@ export const unstable_settings = {
   initialRouteName: "(tabs)",
 };
 
+const queryClient = new QueryClient();
 export default function RootLayout() {
-  const [_, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  const [fontsLoaded, fontsError] = useFonts({
+    latoBold: require("../assets/fonts/Lato-Bold.ttf"),
+    latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
     ...FontAwesome.font,
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (fontsError) throw fontsError;
+  }, [fontsError]);
 
-  const session = useSession();
+  const { session, loggedIn } = useSession();
 
+  /* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */
+  if (!fontsLoaded) return <SplashScreen />;
+  if (!loggedIn) return <LoginPage />;
   return (
-    <SessionContext.Provider value={session}>
+    <SessionContext.Provider value={{ session, loggedIn }}>
       <QueryClientProvider client={queryClient}>
         <View>
-          {session && session.user ? (
-            <AccountDetails key={session.user.id} />
-          ) : (
-            <LoginPage />
-          )}
+          <AccountDetails key={session.user.id} />
         </View>
       </QueryClientProvider>
     </SessionContext.Provider>
-    // <>
-    //   {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-    //   {!loaded && <SplashScreen />}
-    //   {loaded && <RootLayoutNav />}
-    // </>
   );
 }
 
@@ -63,7 +54,7 @@ export function RootLayoutNav() {
 
   return (
     <>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
