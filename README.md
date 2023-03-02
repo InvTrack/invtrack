@@ -10,7 +10,7 @@ this project uwu 🥰
 
 - when you encounter confilcts in package-lock.json, accept the upstream branch version, resolve conflicts in package.json and run `npm i`,
 
-- NO DEFAULT EXPORTS, use named exports only e.g. `export const foo = () => undefined`,
+- NO DEFAULT EXPORTS, use named exports only e.g. `export const foo = () => undefined`, the only exception is when exporting a route component,
 
 - explicitly define return type of util/global/exported functions,
 
