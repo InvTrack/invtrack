@@ -6,7 +6,8 @@ import { useListInventories } from "../db";
 
 export default function Calendar() {
   const { data: inventories, isLoading } = useListInventories();
-  if (isLoading || !inventories) return null;
+  if (isLoading || !inventories)
+    return <Stack.Screen options={{ title: "Loading" }} />;
   return (
     <>
       <Stack.Screen options={{ title: "Kalendarz" }} />

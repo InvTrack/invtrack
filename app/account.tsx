@@ -1,73 +1,47 @@
 import { useRouter } from "expo-router";
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
-import { useGetUser, useUpdateUser, SessionContext, supabase } from "../db";
+import { SessionContext, supabase, useGetUser, useUpdateUser } from "../db";
 
 export default function AccountDetails() {
   const { session } = useContext(SessionContext);
   const { data: user, isLoading } = useGetUser();
-  const [username, setUsername] = useState(user?.username);
-  const [companyName, setCompanyName] = useState(user?.company_name);
+  // TODO try to move to react-query
+  const [username, setUsername] = useState(user?.username || "");
+  const [companyName, setCompanyName] = useState(user?.company_name || "");
   useEffect(() => {
-    setUsername(user?.username);
-    setCompanyName(user?.company_name);
+    setUsername(user?.username || "");
+    setCompanyName(user?.company_name || "");
   }, [user]);
   const updateUser = useUpdateUser();
   const router = useRouter();
 
   return (
     <View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Username"
-          value={username || ""}
-          onChangeText={(text) => setUsername(text)}
-        />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Input
-          label="Company name"
-          value={companyName || ""}
-          onChangeText={(text) => setCompanyName(text)}
-        />
-      </View>
-
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title={isLoading ? "Loading ..." : "Update"}
-          onPress={() => updateUser.mutate({ username, companyName })}
-          disabled={isLoading}
-        />
-      </View>
-
-      <View style={styles.verticallySpaced}>
-        <Button
-          title="Sign Out"
-          onPress={() => {
-            supabase.auth.signOut();
-            router.push("/login");
-          }}
-        />
-      </View>
+      <Input label="Email" value={session?.user?.email} disabled />
+      <Input
+        label="Username"
+        value={username || ""}
+        onChangeText={(text) => setUsername(text)}
+      />
+      <Input
+        label="Company name"
+        value={companyName || ""}
+        onChangeText={(text) => setCompanyName(text)}
+      />
+      <Button
+        title={isLoading ? "Loading ..." : "Update"}
+        onPress={() => updateUser.mutate({ username, companyName })}
+        disabled={isLoading}
+      />
+      <Button
+        title="Sign Out"
+        onPress={() => {
+          supabase.auth.signOut();
+          router.push("/login");
+        }}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: 12,
-  },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: "stretch",
-  },
-  mt20: {
-    marginTop: 20,
-  },
-});

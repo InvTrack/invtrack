@@ -34,6 +34,7 @@ export interface Database {
           created_at: string;
           id: number;
           name: string;
+          steps: number[];
           unit: string;
           user_id: string;
         };
@@ -41,6 +42,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           name?: string;
+          steps?: number[];
           unit?: string;
           user_id: string;
         };
@@ -48,17 +50,18 @@ export interface Database {
           created_at?: string;
           id?: number;
           name?: string;
+          steps?: number[];
           unit?: string;
           user_id?: string;
         };
       };
-      product_quantity: {
+      record: {
         Row: {
           created_at: string;
           id: number;
           inventory_id: number;
           product_id: number;
-          quantity: number | null;
+          quantity: number;
           user_id: string;
         };
         Insert: {
@@ -66,7 +69,7 @@ export interface Database {
           id?: number;
           inventory_id: number;
           product_id: number;
-          quantity?: number | null;
+          quantity: number;
           user_id: string;
         };
         Update: {
@@ -74,7 +77,7 @@ export interface Database {
           id?: number;
           inventory_id?: number;
           product_id?: number;
-          quantity?: number | null;
+          quantity?: number;
           user_id?: string;
         };
       };
@@ -100,7 +103,22 @@ export interface Database {
       };
     };
     Views: {
-      [_ in never]: never;
+      record_view: {
+        Row: {
+          id: number | null;
+          inventory_id: number | null;
+          name: string | null;
+          quantity: number | null;
+          steps: number[] | null;
+          unit: string | null;
+        };
+      };
+      test_view: {
+        Row: {
+          name: string | null;
+          quantity: number | null;
+        };
+      };
     };
     Functions: {
       [_ in never]: never;
