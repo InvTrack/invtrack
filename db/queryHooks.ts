@@ -6,7 +6,7 @@ import { SessionContext } from "./sessionContext";
 import { supabase } from "./supabase";
 
 export const useGetUser = () => {
-  const session = useContext(SessionContext);
+  const { session } = useContext(SessionContext);
   return useQuery(["user", session?.user.id], async () => {
     try {
       if (!session?.user) throw new Error("No user on the session!");
@@ -28,7 +28,7 @@ export const useGetUser = () => {
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
-  const session = useContext(SessionContext);
+  const { session } = useContext(SessionContext);
   return useMutation(
     async ({
       username,

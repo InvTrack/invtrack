@@ -2,7 +2,14 @@ import { useState, createContext, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./supabase";
 
-export const SessionContext = createContext<Session | null>(null);
+type SessionContextType =
+  | { session: Session; loggedIn: true }
+  | { session: null; loggedIn: false };
+
+export const SessionContext = createContext<SessionContextType>({
+  loggedIn: false,
+  session: null,
+});
 
 export const useSession = () => {
   const [session, setSession] = useState<Session | null>(null);
@@ -17,23 +24,6 @@ export const useSession = () => {
     });
   }, []);
 
-  return session;
+  if (session && session.user) return { session, loggedIn: true } as const;
+  return { session: null, loggedIn: false } as const;
 };
-
-// export const SessionProvider = ({
-//   children,
-//   session,
-// }: {
-//   children: React.ReactNode;
-//   session: Session;
-// }) => {
-//   if (!session) {
-//     return <Text>Invalid session</Text>;
-//   }
-
-//   return (
-//     <SessionContext.Provider value={{ session }}>
-//       {children}
-//     </SessionContext.Provider>
-//   );
-// };

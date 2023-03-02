@@ -4,7 +4,7 @@ import { Button, Input } from "react-native-elements";
 import { useGetUser, useUpdateUser, SessionContext, supabase } from "../db";
 
 export function AccountDetails() {
-  const session = useContext(SessionContext);
+  const { session } = useContext(SessionContext);
   const { data: user, isLoading } = useGetUser();
   const [username, setUsername] = useState(user?.username);
   const [companyName, setCompanyName] = useState(user?.company_name);
