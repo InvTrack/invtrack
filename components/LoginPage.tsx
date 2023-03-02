@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { supabase } from "../db/supabase";
+import { supabase } from "../db";
 import { Button, Input } from "react-native-elements";
 
-export default function Auth() {
+export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
+  const signInWithEmail = useCallback(async () => {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -17,9 +17,9 @@ export default function Auth() {
 
     if (error) Alert.alert(error.message);
     setLoading(false);
-  }
+  }, [email, password]);
 
-  async function signUpWithEmail() {
+  const signUpWithEmail = useCallback(async () => {
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
@@ -28,7 +28,7 @@ export default function Auth() {
 
     if (error) Alert.alert(error.message);
     setLoading(false);
-  }
+  }, [email, password]);
 
   return (
     <View>
