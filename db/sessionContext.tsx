@@ -13,6 +13,7 @@ export const SessionContext = createContext<SessionContextType>({
 
 export const useSession = () => {
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -22,8 +23,10 @@ export const useSession = () => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
+    setLoading(false);
   }, []);
 
-  if (session && session.user) return { session, loggedIn: true } as const;
-  return { session: null, loggedIn: false } as const;
+  if (session && session.user)
+    return { session, loggedIn: true, loading } as const;
+  return { session: null, loggedIn: false, loading } as const;
 };
