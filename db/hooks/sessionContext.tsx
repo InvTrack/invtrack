@@ -1,7 +1,11 @@
 import { useState, createContext, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
-import { supabase } from "./supabase";
+import { supabase } from "../supabase";
 
+// TODO try to move to react-query
+/**
+ * Session Context for user authentication, login etc.
+ */
 type SessionContextType =
   | { session: Session; loggedIn: true }
   | { session: null; loggedIn: false };

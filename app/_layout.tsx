@@ -11,7 +11,11 @@ import { mainTheme } from "../theme";
 // Catch any errors thrown by the Layout component.
 export { ErrorBoundary } from "expo-router";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false, retry: 1 },
+  },
+});
 
 export default function App() {
   const [fontsLoaded, fontsError] = useFonts({
@@ -33,7 +37,6 @@ export default function App() {
   React.useEffect(() => {
     const onLoginPage = segments[0] === "login";
     const loggedIn = sessionState.loggedIn;
-    // console.log({ loggedIn });
     if (!sessionState.loading && !loggedIn && !onLoginPage)
       router.replace("/login");
     if (loggedIn && onLoginPage) router.replace("/");
