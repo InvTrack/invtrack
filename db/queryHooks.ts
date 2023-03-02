@@ -1,7 +1,12 @@
 import { useContext } from "react";
 import { Alert } from "react-native";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { fetchUser } from "./queries";
+import {
+  getUser,
+  listInventories,
+  listProductQuantities,
+  listProducts,
+} from "./queries";
 import { SessionContext } from "./sessionContext";
 import { supabase } from "./supabase";
 
@@ -11,7 +16,7 @@ export const useGetUser = () => {
     try {
       if (!session?.user) throw new Error("No user on the session!");
 
-      const { data, error, status } = await fetchUser(session?.user.id);
+      const { data, error, status } = await getUser(session?.user.id);
 
       if (error && status !== 406) {
         throw error;
@@ -60,4 +65,29 @@ export const useUpdateUser = () => {
     },
     { onSuccess: () => queryClient.invalidateQueries("user") }
   );
+};
+
+export const useListInventories = () => {
+  const { session } = useContext(SessionContext);
+  const query = useQuery(
+    ["inventories", session?.user.id],
+    () => session && listInventories(session?.user.id)
+  );
+  return { ...query, data: query.data?.data };
+};
+
+export const useListProducts = () => {
+  const { session } = useContext(SessionContext);
+  const query = useQuery(
+    ["products", session?.user.id],
+    () => session && listProducts(session?.user.id)
+  );
+  return { ...query, data: query.data?.data };
+};
+
+export const useListProductQuantities = (inventoryId: string) => {
+  const query = useQuery(["product_quantities", inventoryId], () =>
+    listProductQuantities(inventoryId)
+  );
+  return { ...query, data: query.data?.data };
 };

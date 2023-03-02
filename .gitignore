@@ -19,3 +19,6 @@ web-build/
 
 # cache files
 .eslintcache
+
+# api keys, etc.
+.secrets
