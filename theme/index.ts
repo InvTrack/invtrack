@@ -21,6 +21,16 @@ const themeColors = {
   darkBlue: "#4A6D90",
 } as const;
 
+export type Breakpoints = typeof breakpoints;
+const breakpoints = {
+  base: 0,
+  sm: 480,
+  md: 768,
+  lg: 992,
+  xl: 1280,
+  "2xl": 1536,
+} as const;
+
 export type MainTheme = typeof mainTheme;
 export const mainTheme = {
   dark: false,
@@ -77,7 +87,7 @@ export const mainTheme = {
     },
   },
   spacing: 0,
-
+  breakpoints,
   colors: themeColors,
   fontSize,
 } as const;
