@@ -12,6 +12,7 @@ const fontSize = {
   xsBold: 17,
 } as const;
 
+// TODO add a grey color for skeletons
 export type ThemeColors = keyof typeof themeColors;
 const themeColors = {
   black: "#000000",
