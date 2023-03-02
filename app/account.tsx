@@ -1,9 +1,10 @@
+import { useRouter } from "expo-router";
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { useGetUser, useUpdateUser, SessionContext, supabase } from "../db";
 
-export function AccountDetails() {
+export default function AccountDetails() {
   const { session } = useContext(SessionContext);
   const { data: user, isLoading } = useGetUser();
   const [username, setUsername] = useState(user?.username);
@@ -13,6 +14,7 @@ export function AccountDetails() {
     setCompanyName(user?.company_name);
   }, [user]);
   const updateUser = useUpdateUser();
+  const router = useRouter();
 
   return (
     <View>
@@ -43,7 +45,13 @@ export function AccountDetails() {
       </View>
 
       <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+        <Button
+          title="Sign Out"
+          onPress={() => {
+            supabase.auth.signOut();
+            router.push("/login");
+          }}
+        />
       </View>
     </View>
   );

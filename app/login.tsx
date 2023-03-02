@@ -3,7 +3,7 @@ import { Alert, StyleSheet, View } from "react-native";
 import { supabase } from "../db";
 import { Button, Input } from "react-native-elements";
 
-export function LoginPage() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ export function LoginPage() {
   }, [email, password]);
 
   return (
-    <View>
+    <View style={[styles.container]}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input
           label="Email"
@@ -55,14 +55,14 @@ export function LoginPage() {
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
-          title="Sign in"
+          title="Login"
           disabled={loading}
           onPress={() => signInWithEmail()}
         />
       </View>
       <View style={styles.verticallySpaced}>
         <Button
-          title="Sign up"
+          title="Register"
           disabled={loading}
           onPress={() => signUpWithEmail()}
         />
@@ -73,8 +73,7 @@ export function LoginPage() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    padding: 12,
+    margin: "auto",
   },
   verticallySpaced: {
     paddingTop: 4,
