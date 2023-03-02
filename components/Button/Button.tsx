@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) =>
 const debouncedOnPress = (onPress: onPress) => debounce(onPress, 50);
 
 // TODO switch to our own Text component
-const Button = ({
+export const Button = ({
   onPress,
   buttonContent,
   containerStyle,
@@ -55,4 +55,3 @@ const Button = ({
     </TouchableOpacity>
   );
 };
-export default Button;
