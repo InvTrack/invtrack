@@ -1,8 +1,24 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../db/supebase'
+import { supabase } from '../db/supabase'
 import { StyleSheet, View, Alert } from 'react-native'
 import { Button, Input } from 'react-native-elements'
 import { Session } from '@supabase/supabase-js'
+
+const fetchUser = async (userId: string) => {
+    const res = await supabase.from('user').select(`username, website, message`).eq('id', userId).single();
+    return res;
+}
+
+const fetchProducts = async (userId: string) => {
+    const res = await supabase.from('user').select(`*, product(*)`).eq('id', userId).single();
+    return { ...res, data: res?.data.product };
+}
+
+const fetchInventories = async (userId: string) => {
+    const res = await supabase.from('user').select(`*, inventory(*)`).eq('id', userId).single();
+    return { ...res, data: res?.data.inventory };
+}
+
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true)
@@ -20,11 +36,8 @@ export default function Account({ session }: { session: Session }) {
       setLoading(true)
       if (!session?.user) throw new Error('No user on the session!')
 
-      let { data, error, status } = await supabase
-        .from('profiles')
-        .select(`username, website, avatar_url, message`)
-        .eq('id', session?.user.id)
-        .single()
+      const { data, error, status } = await fetchUser(session?.user.id);
+
       if (error && status !== 406) {
         throw error
       }
@@ -34,7 +47,14 @@ export default function Account({ session }: { session: Session }) {
         setWebsite(data.website)
         setMessage(data.message)
         setAvatarUrl(data.avatar_url)
+
       }
+      const products = await fetchProducts(session?.user.id);
+      console.log(products);
+      
+      const inv = await fetchInventories(session?.user.id);
+      console.log(inv);
+      
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert(error.message)
@@ -68,7 +88,7 @@ export default function Account({ session }: { session: Session }) {
         updated_at: new Date(),
       }
 
-      let { error } = await supabase.from('profiles').upsert(updates)
+      let { error } = await supabase.from('user').upsert(updates)
 
       if (error) {
         throw error

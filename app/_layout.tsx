@@ -3,9 +3,8 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
-// import 'react-native-url-polyfill/auto'
 import { useState, useEffect } from 'react'
-import { supabase } from '../db/supebase.ts'
+import { supabase } from '../db/supabase.ts'
 import Auth from '../components/Auth'
 import Account from '../components/Account'
 import { View } from 'react-native'
