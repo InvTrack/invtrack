@@ -2,52 +2,58 @@ import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
 import { useColorScheme } from "react-native";
+import { SessionContext, useSession } from "../db";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { SplashScreen, Stack, useRouter, useSegments } from "expo-router";
 import { mainTheme } from "../theme";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+// Catch any errors thrown by the Layout component.
+export { ErrorBoundary } from "expo-router";
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false, retry: 1 },
+  },
+});
 
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
+export default function App() {
+  const [fontsLoaded, fontsError] = useFonts({
     latoBold: require("../assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
     ...FontAwesome.font,
   });
-
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (fontsError) throw fontsError;
+  }, [fontsError]);
 
-  return (
-    <>
-      {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-      {!loaded && <SplashScreen />}
-      {loaded && <RootLayoutNav />}
-    </>
-  );
-}
-
-function RootLayoutNav() {
+  const sessionState = useSession();
   const colorScheme = useColorScheme();
 
+  const segments = useSegments();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const onLoginPage = segments[0] === "login";
+    const loggedIn = sessionState.loggedIn;
+    if (!sessionState.loading && !loggedIn && !onLoginPage)
+      router.replace("/login");
+    if (loggedIn && onLoginPage) router.replace("/");
+  }, [sessionState.loading, sessionState.loggedIn, segments[0]]);
+
+  if (!fontsLoaded || sessionState.loading) return <SplashScreen />;
+
   return (
-    <>
-      <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </ThemeProvider>
-    </>
+    <SessionContext.Provider value={sessionState}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
+          <Stack>
+            <Stack.Screen name="login" />
+            <Stack.Screen name="account" options={{ title: "Dane konta" }} />
+          </Stack>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </SessionContext.Provider>
   );
 }
