@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   GestureResponderEvent,
-  Text,
   StyleProp,
   ViewStyle,
   TextStyle,
@@ -11,13 +10,14 @@ import {
 import debounce from "lodash/debounce";
 import { createStyles } from "../../theme/useStyles";
 import { mainTheme, ThemeColors } from "../../theme";
+import { Typography, TypographyProps } from "../Typography";
 
 type onPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
   onPress: onPress;
   buttonContent: string | JSX.Element;
   containerStyle?: StyleProp<ViewStyle>;
-  labelStyle?: StyleProp<TextStyle>;
+  labelStyle?: TypographyProps["style"];
   color: ThemeColors;
   disabled?: boolean;
 };
@@ -51,7 +51,9 @@ export const Button = ({
       ]}
       disabled={disabled}
     >
-      {!!buttonContent && <Text style={labelStyle}>{buttonContent}</Text>}
+      {!!buttonContent && (
+        <Typography style={labelStyle}>{buttonContent}</Typography>
+      )}
     </TouchableOpacity>
   );
 };
