@@ -10,7 +10,7 @@ export type UserTable = Database["public"]["Tables"]["user"];
  * Inwentaryzacja - zbiór "wpisów" o tym ile jakiego rodzaju towaru posiadało przedsiębiorstwo w danym czasie
  */
 export type Inventory = InventoryTable["Row"];
-export type InventoryTable = Database["public"]["Tables"]["product"];
+export type InventoryTable = Database["public"]["Tables"]["inventory"];
 
 /**
  * Jeden "wpis" danego produktu w inwentaryzacji. Jedna informacja o tym "ile" i "jakiego" produktu. Np. "produkt #462 - 5kg"

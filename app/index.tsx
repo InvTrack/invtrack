@@ -18,7 +18,9 @@ export default function Calendar() {
             <Text>{name}</Text>
           </Link>
         ))}
-        <Button title="Dodaj inwentaryzację"></Button>
+        <Link href={"/new"}>
+          <Button title="Dodaj inwentaryzację"></Button>
+        </Link>
       </View>
     </>
   );
