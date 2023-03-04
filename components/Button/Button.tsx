@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  TouchableOpacity,
+  Pressable,
   StyleSheet,
   GestureResponderEvent,
   StyleProp,
@@ -15,45 +15,86 @@ import { Typography, TypographyProps } from "../Typography";
 type onPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
   onPress: onPress;
-  buttonContent: string | JSX.Element;
+  label: string;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TypographyProps["style"];
-  color: ThemeColors;
   disabled?: boolean;
+  type: "primary" | "secondary";
+  size: "xs" | "s" | "m" | "l" | "xl";
 };
 
-const useStyles = createStyles((theme) =>
-  // placeholder to turn off eslint error
-  StyleSheet.create({ buttonStyle: { borderBottomWidth: theme.spacing } })
-);
-
+const BORDER_WIDTH = 4;
 const debouncedOnPress = (onPress: onPress) => debounce(onPress, 50);
 
 // TODO switch to our own Text component
 export const Button = ({
   onPress,
-  buttonContent,
+  label,
   containerStyle,
   labelStyle,
   // labelColor, TODO
-  color = "lightBlue",
   disabled = false,
+  type,
+  size,
 }: ButtonProps) => {
   const styles = useStyles();
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={debouncedOnPress(onPress)}
-      style={[
-        styles.buttonStyle,
-        { backgroundColor: mainTheme.colors[color] },
-        containerStyle,
-      ]}
+      style={[styles.buttonBase, styles[type], styles[size], containerStyle]}
       disabled={disabled}
     >
-      {!!buttonContent && (
-        <Typography style={labelStyle}>{buttonContent}</Typography>
+      {!!label && (
+        <Typography style={labelStyle} variant={size} color="darkBlue">
+          {label}
+        </Typography>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
+
+const useStyles = createStyles((theme) =>
+  StyleSheet.create({
+    buttonBase: {
+      margin: theme.spacing * 0.5,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    primary: {
+      backgroundColor: theme.colors.mediumBlue,
+      padding: theme.spacing,
+    },
+    secondary: {
+      borderColor: theme.colors.mediumBlue,
+      borderWidth: BORDER_WIDTH,
+      padding: theme.spacing - BORDER_WIDTH,
+    },
+
+    // SIZES
+    xs: {
+      height: 40,
+      borderRadius: theme.borderRadius,
+      paddingHorizontal: 16,
+      borderWidth: 1,
+    },
+    s: {
+      height: 48,
+      borderRadius: theme.borderRadius,
+      paddingHorizontal: 18,
+    },
+    m: {
+      height: 54,
+      borderRadius: theme.borderRadius,
+      paddingHorizontal: 20,
+    },
+    l: {
+      height: 58,
+      borderRadius: theme.borderRadius,
+    },
+    xl: {
+      height: 58,
+      borderRadius: theme.borderRadius,
+    },
+  })
+);
