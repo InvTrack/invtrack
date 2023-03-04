@@ -49,7 +49,12 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
-            <Stack.Screen name="login" />
+            <Stack.Screen
+              name="login"
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen name="account" options={{ title: "Dane konta" }} />
           </Stack>
         </ThemeProvider>

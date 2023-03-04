@@ -1,7 +1,10 @@
 import React, { useCallback, useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Image } from "react-native";
 import { supabase } from "../db";
-import { Button, Input } from "react-native-elements";
+import { Input } from "react-native-elements";
+import { Button } from "../components/Button";
+import { Link } from "expo-router";
+import { Card } from "../components/Card";
 
 export default function Login() {
   // TODO try to move to react-query
@@ -32,7 +35,24 @@ export default function Login() {
   }, [email, password]);
 
   return (
-    <View>
+    <>
+      <Card
+        padding="normal"
+        style={{
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        <Image
+          source={require("../assets/images/logo.png")}
+          resizeMode="contain"
+          style={{
+            width: 256,
+            height: 256,
+            marginHorizontal: "auto",
+          }}
+        />
+      </Card>
       <Input
         label="Email"
         leftIcon={{ type: "font-awesome", name: "envelope" }}
@@ -51,15 +71,22 @@ export default function Login() {
         autoCapitalize="none"
       />
       <Button
-        title="Login"
+        type="primary"
+        size="l"
+        label="Register"
         disabled={loading}
-        onPress={() => signInWithEmail()}
-      />
-      <Button
-        title="Register"
-        disabled={loading}
+        containerStyle={{ marginHorizontal: "auto", width: 160 }}
         onPress={() => signUpWithEmail()}
       />
-    </View>
+      <Button
+        type="secondary"
+        size="l"
+        label="Login"
+        disabled={loading}
+        containerStyle={{ marginHorizontal: "auto", width: 160 }}
+        onPress={() => signInWithEmail()}
+      />
+      <Link href={""}>Regulamin</Link>
+    </>
   );
 }
