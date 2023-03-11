@@ -17,11 +17,21 @@ interface CardProps {
   children: React.ReactNode;
   color?: ThemeColors;
   style?: StyleProp<ViewStyle>;
+  borderTop?: boolean;
+  borderBottom?: boolean;
   onPress?: () => void;
 }
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    borderTop: {
+      borderTopLeftRadius: theme.borderRadius,
+      borderTopRightRadius: theme.borderRadius,
+    },
+    borderBottom: {
+      borderBottomLeftRadius: theme.borderRadius,
+      borderBottomRightRadius: theme.borderRadius,
+    },
     none: {
       padding: 0,
     },
@@ -48,6 +58,8 @@ export const Card = ({
   children,
   style,
   color = "mediumBlue",
+  borderTop = false,
+  borderBottom = false,
   onPress,
 }: CardProps) => {
   const styles = useStyles();
@@ -57,6 +69,8 @@ export const Card = ({
       <TouchableOpacity
         onPress={onPress}
         style={[
+          borderBottom && styles.borderBottom,
+          borderTop && styles.borderTop,
           styles[padding],
           styles[color],
           fullWidth && styles.fullWidth,
@@ -71,6 +85,8 @@ export const Card = ({
   return (
     <View
       style={[
+        borderBottom && styles.borderBottom,
+        borderTop && styles.borderTop,
         styles[padding],
         styles[color],
         fullWidth && styles.fullWidth,

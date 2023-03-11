@@ -5,16 +5,14 @@ import {
   GestureResponderEvent,
   StyleProp,
   ViewStyle,
-  TextStyle,
 } from "react-native";
 import debounce from "lodash/debounce";
 import { createStyles } from "../../theme/useStyles";
-import { mainTheme, ThemeColors } from "../../theme";
 import { Typography, TypographyProps } from "../Typography";
 
 type onPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
-  onPress: onPress;
+  onPress?: onPress;
   label: string;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TypographyProps["style"];
@@ -41,7 +39,7 @@ export const Button = ({
 
   return (
     <Pressable
-      onPress={debouncedOnPress(onPress)}
+      onPress={debouncedOnPress(onPress ?? (() => undefined))}
       style={[styles.buttonBase, styles[type], styles[size], containerStyle]}
       disabled={disabled}
     >
@@ -60,6 +58,7 @@ const useStyles = createStyles((theme) =>
       margin: theme.spacing * 0.5,
       alignItems: "center",
       justifyContent: "center",
+      borderRadius: theme.borderRadiusFull,
     },
     primary: {
       backgroundColor: theme.colors.mediumBlue,
@@ -74,27 +73,22 @@ const useStyles = createStyles((theme) =>
     // SIZES
     xs: {
       height: 40,
-      borderRadius: theme.borderRadius,
       paddingHorizontal: 16,
       borderWidth: 1,
     },
     s: {
       height: 48,
-      borderRadius: theme.borderRadius,
       paddingHorizontal: 18,
     },
     m: {
       height: 54,
-      borderRadius: theme.borderRadius,
       paddingHorizontal: 20,
     },
     l: {
       height: 58,
-      borderRadius: theme.borderRadius,
     },
     xl: {
       height: 58,
-      borderRadius: theme.borderRadius,
     },
   })
 );

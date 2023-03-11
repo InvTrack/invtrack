@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { Alert, Image } from "react-native";
-import { supabase } from "../db";
+import { supabase } from "../../db";
 import { Input } from "react-native-elements";
-import { Button } from "../components/Button";
+import { Button } from "../../components/Button";
 import { Link } from "expo-router";
-import { Card } from "../components/Card";
+import { Card } from "../../components/Card";
 
 export default function Login() {
   // TODO try to move to react-query
@@ -37,6 +37,7 @@ export default function Login() {
   return (
     <>
       <Card
+        borderBottom
         padding="normal"
         style={{
           justifyContent: "center",
@@ -44,7 +45,7 @@ export default function Login() {
         }}
       >
         <Image
-          source={require("../assets/images/logo.png")}
+          source={require("../../assets/images/logo.png")}
           resizeMode="contain"
           style={{
             width: 256,
@@ -69,14 +70,6 @@ export default function Login() {
         secureTextEntry
         placeholder="Password"
         autoCapitalize="none"
-      />
-      <Button
-        type="primary"
-        size="l"
-        label="Register"
-        disabled={loading}
-        containerStyle={{ marginHorizontal: "auto", width: 160 }}
-        onPress={() => signUpWithEmail()}
       />
       <Button
         type="secondary"
