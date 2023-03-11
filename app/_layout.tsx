@@ -35,10 +35,10 @@ export default function App() {
   const router = useRouter();
 
   React.useEffect(() => {
-    const onLoginPage = segments[0] === "login";
+    const onLoginPage = segments[0] === "start";
     const loggedIn = sessionState.loggedIn;
     if (!sessionState.loading && !loggedIn && !onLoginPage)
-      router.replace("/login");
+      router.replace("/start");
     if (loggedIn && onLoginPage) router.replace("/");
   }, [sessionState.loading, sessionState.loggedIn, segments[0]]);
 
@@ -50,7 +50,7 @@ export default function App() {
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
             <Stack.Screen
-              name="login"
+              name="start"
               options={{
                 headerShown: false,
               }}
