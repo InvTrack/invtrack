@@ -1,9 +1,11 @@
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
+  NativeSyntheticEvent,
   StyleProp,
   StyleSheet,
   TextInput as NativeTextInput,
+  TextInputFocusEventData,
   TextInputProps as NativeTextInputProps,
   TextStyle,
   View,
@@ -11,9 +13,8 @@ import {
 } from "react-native";
 import { createStyles } from "../../theme/useStyles";
 
+const BORDER_WIDTH = 4;
 interface TextInputProps extends NativeTextInputProps {
-  rounded?: boolean;
-  raised?: boolean;
   invalid?: boolean;
   disabled?: boolean;
   editable?: boolean;
@@ -21,19 +22,13 @@ interface TextInputProps extends NativeTextInputProps {
   inputStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   style?: never;
-  InputRightElement?: JSX.Element;
-  InputLeftElement?: JSX.Element;
-  onFocus?: (e: any) => void;
-  onBlur?: (e: any) => void;
+  onFocus?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onBlur?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 }
 
 export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
   (
     {
-      InputRightElement,
-      InputLeftElement,
-      rounded = true,
-      raised = false,
       invalid = false,
       disabled = false,
       editable = true,
@@ -46,11 +41,9 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
     },
     ref: React.Ref<NativeTextInput>
   ) => {
-    const theme = useTheme();
     const style = useStyles();
-
+    const theme = useTheme();
     const [_focused, setFocused] = React.useState(false);
-    // const [isHovered, setIsHovered] = React.useState(false);
 
     const handleFocus = (callback?: any) => {
       setFocused(true);
@@ -66,24 +59,15 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
       <View
         style={[
           style.container,
-          rounded ? style.rounded : {},
-          raised ? style.raised : {},
           invalid ? style.invalid : {},
-          (focused || _focused) && !raised && rounded ? style.focused : {},
+          focused || _focused ? style.focused : {},
           props.multiline ? style.containerMultiline : {},
           containerStyle,
         ]}
       >
         <View
-          style={[
-            style.content,
-            rounded ? style.rounded : {},
-            props.multiline ? style.contentMultiline : {},
-          ]}
+          style={[style.content, props.multiline ? style.contentMultiline : {}]}
         >
-          {InputLeftElement !== undefined && (
-            <View style={style.leftElementContainer}>{InputLeftElement}</View>
-          )}
           <NativeTextInput
             ref={ref}
             selectTextOnFocus={!disabled && editable}
@@ -92,7 +76,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             accessibilityLabel={props.accessibilityLabel}
             editable={disabled || !editable ? false : true}
             placeholderTextColor={
-              "white"
+              theme.colors.darkBlue
               // TODO
               // invalid
               //   ? theme.colors.danger
@@ -100,18 +84,14 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
               //   ? theme.colors.dirtyWhite
               //   : theme.colors.lightGrey
             }
-            onFocus={(e: any) =>
-              handleFocus(onFocus ? () => onFocus(e) : undefined)
+            onFocus={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
+              handleFocus(onFocus ? () => onFocus(e) : () => undefined)
             }
-            onBlur={(e: any) =>
-              handleBlur(onBlur ? () => onBlur(e) : undefined)
+            onBlur={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
+              handleBlur(onBlur ? () => onBlur(e) : () => undefined)
             }
             style={[
               style.input,
-              {
-                paddingLeft: InputLeftElement ? 8 : 24,
-                paddingRight: InputRightElement ? 8 : 24,
-              },
               invalid ? style.invalidInput : {},
               disabled ? style.disabledInput : {},
               props.multiline ? style.inputMultiline : {},
@@ -119,9 +99,6 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             ]}
             {...props}
           />
-          {InputRightElement !== undefined && (
-            <View style={style.rightElementContainer}>{InputRightElement}</View>
-          )}
         </View>
       </View>
     );
@@ -133,17 +110,17 @@ TextInput.displayName = "TextInput";
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      height: 46,
-      backgroundColor: theme.colors.white,
-      borderWidth: 1,
-      // TODO
-      // borderColor: theme.colors.dirtyWhite,
-      fontFamily: "Inter_400Regular",
+      ...theme.text.s,
+      borderRadius: theme.borderRadiusFull,
+      height: 44,
       justifyContent: "center",
+      borderColor: theme.colors.mediumBlue,
+      borderWidth: BORDER_WIDTH,
+      padding: theme.spacing - BORDER_WIDTH,
     },
     containerMultiline: {
       height: undefined,
-      minHeight: 46,
+      minHeight: 44,
     },
     content: {
       height: 44,
@@ -157,23 +134,8 @@ const useStyles = createStyles((theme) =>
       minHeight: 44,
       paddingVertical: 6,
     },
-    rounded: {
-      borderRadius: 28,
-    },
-    raised: {
-      borderColor: theme.colors.white,
-      // TODO
-      // shadowColor: theme.colors.shadowBase,
-      shadowOpacity: 0.1,
-      shadowOffset: { width: 0, height: 4 },
-      shadowRadius: 4,
-    },
     focused: {
-      // TODO
-      // shadowColor: theme.colors.shadowBase,
-      shadowOpacity: 0.1,
-      shadowOffset: { width: 10, height: 15 },
-      shadowRadius: 25,
+      ...theme.baseShadow,
     },
     invalid: {
       // TODO
@@ -185,13 +147,11 @@ const useStyles = createStyles((theme) =>
       flexGrow: 1,
       flexShrink: 1,
       width: "100%",
-      paddingVertical: 10,
-      paddingHorizontal: 24,
+      paddingHorizontal: theme.spacing * 2,
       // TODO
       // fontSize: theme.fontSizes.field,
       // TODO
       // color: theme.colors.veryDarkBlue,
-      fontFamily: "Inter_400Regular",
     },
     inputMultiline: {
       height: undefined,
