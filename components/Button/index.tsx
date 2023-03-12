@@ -19,6 +19,7 @@ type ButtonProps = {
   disabled?: boolean;
   type: "primary" | "secondary";
   size: "xs" | "s" | "m" | "l" | "xl";
+  shadow?: boolean;
 };
 
 const BORDER_WIDTH = 4;
@@ -34,13 +35,20 @@ export const Button = ({
   disabled = false,
   type,
   size,
+  shadow = false,
 }: ButtonProps) => {
   const styles = useStyles();
 
   return (
     <Pressable
       onPress={debouncedOnPress(onPress ?? (() => undefined))}
-      style={[styles.buttonBase, styles[type], styles[size], containerStyle]}
+      style={[
+        styles.buttonBase,
+        styles[type],
+        styles[size],
+        shadow && styles.shadow,
+        containerStyle,
+      ]}
       disabled={disabled}
     >
       {!!label && (
@@ -69,12 +77,11 @@ const useStyles = createStyles((theme) =>
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing - BORDER_WIDTH,
     },
-
+    shadow: { ...theme.baseShadow },
     // SIZES
     xs: {
       height: 40,
       paddingHorizontal: 16,
-      borderWidth: 1,
     },
     s: {
       height: 48,

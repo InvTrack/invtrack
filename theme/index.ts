@@ -35,8 +35,8 @@ const breakpoints = {
 const baseShadow = {
   shadowOpacity: 0.2,
   shadowOffset: { width: 0, height: 4 },
-  shadowRadius: 16,
-  elevation: 5,
+  shadowRadius: 4,
+  elevation: 4,
 } as const;
 
 export type MainTheme = typeof mainTheme;
