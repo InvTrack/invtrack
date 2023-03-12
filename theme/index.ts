@@ -32,6 +32,13 @@ const breakpoints = {
   "2xl": 1536,
 } as const;
 
+const baseShadow = {
+  shadowOpacity: 0.2,
+  shadowOffset: { width: 0, height: 4 },
+  shadowRadius: 16,
+  elevation: 5,
+} as const;
+
 export type MainTheme = typeof mainTheme;
 export const mainTheme = {
   dark: false,
@@ -88,11 +95,13 @@ export const mainTheme = {
     },
   },
   spacing: 8,
+  opacity: 0.6,
   borderRadius: 25,
   borderRadiusFull: 9999,
   breakpoints,
   colors: themeColors,
   fontSize,
+  baseShadow,
 } as const;
 
 // Module override

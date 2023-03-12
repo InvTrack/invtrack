@@ -43,6 +43,7 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: { backgroundColor: theme.colors.lightBlue, height: "100%" },
     card: {
+      ...theme.baseShadow,
       justifyContent: "center",
       alignContent: "center",
       marginBottom: theme.spacing * 11,
