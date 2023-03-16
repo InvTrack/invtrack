@@ -14,7 +14,7 @@ import {
 import { createStyles } from "../../theme/useStyles";
 
 const BORDER_WIDTH = 4;
-interface TextInputProps extends NativeTextInputProps {
+export interface TextInputProps extends NativeTextInputProps {
   invalid?: boolean;
   disabled?: boolean;
   editable?: boolean;
