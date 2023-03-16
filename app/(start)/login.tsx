@@ -25,17 +25,6 @@ export default function Login() {
     setLoading(false);
   }, [email, password]);
 
-  const signUpWithEmail = useCallback(async () => {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }, [email, password]);
-
   return (
     <View style={styles.container}>
       <Typography
@@ -84,7 +73,7 @@ const useStyles = createStyles((theme) =>
     },
     title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
     input: { marginVertical: theme.spacing },
-    button: { marginTop: theme.spacing * 4.5, width: "100%" },
+    button: { marginTop: theme.spacing * 5 },
     link: {
       alignSelf: "center",
       marginTop: theme.spacing * 2.5,

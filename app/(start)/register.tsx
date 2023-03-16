@@ -1,11 +1,40 @@
 import { Link } from "expo-router";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
-import { TextInput } from "../../components/TextInput";
+import { Button } from "../../components/Button";
+import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
+import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
+
+type FormValues = {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  passwordRepeat: string;
+};
 export default function Register() {
   const styles = useStyles();
+  const { control, handleSubmit } = useForm<FormValues>({
+    defaultValues: {
+      name: "",
+      surname: "",
+      email: "",
+      password: "",
+      passwordRepeat: "",
+    },
+  });
+
+  const onSubmit = async ({ email, password, ...props }: FormValues) => {
+    console.log(props);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    error && console.log(error);
+  };
   return (
     <View style={styles.container}>
       <Typography
@@ -16,18 +45,52 @@ export default function Register() {
       >
         Rejestracja
       </Typography>
-      <TextInput placeholder="imię" containerStyle={styles.input} />
-      <TextInput placeholder="nazwisko" containerStyle={styles.input} />
-      <TextInput placeholder="e-mail" containerStyle={styles.input} />
-      <TextInput
-        placeholder="hasło"
-        secureTextEntry
-        containerStyle={styles.input}
+      <TextInputController
+        name="name"
+        control={control}
+        textInputProps={{ placeholder: "imię", containerStyle: styles.input }}
       />
-      <TextInput
-        placeholder="powtórz hasło"
-        secureTextEntry
-        containerStyle={styles.input}
+      <TextInputController
+        name="surname"
+        control={control}
+        textInputProps={{
+          placeholder: "nazwisko",
+          containerStyle: styles.input,
+        }}
+      />
+      <TextInputController
+        name="email"
+        control={control}
+        textInputProps={{
+          placeholder: "e-mail,",
+          containerStyle: styles.input,
+        }}
+      />
+      <TextInputController
+        name="password"
+        control={control}
+        textInputProps={{
+          placeholder: "hasło",
+          secureTextEntry: true,
+          containerStyle: styles.input,
+        }}
+      />
+      <TextInputController
+        name="passwordRepeat"
+        control={control}
+        textInputProps={{
+          placeholder: "powtórz hasło",
+          secureTextEntry: true,
+          containerStyle: styles.input,
+        }}
+      />
+      <Button
+        type="primary"
+        size="xs"
+        label="Zarejestruj się"
+        shadow
+        containerStyle={styles.button}
+        onPress={handleSubmit(onSubmit)}
       />
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
@@ -62,5 +125,6 @@ const useStyles = createStyles((theme) =>
       justifyContent: "flex-end",
       marginTop: theme.spacing * 5,
     },
+    button: { marginTop: theme.spacing * 5 },
   })
 );
