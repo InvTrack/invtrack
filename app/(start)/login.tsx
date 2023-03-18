@@ -1,29 +1,35 @@
-import React, { useCallback, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { supabase } from "../../db";
 import { Button } from "../../components/Button";
 import { Link } from "expo-router";
-import { TextInput } from "../../components/TextInput";
 import { createStyles } from "../../theme/useStyles";
 import { Typography } from "../../components/Typography";
+import { useForm } from "react-hook-form";
+import TextInputController from "../../components/TextInputController";
 
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 export default function Login() {
   // TODO try to move to react-query
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
 
+  const { control, handleSubmit } = useForm<LoginFormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
   const styles = useStyles();
-  const signInWithEmail = useCallback(async () => {
-    setLoading(true);
+  const onSubmit = async ({ email, password }: LoginFormValues) => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }, [email, password]);
+    error && console.log(error);
+  };
 
   return (
     <View style={styles.container}>
@@ -35,20 +41,28 @@ export default function Login() {
       >
         Logowanie
       </Typography>
-      <TextInput containerStyle={styles.input} placeholder="e-mail" />
-      <TextInput
-        containerStyle={styles.input}
-        secureTextEntry
-        placeholder="hasło"
+      <TextInputController
+        control={control}
+        name="email"
+        textInputProps={{ containerStyle: styles.input, placeholder: "email" }}
+      />
+      <TextInputController
+        control={control}
+        name="password"
+        textInputProps={{
+          containerStyle: styles.input,
+          placeholder: "password",
+          secureTextEntry: true,
+        }}
       />
       <Button
         type="primary"
         size="xs"
         label="Zaloguj się"
         shadow
-        disabled={loading}
+        // disabled={loading}
         containerStyle={styles.button}
-        onPress={() => signInWithEmail()}
+        onPress={handleSubmit(onSubmit)}
       />
       <Link href={"/login"} style={styles.link}>
         Resetowanie hasła
