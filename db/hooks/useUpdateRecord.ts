@@ -7,7 +7,7 @@ export const useUpdateRecord = (recordId: string) => {
   return useMutation(
     async (record: Partial<Record>) => {
       const { data, error } = await supabase
-        .from<"record", RecordTable>("record")
+        .from<"product_record", RecordTable>("product_record")
         .update(record)
         .eq("id", recordId)
         .select()
