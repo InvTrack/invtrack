@@ -9,7 +9,7 @@ export default function Inventory() {
   const inventoryId = pathName.split("/")[1];
   const { data, isSuccess } = useListRecords(inventoryId);
   if (!isSuccess || !data)
-    return <Stack.Screen options={{ title: "Loading" }} />;
+    return <Stack.Screen options={{ title: "Loading inventory" }} />;
   return (
     <>
       <Stack.Screen options={{ title: "Nazwa inwentaryzacji" }} />

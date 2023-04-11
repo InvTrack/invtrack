@@ -9,12 +9,14 @@ export default function Product() {
   const recordId = pathName.split("/")[2];
   const recordPanel = useRecordPanel(recordId);
 
-  if (recordPanel.isLoading)
+  if (!recordPanel.isSuccess || !recordPanel.data || !recordPanel.data.steps)
     return <Stack.Screen options={{ title: "Loading" }} />;
 
-  const { name, quantity, unit, setQuantity, steppers } = recordPanel;
+  const { data, setQuantity, steppers } = recordPanel;
+  const { name, quantity, unit } = data;
 
-  const quantityText = unit ? "Ilość: " + quantity + unit : null;
+  const quantityText =
+    unit && unit ? <Text>Ilość: {quantity + unit}</Text> : null;
 
   return (
     <>
@@ -27,7 +29,7 @@ export default function Product() {
             </Text>
           ))}
         </View>
-        {quantityText ? <Text>{quantityText}</Text> : null}
+        {quantityText}
         <View>
           {steppers.positive.map(({ click, step }, i) => (
             <Text key={i} onPress={click}>
