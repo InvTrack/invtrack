@@ -5,18 +5,26 @@ import { Text, View } from "../components/Themed";
 import { useCreateInventory } from "../db";
 
 export default function CreateInventory() {
-  const [name, setName] = useState("");
+  const [data, setData] = useState({
+    name: "new inventory",
+    date: "2023-02-06T00:00:00+00:00",
+  });
   const { mutate, status } = useCreateInventory();
   return (
     <View>
       <Text>Nazwa:</Text>
       <TextInput
         style={{ borderColor: "#000000" }}
-        onChangeText={(text) => setName(text)}
-        value={name}
+        onChangeText={(text) => setData((d) => ({ ...d, name: text }))}
+        value={data.name}
+      />
+      <TextInput
+        style={{ borderColor: "#000000" }}
+        onChangeText={(text) => setData((d) => ({ ...d, date: text }))}
+        value={data.date}
       />
       <Button
-        onPress={() => mutate({ name })}
+        onPress={() => mutate(data)}
         title="Stwórz inwentaryzację"
       ></Button>
       <Text>Status: {status}</Text>
