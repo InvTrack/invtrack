@@ -51,6 +51,7 @@ export default function App() {
           <Stack>
             <Stack.Screen name="login" />
             <Stack.Screen name="account" options={{ title: "Dane konta" }} />
+            <Stack.Screen name="new" />
           </Stack>
         </ThemeProvider>
       </QueryClientProvider>
