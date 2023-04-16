@@ -12,18 +12,21 @@ export interface Database {
       inventory: {
         Row: {
           created_at: string;
+          date: string;
           id: number;
           name: string;
           user_id: string;
         };
         Insert: {
           created_at?: string;
+          date?: string;
           id?: number;
           name?: string;
           user_id: string;
         };
         Update: {
           created_at?: string;
+          date?: string;
           id?: number;
           name?: string;
           user_id?: string;
@@ -55,7 +58,7 @@ export interface Database {
           user_id?: string;
         };
       };
-      record: {
+      product_record: {
         Row: {
           created_at: string;
           id: number;
@@ -115,13 +118,59 @@ export interface Database {
       };
       test_view: {
         Row: {
+          created_at: string | null;
+          id: number | null;
           name: string | null;
-          quantity: number | null;
+          steps: number[] | null;
+          unit: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: number | null;
+          name?: string | null;
+          steps?: number[] | null;
+          unit?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: number | null;
+          name?: string | null;
+          steps?: number[] | null;
+          unit?: string | null;
+          user_id?: string | null;
         };
       };
     };
     Functions: {
-      [_ in never]: never;
+      add_next_product_record: {
+        Args: {
+          product_record_id: number;
+          new_inventory_id: number;
+        };
+        Returns: {
+          created_at: string;
+          id: number;
+          inventory_id: number;
+          product_id: number;
+          quantity: number;
+          user_id: string;
+        };
+      };
+      handle_new_inventory_func: {
+        Args: {
+          new_date: string;
+          inventory_id: number;
+        };
+        Returns: {
+          created_at: string;
+          date: string;
+          id: number;
+          name: string;
+          user_id: string;
+        };
+      };
     };
     Enums: {
       [_ in never]: never;

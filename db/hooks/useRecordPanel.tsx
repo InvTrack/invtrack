@@ -1,73 +1,49 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useCallback } from "react";
 import { useGetRecord } from ".";
-import { supabase } from "../supabase";
-import { Record, RecordTable } from "../types";
+import { useUpdateRecord } from "./useUpdateRecord";
 
 /**
  * Hook do obsługi "karty produktu".
  *
- * Po załadowaniu wystawia `quantity`, oraz `setQuantity` do ręcznego ustawiania ilości danego produktu,
- * oraz `negativeSteppers` i `positiveSteppers` do "skakania" o 5, 10, itd.
+ * Wystawia `quantity`, oraz `setQuantity` do ręcznego ustawiania ilości danego produktu.
+ *
+ * Wystawia `negativeSteppers` i `positiveSteppers` do "skakania" o 5, 10, itd.
+ *
+ * Wystawia też `data` informacje potrzebne do przedstawienia produktu w UI.
  *
  */
 export const useRecordPanel = (recordId: string) => {
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation(
-    async (quantity: number) => {
-      const { data, error } = await supabase
-        .from<"record", RecordTable>("record")
-        .update({ quantity })
-        .eq("id", recordId)
-        .select()
-        .single();
-      if (error) throw new Error(error.message);
-      return data;
-    },
-    {
-      onMutate: async (quantity: number) => {
-        await queryClient.cancelQueries(["record", recordId]);
-        const previousRecord = queryClient.getQueryData<Record>([
-          "record",
-          recordId,
-        ]);
-        if (previousRecord?.quantity) {
-          queryClient.setQueryData(["record", recordId], {
-            ...previousRecord,
-            quantity: quantity,
-          });
-        }
-        return { previousRecord };
-      },
-      onSettled: () => queryClient.invalidateQueries(["record", recordId]),
-    }
+  const { mutate } = useUpdateRecord(recordId);
+  const recordResult = useGetRecord(recordId);
+  const { data, isSuccess } = recordResult;
+
+  const stepperFunction = useCallback(
+    (step: number) =>
+      ({
+        click: () => mutate({ quantity: (data?.quantity as number) + step }),
+        step,
+      } as const),
+    [mutate, data?.quantity]
   );
 
-  const { data, isSuccess } = useGetRecord(recordId);
+  const setQuantity = useCallback(
+    (quantity: number) => mutate({ quantity }),
+    [mutate]
+  );
 
-  if (!isSuccess || !data.steps || !data.quantity)
-    return { isLoading: true } as { isLoading: true };
+  if (!isSuccess || !data || !data.steps)
+    return {
+      steppers: { negative: [], positive: [] },
+      setQuantity,
+      ...recordResult,
+    } as const;
 
   return {
     steppers: {
-      negative: data.steps.map(
-        (step) =>
-          ({
-            click: () => mutate((data.quantity as number) - step),
-            step,
-          } as const)
-      ),
-      positive: data.steps.map(
-        (step) =>
-          ({
-            click: () => mutate((data.quantity as number) + step),
-            step,
-          } as const)
-      ),
+      negative: data.steps.map((step) => stepperFunction(-step)),
+      positive: data.steps.map((step) => stepperFunction(step)),
     },
-    setQuantity: mutate,
-    quantity: data.quantity,
-    name: data.name,
-    unit: data.unit,
-    isLoading: false,
+    setQuantity,
+    ...recordResult,
   } as const;
 };
