@@ -9,8 +9,26 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      company: {
+        Row: {
+          created_at: string | null;
+          id: number;
+          name: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: number;
+          name?: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: number;
+          name?: string;
+        };
+      };
       inventory: {
         Row: {
+          company_id: number | null;
           created_at: string;
           date: string;
           id: number;
@@ -18,6 +36,7 @@ export interface Database {
           user_id: string;
         };
         Insert: {
+          company_id?: number | null;
           created_at?: string;
           date?: string;
           id?: number;
@@ -25,6 +44,7 @@ export interface Database {
           user_id: string;
         };
         Update: {
+          company_id?: number | null;
           created_at?: string;
           date?: string;
           id?: number;
@@ -34,6 +54,7 @@ export interface Database {
       };
       product: {
         Row: {
+          company_id: number | null;
           created_at: string;
           id: number;
           name: string;
@@ -42,6 +63,7 @@ export interface Database {
           user_id: string;
         };
         Insert: {
+          company_id?: number | null;
           created_at?: string;
           id?: number;
           name?: string;
@@ -50,6 +72,7 @@ export interface Database {
           user_id: string;
         };
         Update: {
+          company_id?: number | null;
           created_at?: string;
           id?: number;
           name?: string;
@@ -89,19 +112,42 @@ export interface Database {
           company_name: string;
           id: string;
           updated_at: string | null;
-          username: string;
+          username: string | null;
         };
         Insert: {
           company_name?: string;
           id: string;
           updated_at?: string | null;
-          username: string;
+          username?: string | null;
         };
         Update: {
           company_name?: string;
           id?: string;
           updated_at?: string | null;
-          username?: string;
+          username?: string | null;
+        };
+      };
+      worker: {
+        Row: {
+          company_id: number | null;
+          created_at: string;
+          id: string;
+          is_admin: boolean;
+          name: string | null;
+        };
+        Insert: {
+          company_id?: number | null;
+          created_at?: string;
+          id: string;
+          is_admin?: boolean;
+          name?: string | null;
+        };
+        Update: {
+          company_id?: number | null;
+          created_at?: string;
+          id?: string;
+          is_admin?: boolean;
+          name?: string | null;
         };
       };
     };
@@ -164,6 +210,7 @@ export interface Database {
           inventory_id: number;
         };
         Returns: {
+          company_id: number | null;
           created_at: string;
           date: string;
           id: number;
