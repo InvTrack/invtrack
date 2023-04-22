@@ -5,7 +5,13 @@ import { useFonts } from "expo-font";
 import { useColorScheme } from "react-native";
 import { SessionContext, useSession } from "../db";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { SplashScreen, Stack, useRouter, useSegments } from "expo-router";
+import {
+  SplashScreen,
+  Stack,
+  useRootNavigationState,
+  useRouter,
+  useSegments,
+} from "expo-router";
 import { mainTheme } from "../theme";
 
 // Catch any errors thrown by the Layout component.
@@ -33,8 +39,13 @@ export default function App() {
 
   const segments = useSegments();
   const router = useRouter();
+  const navigationState = useRootNavigationState();
 
   React.useEffect(() => {
+    if (!navigationState?.key) {
+      // Temporary fix for router not being ready.
+      return;
+    }
     const onLoginPage = segments[0] === "start";
     const loggedIn = sessionState.loggedIn;
     if (!sessionState.loading && !loggedIn && !onLoginPage)
