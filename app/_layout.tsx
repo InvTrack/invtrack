@@ -47,19 +47,26 @@ export default function App() {
       return;
     }
 
-    const onLoginPage = segments[0] === "(start)";
+    const onLoginPage = segments[0] === "(start)/login";
     const loggedIn = sessionState.loggedIn;
 
-    if (!sessionState.loading && !loggedIn && !onLoginPage) {
-      router.replace("/(start)");
+    if (!loggedIn && !onLoginPage) {
+      router.replace("(start)/start");
     }
 
     if (loggedIn && onLoginPage) {
       router.replace("/");
     }
-  }, [sessionState.loading, sessionState.loggedIn, segments[0]]);
+  }, [
+    sessionState.loading,
+    sessionState.loggedIn,
+    segments[0],
+    navigationState?.key,
+  ]);
 
-  if (!fontsLoaded || sessionState.loading) return <SplashScreen />;
+  if (!fontsLoaded || sessionState.loading) {
+    return <SplashScreen />;
+  }
 
   return (
     <SessionContext.Provider value={sessionState}>
@@ -67,7 +74,7 @@ export default function App() {
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
             <Stack.Screen
-              name="start"
+              name="(start)/start"
               options={{
                 headerShown: false,
               }}
