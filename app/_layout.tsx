@@ -46,11 +46,17 @@ export default function App() {
       // Temporary fix for router not being ready.
       return;
     }
-    const onLoginPage = segments[0] === "start";
+
+    const onLoginPage = segments[0] === "(start)";
     const loggedIn = sessionState.loggedIn;
-    if (!sessionState.loading && !loggedIn && !onLoginPage)
-      router.replace("/start");
-    if (loggedIn && onLoginPage) router.replace("/");
+
+    if (!sessionState.loading && !loggedIn && !onLoginPage) {
+      router.replace("/(start)");
+    }
+
+    if (loggedIn && onLoginPage) {
+      router.replace("/");
+    }
   }, [sessionState.loading, sessionState.loggedIn, segments[0]]);
 
   if (!fontsLoaded || sessionState.loading) return <SplashScreen />;
