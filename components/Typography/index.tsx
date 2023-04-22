@@ -18,6 +18,8 @@ export type TypographyProps = {
   variant?: keyof MainTheme["text"];
   numberOfLines?: number;
   align?: "left" | "center" | "right" | "auto" | "justify";
+  underline?: boolean;
+  opacity?: boolean;
 };
 // Consider adding variants to a StyleSheets, then using them as style[variant]
 
@@ -29,6 +31,8 @@ export const Typography = ({
   variant = "l",
   numberOfLines,
   align = "left",
+  underline = false,
+  opacity = false,
 }: TypographyProps) => {
   const theme = useTheme();
   const styles = useStyles();
@@ -38,9 +42,9 @@ export const Typography = ({
       style={[
         color && { color: theme.colors[color] },
         styles[variant],
-        {
-          textAlign: align,
-        },
+        styles[`align${align.toUpperCase()}`],
+        underline && styles.underline,
+        opacity && styles.opacity,
         style,
       ]}
       numberOfLines={numberOfLines}
@@ -63,5 +67,26 @@ const useStyles = createStyles((theme) =>
     lBold: { ...theme.text.lBold },
     xl: { ...theme.text.xl },
     xlBold: { ...theme.text.xlBold },
+    alignLeft: {
+      textAlign: "left",
+    },
+    alignCenter: {
+      textAlign: "center",
+    },
+    alignRight: {
+      textAlign: "right",
+    },
+    alignAuto: {
+      textAlign: "auto",
+    },
+    alignJustify: {
+      textAlign: "justify",
+    },
+    underline: {
+      textDecorationLine: "underline",
+    },
+    opacity: {
+      opacity: theme.opacity,
+    },
   })
 );
