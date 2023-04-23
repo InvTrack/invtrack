@@ -17,20 +17,21 @@ export const useUpdateRecord = (recordId: string) => {
     },
     {
       onMutate: async (record: Partial<Record>) => {
-        await queryClient.cancelQueries(["record", recordId]);
+        await queryClient.cancelQueries(["product_record", recordId]);
         const previousRecord = queryClient.getQueryData<Record>([
-          "record",
+          "product_record",
           recordId,
         ]);
         if (previousRecord?.quantity) {
-          queryClient.setQueryData(["record", recordId], {
+          queryClient.setQueryData(["product_record", recordId], {
             ...previousRecord,
             ...record,
           });
         }
         return { previousRecord };
       },
-      onSettled: () => queryClient.invalidateQueries(["record", recordId]),
+      onSettled: () =>
+        queryClient.invalidateQueries(["product_record", recordId]),
     }
   );
 };

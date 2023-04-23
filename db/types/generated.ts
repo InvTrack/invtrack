@@ -9,53 +9,70 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      company: {
+        Row: {
+          created_at: string | null;
+          id: number;
+          name: string;
+        };
+        Insert: {
+          created_at?: string | null;
+          id?: number;
+          name?: string;
+        };
+        Update: {
+          created_at?: string | null;
+          id?: number;
+          name?: string;
+        };
+      };
       inventory: {
         Row: {
+          company_id: number | null;
           created_at: string;
           date: string;
           id: number;
           name: string;
-          user_id: string;
         };
         Insert: {
+          company_id?: number | null;
           created_at?: string;
           date?: string;
           id?: number;
           name?: string;
-          user_id: string;
         };
         Update: {
+          company_id?: number | null;
           created_at?: string;
           date?: string;
           id?: number;
           name?: string;
-          user_id?: string;
         };
       };
       product: {
         Row: {
+          company_id: number | null;
           created_at: string;
           id: number;
           name: string;
           steps: number[];
           unit: string;
-          user_id: string;
         };
         Insert: {
+          company_id?: number | null;
           created_at?: string;
           id?: number;
           name?: string;
           steps?: number[];
           unit?: string;
-          user_id: string;
         };
         Update: {
+          company_id?: number | null;
           created_at?: string;
           id?: number;
           name?: string;
           steps?: number[];
           unit?: string;
-          user_id?: string;
         };
       };
       product_record: {
@@ -65,7 +82,6 @@ export interface Database {
           inventory_id: number;
           product_id: number;
           quantity: number;
-          user_id: string;
         };
         Insert: {
           created_at?: string;
@@ -73,7 +89,6 @@ export interface Database {
           inventory_id: number;
           product_id: number;
           quantity: number;
-          user_id: string;
         };
         Update: {
           created_at?: string;
@@ -81,31 +96,44 @@ export interface Database {
           inventory_id?: number;
           product_id?: number;
           quantity?: number;
-          user_id?: string;
         };
       };
-      user: {
+      worker: {
         Row: {
-          company_name: string;
+          company_id: number | null;
+          created_at: string;
           id: string;
-          updated_at: string | null;
-          username: string;
+          is_admin: boolean;
+          name: string | null;
         };
         Insert: {
-          company_name?: string;
+          company_id?: number | null;
+          created_at?: string;
           id: string;
-          updated_at?: string | null;
-          username: string;
+          is_admin?: boolean;
+          name?: string | null;
         };
         Update: {
-          company_name?: string;
+          company_id?: number | null;
+          created_at?: string;
           id?: string;
-          updated_at?: string | null;
-          username?: string;
+          is_admin?: boolean;
+          name?: string | null;
         };
       };
     };
     Views: {
+      current_company_id: {
+        Row: {
+          id: number | null;
+        };
+        Insert: {
+          id?: number | null;
+        };
+        Update: {
+          id?: number | null;
+        };
+      };
       record_view: {
         Row: {
           id: number | null;
@@ -114,32 +142,6 @@ export interface Database {
           quantity: number | null;
           steps: number[] | null;
           unit: string | null;
-        };
-      };
-      test_view: {
-        Row: {
-          created_at: string | null;
-          id: number | null;
-          name: string | null;
-          steps: number[] | null;
-          unit: string | null;
-          user_id: string | null;
-        };
-        Insert: {
-          created_at?: string | null;
-          id?: number | null;
-          name?: string | null;
-          steps?: number[] | null;
-          unit?: string | null;
-          user_id?: string | null;
-        };
-        Update: {
-          created_at?: string | null;
-          id?: number | null;
-          name?: string | null;
-          steps?: number[] | null;
-          unit?: string | null;
-          user_id?: string | null;
         };
       };
     };
@@ -155,7 +157,6 @@ export interface Database {
           inventory_id: number;
           product_id: number;
           quantity: number;
-          user_id: string;
         };
       };
       handle_new_inventory_func: {
@@ -164,11 +165,11 @@ export interface Database {
           inventory_id: number;
         };
         Returns: {
+          company_id: number | null;
           created_at: string;
           date: string;
           id: number;
           name: string;
-          user_id: string;
         };
       };
     };
