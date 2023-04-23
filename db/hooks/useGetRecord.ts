@@ -3,7 +3,7 @@ import { supabase } from "../supabase";
 import { RecordViewTable } from "../types";
 
 export const useGetRecord = (recordId: string) =>
-  useQuery(["record_view", recordId], async () => {
+  useQuery(["product_record", recordId], async () => {
     const { data, error } = await supabase
       .from<"record_view", RecordViewTable>("record_view")
       .select()

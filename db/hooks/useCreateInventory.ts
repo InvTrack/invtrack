@@ -5,14 +5,13 @@ import { Inventory, InventoryTable } from "../types";
 import { SessionContext } from "./sessionContext";
 
 export const useCreateInventory = () => {
-  const { session } = useContext(SessionContext);
-  const user_id = session?.user.id || "";
+  const { companyId } = useContext(SessionContext);
 
   return useMutation(
-    async (inventory: Omit<Inventory, "created_at" | "user_id" | "id">) => {
+    async (inventory: Omit<Inventory, "created_at" | "company_id" | "id">) => {
       const { data, error } = await supabase
         .from<"inventory", InventoryTable>("inventory")
-        .insert({ ...inventory, user_id });
+        .insert({ ...inventory, company_id: companyId });
       if (error) throw new Error(error.message);
       return data;
     }
