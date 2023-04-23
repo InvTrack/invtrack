@@ -46,21 +46,39 @@ export default function App() {
       // Temporary fix for router not being ready.
       return;
     }
-    const onLoginPage = segments[0] === "login";
-    const loggedIn = sessionState.loggedIn;
-    if (!sessionState.loading && !loggedIn && !onLoginPage)
-      router.replace("/login");
-    if (loggedIn && onLoginPage) router.replace("/");
-  }, [sessionState.loading, sessionState.loggedIn, segments[0]]);
 
-  if (!fontsLoaded || sessionState.loading) return <SplashScreen />;
+    const onLoginPage = segments[0] === "(start)/login";
+    const loggedIn = sessionState.loggedIn;
+
+    if (!loggedIn && !onLoginPage) {
+      router.replace("(start)/start");
+    }
+
+    if (loggedIn && onLoginPage) {
+      router.replace("/");
+    }
+  }, [
+    sessionState.loading,
+    sessionState.loggedIn,
+    segments[0],
+    navigationState?.key,
+  ]);
+
+  if (!fontsLoaded || sessionState.loading) {
+    return <SplashScreen />;
+  }
 
   return (
     <SessionContext.Provider value={sessionState}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
-            <Stack.Screen name="login" />
+            <Stack.Screen
+              name="(start)/start"
+              options={{
+                headerShown: false,
+              }}
+            />
             <Stack.Screen name="account" options={{ title: "Dane konta" }} />
             <Stack.Screen name="new" />
           </Stack>
