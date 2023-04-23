@@ -1,8 +1,8 @@
 import { Text } from "react-native-elements";
 import React from "react";
-import { View } from "../../components/Themed";
 import { Stack, usePathname } from "expo-router";
-import { useRecordPanel } from "../../db";
+import { useRecordPanel } from "../../../db";
+import { View } from "react-native";
 
 export default function Product() {
   const pathName = usePathname();
