@@ -29,7 +29,7 @@ export const SessionContext = createContext<SessionContextType>({
 export const useSession = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [companyId, setCompanyId] = useState(null);
+  const [companyId, setCompanyId] = useState<null | number>(null);
   useEffect(() => {
     // TODO: remove duplicated code
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -67,7 +67,7 @@ export const useSession = () => {
     setLoading(false);
   }, []);
 
-  if (session && session.user && companyId) {
+  if (session && session.user) {
     return {
       session,
       loggedIn: true,

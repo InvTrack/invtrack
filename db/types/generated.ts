@@ -33,7 +33,6 @@ export interface Database {
           date: string;
           id: number;
           name: string;
-          user_id: string;
         };
         Insert: {
           company_id?: number | null;
@@ -41,7 +40,6 @@ export interface Database {
           date?: string;
           id?: number;
           name?: string;
-          user_id: string;
         };
         Update: {
           company_id?: number | null;
@@ -49,7 +47,6 @@ export interface Database {
           date?: string;
           id?: number;
           name?: string;
-          user_id?: string;
         };
       };
       product: {
@@ -60,7 +57,6 @@ export interface Database {
           name: string;
           steps: number[];
           unit: string;
-          user_id: string;
         };
         Insert: {
           company_id?: number | null;
@@ -69,7 +65,6 @@ export interface Database {
           name?: string;
           steps?: number[];
           unit?: string;
-          user_id: string;
         };
         Update: {
           company_id?: number | null;
@@ -78,7 +73,6 @@ export interface Database {
           name?: string;
           steps?: number[];
           unit?: string;
-          user_id?: string;
         };
       };
       product_record: {
@@ -88,7 +82,6 @@ export interface Database {
           inventory_id: number;
           product_id: number;
           quantity: number;
-          user_id: string;
         };
         Insert: {
           created_at?: string;
@@ -96,7 +89,6 @@ export interface Database {
           inventory_id: number;
           product_id: number;
           quantity: number;
-          user_id: string;
         };
         Update: {
           created_at?: string;
@@ -104,27 +96,6 @@ export interface Database {
           inventory_id?: number;
           product_id?: number;
           quantity?: number;
-          user_id?: string;
-        };
-      };
-      user: {
-        Row: {
-          company_name: string;
-          id: string;
-          updated_at: string | null;
-          username: string | null;
-        };
-        Insert: {
-          company_name?: string;
-          id: string;
-          updated_at?: string | null;
-          username?: string | null;
-        };
-        Update: {
-          company_name?: string;
-          id?: string;
-          updated_at?: string | null;
-          username?: string | null;
         };
       };
       worker: {
@@ -152,6 +123,17 @@ export interface Database {
       };
     };
     Views: {
+      current_company_id: {
+        Row: {
+          id: number | null;
+        };
+        Insert: {
+          id?: number | null;
+        };
+        Update: {
+          id?: number | null;
+        };
+      };
       record_view: {
         Row: {
           id: number | null;
@@ -160,32 +142,6 @@ export interface Database {
           quantity: number | null;
           steps: number[] | null;
           unit: string | null;
-        };
-      };
-      test_view: {
-        Row: {
-          created_at: string | null;
-          id: number | null;
-          name: string | null;
-          steps: number[] | null;
-          unit: string | null;
-          user_id: string | null;
-        };
-        Insert: {
-          created_at?: string | null;
-          id?: number | null;
-          name?: string | null;
-          steps?: number[] | null;
-          unit?: string | null;
-          user_id?: string | null;
-        };
-        Update: {
-          created_at?: string | null;
-          id?: number | null;
-          name?: string | null;
-          steps?: number[] | null;
-          unit?: string | null;
-          user_id?: string | null;
         };
       };
     };
@@ -201,7 +157,6 @@ export interface Database {
           inventory_id: number;
           product_id: number;
           quantity: number;
-          user_id: string;
         };
       };
       handle_new_inventory_func: {
@@ -215,7 +170,6 @@ export interface Database {
           date: string;
           id: number;
           name: string;
-          user_id: string;
         };
       };
     };

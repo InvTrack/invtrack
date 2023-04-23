@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import { supabase } from "../supabase";
-import { CompanyTable, Inventory, InventoryTable } from "../types";
+import { Inventory, InventoryTable } from "../types";
 import { SessionContext } from "./sessionContext";
 
-const listInventories = async (userId: string, companyId: number) => {
+const listInventories = async () => {
   const res = await supabase
     .from<"inventory", InventoryTable>("inventory")
     .select();
@@ -15,10 +15,10 @@ const listInventories = async (userId: string, companyId: number) => {
 };
 
 export const useListInventories = () => {
-  const { session, companyId } = useContext(SessionContext);
+  const { session } = useContext(SessionContext);
   const query = useQuery(
     ["inventories", session?.user.id],
-    () => session && listInventories(session?.user.id, companyId)
+    () => session && listInventories()
   );
   return { ...query, data: query.data?.data };
 };
