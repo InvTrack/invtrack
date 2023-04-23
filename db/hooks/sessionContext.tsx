@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect, useCallback } from "react";
+import { useState, createContext, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
 
