@@ -15,6 +15,7 @@ export const useUpdateRecord = (recordId: string) => {
       if (error) throw new Error(error.message);
       return data;
     },
+    // TODO: fix optimistic update
     {
       onMutate: async (record: Partial<Record>) => {
         await queryClient.cancelQueries(["record", recordId]);
