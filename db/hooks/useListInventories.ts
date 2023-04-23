@@ -1,23 +1,16 @@
 import { useContext } from "react";
 import { useQuery } from "react-query";
 import { supabase } from "../supabase";
-import { Inventory, UserTable } from "../types";
+import { CompanyTable, Inventory, InventoryTable } from "../types";
 import { SessionContext } from "./sessionContext";
 
 const listInventories = async (userId: string, companyId: number) => {
   const res = await supabase
-    .from<"user", UserTable>("user")
-    .select(`*, inventory(*)`)
-    .eq("id", userId)
-    .single();
-  // const res = await supabase
-  //   .from<"user", UserTable>("user")
-  //   .select(`*, inventory(*)`)
-  //   .eq("id", userId)
-  //   .single();
+    .from<"inventory", InventoryTable>("inventory")
+    .select();
   return {
     ...res,
-    data: res.data?.inventory as Inventory[],
+    data: res.data as Inventory[],
   };
 };
 
