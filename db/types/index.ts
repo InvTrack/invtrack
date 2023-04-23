@@ -29,3 +29,17 @@ export type RecordViewTable = Database["public"]["Views"]["record_view"];
  */
 export type Product = ProductTable["Row"];
 export type ProductTable = Database["public"]["Tables"]["product"];
+
+/**
+ * Pracownik. Zwykły, albo z rolą "administrator". Szef też jest pracownikiem i zazwyczaj będzie miał rolę administrator.
+ * Administrator może na przykład dodawać nowych pracowników
+ */
+export type Worker = WorkerTable["Row"];
+export type WorkerTable = Database["public"]["Tables"]["worker"];
+
+/**
+ * Przedsiębiorstwo / firma. To do niej przypisane są wszystkie inne zasoby i to wg przyależności do niej ustalany jest dostęp do zasobów.
+ * Np. pracownik może edytować inwentaryzacje tylko w obrębie firmy do której należy.
+ */
+export type Company = CompanyTable["Row"];
+export type CompanyTable = Database["public"]["Tables"]["company"];

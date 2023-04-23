@@ -47,7 +47,7 @@ export default function App() {
       return;
     }
 
-    const onLoginPage = segments[0] === "(start)/login";
+    const onLoginPage = segments[0] === "(start)";
     const loggedIn = sessionState.loggedIn;
 
     if (!loggedIn && !onLoginPage) {
