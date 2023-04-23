@@ -42,7 +42,6 @@ export const useSession = () => {
           .single()
           .then((res) => {
             if (res && res.data) {
-              console.log(res.data);
               setCompanyId(res.data["company_id"]);
             }
           });
