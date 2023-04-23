@@ -1,36 +1,86 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useCallback } from "react";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
 
+type SessionContextLoggedInType = {
+  session: Session;
+  loggedIn: true;
+  companyId: number;
+};
+type SessionContextNotLoggedInType = {
+  session: null;
+  loggedIn: false;
+  companyId: null;
+};
 // TODO try to move to react-query
 /**
  * Session Context for user authentication, login etc.
  */
 type SessionContextType =
-  | { session: Session; loggedIn: true }
-  | { session: null; loggedIn: false };
+  | SessionContextLoggedInType
+  | SessionContextNotLoggedInType;
 
 export const SessionContext = createContext<SessionContextType>({
   loggedIn: false,
   session: null,
+  companyId: null,
 });
 
 export const useSession = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [companyId, setCompanyId] = useState(null);
   useEffect(() => {
+    // TODO: remove duplicated code
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      if (session) {
+        return supabase
+          .from("worker")
+          .select("id, company_id")
+          .eq("id", session.user.id)
+          .single()
+          .then((res) => {
+            if (res && res.data) {
+              console.log(res.data);
+              setCompanyId(res.data["company_id"]);
+            }
+          });
+      }
+      return null;
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      if (session) {
+        return supabase
+          .from("worker")
+          .select("id, company_id")
+          .eq("id", session.user.id)
+          .single()
+          .then((res) => {
+            if (res && res.data) {
+              setCompanyId(res.data["company_id"]);
+            }
+          });
+      }
     });
     setLoading(false);
   }, []);
 
-  if (session && session.user)
-    return { session, loggedIn: true, loading } as const;
-  return { session: null, loggedIn: false, loading } as const;
+  if (session && session.user && companyId) {
+    return {
+      session,
+      loggedIn: true,
+      loading,
+      companyId,
+    } as SessionContextLoggedInType & { loading: boolean };
+  }
+
+  return {
+    session: null,
+    loggedIn: false,
+    loading,
+    companyId,
+  } as SessionContextNotLoggedInType & { loading: boolean };
 };
