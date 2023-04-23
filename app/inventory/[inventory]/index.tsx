@@ -1,8 +1,8 @@
 import { Text } from "react-native-elements";
 import React from "react";
-import { View } from "../../components/Themed";
+import { View } from "../../../components/Themed";
 import { Link, Stack, usePathname } from "expo-router";
-import { useListRecords } from "../../db";
+import { useListRecords } from "../../../db";
 
 export default function Inventory() {
   const pathName = usePathname();
