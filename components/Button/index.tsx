@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import debounce from "lodash/debounce";
 import { createStyles } from "../../theme/useStyles";
-import { Typography, TypographyProps } from "../Typography";
+import { TypographyProps } from "../Typography";
 
-type onPress = (event: GestureResponderEvent) => void;
+export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
-  onPress?: onPress;
+  onPress?: ButtonOnPress;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TypographyProps["style"];
   disabled?: boolean;
@@ -23,9 +23,8 @@ type ButtonProps = {
 };
 
 const BORDER_WIDTH = 4;
-const debouncedOnPress = (onPress: onPress) => debounce(onPress, 50);
+const debouncedOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
 
-// TODO switch to our own Text component
 export const Button = ({
   onPress,
   containerStyle,
