@@ -4,7 +4,7 @@ import { useListRecords } from "../../../db";
 import { View } from "react-native";
 import { Typography } from "../../../components/Typography";
 
-const getInventoryId = (pathName: string) => pathName.split("/")[1];
+const getInventoryId = (pathName: string) => pathName.split("/")[2];
 
 export default function InventoryIdIndex() {
   const pathName = usePathname();
@@ -30,7 +30,7 @@ export default function InventoryIdIndex() {
                 params: { inventory: inventoryId, product: id },
               }}
             >
-              <Typography>{name + quantityPostfix + "dupa"}</Typography>
+              <Typography>{name + quantityPostfix}</Typography>
             </Link>
           );
         })}
