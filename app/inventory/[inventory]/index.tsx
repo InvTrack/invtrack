@@ -4,12 +4,16 @@ import { useListRecords } from "../../../db";
 import { View } from "react-native";
 import { Typography } from "../../../components/Typography";
 
-export default function Inventory() {
+const getInventoryId = (pathName: string) => pathName.split("/")[1];
+
+export default function InventoryIdIndex() {
   const pathName = usePathname();
-  const inventoryId = pathName.split("/")[1];
+  const inventoryId = getInventoryId(pathName);
   const { data, isSuccess } = useListRecords(inventoryId);
+
   if (!isSuccess || !data)
     return <Stack.Screen options={{ title: "Loading inventory" }} />;
+
   return (
     <>
       <Stack.Screen options={{ title: "Nazwa inwentaryzacji" }} />
@@ -19,8 +23,14 @@ export default function Inventory() {
           const quantityPostfix =
             (unit ? (quantity ? " - " + quantity + unit : null) : null) || "";
           return (
-            <Link key={id} href={`/inventory/${inventoryId}/${id}`}>
-              <Typography>{name + quantityPostfix}</Typography>
+            <Link
+              key={id}
+              href={{
+                pathname: "/inventory/[inventory]/[product]",
+                params: { inventory: inventoryId, product: id },
+              }}
+            >
+              <Typography>{name + quantityPostfix + "dupa"}</Typography>
             </Link>
           );
         })}

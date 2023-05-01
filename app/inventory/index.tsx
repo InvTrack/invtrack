@@ -17,7 +17,13 @@ export default function Calendar() {
       <View style={styles.screen}>
         <Typography>Lista inwentaryzacji</Typography>
         {inventories.map(({ id, name }) => (
-          <Link href={"./" + id} key={id}>
+          <Link
+            href={{
+              pathname: `/inventory/[inventory]/`,
+              params: { inventory: id },
+            }}
+            key={id}
+          >
             <Typography>{name}</Typography>
           </Link>
         ))}
