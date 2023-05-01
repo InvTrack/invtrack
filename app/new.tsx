@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { TextInput } from "react-native";
-import { Button } from "react-native-elements";
-import { Text, View } from "../components/Themed";
-import { useCreateInventory } from "../db";
+import { TextInput, View } from "react-native";
 
+import { useCreateInventory } from "../db";
+import { Typography } from "../components/Typography";
+import { Button } from "../components/Button";
 export default function CreateInventory() {
   const [data, setData] = useState({
     name: "new inventory",
@@ -12,7 +12,7 @@ export default function CreateInventory() {
   const { mutate, status } = useCreateInventory();
   return (
     <View>
-      <Text>Nazwa:</Text>
+      <Typography>Nazwa:</Typography>
       <TextInput
         style={{ borderColor: "#000000" }}
         onChangeText={(text) => setData((d) => ({ ...d, name: text }))}
@@ -23,11 +23,9 @@ export default function CreateInventory() {
         onChangeText={(text) => setData((d) => ({ ...d, date: text }))}
         value={data.date}
       />
-      <Button
-        onPress={() => mutate(data)}
-        title="Stwórz inwentaryzację"
-      ></Button>
-      <Text>Status: {status}</Text>
+      <Button type="primary" size="xl" onPress={() => mutate(data)}>
+        <Typography>Stwórz inwentaryzację</Typography>
+      </Button>
     </View>
   );
 }
