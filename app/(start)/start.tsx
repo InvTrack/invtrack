@@ -4,10 +4,10 @@ import { Button } from "../../components/Button";
 import { Link } from "expo-router";
 import { Card } from "../../components/Card";
 import { createStyles } from "../../theme/useStyles";
+import { Typography } from "../../components/Typography";
 
-export default function Login() {
+export default function Start() {
   const styles = useStyles();
-  // TODO try to move to react-query
 
   return (
     <View style={styles.container}>
@@ -19,20 +19,14 @@ export default function Login() {
         />
       </Card>
       <Link href="/register" asChild>
-        <Button
-          type="primary"
-          size="l"
-          label="Register"
-          containerStyle={styles.button}
-        />
+        <Button type="primary" size="l" containerStyle={styles.button}>
+          <Typography variant="l">Register</Typography>
+        </Button>
       </Link>
       <Link href="/login" asChild>
-        <Button
-          type="secondary"
-          size="l"
-          label="Login"
-          containerStyle={styles.button}
-        />
+        <Button type="secondary" size="l" containerStyle={styles.button}>
+          <Typography variant="l">Login</Typography>
+        </Button>
       </Link>
       <Link href={""}>Regulamin</Link>
     </View>
