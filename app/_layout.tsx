@@ -55,7 +55,7 @@ export default function App() {
     }
 
     if (loggedIn && onLoginPage) {
-      router.replace("/");
+      router.replace("/inventory");
     }
   }, [
     sessionState.loading,
@@ -74,7 +74,7 @@ export default function App() {
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
             <Stack.Screen
-              name="(start)/start"
+              name="start"
               options={{
                 headerShown: false,
               }}

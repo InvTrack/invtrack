@@ -1,8 +1,8 @@
-import { Text } from "react-native-elements";
 import React from "react";
 import { Link, Stack, usePathname } from "expo-router";
 import { useListRecords } from "../../../db";
 import { View } from "react-native";
+import { Typography } from "../../../components/Typography";
 
 export default function Inventory() {
   const pathName = usePathname();
@@ -14,13 +14,13 @@ export default function Inventory() {
     <>
       <Stack.Screen options={{ title: "Nazwa inwentaryzacji" }} />
       <View>
-        <Text>Lista produktów</Text>
+        <Typography>Lista produktów</Typography>
         {data.map(({ name, quantity, unit, id }) => {
           const quantityPostfix =
             (unit ? (quantity ? " - " + quantity + unit : null) : null) || "";
           return (
-            <Link key={id} href={`${inventoryId}/${id}`}>
-              <Text>{name + quantityPostfix}</Text>
+            <Link key={id} href={`/inventory/${inventoryId}/${id}`}>
+              <Typography>{name + quantityPostfix}</Typography>
             </Link>
           );
         })}
