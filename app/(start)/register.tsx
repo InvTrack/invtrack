@@ -35,6 +35,7 @@ export default function Register() {
     });
     error && console.log(error);
   };
+
   return (
     <View style={styles.container}>
       <Typography

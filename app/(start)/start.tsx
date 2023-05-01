@@ -40,7 +40,7 @@ export default function Start() {
   const styles = useStyles();
 
   // temporary - move it to [product]
-  const workOnProduct = true;
+  const workOnProduct = false;
   if (workOnProduct) {
     return (
       <View style={styles.INVcontainer}>
