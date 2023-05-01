@@ -20,6 +20,8 @@
     "@react-navigation/native": "^6.0.2",
     "@supabase/supabase-js": "^2.8.0",
     "expo": "~48.0.4",
+    "expo-auth-session": "^4.0.3",
+    "expo-crypto": "^12.2.2",
     "expo-font": "~11.1.1",
     "expo-linking": "~4.0.1",
     "expo-router": "^1.0.0-rc5",

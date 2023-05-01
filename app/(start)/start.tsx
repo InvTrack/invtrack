@@ -4,9 +4,11 @@ import { Button } from "../../components/Button";
 import { Link } from "expo-router";
 import { Card } from "../../components/Card";
 import { createStyles } from "../../theme/useStyles";
+// import { useGoogleSignIn } from "../../db/auth/google";
 
 export default function Login() {
   const styles = useStyles();
+  // const googleSignIn = useGoogleSignIn();
   // TODO try to move to react-query
 
   return (
@@ -34,6 +36,13 @@ export default function Login() {
           containerStyle={styles.button}
         />
       </Link>
+      {/* <Button
+        type="secondary"
+        size="l"
+        label="Continue with Google"
+        containerStyle={styles.button}
+        onPress={() => googleSignIn()}
+      /> */}
       <Link href={""}>Regulamin</Link>
     </View>
   );
