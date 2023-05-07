@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
+import { useGetTokens } from "./LinkingContext";
 
 type SessionContextLoggedInType = {
   session: Session;
@@ -27,12 +28,14 @@ export const SessionContext = createContext<SessionContextType>({
 });
 
 export const useSession = () => {
+  useGetTokens();
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [companyId, setCompanyId] = useState<null | number>(null);
   useEffect(() => {
     // TODO: remove duplicated code
     supabase.auth.getSession().then(({ data: { session } }) => {
+      // console.log("get session", session);
       setSession(session);
       if (session) {
         return supabase
@@ -50,6 +53,7 @@ export const useSession = () => {
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
+      // console.log("auth changed", session);
       setSession(session);
       if (session) {
         return supabase
