@@ -8,34 +8,32 @@ import {
 } from "react-native";
 import debounce from "lodash/debounce";
 import { createStyles } from "../../theme/useStyles";
-import { Typography, TypographyProps } from "../Typography";
+import { TypographyProps } from "../Typography";
 
-type onPress = (event: GestureResponderEvent) => void;
+export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
-  onPress?: onPress;
-  label: string;
+  onPress?: ButtonOnPress;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TypographyProps["style"];
   disabled?: boolean;
   type: "primary" | "secondary";
   size: "xs" | "s" | "m" | "l" | "xl";
   shadow?: boolean;
+  children?: React.ReactNode;
 };
 
 const BORDER_WIDTH = 4;
-const debouncedOnPress = (onPress: onPress) => debounce(onPress, 50);
+const debouncedOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
 
-// TODO switch to our own Text component
 export const Button = ({
   onPress,
-  label,
   containerStyle,
-  labelStyle,
   // labelColor, TODO
   disabled = false,
   type,
   size,
   shadow = false,
+  children,
 }: ButtonProps) => {
   const styles = useStyles();
 
@@ -51,11 +49,7 @@ export const Button = ({
       ]}
       disabled={disabled}
     >
-      {!!label && (
-        <Typography style={labelStyle} variant={size} color="darkBlue">
-          {label}
-        </Typography>
-      )}
+      {children}
     </Pressable>
   );
 };
@@ -81,21 +75,26 @@ const useStyles = createStyles((theme) =>
     // SIZES
     xs: {
       height: 40,
+      width: 40,
       paddingHorizontal: 16,
     },
     s: {
       height: 48,
+      width: 48,
       paddingHorizontal: 18,
     },
     m: {
       height: 54,
+      width: 54,
       paddingHorizontal: 20,
     },
     l: {
       height: 58,
+      width: 58,
     },
     xl: {
       height: 58,
+      width: 58,
     },
   })
 );

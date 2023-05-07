@@ -1,4 +1,4 @@
-# InvTrack README
+# invtrack README
 
 ## Introduction
 
@@ -16,16 +16,20 @@ this project uwu 🥰
 
 - `useStyles` hook at the bottom of the file,
 
-- import React in every `.tsx` file,
+- import \* as React in every `.tsx` file,
 
 - where possible, use our own components instead of direct react-native imports,
 
+- for routing, always use absolute paths.
+
 ## Setup
 
-- run `npm i`
+- make sure to use the node version specified in .nvmrc,
 
-- when running on Windows, make sure to set `git config --global core.autocrlf true`
+- run `npm i`,
+
+- if running on Windows, make sure to set `git config --global core.autocrlf true`.
 
 ## Usage
 
-- run `npm start`, then choose your desired option from the CLI. Make sure your computer is connected to the same network as the device you want to run the development app on.
+- run `npm start`, then choose your desired option from the CLI. Make sure your machine is connected to the same network as the device you want to run the development app on.

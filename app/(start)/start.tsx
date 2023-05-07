@@ -5,8 +5,9 @@ import { Link } from "expo-router";
 import { Card } from "../../components/Card";
 import { createStyles } from "../../theme/useStyles";
 // import { useGoogleSignIn } from "../../db/auth/google";
+import { Typography } from "../../components/Typography";
 
-export default function Login() {
+export default function Start() {
   const styles = useStyles();
   // const googleSignIn = useGoogleSignIn();
   // TODO try to move to react-query
@@ -21,20 +22,14 @@ export default function Login() {
         />
       </Card>
       <Link href="/register" asChild>
-        <Button
-          type="primary"
-          size="l"
-          label="Register"
-          containerStyle={styles.button}
-        />
+        <Button type="primary" size="l" containerStyle={styles.button}>
+          <Typography variant="l">Register</Typography>
+        </Button>
       </Link>
       <Link href="/login" asChild>
-        <Button
-          type="secondary"
-          size="l"
-          label="Login"
-          containerStyle={styles.button}
-        />
+        <Button type="secondary" size="l" containerStyle={styles.button}>
+          <Typography variant="l">Login</Typography>
+        </Button>
       </Link>
       {/* <Button
         type="secondary"

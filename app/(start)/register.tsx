@@ -35,6 +35,7 @@ export default function Register() {
     });
     error && console.log(error);
   };
+
   return (
     <View style={styles.container}>
       <Typography
@@ -87,11 +88,12 @@ export default function Register() {
       <Button
         type="primary"
         size="xs"
-        label="Zarejestruj się"
         shadow
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
-      />
+      >
+        <Typography variant="xs">Zarejestruj się</Typography>
+      </Button>
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
           Masz już konto?{" "}
@@ -125,6 +127,6 @@ const useStyles = createStyles((theme) =>
       justifyContent: "flex-end",
       marginTop: theme.spacing * 5,
     },
-    button: { marginTop: theme.spacing * 5 },
+    button: { marginTop: theme.spacing * 5, width: "100%" },
   })
 );
