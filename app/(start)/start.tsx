@@ -4,13 +4,12 @@ import { Button } from "../../components/Button";
 import { Link } from "expo-router";
 import { Card } from "../../components/Card";
 import { createStyles } from "../../theme/useStyles";
-// import { useGoogleSignIn } from "../../db/auth/google";
 import { Typography } from "../../components/Typography";
+import { useGoogle } from "../../db/auth/useGoogle";
 
 export default function Start() {
   const styles = useStyles();
-  // const googleSignIn = useGoogleSignIn();
-  // TODO try to move to react-query
+  const googleSignIn = useGoogle();
 
   return (
     <View style={styles.container}>
@@ -31,13 +30,12 @@ export default function Start() {
           <Typography variant="l">Login</Typography>
         </Button>
       </Link>
-      {/* <Button
+      <Button
         type="secondary"
         size="l"
-        label="Continue with Google"
         containerStyle={styles.button}
         onPress={() => googleSignIn()}
-      /> */}
+      />
       <Link href={""}>Regulamin</Link>
     </View>
   );
