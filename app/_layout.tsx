@@ -55,7 +55,7 @@ export default function App() {
     }
 
     if (loggedIn && onLoginPage) {
-      router.replace("/");
+      router.replace("/inventory");
     }
   }, [
     sessionState.loading,
@@ -67,14 +67,14 @@ export default function App() {
   if (!fontsLoaded || sessionState.loading) {
     return <SplashScreen />;
   }
-
+  // this shouldnt be in the _layout file
   return (
     <SessionContext.Provider value={sessionState}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
             <Stack.Screen
-              name="(start)/start"
+              name="inventory/index"
               options={{
                 headerShown: false,
               }}

@@ -97,6 +97,7 @@ export const mainTheme = {
   spacing: 8,
   opacity: 0.6,
   borderRadius: 25,
+  borderRadiusSmall: 5,
   borderRadiusFull: 9999,
   breakpoints,
   colors: themeColors,
