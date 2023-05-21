@@ -29,7 +29,7 @@ export default function Start() {
           <Typography variant="l">Login</Typography>
         </Button>
       </Link>
-      <Link href={""}>Regulamin</Link>
+      <Link href="">Regulamin</Link>
     </View>
   );
 }

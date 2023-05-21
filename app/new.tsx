@@ -10,7 +10,7 @@ export default function CreateInventory() {
     name: "new inventory",
     date: "2023-02-06T00:00:00+00:00",
   });
-  const { mutate, status } = useCreateInventory();
+  const { mutate, status: _status } = useCreateInventory();
   return (
     <View>
       <Typography>Nazwa:</Typography>

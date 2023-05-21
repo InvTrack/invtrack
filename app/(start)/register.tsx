@@ -99,7 +99,7 @@ export default function Register() {
         <Typography variant="xs" color="darkBlue" opacity>
           Masz już konto?{" "}
         </Typography>
-        <Link href={"/register"} style={styles.link}>
+        <Link href="/register" style={styles.link}>
           Zaloguj się
         </Link>
       </Typography>

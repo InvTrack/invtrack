@@ -28,7 +28,7 @@ export default function Calendar() {
             <Typography>{name}</Typography>
           </Link>
         ))}
-        <Link href={"/new"}>
+        <Link href="/new">
           <Button type="primary" size="xl">
             <Typography>Dodaj inwentaryzację</Typography>
           </Button>

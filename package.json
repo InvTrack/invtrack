@@ -7,7 +7,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "prepare": "husky install",
-    "typecheck": "eslint . && bash -c tsc --noEmit",
+    "typecheck": "eslint . --fix && bash -c tsc --noEmit",
     "format": "prettier --write .",
     "gen-types": "supabase gen types typescript --project-id 'xysdrumggpxdpxoysaib' --schema public > db/types/generated.ts"
   },

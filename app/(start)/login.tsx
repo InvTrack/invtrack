@@ -66,14 +66,14 @@ export default function Login() {
       >
         <Typography variant="xs">Zaloguj się</Typography>
       </Button>
-      <Link href={"/login"} style={styles.link}>
+      <Link href="/login" style={styles.link}>
         Resetowanie hasła
       </Link>
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
           Nie masz konta?{" "}
         </Typography>
-        <Link href={"/register"} style={styles.link}>
+        <Link href="/register" style={styles.link}>
           Zarejestruj się
         </Link>
       </Typography>

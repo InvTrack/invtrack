@@ -1,7 +1,6 @@
 import { Stack, usePathname } from "expo-router";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { Text } from "react-native-elements";
 
 import { Button } from "../../../components/Button";
 import {
