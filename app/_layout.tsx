@@ -19,7 +19,16 @@ export { ErrorBoundary } from "expo-router";
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { refetchOnWindowFocus: false, retry: 1 },
+    mutations: {
+      cacheTime: Infinity,
+      retry: 0,
+    },
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 2,
+      cacheTime: 1000 * 10,
+      // staleTime: Infinity,
+    },
   },
 });
 
