@@ -1,14 +1,15 @@
-import { MainTheme, ThemeColors } from "../../theme";
-import { createStyles } from "../../theme/useStyles";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
   StyleProp,
+  StyleSheet,
   Text,
   TextProps,
   TextStyle,
-  StyleSheet,
 } from "react-native";
+
+import { MainTheme, ThemeColors } from "../../theme";
+import { createStyles } from "../../theme/useStyles";
 
 export type TypographyProps = {
   children: React.ReactNode;

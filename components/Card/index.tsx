@@ -1,5 +1,3 @@
-import { ThemeColors } from "../../theme";
-import { createStyles } from "../../theme/useStyles";
 import React from "react";
 import {
   StyleProp,
@@ -8,6 +6,9 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+
+import { ThemeColors } from "../../theme";
+import { createStyles } from "../../theme/useStyles";
 
 type CardPaddings = "none" | "dense" | "normal";
 

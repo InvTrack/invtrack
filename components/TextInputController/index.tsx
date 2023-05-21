@@ -1,10 +1,11 @@
-import { TextInputProps, TextInput } from "../TextInput";
 import React from "react";
 import {
   FieldValues,
   UseControllerProps,
   useController,
 } from "react-hook-form";
+
+import { TextInput, TextInputProps } from "../TextInput";
 
 // import { Typography } from "../Typography";
 

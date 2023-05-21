@@ -3,5 +3,8 @@
   "tabWidth": 2,
   "semi": true,
   "singleQuote": false,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "importOrder": ["^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

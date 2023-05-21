@@ -1,7 +1,3 @@
-import { SessionContext, useSession } from "../db";
-import { mainTheme } from "../theme";
-import { useAppState } from "../utils/useAppState";
-import { useOnlineManager } from "../utils/useOnlineManager";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@react-navigation/native";
@@ -18,6 +14,11 @@ import {
 } from "expo-router";
 import React, { useEffect } from "react";
 import { Platform, useColorScheme } from "react-native";
+
+import { SessionContext, useSession } from "../db";
+import { mainTheme } from "../theme";
+import { useAppState } from "../utils/useAppState";
+import { useOnlineManager } from "../utils/useOnlineManager";
 
 // Catch any errors thrown by the Layout component.
 export { ErrorBoundary } from "expo-router";

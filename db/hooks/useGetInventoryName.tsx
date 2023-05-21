@@ -1,8 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+
 import { supabase } from "../supabase";
 import { InventoryTable } from "../types";
 import { SessionContext } from "./sessionContext";
-import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
 
 const getInventoryName = async (inventoryId: number | undefined | null) => {
   const res = await supabase

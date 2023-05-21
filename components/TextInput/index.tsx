@@ -1,17 +1,18 @@
-import { createStyles } from "../../theme/useStyles";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
   NativeSyntheticEvent,
+  TextInput as NativeTextInput,
+  TextInputProps as NativeTextInputProps,
   StyleProp,
   StyleSheet,
-  TextInput as NativeTextInput,
   TextInputFocusEventData,
-  TextInputProps as NativeTextInputProps,
   TextStyle,
   View,
   ViewStyle,
 } from "react-native";
+
+import { createStyles } from "../../theme/useStyles";
 
 const BORDER_WIDTH = 4;
 export interface TextInputProps extends NativeTextInputProps {

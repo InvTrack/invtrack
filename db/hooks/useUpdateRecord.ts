@@ -1,6 +1,7 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { supabase } from "../supabase";
 import { Record, RecordTable } from "../types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateRecord = (recordId: string) => {
   const queryClient = useQueryClient();

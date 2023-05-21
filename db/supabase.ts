@@ -1,6 +1,7 @@
-import keys from "./.secrets/api-keys.json";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
+
+import keys from "./.secrets/api-keys.json";
 
 const supabaseUrl = keys.supabaseUrl;
 const supabaseAnonKey = keys.supabaseAnonKey;

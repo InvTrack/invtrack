@@ -1,8 +1,9 @@
+import React, { useState } from "react";
+import { TextInput, View } from "react-native";
+
 import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
-import React, { useState } from "react";
-import { TextInput, View } from "react-native";
 
 export default function CreateInventory() {
   const [data, setData] = useState({

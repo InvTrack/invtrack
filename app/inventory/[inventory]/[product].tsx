@@ -1,17 +1,18 @@
+import { Stack, usePathname } from "expo-router";
+import React from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Text } from "react-native-elements";
+
 import { Button } from "../../../components/Button";
 import {
+  ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-  ArrowLeftIcon,
 } from "../../../components/Icon";
 import { Typography } from "../../../components/Typography";
 import { useListInventories, useRecordPanel } from "../../../db";
 import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
 import { createStyles } from "../../../theme/useStyles";
-import { Stack, usePathname } from "expo-router";
-import React from "react";
-import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
-import { Text } from "react-native-elements";
 
 const ProductButton = ({
   label,

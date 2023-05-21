@@ -1,6 +1,7 @@
+import { useCallback } from "react";
+
 import { useGetRecord } from ".";
 import { useUpdateRecord } from "./useUpdateRecord";
-import { useCallback } from "react";
 
 /**
  * Hook do obsługi "karty produktu".

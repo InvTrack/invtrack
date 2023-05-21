@@ -1,9 +1,10 @@
-import { supabase } from "../supabase";
-import { UserTable } from "../types";
-import { SessionContext } from "./sessionContext";
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { Alert } from "react-native";
+
+import { supabase } from "../supabase";
+import { UserTable } from "../types";
+import { SessionContext } from "./sessionContext";
 
 export const useGetUser = () => {
   const { session } = useContext(SessionContext);
