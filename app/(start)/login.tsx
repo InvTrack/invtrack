@@ -1,12 +1,12 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { supabase } from "../../db";
 import { Button } from "../../components/Button";
-import { Link } from "expo-router";
-import { createStyles } from "../../theme/useStyles";
-import { Typography } from "../../components/Typography";
-import { useForm } from "react-hook-form";
 import TextInputController from "../../components/TextInputController";
+import { Typography } from "../../components/Typography";
+import { supabase } from "../../db";
+import { createStyles } from "../../theme/useStyles";
+import { Link } from "expo-router";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { StyleSheet, View } from "react-native";
 
 type LoginFormValues = {
   email: string;

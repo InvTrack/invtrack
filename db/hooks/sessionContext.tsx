@@ -1,6 +1,6 @@
-import { useState, createContext, useEffect } from "react";
-import { Session } from "@supabase/supabase-js";
 import { supabase } from "../supabase";
+import { Session } from "@supabase/supabase-js";
+import { useState, createContext, useEffect } from "react";
 
 type SessionContextLoggedInType = {
   session: Session;

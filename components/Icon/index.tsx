@@ -1,3 +1,4 @@
+import { MainTheme } from "../../theme";
 import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
@@ -11,7 +12,6 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { MainTheme } from "../../theme";
 
 export interface InternalIconProps {
   source: ImageURISource;

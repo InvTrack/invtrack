@@ -1,10 +1,10 @@
+import { Button } from "../../components/Button";
+import { Card } from "../../components/Card";
+import { Typography } from "../../components/Typography";
+import { createStyles } from "../../theme/useStyles";
+import { Link } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { Button } from "../../components/Button";
-import { Link } from "expo-router";
-import { Card } from "../../components/Card";
-import { createStyles } from "../../theme/useStyles";
-import { Typography } from "../../components/Typography";
 
 export default function Start() {
   const styles = useStyles();

@@ -1,3 +1,4 @@
+import { createStyles } from "../../theme/useStyles";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
@@ -6,7 +7,6 @@ import {
   StyleSheet,
   StyleProp,
 } from "react-native";
-import { createStyles } from "../../theme/useStyles";
 
 interface SkeletonProps {
   rounded?: "full" | number;

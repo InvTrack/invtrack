@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabase";
 import { RecordViewTable } from "../types";
+import { useQuery } from "@tanstack/react-query";
 
 export const useListRecords = (inventoryId: string) =>
   useQuery(["recordsList", inventoryId], async () => {

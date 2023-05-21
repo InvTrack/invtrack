@@ -1,3 +1,4 @@
+import { TextInputProps, TextInput } from "../TextInput";
 import React from "react";
 import {
   FieldValues,
@@ -5,7 +6,6 @@ import {
   useController,
 } from "react-hook-form";
 
-import { TextInputProps, TextInput } from "../TextInput";
 // import { Typography } from "../Typography";
 
 interface TextInputControllerProps<T extends FieldValues>

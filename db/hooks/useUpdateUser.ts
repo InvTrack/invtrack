@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { Alert } from "react-native";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../supabase";
 import { SessionContext } from "./sessionContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext } from "react";
+import { Alert } from "react-native";
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();

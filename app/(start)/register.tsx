@@ -1,12 +1,12 @@
-import { Link } from "expo-router";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
+import { Link } from "expo-router";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { StyleSheet, View } from "react-native";
 
 type FormValues = {
   name: string;

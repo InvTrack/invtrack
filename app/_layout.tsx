@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { ThemeProvider } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { useColorScheme } from "react-native";
 import { SessionContext, useSession } from "../db";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { mainTheme } from "../theme";
+import { useAppState } from "../utils/useAppState";
+import { useOnlineManager } from "../utils/useOnlineManager";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ThemeProvider } from "@react-navigation/native";
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
+import { QueryClient, focusManager } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { useFonts } from "expo-font";
 import {
   SplashScreen,
   Stack,
@@ -12,7 +16,8 @@ import {
   useRouter,
   useSegments,
 } from "expo-router";
-import { mainTheme } from "../theme";
+import React, { useEffect } from "react";
+import { Platform, useColorScheme } from "react-native";
 
 // Catch any errors thrown by the Layout component.
 export { ErrorBoundary } from "expo-router";
@@ -32,7 +37,24 @@ const queryClient = new QueryClient({
   },
 });
 
+const asyncPersist = createAsyncStoragePersister({
+  storage: AsyncStorage,
+  // dehydrateOptions: {
+  //   dehydrateMutations: true,
+  //   dehydrateQueries: false,
+  // },
+  throttleTime: 1000,
+});
+
+const onAppStateChange = (status) => {
+  if (Platform.OS !== "web") {
+    focusManager.setFocused(status === "active");
+  }
+};
+
 export default function App() {
+  useAppState(onAppStateChange);
+  useOnlineManager();
   const [fontsLoaded, fontsError] = useFonts({
     latoBold: require("../assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
@@ -79,7 +101,18 @@ export default function App() {
   // this shouldnt be in the _layout file
   return (
     <SessionContext.Provider value={sessionState}>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{
+          maxAge: Infinity,
+          persister: asyncPersist,
+        }}
+        onSuccess={() =>
+          queryClient
+            .resumePausedMutations()
+            .then(() => queryClient.invalidateQueries())
+        }
+      >
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
           <Stack>
             <Stack.Screen
@@ -92,7 +125,7 @@ export default function App() {
             <Stack.Screen name="new" />
           </Stack>
         </ThemeProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </SessionContext.Provider>
   );
 }

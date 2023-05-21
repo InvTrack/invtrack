@@ -1,3 +1,6 @@
+import { createStyles } from "../../theme/useStyles";
+import { TypographyProps } from "../Typography";
+import debounce from "lodash/debounce";
 import React from "react";
 import {
   Pressable,
@@ -6,9 +9,6 @@ import {
   StyleProp,
   ViewStyle,
 } from "react-native";
-import debounce from "lodash/debounce";
-import { createStyles } from "../../theme/useStyles";
-import { TypographyProps } from "../Typography";
 
 export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
