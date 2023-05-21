@@ -79,7 +79,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             textAlignVertical="top"
             accessible
             accessibilityLabel={props.accessibilityLabel}
-            editable={disabled || !editable}
+            editable={!disabled || editable}
             placeholderTextColor={
               theme.colors.darkBlue
               // TODO

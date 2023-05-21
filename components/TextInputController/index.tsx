@@ -28,9 +28,9 @@ export const TextInputController = <T extends FieldValues>({
     <>
       <TextInput
         onChange={onChange}
+        value={value}
         onBlur={onBlur}
         ref={ref}
-        value={value}
         // error={!!error}
         {...textInputProps}
       />

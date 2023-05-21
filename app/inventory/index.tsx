@@ -17,17 +17,19 @@ export default function Calendar() {
       <Stack.Screen options={{ title: "Kalendarz" }} />
       <View style={styles.screen}>
         <Typography>Lista inwentaryzacji</Typography>
-        {inventories.map(({ id, name }) => (
-          <Link
-            href={{
-              pathname: `/inventory/[inventory]/`,
-              params: { inventory: id },
-            }}
-            key={id}
-          >
-            <Typography>{name}</Typography>
-          </Link>
-        ))}
+        {inventories.map(({ id, name }) => {
+          return (
+            <Link
+              href={{
+                pathname: `/inventory/[inventory]/`,
+                params: { inventory: id },
+              }}
+              key={id}
+            >
+              <Typography>{name}</Typography>
+            </Link>
+          );
+        })}
         <Link href="/new">
           <Button type="primary" size="xl">
             <Typography>Dodaj inwentaryzację</Typography>
