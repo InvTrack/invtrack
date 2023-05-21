@@ -12,7 +12,7 @@ type SessionContextNotLoggedInType = {
   loggedIn: false;
   companyId: null;
 };
-// TODO try to move to react-query
+// TODO try to move to @tanstack/react-query
 /**
  * Session Context for user authentication, login etc.
  */

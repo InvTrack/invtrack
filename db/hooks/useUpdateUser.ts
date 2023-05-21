@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Alert } from "react-native";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../supabase";
 import { SessionContext } from "./sessionContext";
 
@@ -36,6 +36,6 @@ export const useUpdateUser = () => {
         }
       }
     },
-    { onSuccess: () => queryClient.invalidateQueries("user") }
+    { onSuccess: () => queryClient.invalidateQueries(["user"]) }
   );
 };

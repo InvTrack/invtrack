@@ -4,7 +4,7 @@ import { ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { useColorScheme } from "react-native";
 import { SessionContext, useSession } from "../db";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   SplashScreen,
   Stack,

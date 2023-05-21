@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { supabase } from "../supabase";
 import { Inventory, InventoryTable } from "../types";
 import { SessionContext } from "./sessionContext";

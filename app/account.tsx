@@ -7,7 +7,7 @@ import { SessionContext, supabase, useGetUser, useUpdateUser } from "../db";
 export default function AccountDetails() {
   const { session } = useContext(SessionContext);
   const { data: user, isLoading } = useGetUser();
-  // TODO try to move to react-query
+  // TODO try to move to @tanstack/react-query
   const [username, setUsername] = useState(user?.username || "");
   const [companyName, setCompanyName] = useState(user?.company_name || "");
   useEffect(() => {

@@ -6,7 +6,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "maxNodeModuleJsDepth": 0,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitAny": true
   },
   "include": ["*"]
 }

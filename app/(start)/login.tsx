@@ -13,7 +13,7 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
-  // TODO try to move to react-query
+  // TODO try to move to @tanstack/react-query
 
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
