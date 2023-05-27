@@ -5,11 +5,11 @@ import { Link } from "expo-router";
 import { Card } from "../../components/Card";
 import { createStyles } from "../../theme/useStyles";
 import { Typography } from "../../components/Typography";
-import { useGoogle } from "../../db/auth/useGoogle";
+import { useGoogle1, useGoogle2 } from "../../db/auth/useGoogle";
 
 export default function Start() {
   const styles = useStyles();
-  const googleSignIn = useGoogle();
+  const googleSignIn = useGoogle2();
 
   return (
     <View style={styles.container}>
