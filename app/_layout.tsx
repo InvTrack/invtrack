@@ -13,6 +13,7 @@ import {
   useSegments,
 } from "expo-router";
 import { mainTheme } from "../theme";
+import { maybeCompleteAuthSession } from "expo-web-browser";
 
 // Catch any errors thrown by the Layout component.
 export { ErrorBoundary } from "expo-router";
@@ -22,7 +23,7 @@ const queryClient = new QueryClient({
     queries: { refetchOnWindowFocus: false, retry: 1 },
   },
 });
-
+maybeCompleteAuthSession();
 export default function App() {
   const [fontsLoaded, fontsError] = useFonts({
     latoBold: require("../assets/fonts/Lato-Bold.ttf"),
