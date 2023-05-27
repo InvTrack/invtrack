@@ -1,12 +1,6 @@
 import { Database } from "./generated";
 
 /**
- * Użytkownik aplicaji, czyli pracownik albo szef
- */
-export type User = UserTable["Row"];
-export type UserTable = Database["public"]["Tables"]["user"];
-
-/**
  * Inwentaryzacja - zbiór "wpisów" o tym ile jakiego rodzaju towaru posiadało przedsiębiorstwo w danym czasie
  */
 export type Inventory = InventoryTable["Row"];
@@ -43,3 +37,7 @@ export type WorkerTable = Database["public"]["Tables"]["worker"];
  */
 export type Company = CompanyTable["Row"];
 export type CompanyTable = Database["public"]["Tables"]["company"];
+
+export type CurrentCompanyId = CurrentCompanyIdTable["Row"];
+export type CurrentCompanyIdTable =
+  Database["public"]["Views"]["current_company_id"];
