@@ -22,3 +22,4 @@ web-build/
 
 # api keys, etc.
 .secrets
+.env
