@@ -1,0 +1,25 @@
+name: Deploy Migrations to Development
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.DEVELOPMENT_DB_PASSWORD }}
+      DEVELOPMENT_PROJECT_ID: vskfnihejgggjibolhzv
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: supabase/setup-cli@v1
+
+      - run: |
+          supabase link --project-ref $DEVELOPMENT_PROJECT_ID
+          supabase db push
