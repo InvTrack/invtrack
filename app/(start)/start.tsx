@@ -9,7 +9,7 @@ import { useGoogle1, useGoogle2 } from "../../db/auth/useGoogle";
 
 export default function Start() {
   const styles = useStyles();
-  const googleSignIn = useGoogle2();
+  const googleSignIn = useGoogle1();
 
   return (
     <View style={styles.container}>

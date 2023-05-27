@@ -6,27 +6,26 @@ export const useGoogle1 = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
     });
-    // console.log("GOOGLE SIGNIN", data, error);
   };
   return singIn;
 };
 
-export const useGoogle2 = () => {
-  const singIn = async () => {
-    const redirectUrl = makeRedirectUri({
-      path: "/auth/callback",
-    });
-    // const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${redirectUrl}`;
-    const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=google`;
+// export const useGoogle2 = () => {
+//   const singIn = async () => {
+//     const redirectUrl = makeRedirectUri({
+//       path: "/auth/callback",
+//     });
+//     // const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${redirectUrl}`;
+//     const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=google`;
 
-    console.log(authUrl);
+//     console.log(authUrl);
 
-    const authResponse = await startAsync({
-      authUrl,
-      returnUrl: redirectUrl,
-    });
+//     const authResponse = await startAsync({
+//       authUrl,
+//       returnUrl: redirectUrl,
+//     });
 
-    console.log(authResponse);
-  };
-  return singIn;
-};
+//     console.log(authResponse);
+//   };
+//   return singIn;
+// };
