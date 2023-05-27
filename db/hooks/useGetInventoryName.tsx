@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useQuery } from "react-query";
 import { supabase } from "../supabase";
 import { InventoryTable } from "../types";
-import { SessionContext } from "./sessionContext";
+import { SessionContext } from "../auth/SessionContext";
 
 const getInventoryName = async (inventoryId: number | undefined | null) => {
   const res = await supabase

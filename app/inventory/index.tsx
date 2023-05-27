@@ -16,6 +16,9 @@ export default function Calendar() {
       <Stack.Screen options={{ title: "Kalendarz" }} />
       <View style={styles.screen}>
         <Typography>Lista inwentaryzacji</Typography>
+        <Link href={{ pathname: `/account` }}>
+          <Typography>account</Typography>
+        </Link>
         {inventories.map(({ id, name }) => (
           <Link
             href={{
