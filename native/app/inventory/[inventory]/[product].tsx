@@ -1,17 +1,17 @@
-import { Text } from "react-native-elements";
-import React from "react";
 import { Stack, usePathname } from "expo-router";
-import { useListInventories, useRecordPanel } from "../../../db";
-import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import React from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+
+import { Button } from "../../../components/Button";
 import {
+  ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-  ArrowLeftIcon,
 } from "../../../components/Icon";
 import { Typography } from "../../../components/Typography";
-import { createStyles } from "../../../theme/useStyles";
-import { Button } from "../../../components/Button";
+import { useListInventories, useRecordPanel } from "../../../db";
 import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
+import { createStyles } from "../../../theme/useStyles";
 
 const ProductButton = ({
   label,
@@ -40,9 +40,7 @@ const ProductButton = ({
     </Button>
   );
 };
-
-// TODO fix
-const getRecordId = (pathName: string) => pathName.split("/")[3];
+const getRecordId = (pathName: string) => pathName.split("/")[2];
 
 export default function Product() {
   const styles = useStyles();

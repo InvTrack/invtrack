@@ -1,10 +1,11 @@
-import React from "react";
 import { Link, Stack } from "expo-router";
-import { useListInventories } from "../../db";
+import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Typography } from "../../components/Typography";
-import { createStyles } from "../../theme/useStyles";
+
 import { Button } from "../../components/Button";
+import { Typography } from "../../components/Typography";
+import { useListInventories } from "../../db";
+import { createStyles } from "../../theme/useStyles";
 
 export default function Calendar() {
   const styles = useStyles();
@@ -16,21 +17,20 @@ export default function Calendar() {
       <Stack.Screen options={{ title: "Kalendarz" }} />
       <View style={styles.screen}>
         <Typography>Lista inwentaryzacji</Typography>
-        <Link href={{ pathname: `/account` }}>
-          <Typography>account</Typography>
-        </Link>
-        {inventories.map(({ id, name }) => (
-          <Link
-            href={{
-              pathname: `/inventory/[inventory]/`,
-              params: { inventory: id },
-            }}
-            key={id}
-          >
-            <Typography>{name}</Typography>
-          </Link>
-        ))}
-        <Link href={"/new"}>
+        {inventories.map(({ id, name }) => {
+          return (
+            <Link
+              href={{
+                pathname: `/inventory/[inventory]/`,
+                params: { inventory: id },
+              }}
+              key={id}
+            >
+              <Typography>{name}</Typography>
+            </Link>
+          );
+        })}
+        <Link href="/new">
           <Button type="primary" size="xl">
             <Typography>Dodaj inwentaryzację</Typography>
           </Button>

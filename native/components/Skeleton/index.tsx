@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
-  ViewStyle,
   Platform,
-  StyleSheet,
   StyleProp,
+  StyleSheet,
+  ViewStyle,
 } from "react-native";
+
 import { createStyles } from "../../theme/useStyles";
 
 interface SkeletonProps {

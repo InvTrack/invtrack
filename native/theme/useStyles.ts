@@ -1,4 +1,5 @@
 import { useTheme } from "@react-navigation/native";
+
 import { MainTheme } from ".";
 
 type Generator<T extends object> = (theme: MainTheme) => T;

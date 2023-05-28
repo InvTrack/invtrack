@@ -1,15 +1,14 @@
+import { Link } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
+
 import { Button } from "../../components/Button";
-import { Link } from "expo-router";
 import { Card } from "../../components/Card";
-import { createStyles } from "../../theme/useStyles";
 import { Typography } from "../../components/Typography";
-import { useGoogle1, useGoogle2 } from "../../db/auth/useGoogle";
+import { createStyles } from "../../theme/useStyles";
 
 export default function Start() {
   const styles = useStyles();
-  const googleSignIn = useGoogle1();
 
   return (
     <View style={styles.container}>
@@ -30,13 +29,7 @@ export default function Start() {
           <Typography variant="l">Login</Typography>
         </Button>
       </Link>
-      <Button
-        type="secondary"
-        size="l"
-        containerStyle={styles.button}
-        onPress={() => googleSignIn()}
-      />
-      <Link href={""}>Regulamin</Link>
+      <Link href="">Regulamin</Link>
     </View>
   );
 }

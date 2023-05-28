@@ -11,6 +11,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+
 import { MainTheme } from "../../theme";
 
 export interface InternalIconProps {
