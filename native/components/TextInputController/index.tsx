@@ -5,7 +5,8 @@ import {
   useController,
 } from "react-hook-form";
 
-import { TextInputProps, TextInput } from "../TextInput";
+import { TextInput, TextInputProps } from "../TextInput";
+
 // import { Typography } from "../Typography";
 
 interface TextInputControllerProps<T extends FieldValues>
@@ -27,9 +28,9 @@ export const TextInputController = <T extends FieldValues>({
     <>
       <TextInput
         onChange={onChange}
+        value={value}
         onBlur={onBlur}
         ref={ref}
-        value={value}
         // error={!!error}
         {...textInputProps}
       />

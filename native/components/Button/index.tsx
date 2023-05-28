@@ -1,12 +1,13 @@
-import React from "react";
+import debounce from "lodash/debounce";
+import React, { forwardRef } from "react";
 import {
-  Pressable,
-  StyleSheet,
   GestureResponderEvent,
+  Pressable,
   StyleProp,
+  StyleSheet,
   ViewStyle,
 } from "react-native";
-import debounce from "lodash/debounce";
+
 import { createStyles } from "../../theme/useStyles";
 import { TypographyProps } from "../Typography";
 
@@ -25,34 +26,41 @@ type ButtonProps = {
 const BORDER_WIDTH = 4;
 const debouncedOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
 
-export const Button = ({
-  onPress,
-  containerStyle,
-  // labelColor, TODO
-  disabled = false,
-  type,
-  size,
-  shadow = false,
-  children,
-}: ButtonProps) => {
-  const styles = useStyles();
+export const Button = forwardRef(
+  (
+    {
+      onPress,
+      containerStyle,
+      // labelColor, TODO
+      disabled = false,
+      type,
+      size,
+      shadow = false,
+      children,
+    }: ButtonProps,
+    _ref
+  ) => {
+    const styles = useStyles();
 
-  return (
-    <Pressable
-      onPress={debouncedOnPress(onPress ?? (() => undefined))}
-      style={[
-        styles.buttonBase,
-        styles[type],
-        styles[size],
-        shadow && styles.shadow,
-        containerStyle,
-      ]}
-      disabled={disabled}
-    >
-      {children}
-    </Pressable>
-  );
-};
+    return (
+      <Pressable
+        onPress={debouncedOnPress(onPress ?? (() => undefined))}
+        style={[
+          styles.buttonBase,
+          styles[type],
+          styles[size],
+          shadow && styles.shadow,
+          containerStyle,
+        ]}
+        disabled={disabled}
+      >
+        {children}
+      </Pressable>
+    );
+  }
+);
+
+Button.displayName = "Button";
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({

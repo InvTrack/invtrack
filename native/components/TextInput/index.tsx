@@ -2,19 +2,20 @@ import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
   NativeSyntheticEvent,
+  TextInput as NativeTextInput,
+  TextInputProps as NativeTextInputProps,
   StyleProp,
   StyleSheet,
-  TextInput as NativeTextInput,
   TextInputFocusEventData,
-  TextInputProps as NativeTextInputProps,
   TextStyle,
   View,
   ViewStyle,
 } from "react-native";
+
 import { createStyles } from "../../theme/useStyles";
 
 const BORDER_WIDTH = 4;
-export interface TextInputProps extends NativeTextInputProps {
+export interface TextInputProps extends Omit<NativeTextInputProps, "onChange"> {
   invalid?: boolean;
   disabled?: boolean;
   editable?: boolean;
@@ -24,11 +25,14 @@ export interface TextInputProps extends NativeTextInputProps {
   style?: never;
   onFocus?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onBlur?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onChange: (text: string) => void;
 }
 
 export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
   (
     {
+      value = "",
+      onChange,
       invalid = false,
       disabled = false,
       editable = true,
@@ -70,11 +74,12 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
         >
           <NativeTextInput
             ref={ref}
+            onChangeText={onChange}
             selectTextOnFocus={!disabled && editable}
             textAlignVertical="top"
             accessible
             accessibilityLabel={props.accessibilityLabel}
-            editable={disabled || !editable ? false : true}
+            editable={!disabled || editable}
             placeholderTextColor={
               theme.colors.darkBlue
               // TODO

@@ -1,5 +1,6 @@
 import { useTheme } from "@react-navigation/native";
 import { useMediaQuery } from "react-responsive";
+
 import { Breakpoints } from "../theme";
 
 export function useThemeBreakpoints() {
