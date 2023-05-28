@@ -40,7 +40,9 @@ const ProductButton = ({
     </Button>
   );
 };
-const getRecordId = (pathName: string) => pathName.split("/")[2];
+
+// TODO fix
+const getRecordId = (pathName: string) => pathName.split("/")[3];
 
 export default function Product() {
   const styles = useStyles();
