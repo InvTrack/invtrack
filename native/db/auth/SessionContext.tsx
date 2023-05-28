@@ -1,5 +1,6 @@
-import { useState, createContext, useEffect } from "react";
 import { Session } from "@supabase/supabase-js";
+import { createContext, useEffect, useState } from "react";
+
 import { supabase } from "../supabase";
 import { useGetTokens } from "./LinkingContext";
 
