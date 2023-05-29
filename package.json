@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "precommit": "cd native && npm run precommit",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}
