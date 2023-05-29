@@ -2,11 +2,11 @@ import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
   NativeSyntheticEvent,
-  TextInput as NativeTextInput,
-  TextInputProps as NativeTextInputProps,
   StyleProp,
   StyleSheet,
+  TextInput as NativeTextInput,
   TextInputFocusEventData,
+  TextInputProps as NativeTextInputProps,
   TextStyle,
   View,
   ViewStyle,
