@@ -1,4 +1,3 @@
-import { Stack, usePathname } from "expo-router";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
@@ -12,6 +11,7 @@ import { Typography } from "../../../components/Typography";
 import { useRecordPanel } from "../../../db";
 import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
 import { createStyles } from "../../../theme/useStyles";
+const { Stack, usePathname } = require("expo-router");
 
 const ProductButton = ({
   label,
