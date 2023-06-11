@@ -48,6 +48,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/lodash": "^4.14.191",
+    "@types/node": "18.16.0",
     "@types/react": "~18.0.14",
     "eslint": "^8.35.0",
     "eslint-config-universe": "^11.2.0",

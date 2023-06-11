@@ -8,7 +8,9 @@
     "maxNodeModuleJsDepth": 0,
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "jsx": "react-native"
+    "jsx": "react-native",
+    "noResolve": true,
+    "types": ["node"]
   },
-  "include": ["*"]
+  "exclude": ["../node_modules"]
 }

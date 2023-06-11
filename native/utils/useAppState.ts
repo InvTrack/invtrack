@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { AppState } from "react-native";
+import { AppState, AppStateStatus } from "react-native";
 
-export function useAppState(onChange) {
+export function useAppState(onChange: (state: AppStateStatus) => void) {
   useEffect(() => {
     AppState.addEventListener("change", onChange);
     // no cleanup function to return

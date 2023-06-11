@@ -9,7 +9,7 @@ import {
   PencilIcon,
 } from "../../../components/Icon";
 import { Typography } from "../../../components/Typography";
-import { useListInventories, useRecordPanel } from "../../../db";
+import { useRecordPanel } from "../../../db";
 import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
 import { createStyles } from "../../../theme/useStyles";
 

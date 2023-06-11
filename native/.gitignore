@@ -19,6 +19,7 @@ web-build/
 
 # cache files
 .eslintcache
+.tsconfig-lint.json
 
 # api keys, etc.
 .secrets
