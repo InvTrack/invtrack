@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Alert } from "react-native";
 
 import { supabase } from "../supabase";
-import { UserTable } from "../types";
+// import { UserTable } from "../types";
 import { SessionContext } from "./sessionContext";
 
 export const useGetUser = () => {
@@ -13,7 +13,7 @@ export const useGetUser = () => {
       if (!session?.user) throw new Error("No user on the session!");
 
       const { data, error, status } = await supabase
-        .from<"user", UserTable>("user")
+        .from("user")
         .select(`username, company_name`)
         .eq("id", session?.user.id)
         .single();

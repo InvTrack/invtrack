@@ -14,9 +14,9 @@ import {
 } from "expo-router";
 import { maybeCompleteAuthSession } from "expo-web-browser";
 import React, { useEffect } from "react";
-import { Platform, useColorScheme } from "react-native";
+import { AppStateStatus, Platform, useColorScheme } from "react-native";
 
-import { SessionContext, useGetTokens, useSession } from "../db";
+import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
 import { useOnlineManager } from "../utils/useOnlineManager";
@@ -49,7 +49,7 @@ const asyncPersist = createAsyncStoragePersister({
   throttleTime: 1000,
 });
 
-const onAppStateChange = (status) => {
+const onAppStateChange = (status: AppStateStatus) => {
   if (Platform.OS !== "web") {
     focusManager.setFocused(status === "active");
   }
@@ -67,7 +67,7 @@ export default function App() {
   useEffect(() => {
     if (fontsError) throw fontsError;
   }, [fontsError]);
-  useGetTokens();
+  // useGetTokens();
 
   const sessionState = useSession();
   const colorScheme = useColorScheme();
