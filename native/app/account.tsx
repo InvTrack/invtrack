@@ -1,9 +1,9 @@
-import { useRouter } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 
 import { SessionContext, supabase, useGetUser, useUpdateUser } from "../db";
+const { useRouter } = require("expo-router");
 
 export default function AccountDetails() {
   const { session } = useContext(SessionContext);

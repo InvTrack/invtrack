@@ -1,7 +1,7 @@
 import { useURL } from "expo-linking";
 import { useEffect } from "react";
 
-// import { supabase } from "../supabase";
+import { supabase } from "../supabase";
 
 export const useGetTokens = (setGoogleAccessToken: (tkn: string) => void) => {
   // console.log({setGoogleAccessToken})

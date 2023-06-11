@@ -2,15 +2,14 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "baseUrl": "./",
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "maxNodeModuleJsDepth": 0,
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-    "jsx": "react-native",
-    "noResolve": true,
-    "types": ["node"]
+    "incremental": true,
+    "noImplicitAny": true
   },
-  "exclude": ["../node_modules"]
+  "exclude": ["node_modules", "../node_modules", "expo"]
 }

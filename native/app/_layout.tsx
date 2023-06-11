@@ -5,13 +5,6 @@ import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persi
 import { focusManager, QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
-import {
-  SplashScreen,
-  Stack,
-  useRootNavigationState,
-  useRouter,
-  useSegments,
-} from "expo-router";
 import { maybeCompleteAuthSession } from "expo-web-browser";
 import React, { useEffect } from "react";
 import { AppStateStatus, Platform, useColorScheme } from "react-native";
@@ -20,9 +13,15 @@ import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
 import { useOnlineManager } from "../utils/useOnlineManager";
+const {
+  SplashScreen,
+  Stack,
+  useRootNavigationState,
+  useRouter,
+  useSegments,
+} = require("expo-router");
 
 // Catch any errors thrown by the Layout component.
-export { ErrorBoundary } from "expo-router";
 
 const queryClient = new QueryClient({
   defaultOptions: {
