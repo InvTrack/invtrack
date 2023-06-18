@@ -65,14 +65,16 @@ export default function Login() {
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        <Typography variant="xs">Zaloguj się</Typography>
+        <Typography variant="xs" color="darkBlue">
+          Zaloguj się
+        </Typography>
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
       </Link>
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
-          Nie masz konta?{" "}
+          Nie masz konta
         </Typography>
         <Link href="/register" style={styles.link}>
           Zarejestruj się
@@ -94,7 +96,10 @@ const useStyles = createStyles((theme) =>
       marginTop: theme.spacing * 11,
     },
     input: { marginVertical: theme.spacing },
-    button: { marginTop: theme.spacing * 5, width: "100%" },
+    button: {
+      marginTop: theme.spacing * 5,
+      width: "100%",
+    },
     link: {
       alignSelf: "center",
       marginTop: theme.spacing * 2.5,
