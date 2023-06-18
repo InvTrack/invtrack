@@ -88,7 +88,11 @@ const useStyles = createStyles((theme) =>
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
     },
-    title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
+    title: {
+      alignSelf: "center",
+      marginBottom: theme.spacing * 7,
+      marginTop: theme.spacing * 11,
+    },
     input: { marginVertical: theme.spacing },
     button: { marginTop: theme.spacing * 5, width: "100%" },
     link: {

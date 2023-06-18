@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
@@ -118,6 +118,7 @@ const useStyles = createStyles((theme) =>
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
       alignItems: "center",
+      justifyContent: "center",
     },
     title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
     input: { marginVertical: theme.spacing },
