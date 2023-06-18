@@ -114,7 +114,17 @@ export default function App() {
         }
       >
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
-          <Stack />
+          <Stack
+            // theme not available here yet
+            screenOptions={{
+              headerTitleStyle: {
+                fontFamily: "latoBold",
+                fontSize: 18,
+                color: "#000",
+              },
+              headerTransparent: true,
+            }}
+          />
         </ThemeProvider>
       </PersistQueryClientProvider>
     </SessionContext.Provider>
