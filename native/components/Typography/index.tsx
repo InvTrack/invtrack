@@ -2,13 +2,16 @@ import { useTheme } from "@react-navigation/native";
 import React from "react";
 import {
   StyleProp,
+  StyleSheet,
   Text,
   TextProps,
   TextStyle,
-  StyleSheet,
 } from "react-native";
+
 import { MainTheme, ThemeColors } from "../../theme";
 import { createStyles } from "../../theme/useStyles";
+
+type Align = Capitalize<Required<TypographyProps>["align"]>;
 
 export type TypographyProps = {
   children: React.ReactNode;
@@ -42,7 +45,7 @@ export const Typography = ({
       style={[
         color && { color: theme.colors[color] },
         styles[variant],
-        styles[`align${align.toUpperCase()}`],
+        align && styles[`align${align.toUpperCase() as Align}`],
         underline && styles.underline,
         opacity && styles.opacity,
         style,
@@ -57,16 +60,6 @@ export const Typography = ({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    xs: { ...theme.text.xs },
-    xsBold: { ...theme.text.xsBold },
-    s: { ...theme.text.s },
-    sBold: { ...theme.text.sBold },
-    m: { ...theme.text.m },
-    mBold: { ...theme.text.mBold },
-    l: { ...theme.text.l },
-    lBold: { ...theme.text.lBold },
-    xl: { ...theme.text.xl },
-    xlBold: { ...theme.text.xlBold },
     alignLeft: {
       textAlign: "left",
     },
@@ -82,6 +75,16 @@ const useStyles = createStyles((theme) =>
     alignJustify: {
       textAlign: "justify",
     },
+    xs: { ...theme.text.xs },
+    xsBold: { ...theme.text.xsBold },
+    s: { ...theme.text.s },
+    sBold: { ...theme.text.sBold },
+    m: { ...theme.text.m },
+    mBold: { ...theme.text.mBold },
+    l: { ...theme.text.l },
+    lBold: { ...theme.text.lBold },
+    xl: { ...theme.text.xl },
+    xlBold: { ...theme.text.xlBold },
     underline: {
       textDecorationLine: "underline",
     },

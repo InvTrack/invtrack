@@ -1,14 +1,15 @@
-import { makeRedirectUri, startAsync } from "expo-auth-session";
-import { supabase, supabaseUrl } from "../supabase";
+// import { makeRedirectUri, startAsync } from "expo-auth-session";
 
-export const useGoogle1 = () => {
-  const singIn = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-  };
-  return singIn;
-};
+// import { supabase, supabaseUrl } from "../supabase";
+
+// export const useGoogle1 = () => {
+//   const singIn = async () => {
+//     const { data, error } = await supabase.auth.signInWithOAuth({
+//       provider: "google",
+//     });
+//   };
+//   return singIn;
+// };
 
 // export const useGoogle2 = () => {
 //   const singIn = async () => {

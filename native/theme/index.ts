@@ -1,3 +1,7 @@
+// Module override
+import "@react-navigation/native";
+import { ReactNode } from "react";
+
 export type ThemeFontSize = typeof fontSize;
 const fontSize = {
   xl: 40,
@@ -104,10 +108,6 @@ export const mainTheme = {
   fontSize,
   baseShadow,
 } as const;
-
-// Module override
-import "@react-navigation/native";
-import { ReactNode } from "react";
 
 declare module "@react-navigation/native" {
   export function useTheme(): MainTheme;

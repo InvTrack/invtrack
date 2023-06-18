@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@react-navigation/native";
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
+import { focusManager, QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
-import { useColorScheme } from "react-native";
-import { SessionContext, useGetTokens, useSession } from "../db";
-import { QueryClient, QueryClientProvider } from "react-query";
+import React, { useEffect } from "react";
+import { AppStateStatus, Platform, useColorScheme } from "react-native";
+
 import {
   SplashScreen,
   Stack,
@@ -12,19 +15,46 @@ import {
   useRouter,
   useSegments,
 } from "expo-router";
+import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
-import { maybeCompleteAuthSession } from "expo-web-browser";
+import { useAppState } from "../utils/useAppState";
+import { useOnlineManager } from "../utils/useOnlineManager";
 
 // Catch any errors thrown by the Layout component.
-export { ErrorBoundary } from "expo-router";
 
 const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { refetchOnWindowFocus: false, retry: 1 },
+    mutations: {
+      cacheTime: Infinity,
+      retry: 0,
+    },
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 2,
+      cacheTime: 1000 * 10,
+      // staleTime: Infinity,
+    },
   },
 });
-maybeCompleteAuthSession();
+
+const asyncPersist = createAsyncStoragePersister({
+  storage: AsyncStorage,
+  // dehydrateOptions: {
+  //   dehydrateMutations: true,
+  //   dehydrateQueries: false,
+  // },
+  throttleTime: 1000,
+});
+
+const onAppStateChange = (status: AppStateStatus) => {
+  if (Platform.OS !== "web") {
+    focusManager.setFocused(status === "active");
+  }
+};
+
 export default function App() {
+  useAppState(onAppStateChange);
+  useOnlineManager();
   const [fontsLoaded, fontsError] = useFonts({
     latoBold: require("../assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
@@ -34,7 +64,6 @@ export default function App() {
   useEffect(() => {
     if (fontsError) throw fontsError;
   }, [fontsError]);
-  useGetTokens();
 
   const sessionState = useSession();
   const colorScheme = useColorScheme();
@@ -44,7 +73,6 @@ export default function App() {
   const navigationState = useRootNavigationState();
 
   React.useEffect(() => {
-    // console.log("nav", navigationState);
     if (!navigationState?.key) {
       // Temporary fix for router not being ready.
       return;
@@ -73,20 +101,22 @@ export default function App() {
   // this shouldnt be in the _layout file
   return (
     <SessionContext.Provider value={sessionState}>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{
+          maxAge: Infinity,
+          persister: asyncPersist,
+        }}
+        onSuccess={() =>
+          queryClient
+            .resumePausedMutations()
+            .then(() => queryClient.invalidateQueries())
+        }
+      >
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
-          <Stack>
-            <Stack.Screen
-              name="inventory/index"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen name="account" options={{ title: "Dane konta" }} />
-            <Stack.Screen name="new" />
-          </Stack>
+          <Stack />
         </ThemeProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </SessionContext.Provider>
   );
 }

@@ -1,17 +1,17 @@
-import { Text } from "react-native-elements";
 import React from "react";
-import { Stack, usePathname } from "expo-router";
-import { useListInventories, useRecordPanel } from "../../../db";
-import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+
+import { Button } from "../../../components/Button";
 import {
+  ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-  ArrowLeftIcon,
 } from "../../../components/Icon";
 import { Typography } from "../../../components/Typography";
-import { createStyles } from "../../../theme/useStyles";
-import { Button } from "../../../components/Button";
+import { useRecordPanel } from "../../../db";
 import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
+import { createStyles } from "../../../theme/useStyles";
+const { Stack, usePathname } = require("expo-router");
 
 const ProductButton = ({
   label,
@@ -41,8 +41,8 @@ const ProductButton = ({
   );
 };
 
-// TODO fix
-const getRecordId = (pathName: string) => pathName.split("/")[3];
+// TODO fix fragile code
+const getRecordId = (pathName: string) => pathName.split("/")[-1];
 
 export default function Product() {
   const styles = useStyles();
@@ -65,75 +65,73 @@ export default function Product() {
 
   const { name: productName, quantity, unit } = data;
 
-  if (true) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.topBar}>
-          <Typography variant="xsBold">{inventoryName ?? ""}</Typography>
-        </View>
-        <View style={styles.contentContainer}>
-          <Typography variant="xlBold" underline style={styles.title}>
-            {/* nazwa produktu */}
-            {productName}
+  return (
+    <View style={styles.container}>
+      <View style={styles.topBar}>
+        <Typography variant="xsBold">{inventoryName ?? ""}</Typography>
+      </View>
+      <View style={styles.contentContainer}>
+        <Typography variant="xlBold" underline style={styles.title}>
+          {/* nazwa produktu */}
+          {productName}
+        </Typography>
+        <View style={styles.content}>
+          <Typography variant="l" underline style={styles.wasTitle}>
+            Ile było:
           </Typography>
-          <View style={styles.content}>
-            <Typography variant="l" underline style={styles.wasTitle}>
-              Ile było:
-            </Typography>
-            <Typography variant="xlBold" style={styles.wasAmount}>
-              {/* liczba + jednostka previous*/}
-              10 szt TODO
-            </Typography>
-            <View style={styles.gridRow}>
-              <View style={styles.leftColumn}>
-                {steppers.positive.map(({ click, step }, i) => (
-                  <ProductButton
-                    key={"positive" + step + i}
-                    label={`+${step}`}
-                    onPress={click}
-                  />
-                ))}
-                <Button type="primary" size="l">
-                  <ArrowRightIcon size={32} />
-                </Button>
-              </View>
-              <View style={styles.middleColumn}>
-                <Typography underline>Ile jest:</Typography>
-                <Typography
-                  variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
-                  style={styles.title}
-                >
-                  {/* liczba + jednostka current */}
-                  {unit ? quantity + " " + unit : null}
-                </Typography>
-                <Button
-                  type="primary"
-                  size="xl"
-                  containerStyle={styles.editButton}
-                  // TODO: make the current quantity editable - convert to a text field with fixed jednostka
-                  onPress={() => setQuantity(69)}
-                >
-                  <PencilIcon size={32} />
-                </Button>
-              </View>
-              <View style={styles.rightColumn}>
-                {steppers.negative.map(({ click, step }, i) => (
-                  <ProductButton
-                    key={"negative" + step + i}
-                    label={step.toString()}
-                    onPress={click}
-                  />
-                ))}
-                <Button type="primary" size="l">
-                  <ArrowLeftIcon size={32} />
-                </Button>
-              </View>
+          <Typography variant="xlBold" style={styles.wasAmount}>
+            {/* liczba + jednostka previous*/}
+            10 szt TODO
+          </Typography>
+          <View style={styles.gridRow}>
+            <View style={styles.leftColumn}>
+              {steppers.positive.map(({ click, step }, i) => (
+                <ProductButton
+                  key={"positive" + step + i}
+                  label={`+${step}`}
+                  onPress={click}
+                />
+              ))}
+              <Button type="primary" size="l">
+                <ArrowRightIcon size={32} />
+              </Button>
+            </View>
+            <View style={styles.middleColumn}>
+              <Typography underline>Ile jest:</Typography>
+              <Typography
+                variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
+                style={styles.title}
+              >
+                {/* liczba + jednostka current */}
+                {unit ? quantity + " " + unit : null}
+              </Typography>
+              <Button
+                type="primary"
+                size="xl"
+                containerStyle={styles.editButton}
+                // TODO: make the current quantity editable - convert to a text field with fixed jednostka
+                onPress={() => setQuantity(69)}
+              >
+                <PencilIcon size={32} />
+              </Button>
+            </View>
+            <View style={styles.rightColumn}>
+              {steppers.negative.map(({ click, step }, i) => (
+                <ProductButton
+                  key={"negative" + step + i}
+                  label={step.toString()}
+                  onPress={click}
+                />
+              ))}
+              <Button type="primary" size="l">
+                <ArrowLeftIcon size={32} />
+              </Button>
             </View>
           </View>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const useStyles = createStyles((theme) =>
