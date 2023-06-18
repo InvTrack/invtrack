@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
@@ -33,7 +34,7 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Typography
         variant="xlBold"
         color="darkBlue"
@@ -77,7 +78,7 @@ export default function Login() {
           Zarejestruj się
         </Link>
       </Typography>
-    </View>
+    </SafeAreaView>
   );
 }
 const useStyles = createStyles((theme) =>
