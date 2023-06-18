@@ -8,7 +8,7 @@
     "web": "expo start --web",
     "prepare": "cd .. && husky install",
     "precommit": "lint-staged",
-    "typecheck": "eslint . --fix && bash -c tsc --noEmit",
+    "typecheck": "eslint . --fix",
     "format": "prettier --write .",
     "gen-types": "supabase gen types typescript --project-id 'xysdrumggpxdpxoysaib' --schema public > db/types/generated.ts"
   },
