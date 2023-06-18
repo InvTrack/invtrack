@@ -1,6 +1,8 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
+import { Stack } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 import { Typography } from "../../components/Typography";
@@ -11,7 +13,12 @@ export default function Start() {
   const styles = useStyles();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+      />
       <Card borderBottom padding="normal" style={styles.card}>
         <Image
           source={require("../../assets/images/logo.png")}
@@ -30,23 +37,27 @@ export default function Start() {
         </Button>
       </Link>
       <Link href="">Regulamin</Link>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    container: { backgroundColor: theme.colors.lightBlue, height: "100%" },
+    container: {
+      backgroundColor: theme.colors.lightBlue,
+      height: "100%",
+      alignItems: "center",
+    },
     card: {
       ...theme.baseShadow,
       justifyContent: "center",
-      alignContent: "center",
+      alignItems: "center",
       marginBottom: theme.spacing * 11,
+      width: "100%",
     },
     logoImage: {
       width: 256,
       height: 256,
-      marginHorizontal: "auto",
     },
     button: {
       marginHorizontal: "auto",
