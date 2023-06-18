@@ -98,7 +98,9 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          <Typography variant="xs">Zarejestruj się</Typography>
+          <Typography variant="xs" color="darkBlue">
+            Zarejestruj się
+          </Typography>
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
