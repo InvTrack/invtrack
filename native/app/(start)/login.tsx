@@ -1,19 +1,20 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { supabase } from "../../db";
-import { Button } from "../../components/Button";
-import { Link } from "expo-router";
-import { createStyles } from "../../theme/useStyles";
-import { Typography } from "../../components/Typography";
 import { useForm } from "react-hook-form";
+import { StyleSheet, View } from "react-native";
+
+import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
+import { Typography } from "../../components/Typography";
+import { supabase } from "../../db";
+import { createStyles } from "../../theme/useStyles";
+const { Link } = require("expo-router");
 
 type LoginFormValues = {
   email: string;
   password: string;
 };
 export default function Login() {
-  // TODO try to move to react-query
+  // TODO try to move to @tanstack/react-query
 
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
@@ -65,14 +66,14 @@ export default function Login() {
       >
         <Typography variant="xs">Zaloguj się</Typography>
       </Button>
-      <Link href={"/login"} style={styles.link}>
+      <Link href="/login" style={styles.link}>
         Resetowanie hasła
       </Link>
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
           Nie masz konta?{" "}
         </Typography>
-        <Link href={"/register"} style={styles.link}>
+        <Link href="/register" style={styles.link}>
           Zarejestruj się
         </Link>
       </Typography>

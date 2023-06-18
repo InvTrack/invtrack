@@ -1,21 +1,20 @@
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
+import { useContext } from "react";
+
 import { supabase } from "../supabase";
 import { Inventory, InventoryTable } from "../types";
-import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
+import { SessionContext } from "./sessionContext";
 
 export const useCreateInventory = () => {
-  const companyIdResult = useGetCurrentCompanyId();
+  const { companyId } = useContext(SessionContext);
+
   return useMutation(
     async (inventory: Omit<Inventory, "created_at" | "company_id" | "id">) => {
-      if (companyIdResult.isSuccess) {
-        const { data, error } = await supabase
-          .from<"inventory", InventoryTable>("inventory")
-          .insert({ ...inventory, company_id: companyIdResult.data.id });
-        if (error) throw new Error(error.message);
-        return data;
-      }
-      return null;
-    },
-    {}
+      const { data, error } = await supabase
+        .from<"inventory", InventoryTable>("inventory")
+        .insert({ ...inventory, company_id: companyId });
+      if (error) throw new Error(error.message);
+      return data;
+    }
   );
 };

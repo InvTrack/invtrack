@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, Stack, usePathname } from "expo-router";
-import { useListRecords } from "../../../db";
 import { View } from "react-native";
+
 import { Typography } from "../../../components/Typography";
+import { useListRecords } from "../../../db";
+const { Link, Stack, usePathname } = require("expo-router");
 
 const getInventoryId = (pathName: string) => pathName.split("/")[2];
 

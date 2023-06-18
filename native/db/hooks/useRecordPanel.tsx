@@ -1,5 +1,6 @@
 import { useCallback } from "react";
-import { useGetRecord } from "./useGetRecord";
+
+import { useGetRecord } from ".";
 import { useUpdateRecord } from "./useUpdateRecord";
 
 /**

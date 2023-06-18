@@ -1,4 +1,5 @@
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { supabase } from "../supabase";
 import { Record, RecordTable } from "../types";
 

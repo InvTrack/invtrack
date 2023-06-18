@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
-import { useQuery } from "react-query";
+
 import { SessionContext } from "../auth";
 import { supabase } from "../supabase";
 import { CurrentCompanyIdTable } from "../types";

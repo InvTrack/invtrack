@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 
-import { useCreateInventory } from "../db";
-import { Typography } from "../components/Typography";
 import { Button } from "../components/Button";
+import { Typography } from "../components/Typography";
+import { useCreateInventory } from "../db";
+
 export default function CreateInventory() {
   const [data, setData] = useState({
     name: "new inventory",
     date: "2023-02-06T00:00:00+00:00",
   });
-  const { mutate, status } = useCreateInventory();
+  const { mutate, status: _status } = useCreateInventory();
   return (
     <View>
       <Typography>Nazwa:</Typography>

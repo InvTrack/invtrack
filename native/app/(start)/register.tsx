@@ -1,12 +1,13 @@
-import { Link } from "expo-router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
+
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
+const { Link } = require("expo-router");
 
 type FormValues = {
   name: string;
@@ -98,7 +99,7 @@ export default function Register() {
         <Typography variant="xs" color="darkBlue" opacity>
           Masz już konto?{" "}
         </Typography>
-        <Link href={"/register"} style={styles.link}>
+        <Link href="/login" style={styles.link}>
           Zaloguj się
         </Link>
       </Typography>
