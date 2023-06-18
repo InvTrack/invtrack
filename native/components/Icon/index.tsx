@@ -101,3 +101,7 @@ export const ArrowRightIcon = (props: IconProps) =>
 const arrowLeftIconSrc = require("../../assets/images/arrow-left.png");
 export const ArrowLeftIcon = (props: IconProps) =>
   createIcon({ source: arrowLeftIconSrc, props });
+
+const homeIconSrc = require("../../assets/images/home.png");
+export const HomeIcon = (props: IconProps) =>
+  createIcon({ source: homeIconSrc, props });

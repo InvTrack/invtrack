@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
@@ -33,7 +34,7 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Typography
         variant="xlBold"
         color="darkBlue"
@@ -64,20 +65,22 @@ export default function Login() {
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        <Typography variant="xs">Zaloguj się</Typography>
+        <Typography variant="xs" color="darkBlue">
+          Zaloguj się
+        </Typography>
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
       </Link>
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
-          Nie masz konta?{" "}
+          Nie masz konta
         </Typography>
         <Link href="/register" style={styles.link}>
           Zarejestruj się
         </Link>
       </Typography>
-    </View>
+    </SafeAreaView>
   );
 }
 const useStyles = createStyles((theme) =>
@@ -87,9 +90,16 @@ const useStyles = createStyles((theme) =>
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
     },
-    title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
+    title: {
+      alignSelf: "center",
+      marginBottom: theme.spacing * 7,
+      marginTop: theme.spacing * 11,
+    },
     input: { marginVertical: theme.spacing },
-    button: { marginTop: theme.spacing * 5, width: "100%" },
+    button: {
+      marginTop: theme.spacing * 5,
+      width: "100%",
+    },
     link: {
       alignSelf: "center",
       marginTop: theme.spacing * 2.5,
