@@ -5,21 +5,20 @@ import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persi
 import { focusManager, QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
-import { maybeCompleteAuthSession } from "expo-web-browser";
 import React, { useEffect } from "react";
 import { AppStateStatus, Platform, useColorScheme } from "react-native";
 
-import { SessionContext, useSession } from "../db";
-import { mainTheme } from "../theme";
-import { useAppState } from "../utils/useAppState";
-import { useOnlineManager } from "../utils/useOnlineManager";
-const {
+import {
   SplashScreen,
   Stack,
   useRootNavigationState,
   useRouter,
   useSegments,
-} = require("expo-router");
+} from "expo-router";
+import { SessionContext, useSession } from "../db";
+import { mainTheme } from "../theme";
+import { useAppState } from "../utils/useAppState";
+import { useOnlineManager } from "../utils/useOnlineManager";
 
 // Catch any errors thrown by the Layout component.
 
@@ -38,7 +37,6 @@ const queryClient = new QueryClient({
   },
 });
 
-maybeCompleteAuthSession();
 const asyncPersist = createAsyncStoragePersister({
   storage: AsyncStorage,
   // dehydrateOptions: {
@@ -66,7 +64,6 @@ export default function App() {
   useEffect(() => {
     if (fontsError) throw fontsError;
   }, [fontsError]);
-  // useGetTokens();
 
   const sessionState = useSession();
   const colorScheme = useColorScheme();
@@ -117,16 +114,7 @@ export default function App() {
         }
       >
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
-          <Stack>
-            <Stack.Screen
-              name="inventory/index"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen name="account" options={{ title: "Dane konta" }} />
-            <Stack.Screen name="new" />
-          </Stack>
+          <Stack />
         </ThemeProvider>
       </PersistQueryClientProvider>
     </SessionContext.Provider>
