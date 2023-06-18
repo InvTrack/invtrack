@@ -6,7 +6,12 @@ import { focusManager, QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
 import React, { useEffect } from "react";
-import { AppStateStatus, Platform, useColorScheme } from "react-native";
+import {
+  AppStateStatus,
+  Platform,
+  StatusBar,
+  useColorScheme,
+} from "react-native";
 
 import {
   SplashScreen,
@@ -15,12 +20,11 @@ import {
   useRouter,
   useSegments,
 } from "expo-router";
+import { HeaderLeft } from "../components/HeaderLeft";
 import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
 import { useOnlineManager } from "../utils/useOnlineManager";
-
-// Catch any errors thrown by the Layout component.
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -78,14 +82,18 @@ export default function App() {
       return;
     }
 
-    const onLoginPage = segments[0] === "(start)";
+    const onLoginPage = segments[0] === "(start)" && segments[1] === "login";
+    const onRegisterPage =
+      segments[0] === "(start)" && segments[1] === "register";
+    const onStartPage = segments[0] === "(start)" && segments[1] === "start";
+
     const loggedIn = sessionState.loggedIn;
 
-    if (!loggedIn && !onLoginPage) {
+    if (!loggedIn && !onStartPage) {
       router.replace("(start)/start");
     }
 
-    if (loggedIn && onLoginPage) {
+    if (loggedIn && (onLoginPage || onStartPage || onRegisterPage)) {
       router.replace("/inventory");
     }
   }, [
@@ -95,10 +103,14 @@ export default function App() {
     navigationState?.key,
   ]);
 
+  React.useEffect(() => {
+    StatusBar.setBarStyle("dark-content", true);
+  }, []);
+
   if (!fontsLoaded || sessionState.loading) {
     return <SplashScreen />;
   }
-  // this shouldnt be in the _layout file
+
   return (
     <SessionContext.Provider value={sessionState}>
       <PersistQueryClientProvider
@@ -114,7 +126,15 @@ export default function App() {
         }
       >
         <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
-          <Stack />
+          <Stack
+            // theme not available here yet
+            screenOptions={{
+              headerTitle: "",
+              headerTransparent: true,
+              headerBackVisible: false,
+              headerLeft: (props) => <HeaderLeft {...props} />,
+            }}
+          />
         </ThemeProvider>
       </PersistQueryClientProvider>
     </SessionContext.Provider>

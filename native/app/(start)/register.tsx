@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
@@ -38,80 +39,88 @@ export default function Register() {
   };
 
   return (
-    <View style={styles.container}>
-      <Typography
-        variant="xlBold"
-        color="darkBlue"
-        underline
-        style={styles.title}
+    <SafeAreaView style={styles.background}>
+      <ScrollView
+        contentContainerStyle={[styles.container, styles.background]}
+        style={styles.background}
       >
-        Rejestracja
-      </Typography>
-      <TextInputController
-        name="name"
-        control={control}
-        textInputProps={{ placeholder: "imię", containerStyle: styles.input }}
-      />
-      <TextInputController
-        name="surname"
-        control={control}
-        textInputProps={{
-          placeholder: "nazwisko",
-          containerStyle: styles.input,
-        }}
-      />
-      <TextInputController
-        name="email"
-        control={control}
-        textInputProps={{
-          placeholder: "e-mail,",
-          containerStyle: styles.input,
-        }}
-      />
-      <TextInputController
-        name="password"
-        control={control}
-        textInputProps={{
-          placeholder: "hasło",
-          secureTextEntry: true,
-          containerStyle: styles.input,
-        }}
-      />
-      <TextInputController
-        name="passwordRepeat"
-        control={control}
-        textInputProps={{
-          placeholder: "powtórz hasło",
-          secureTextEntry: true,
-          containerStyle: styles.input,
-        }}
-      />
-      <Button
-        type="primary"
-        size="xs"
-        shadow
-        containerStyle={styles.button}
-        onPress={handleSubmit(onSubmit)}
-      >
-        <Typography variant="xs">Zarejestruj się</Typography>
-      </Button>
-      <Typography style={styles.registerLink}>
-        <Typography variant="xs" color="darkBlue" opacity>
-          Masz już konto?{" "}
+        <Typography
+          variant="xlBold"
+          color="darkBlue"
+          underline
+          style={styles.title}
+        >
+          Rejestracja
         </Typography>
-        <Link href="/login" style={styles.link}>
-          Zaloguj się
-        </Link>
-      </Typography>
-    </View>
+        <TextInputController
+          name="name"
+          control={control}
+          textInputProps={{ placeholder: "imię", containerStyle: styles.input }}
+        />
+        <TextInputController
+          name="surname"
+          control={control}
+          textInputProps={{
+            placeholder: "nazwisko",
+            containerStyle: styles.input,
+          }}
+        />
+        <TextInputController
+          name="email"
+          control={control}
+          textInputProps={{
+            placeholder: "e-mail,",
+            containerStyle: styles.input,
+          }}
+        />
+        <TextInputController
+          name="password"
+          control={control}
+          textInputProps={{
+            placeholder: "hasło",
+            secureTextEntry: true,
+            containerStyle: styles.input,
+          }}
+        />
+        <TextInputController
+          name="passwordRepeat"
+          control={control}
+          textInputProps={{
+            placeholder: "powtórz hasło",
+            secureTextEntry: true,
+            containerStyle: styles.input,
+          }}
+        />
+        <Button
+          type="primary"
+          size="xs"
+          shadow
+          containerStyle={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Typography variant="xs" color="darkBlue">
+            Zarejestruj się
+          </Typography>
+        </Button>
+        <Typography style={styles.registerLink}>
+          <Typography variant="xs" color="darkBlue" opacity>
+            Masz już konto?{" "}
+          </Typography>
+          <Link href="/login" style={styles.link}>
+            Zaloguj się
+          </Link>
+        </Typography>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
+      alignItems: "center",
+      justifyContent: "center",
     },
     title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
     input: { marginVertical: theme.spacing },
@@ -128,6 +137,12 @@ const useStyles = createStyles((theme) =>
       justifyContent: "flex-end",
       marginTop: theme.spacing * 5,
     },
-    button: { marginTop: theme.spacing * 5, width: "100%" },
+    button: {
+      marginTop: theme.spacing * 5,
+      width: "100%",
+    },
+    background: {
+      backgroundColor: theme.colors.lightBlue,
+    },
   })
 );
