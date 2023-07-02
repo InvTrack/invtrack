@@ -56,7 +56,7 @@ const onAppStateChange = (status: AppStateStatus) => {
   }
 };
 
-export default function App() {
+export default function Root() {
   useAppState(onAppStateChange);
   useOnlineManager();
   const [fontsLoaded, fontsError] = useFonts({
@@ -76,31 +76,34 @@ export default function App() {
   const router = useRouter();
   const navigationState = useRootNavigationState();
 
+  const onLoginPage = segments[0] === "(start)" && segments[1] === "login";
+  const onRegisterPage =
+    segments[0] === "(start)" && segments[1] === "register";
+  const onStartPage = segments[0] === "(start)" && segments[1] === "start";
+  const loggedIn = sessionState.loggedIn;
+
+  //
   React.useEffect(() => {
     if (!navigationState?.key) {
       // Temporary fix for router not being ready.
       return;
     }
 
-    const onLoginPage = segments[0] === "(start)" && segments[1] === "login";
-    const onRegisterPage =
-      segments[0] === "(start)" && segments[1] === "register";
-    const onStartPage = segments[0] === "(start)" && segments[1] === "start";
-
-    const loggedIn = sessionState.loggedIn;
+    if (loggedIn && (onLoginPage || onStartPage || onRegisterPage)) {
+      router.replace("/(tabs)/inventory");
+    }
 
     if (!loggedIn && !onStartPage) {
       router.replace("(start)/start");
     }
-
-    if (loggedIn && (onLoginPage || onStartPage || onRegisterPage)) {
-      router.replace("/inventory");
-    }
   }, [
     sessionState.loading,
     sessionState.loggedIn,
-    segments[0],
     navigationState?.key,
+    onLoginPage,
+    onRegisterPage,
+    onStartPage,
+    loggedIn,
   ]);
 
   React.useEffect(() => {
@@ -110,7 +113,6 @@ export default function App() {
   if (!fontsLoaded || sessionState.loading) {
     return <SplashScreen />;
   }
-
   return (
     <SessionContext.Provider value={sessionState}>
       <PersistQueryClientProvider
@@ -130,11 +132,26 @@ export default function App() {
             // theme not available here yet
             screenOptions={{
               headerTitle: "",
-              headerTransparent: true,
               headerBackVisible: false,
-              headerLeft: (props) => <HeaderLeft {...props} />,
+              headerStyle: { backgroundColor: "#EDF6FF" },
+              headerLeft: (props) => (
+                <HeaderLeft
+                  {...props}
+                  href={loggedIn ? "/(tabs)/inventory" : "(start)/start"}
+                />
+              ),
             }}
-          />
+          >
+            <Stack.Screen name="(start)" />
+            <Stack.Screen name="(tabs)" />
+            {/* TODO styling etc. */}
+            <Stack.Screen
+              name="modal"
+              options={{
+                presentation: "modal",
+              }}
+            />
+          </Stack>
         </ThemeProvider>
       </PersistQueryClientProvider>
     </SessionContext.Provider>

@@ -1,16 +1,16 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Button } from "../../../components/Button";
+import { Button } from "../../../../components/Button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-} from "../../../components/Icon";
-import { Typography } from "../../../components/Typography";
-import { useRecordPanel } from "../../../db";
-import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
-import { createStyles } from "../../../theme/useStyles";
+} from "../../../../components/Icon";
+import { Typography } from "../../../../components/Typography";
+import { useRecordPanel } from "../../../../db";
+import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
+import { createStyles } from "../../../../theme/useStyles";
 const { Stack, usePathname } = require("expo-router");
 
 const ProductButton = ({
