@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Typography } from "../../../components/Typography";
-import { useListRecords } from "../../../db";
+import { Typography } from "../../../../components/Typography";
+import { useListRecords } from "../../../../db";
 const { Link, Stack, usePathname } = require("expo-router");
 
 const getInventoryId = (pathName: string) => pathName.split("/")[2];
@@ -27,7 +27,7 @@ export default function InventoryIdIndex() {
             <Link
               key={id}
               href={{
-                pathname: "/inventory/[inventory]/[product]",
+                pathname: "/(tabs)/inventory/[inventory]/[product]",
                 params: { inventory: inventoryId, product: id },
               }}
             >
