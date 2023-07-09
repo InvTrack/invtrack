@@ -1,27 +1,28 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import { Button } from "../../components/Button";
-import { Typography } from "../../components/Typography";
-import { useListInventories } from "../../db";
-import { createStyles } from "../../theme/useStyles";
-const { Link, Stack } = require("expo-router");
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "../../../components/Button";
+import { Typography } from "../../../components/Typography";
+import { useListInventories } from "../../../db";
+import { createStyles } from "../../../theme/useStyles";
+const { Link } = require("expo-router");
 
 export default function Calendar() {
   const styles = useStyles();
   const { data: inventories, isLoading } = useListInventories();
+
   if (isLoading || !inventories)
-    return <Stack.Screen options={{ title: "Loading" }} />;
+    return <Typography variant="xlBold">LOADING...</Typography>;
   return (
-    <>
-      <Stack.Screen options={{ title: "Kalendarz" }} />
+    <SafeAreaView edges={["left", "right"]}>
       <View style={styles.screen}>
         <Typography>Lista inwentaryzacji</Typography>
         {inventories.map(({ id, name }) => {
           return (
             <Link
               href={{
-                pathname: `/inventory/[inventory]/`,
+                pathname: `/(tabs)/inventory/[inventory]/`,
                 params: { inventory: id },
               }}
               key={id}
@@ -36,7 +37,7 @@ export default function Calendar() {
           </Button>
         </Link>
       </View>
-    </>
+    </SafeAreaView>
   );
 }
 

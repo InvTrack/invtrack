@@ -3,7 +3,6 @@
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
-    "baseUrl": "./",
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "noUnusedLocals": true,
