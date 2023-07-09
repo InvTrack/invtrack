@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createStyles } from "../../theme/useStyles";
@@ -7,17 +8,34 @@ import { Typography } from "../Typography";
 
 type InventoryCardAddProps = {
   title: string;
+  inventoryId: number;
 };
 
-export const InventoryCardLink = ({ title }: InventoryCardAddProps) => {
+export const InventoryCardLink = ({
+  title,
+  inventoryId,
+}: InventoryCardAddProps) => {
   const styles = useStyles();
+  console.log(inventoryId);
   return (
-    <Card color="mediumBlue" style={styles.card} padding="none">
-      <Typography color="darkBlue" variant="lBold">
-        {title}
-      </Typography>
-      <SmallerArrowRightIcon size={25} />
-    </Card>
+    <Link
+      href={{
+        pathname: `/(tabs)/inventory/[inventory]/`,
+        params: { inventory: inventoryId },
+      }}
+      asChild
+    >
+      <Card color="mediumBlue" style={styles.card} padding="none">
+        <Typography
+          color="darkBlue"
+          variant={title.length > 15 ? "sBold" : "lBold"}
+          numberOfLines={2}
+        >
+          {title}
+        </Typography>
+        <SmallerArrowRightIcon size={25} />
+      </Card>
+    </Link>
   );
 };
 const useStyles = createStyles((theme) =>
