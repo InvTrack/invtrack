@@ -7,24 +7,27 @@ const TabLayout = () => {
   return (
     <Tabs>
       <Tabs.Screen
+        name="list"
+        options={{
+          tabBarLabel: "list",
+          tabBarActiveTintColor: theme.colors.mediumBlue,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
         name="inventory"
         options={{
           tabBarLabel: "Inventory",
           tabBarActiveTintColor: theme.colors.mediumBlue,
+          headerShown: false,
         }}
       />
       <Tabs.Screen
         name="Tab3"
         options={{
-          tabBarLabel: "Tab2",
-          tabBarActiveTintColor: theme.colors.mediumBlue,
-        }}
-      />
-      <Tabs.Screen
-        name="Tab2"
-        options={{
           tabBarLabel: "Tab3",
           tabBarActiveTintColor: theme.colors.mediumBlue,
+          headerShown: false,
         }}
       />
     </Tabs>
