@@ -9,10 +9,9 @@ import { TextInput, TextInputProps } from "../TextInput";
 
 // import { Typography } from "../Typography";
 
-interface TextInputControllerProps<T extends FieldValues>
-  extends UseControllerProps<T> {
+type TextInputControllerProps<T extends FieldValues> = UseControllerProps<T> & {
   textInputProps?: Omit<TextInputProps, "value" | "onChange">;
-}
+};
 
 export const TextInputController = <T extends FieldValues>({
   textInputProps,
