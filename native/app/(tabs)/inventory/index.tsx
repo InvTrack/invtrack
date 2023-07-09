@@ -15,7 +15,7 @@ export default function Calendar() {
   if (isLoading || !inventories)
     return <Typography variant="xlBold">LOADING...</Typography>;
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]}>
+    <SafeAreaView edges={["left", "right"]}>
       <View style={styles.screen}>
         <Typography>Lista inwentaryzacji</Typography>
         {inventories.map(({ id, name }) => {
