@@ -11,7 +11,7 @@ const InventoryLayout = () => {
         }}
       />
       <Stack.Screen
-        name="[inventory]"
+        name="[product]"
         options={{
           headerShown: false,
         }}
