@@ -5,6 +5,7 @@ import {
   StyleProp,
   StyleSheet,
   TextInput as NativeTextInput,
+  TextInputChangeEventData,
   TextInputFocusEventData,
   TextInputProps as NativeTextInputProps,
   TextStyle,
@@ -15,7 +16,7 @@ import {
 import { createStyles } from "../../theme/useStyles";
 
 const BORDER_WIDTH = 4;
-export interface TextInputProps extends Omit<NativeTextInputProps, "onChange"> {
+export type TextInputProps = Omit<NativeTextInputProps, "onChange"> & {
   invalid?: boolean;
   disabled?: boolean;
   editable?: boolean;
@@ -23,10 +24,10 @@ export interface TextInputProps extends Omit<NativeTextInputProps, "onChange"> {
   inputStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   style?: never;
-  onFocus?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
-  onBlur?: (e?: NativeSyntheticEvent<TextInputFocusEventData>) => void;
-  onChange: (text: string) => void;
-}
+  onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
+  onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
+};
 
 export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
   (
@@ -74,7 +75,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
         >
           <NativeTextInput
             ref={ref}
-            onChangeText={onChange}
+            onChange={onChange}
             selectTextOnFocus={!disabled && editable}
             textAlignVertical="top"
             accessible
