@@ -13,7 +13,8 @@ import { useUpdateRecord } from "./useUpdateRecord";
  * Wystawia też `data` informacje potrzebne do przedstawienia produktu w UI.
  *
  */
-export const useRecordPanel = (recordId: string) => {
+export const useRecordPanel = (recordId: string | undefined) => {
+  if (!recordId) throw new Error("recordId is undefined");
   const { mutate } = useUpdateRecord(recordId);
   const recordResult = useGetRecord(recordId);
   const { data, isSuccess } = recordResult;
