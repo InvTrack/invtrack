@@ -1,17 +1,17 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Button } from "../../../components/Button";
+import { Button } from "../../../../components/Button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-} from "../../../components/Icon";
-import { Typography } from "../../../components/Typography";
-import { useRecordPanel } from "../../../db";
-import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
-import { createStyles } from "../../../theme/useStyles";
-const { Stack, usePathname } = require("expo-router");
+} from "../../../../components/Icon";
+import { Typography } from "../../../../components/Typography";
+import { useRecordPanel } from "../../../../db";
+import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
+import { createStyles } from "../../../../theme/useStyles";
+const { usePathname } = require("expo-router");
 
 const ProductButton = ({
   label,
@@ -42,13 +42,14 @@ const ProductButton = ({
 };
 
 // TODO fix fragile code
-const getRecordId = (pathName: string) => pathName.split("/")[-1];
+const getRecordId = (pathName: string) => pathName.split("/").splice(-1).pop();
 
 export default function Product() {
   const styles = useStyles();
   const pathName = usePathname();
   const recordId = getRecordId(pathName);
   const recordPanel = useRecordPanel(recordId);
+
   const { data: inventoryName } = useGetInventoryName(
     recordPanel.data?.inventory_id
   );
@@ -59,12 +60,12 @@ export default function Product() {
     !recordPanel.data?.steps ||
     !recordPanel.data?.inventory_id
   )
-    return <Stack.Screen options={{ title: "Loading" }} />;
+    return <Typography>Loading product</Typography>;
 
   const { data, setQuantity, steppers } = recordPanel;
 
   const { name: productName, quantity, unit } = data;
-
+  console.log(inventoryName);
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -142,7 +143,7 @@ const useStyles = createStyles((theme) =>
       backgroundColor: theme.colors.mediumBlue,
       height: 50,
       justifyContent: "center",
-      textAlign: "center",
+      alignItems: "center",
     },
     container: { backgroundColor: theme.colors.lightBlue, height: "100%" },
     contentContainer: { paddingHorizontal: 24 },

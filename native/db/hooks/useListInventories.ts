@@ -1,9 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
 
 import { supabase } from "../supabase";
 import { Inventory, InventoryTable } from "../types";
-import { SessionContext } from "./sessionContext";
+import { useSession } from "./sessionContext";
 
 const listInventories = async () => {
   const res = await supabase
@@ -16,7 +15,7 @@ const listInventories = async () => {
 };
 
 export const useListInventories = () => {
-  const { session } = useContext(SessionContext);
+  const { session } = useSession();
   const query = useQuery(
     ["inventories", session?.user.id],
     () => session && listInventories()

@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 
-import { SessionContext, supabase, useGetUser, useUpdateUser } from "../db";
+import { supabase, useGetUser, useUpdateUser } from "../db";
+import { useSession } from "../db/hooks/sessionContext";
 const { useRouter } = require("expo-router");
 
 export default function AccountDetails() {
-  const { session } = useContext(SessionContext);
+  const { session } = useSession();
   const { data: user, isLoading } = useGetUser();
   // TODO try to move to @tanstack/react-query
   const [username, setUsername] = useState(user?.username || "");

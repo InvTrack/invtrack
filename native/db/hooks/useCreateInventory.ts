@@ -1,12 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { useContext } from "react";
 
 import { supabase } from "../supabase";
 import { Inventory, InventoryTable } from "../types";
-import { SessionContext } from "./sessionContext";
+import { useSession } from "./sessionContext";
 
 export const useCreateInventory = () => {
-  const { companyId } = useContext(SessionContext);
+  const { companyId } = useSession();
 
   return useMutation(
     async (inventory: Omit<Inventory, "created_at" | "company_id" | "id">) => {
