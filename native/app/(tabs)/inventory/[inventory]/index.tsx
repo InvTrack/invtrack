@@ -3,21 +3,19 @@ import { View } from "react-native";
 
 import { Typography } from "../../../../components/Typography";
 import { useListRecords } from "../../../../db";
-const { Link, Stack, usePathname } = require("expo-router");
+const { Link, usePathname } = require("expo-router");
 
-const getInventoryId = (pathName: string) => pathName.split("/")[2];
+const getInventoryId = (pathName: string) => pathName.split("/").pop();
 
 export default function InventoryIdIndex() {
   const pathName = usePathname();
   const inventoryId = getInventoryId(pathName);
   const { data, isSuccess } = useListRecords(inventoryId);
 
-  if (!isSuccess || !data)
-    return <Stack.Screen options={{ title: "Loading inventory" }} />;
+  if (!isSuccess || !data) return <Typography>Loading inventory</Typography>;
 
   return (
     <>
-      <Stack.Screen options={{ title: "Nazwa inwentaryzacji" }} />
       <View>
         <Typography>Lista produktów</Typography>
         {data.map(({ name, quantity, unit, id }) => {

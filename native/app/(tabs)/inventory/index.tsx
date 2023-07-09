@@ -12,10 +12,8 @@ export default function Calendar() {
   const styles = useStyles();
   const { data: inventories, isLoading } = useListInventories();
 
-  if (isLoading || !inventories) return;
-  <SafeAreaView>
-    <Typography variant="xlBold">LOADING...</Typography>;
-  </SafeAreaView>;
+  if (isLoading || !inventories)
+    return <Typography variant="xlBold">LOADING...</Typography>;
   return (
     <SafeAreaView edges={["bottom", "left", "right"]}>
       <View style={styles.screen}>
