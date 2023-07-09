@@ -149,6 +149,8 @@ export default function Root() {
               name="modal"
               options={{
                 presentation: "modal",
+                // needs a custom header
+                headerShown: false,
               }}
             />
           </Stack>

@@ -1,9 +1,11 @@
-import React from "react";
+import { capitalize } from "lodash";
+import React, { useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { InventoryCardAdd } from "../../../components/InventoryCard/InventoryCardAdd";
 import { InventoryCardLink } from "../../../components/InventoryCard/InventoryCardLink";
 import { Typography } from "../../../components/Typography";
+import { useListInventories } from "../../../db";
 import { createStyles } from "../../../theme/useStyles";
 
 const MonthTitle = ({ title }: { title: string }) => {
@@ -20,16 +22,68 @@ const DayTitle = ({ title }: { title: string }) => {
     </Typography>
   );
 };
+
+const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
+  if (!data) return;
+  const days: { [key: string]: typeof data } = {};
+  data.forEach((item) => {
+    const day = new Date(item.created_at).toLocaleString("pl-PL", {
+      day: "numeric",
+      month: "numeric",
+    });
+    if (!days[day]) {
+      days[day] = [];
+    }
+    days[day].push(item);
+  });
+  return Object.entries(days);
+};
+
+const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
+  if (!groupedByDay) return;
+  const months: { [key: string]: typeof groupedByDay } = {};
+  groupedByDay.forEach(([day, inventories]) => {
+    const month = new Date(inventories[0].created_at).toLocaleString("pl-PL", {
+      month: "long",
+    });
+    const capitalizedMonth = capitalize(month);
+    if (!months[capitalizedMonth]) {
+      months[capitalizedMonth] = [];
+    }
+    months[capitalizedMonth].push([day, inventories]);
+  });
+
+  return Object.entries(months).reverse();
+};
+
 const ListIndex = () => {
   const styles = useStyles();
+  const { data } = useListInventories();
+  const months = useMemo(() => groupDaysByMonth(groupByDay(data)), [data]);
+
+  if (!data || !months) return null;
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.screen}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <MonthTitle title="Marzec" />
-        <DayTitle title="21.03" />
-        <InventoryCardLink title="Inwentaryzacja 1" />
-        <InventoryCardAdd />
+        {months.map(([month, days]) => (
+          <React.Fragment key={month}>
+            <MonthTitle title={month} />
+            {days.map(([day, inventories]) => (
+              <React.Fragment key={day}>
+                <DayTitle title={day} />
+                {inventories.map((inventory) => (
+                  <InventoryCardLink
+                    key={inventory.id}
+                    title={inventory.name}
+                    inventoryId={inventory.id}
+                  />
+                ))}
+                <InventoryCardAdd />
+              </React.Fragment>
+            ))}
+          </React.Fragment>
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
