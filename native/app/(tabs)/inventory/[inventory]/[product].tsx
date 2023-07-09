@@ -1,17 +1,23 @@
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Keyboard, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
+import { useForm } from "react-hook-form";
 import { Button } from "../../../../components/Button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
 } from "../../../../components/Icon";
+import { ProductInputController } from "../../../../components/ProductInputController";
 import { Typography } from "../../../../components/Typography";
 import { useRecordPanel } from "../../../../db";
 import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
 import { createStyles } from "../../../../theme/useStyles";
 const { usePathname } = require("expo-router");
+
+type ProductInputValues = {
+  quantityManual: number;
+};
 
 const ProductButton = ({
   label,
@@ -49,10 +55,35 @@ export default function Product() {
   const pathName = usePathname();
   const recordId = getRecordId(pathName);
   const recordPanel = useRecordPanel(recordId);
-
+  const [isEditMode, setIsEditMode] = React.useState(false);
+  const {
+    control,
+    handleSubmit,
+    setFocus,
+    // setValue,
+    // resetField,
+    // watch,
+    // reset,
+    // register,
+  } = useForm<ProductInputValues>({
+    defaultValues: {
+      quantityManual: recordPanel.data?.quantity ?? 0,
+    },
+    reValidateMode: "onSubmit",
+  });
   const { data: inventoryName } = useGetInventoryName(
     recordPanel.data?.inventory_id
   );
+
+  // React.useEffect(() => {
+  //   register("quantityManual");
+  // }, [register]);
+
+  // React.useLayoutEffect(() => {
+  //   if (!recordPanel.data?.quantity) return;
+  //   setValue("quantityManual", recordPanel.data?.quantity);
+  //   reset({ quantityManual: recordPanel.data?.quantity });
+  // }, [recordPanel.data?.quantity, setValue, resetField]);
 
   if (
     !recordPanel.isSuccess ||
@@ -65,9 +96,13 @@ export default function Product() {
   const { data, setQuantity, steppers } = recordPanel;
 
   const { name: productName, quantity, unit } = data;
-  console.log(inventoryName);
+
+  const onSubmit = ({ quantityManual }: ProductInputValues) => {
+    setQuantity(quantityManual);
+    setIsEditMode(false);
+  };
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onTouchStart={() => Keyboard.dismiss()}>
       <View style={styles.topBar}>
         <Typography variant="xsBold">{inventoryName ?? ""}</Typography>
       </View>
@@ -99,19 +134,37 @@ export default function Product() {
             </View>
             <View style={styles.middleColumn}>
               <Typography underline>Ile jest:</Typography>
-              <Typography
-                variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
-                style={styles.title}
-              >
-                {/* liczba + jednostka current */}
-                {unit ? quantity + " " + unit : null}
-              </Typography>
+              {isEditMode ? (
+                <ProductInputController
+                  name="quantityManual"
+                  control={control}
+                  unit={unit}
+                  rules={{
+                    required: true,
+                    onBlur: () => {
+                      handleSubmit(onSubmit);
+                      setIsEditMode(false);
+                    },
+                  }}
+                />
+              ) : (
+                <Typography
+                  variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
+                  style={styles.title}
+                >
+                  {/* liczba + jednostka current */}
+                  {unit ? quantity + " " + unit : null}
+                </Typography>
+              )}
               <Button
                 type="primary"
                 size="xl"
                 containerStyle={styles.editButton}
                 // TODO: make the current quantity editable - convert to a text field with fixed jednostka
-                onPress={() => setQuantity(69)}
+                onPress={() => {
+                  setIsEditMode(true);
+                  setFocus("quantityManual");
+                }}
               >
                 <PencilIcon size={32} />
               </Button>
@@ -158,6 +211,7 @@ const useStyles = createStyles((theme) =>
       justifyContent: "flex-end",
       alignItems: "center",
       marginHorizontal: 16,
+      flex: 1,
     },
     editButton: {
       marginTop: 24,
