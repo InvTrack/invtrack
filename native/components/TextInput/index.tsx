@@ -5,7 +5,6 @@ import {
   StyleProp,
   StyleSheet,
   TextInput as NativeTextInput,
-  TextInputChangeEventData,
   TextInputFocusEventData,
   TextInputProps as NativeTextInputProps,
   TextStyle,
