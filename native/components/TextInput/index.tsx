@@ -26,7 +26,7 @@ export type TextInputProps = Omit<NativeTextInputProps, "onChange"> & {
   style?: never;
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
-  onChange: (e: NativeSyntheticEvent<TextInputChangeEventData>) => void;
+  onChange: (text: string) => void;
 };
 
 export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
@@ -75,7 +75,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
         >
           <NativeTextInput
             ref={ref}
-            onChange={onChange}
+            onChangeText={onChange}
             selectTextOnFocus={!disabled && editable}
             textAlignVertical="top"
             accessible

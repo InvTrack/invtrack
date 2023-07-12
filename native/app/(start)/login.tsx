@@ -22,6 +22,9 @@ export default function Login() {
       email: "",
       password: "",
     },
+    resetOptions: {
+      keepDirtyValues: true,
+    },
   });
   const styles = useStyles();
   const onSubmit = async ({ email, password }: LoginFormValues) => {

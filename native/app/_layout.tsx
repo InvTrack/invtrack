@@ -14,13 +14,16 @@ import {
 } from "react-native";
 
 import {
+  Link,
   SplashScreen,
   Stack,
   useRootNavigationState,
   useRouter,
   useSegments,
 } from "expo-router";
+import { Button } from "../components/Button";
 import { HeaderLeft } from "../components/HeaderLeft";
+import { Typography } from "../components/Typography";
 import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
@@ -100,9 +103,6 @@ export default function Root() {
     sessionState.loading,
     sessionState.loggedIn,
     navigationState?.key,
-    onLoginPage,
-    onRegisterPage,
-    onStartPage,
     loggedIn,
   ]);
 
@@ -139,6 +139,13 @@ export default function Root() {
                   {...props}
                   href={loggedIn ? "/(tabs)/inventory" : "(start)/start"}
                 />
+              ),
+              headerRight: () => (
+                <Link href={{ pathname: "/account" }} asChild>
+                  <Button type="primary" size="xs" onPress={() => {}}>
+                    <Typography variant="xs">Ac</Typography>
+                  </Button>
+                </Link>
               ),
             }}
           >
