@@ -12,6 +12,7 @@ const TabLayout = () => {
           tabBarLabel: "list",
           tabBarActiveTintColor: theme.colors.mediumBlue,
           headerShown: false,
+          lazy: false,
         }}
       />
       <Tabs.Screen

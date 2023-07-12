@@ -14,16 +14,14 @@ import {
 } from "react-native";
 
 import {
-  Link,
   SplashScreen,
   Stack,
   useRootNavigationState,
   useRouter,
   useSegments,
 } from "expo-router";
-import { Button } from "../components/Button";
 import { HeaderLeft } from "../components/HeaderLeft";
-import { Typography } from "../components/Typography";
+import { HeaderRight } from "../components/HeaderRight";
 import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
@@ -140,12 +138,8 @@ export default function Root() {
                   href={loggedIn ? "/(tabs)/inventory" : "(start)/start"}
                 />
               ),
-              headerRight: () => (
-                <Link href={{ pathname: "/account" }} asChild>
-                  <Button type="primary" size="xs" onPress={() => {}}>
-                    <Typography variant="xs">Ac</Typography>
-                  </Button>
-                </Link>
+              headerRight: (props) => (
+                <HeaderRight {...props} href="/account" />
               ),
             }}
           >
@@ -158,6 +152,12 @@ export default function Root() {
                 presentation: "modal",
                 // needs a custom header
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="account"
+              options={{
+                headerTitle: "Ustawienia",
               }}
             />
           </Stack>
