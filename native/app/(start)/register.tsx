@@ -27,10 +27,12 @@ export default function Register() {
       password: "",
       passwordRepeat: "",
     },
+    resetOptions: {
+      keepDirtyValues: true,
+    },
   });
 
   const onSubmit = async ({ email, password, ...props }: FormValues) => {
-    console.log(props);
     const { error } = await supabase.auth.signUp({
       email,
       password,
