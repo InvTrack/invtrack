@@ -27,6 +27,7 @@ export default function AccountDetails() {
         value={username || ""}
         onChangeText={(text) => setUsername(text)}
       />
+
       <Input
         label="Company name"
         value={companyName || ""}

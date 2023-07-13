@@ -8,8 +8,8 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { createStyles } from "../../theme/useStyles";
-import { TypographyProps } from "../Typography";
+import { createStyles } from "../theme/useStyles";
+import { TypographyProps } from "./Typography";
 
 export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
