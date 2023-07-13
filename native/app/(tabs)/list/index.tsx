@@ -36,7 +36,7 @@ const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
     }
     days[day].push(item);
   });
-  return Object.entries(days);
+  return Object.entries(days).reverse();
 };
 
 const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
@@ -53,7 +53,7 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
     months[capitalizedMonth].push([day, inventories]);
   });
 
-  return Object.entries(months).reverse();
+  return Object.entries(months);
 };
 
 const ListIndex = () => {
