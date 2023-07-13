@@ -12,7 +12,7 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { createStyles } from "../../theme/useStyles";
+import { createStyles } from "../theme/useStyles";
 
 const BORDER_WIDTH = 4;
 export type TextInputProps = Omit<NativeTextInputProps, "onChange"> & {

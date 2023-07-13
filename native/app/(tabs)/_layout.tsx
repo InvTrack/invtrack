@@ -23,14 +23,6 @@ const TabLayout = () => {
           headerShown: false,
         }}
       />
-      <Tabs.Screen
-        name="Tab3"
-        options={{
-          tabBarLabel: "Tab3",
-          tabBarActiveTintColor: theme.colors.mediumBlue,
-          headerShown: false,
-        }}
-      />
     </Tabs>
   );
 };

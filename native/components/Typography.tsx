@@ -8,8 +8,8 @@ import {
   TextStyle,
 } from "react-native";
 
-import { MainTheme, ThemeColors } from "../../theme";
-import { createStyles } from "../../theme/useStyles";
+import { MainTheme, ThemeColors } from "../theme";
+import { createStyles } from "../theme/useStyles";
 
 type Align = Capitalize<Required<TypographyProps>["align"]>;
 

@@ -12,7 +12,7 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { MainTheme } from "../../theme";
+import { MainTheme } from "../theme";
 
 export interface InternalIconProps {
   source: ImageURISource;
@@ -90,30 +90,30 @@ const createIcon = ({
   props: IconProps;
 }) => <Icon source={source} {...props} />;
 
-const pencilIconSrc = require("../../assets/images/pencil.png");
+const pencilIconSrc = require("../assets/images/pencil.png");
 export const PencilIcon = (props: IconProps) =>
   createIcon({ source: pencilIconSrc, props });
 
-const arrowRightIconSrc = require("../../assets/images/arrow-right.png");
+const arrowRightIconSrc = require("../assets/images/arrow-right.png");
 export const ArrowRightIcon = (props: IconProps) =>
   createIcon({ source: arrowRightIconSrc, props });
 
-const arrowLeftIconSrc = require("../../assets/images/arrow-left.png");
+const arrowLeftIconSrc = require("../assets/images/arrow-left.png");
 export const ArrowLeftIcon = (props: IconProps) =>
   createIcon({ source: arrowLeftIconSrc, props });
 
-const homeIconSrc = require("../../assets/images/home.png");
+const homeIconSrc = require("../assets/images/home.png");
 export const HomeIcon = (props: IconProps) =>
   createIcon({ source: homeIconSrc, props });
 
-const smallerArrowRightIconSrc = require("../../assets/images/smaller-arrow-right.png");
+const smallerArrowRightIconSrc = require("../assets/images/smaller-arrow-right.png");
 export const SmallerArrowRightIcon = (props: IconProps) =>
   createIcon({ source: smallerArrowRightIconSrc, props });
 
-const plusIconSrc = require("../../assets/images/plus.png");
+const plusIconSrc = require("../assets/images/plus.png");
 export const PlusIcon = (props: IconProps) =>
   createIcon({ source: plusIconSrc, props });
 
-const cogIconSrc = require("../../assets/images/cog.png");
+const cogIconSrc = require("../assets/images/cog.png");
 export const CogIcon = (props: IconProps) =>
   createIcon({ source: cogIconSrc, props });

@@ -5,7 +5,7 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
-import { TextInput, TextInputProps } from "../TextInput";
+import { TextInput, TextInputProps } from "./TextInput";
 
 // import { Typography } from "../Typography";
 
