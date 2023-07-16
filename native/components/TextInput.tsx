@@ -75,6 +75,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
           <NativeTextInput
             ref={ref}
             onChangeText={onChange}
+            value={value}
             selectTextOnFocus={!disabled && editable}
             textAlignVertical="top"
             accessible
