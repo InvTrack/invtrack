@@ -18,7 +18,7 @@ const TabLayout = () => {
       <Tabs.Screen
         name="inventory"
         options={{
-          tabBarLabel: "Inventory",
+          tabBarLabel: "inventory",
           tabBarActiveTintColor: theme.colors.mediumBlue,
           headerShown: false,
         }}

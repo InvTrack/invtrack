@@ -1,4 +1,6 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+// RNGH has to be on top
+// organize-imports-ignore
+import "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@react-navigation/native";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
@@ -63,7 +65,6 @@ export default function Root() {
   const [fontsLoaded, fontsError] = useFonts({
     latoBold: require("../assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
-    ...FontAwesome.font,
   });
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
