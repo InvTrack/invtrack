@@ -28,6 +28,8 @@ import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
 import { useOnlineManager } from "../utils/useOnlineManager";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,6 +61,38 @@ const onAppStateChange = (status: AppStateStatus) => {
   }
 };
 
+const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
+  const colorScheme = useColorScheme();
+  const sessionState = useSession();
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetProvider>
+        <SessionContext.Provider value={sessionState}>
+          <PersistQueryClientProvider
+            client={queryClient}
+            persistOptions={{
+              maxAge: Infinity,
+              persister: asyncPersist,
+            }}
+            onSuccess={() =>
+              queryClient
+                .resumePausedMutations()
+                .then(() => queryClient.invalidateQueries())
+            }
+          >
+            <ThemeProvider
+              value={colorScheme === "dark" ? mainTheme : mainTheme}
+            >
+              {children}
+            </ThemeProvider>
+          </PersistQueryClientProvider>
+        </SessionContext.Provider>
+      </BottomSheetProvider>
+    </GestureHandlerRootView>
+  );
+};
+
 export default function Root() {
   useAppState(onAppStateChange);
   useOnlineManager();
@@ -72,7 +106,6 @@ export default function Root() {
   }, [fontsError]);
 
   const sessionState = useSession();
-  const colorScheme = useColorScheme();
 
   const segments = useSegments();
   const router = useRouter();
@@ -113,57 +146,41 @@ export default function Root() {
     return <SplashScreen />;
   }
   return (
-    <SessionContext.Provider value={sessionState}>
-      <PersistQueryClientProvider
-        client={queryClient}
-        persistOptions={{
-          maxAge: Infinity,
-          persister: asyncPersist,
+    <ProvideProviders>
+      <Stack
+        // theme not available here yet
+        screenOptions={{
+          headerTitle: "",
+          headerBackVisible: false,
+          headerStyle: { backgroundColor: "#EDF6FF" },
+          headerLeft: (props) => (
+            <HeaderLeft
+              {...props}
+              href={loggedIn ? "/(tabs)/inventory" : "(start)/start"}
+            />
+          ),
+          headerRight: (props) => <HeaderRight {...props} href="/account" />,
         }}
-        onSuccess={() =>
-          queryClient
-            .resumePausedMutations()
-            .then(() => queryClient.invalidateQueries())
-        }
       >
-        <ThemeProvider value={colorScheme === "dark" ? mainTheme : mainTheme}>
-          <Stack
-            // theme not available here yet
-            screenOptions={{
-              headerTitle: "",
-              headerBackVisible: false,
-              headerStyle: { backgroundColor: "#EDF6FF" },
-              headerLeft: (props) => (
-                <HeaderLeft
-                  {...props}
-                  href={loggedIn ? "/(tabs)/inventory" : "(start)/start"}
-                />
-              ),
-              headerRight: (props) => (
-                <HeaderRight {...props} href="/account" />
-              ),
-            }}
-          >
-            <Stack.Screen name="(start)" />
-            <Stack.Screen name="(tabs)" />
-            {/* TODO styling etc. */}
-            <Stack.Screen
-              name="modal"
-              options={{
-                presentation: "modal",
-                // needs a custom header
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="account"
-              options={{
-                headerTitle: "Ustawienia",
-              }}
-            />
-          </Stack>
-        </ThemeProvider>
-      </PersistQueryClientProvider>
-    </SessionContext.Provider>
+        <Stack.Screen name="(start)" />
+        <Stack.Screen name="(tabs)" />
+        {/* TODO styling etc. */}
+        <Stack.Screen
+          name="modal"
+          options={{
+            presentation: "modal",
+            // needs a custom header
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="account"
+          options={{
+            headerTitle: "Ustawienia",
+          }}
+        />
+      </Stack>
+      <BottomSheet />
+    </ProvideProviders>
   );
 }
