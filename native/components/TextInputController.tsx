@@ -10,9 +10,11 @@ import { TextInput, TextInputProps } from "./TextInput";
 // import { Typography } from "../Typography";
 
 type TextInputControllerProps<T extends FieldValues> = UseControllerProps<T> & {
-  textInputProps?: Omit<TextInputProps, "value" | "onChange">;
+  textInputProps?: Omit<TextInputProps, "onChange">;
 };
-
+/**
+ * be vary when setting the value explicitly here
+ */
 export const TextInputController = <T extends FieldValues>({
   textInputProps,
   ...props
@@ -26,12 +28,12 @@ export const TextInputController = <T extends FieldValues>({
   return (
     <>
       <TextInput
+        {...textInputProps}
         onChange={onChange}
-        value={value}
+        value={textInputProps?.value || value}
         onBlur={onBlur}
         ref={ref}
         // error={!!error}
-        {...textInputProps}
       />
 
       {/* {error && <Typography variant="error">{error.message}</Typography>} */}
