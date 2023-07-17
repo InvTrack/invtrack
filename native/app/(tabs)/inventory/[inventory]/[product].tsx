@@ -65,7 +65,7 @@ export default function Product() {
   const { data, setQuantity, steppers } = recordPanel;
 
   const { name: productName, quantity, unit } = data;
-  console.log(inventoryName);
+
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
