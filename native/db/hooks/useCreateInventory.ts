@@ -11,7 +11,8 @@ export const useCreateInventory = () => {
     async (inventory: Omit<Inventory, "created_at" | "company_id" | "id">) => {
       const { data, error } = await supabase
         .from<"inventory", InventoryTable>("inventory")
-        .insert({ ...inventory, company_id: companyId });
+        .insert({ ...inventory, company_id: companyId })
+        .select();
       if (error) throw new Error(error.message);
       return data;
     }
