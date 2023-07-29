@@ -21,6 +21,7 @@ const themeColors = {
   mediumBlue: "#C9E0F6",
   darkBlue: "#4A6D90",
   grey: "#96AFC8",
+  error: "#EF5350",
 } as const;
 
 export type Breakpoints = typeof breakpoints;
