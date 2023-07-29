@@ -24,12 +24,13 @@ export default function CreateInventory() {
   const { control, handleSubmit, getValues, reset } =
     useForm<CreateInventoryFormValues>({
       defaultValues: {
-        name: "Inwentaryzacja dzisiaj",
+        name: "",
         date: formatISO(now),
       },
       resetOptions: {
         keepDirtyValues: true,
       },
+      mode: "onSubmit",
     });
 
   const { mutate, status: _status } = useCreateInventory();
@@ -44,31 +45,50 @@ export default function CreateInventory() {
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
-      <View style={styles.ph}>
-        <Typography style={styles.title} variant="xlBold" color="darkBlue">
-          {`Nowa \ninwentaryzacja`}:
-        </Typography>
-        <TextInputController control={control} name="name" />
-        <DateInputController
+      <Typography
+        underline
+        style={styles.title}
+        variant="xlBold"
+        color="darkBlue"
+      >
+        {`Nowa \ninwentaryzacja`}:
+      </Typography>
+      <View style={styles.mb}>
+        <TextInputController
           control={control}
-          name="date"
-          setDateValue={setDateValue}
-          RHFValue={getValues("date")}
-          dateValue={
-            formatISO(now) === getValues("date")
-              ? now
-              : new Date(getValues("date"))
-          }
+          name="name"
+          rules={{
+            minLength: { value: 3, message: "Minimalna długość" },
+            maxLength: { value: 30, message: "Maksymalna długość" },
+            required: { value: true, message: "Wymagane" },
+          }}
+          textInputProps={{
+            placeholder: "nazwa",
+          }}
         />
-        <Button
-          type="primary"
-          size="s"
-          containerStyle={styles.buttonContainer}
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Typography>Dodaj</Typography>
-        </Button>
       </View>
+      <DateInputController
+        control={control}
+        name="date"
+        setDateValue={setDateValue}
+        RHFValue={getValues("date")}
+        dateValue={
+          formatISO(now) === getValues("date")
+            ? now
+            : new Date(getValues("date"))
+        }
+      />
+      <Button
+        type="primary"
+        size="xs"
+        shadow
+        containerStyle={styles.buttonContainer}
+        onPress={handleSubmit(onSubmit)}
+      >
+        <Typography variant="m" color="darkBlue">
+          Dodaj
+        </Typography>
+      </Button>
     </SafeAreaView>
   );
 }
@@ -77,16 +97,20 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
       backgroundColor: theme.colors.lightBlue,
-      justifyContent: "center",
-      alignItems: "center",
       height: "100%",
-      width: "100%",
+      paddingHorizontal: theme.spacing * 6,
     },
-    ph: { paddingHorizontal: theme.spacing * 6 },
+    mb: {
+      marginBottom: theme.spacing * 3,
+    },
     title: {
       alignItems: "center",
       justifyContent: "center",
+      marginBottom: theme.spacing * 10,
+      marginTop: "20%",
     },
-    buttonContainer: { width: "100%" },
+    buttonContainer: {
+      width: "100%",
+    },
   })
 );
