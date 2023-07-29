@@ -58,10 +58,13 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
 
 const ListIndex = () => {
   const styles = useStyles();
-  const { data } = useListInventories();
-  const months = useMemo(() => groupDaysByMonth(groupByDay(data)), [data]);
+  const { data: inventoryList } = useListInventories();
+  const months = useMemo(
+    () => groupDaysByMonth(groupByDay(inventoryList)),
+    [inventoryList]
+  );
 
-  if (!data || !months) return null;
+  if (!inventoryList || !months) return null;
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.screen}>
