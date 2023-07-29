@@ -1,7 +1,8 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import formatISO from "date-fns/formatISO";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { createStyles } from "../../../theme/useStyles";
 import { Button } from "../../Button";
 import { Typography } from "../../Typography";
 
@@ -16,6 +17,7 @@ export const DatePickerBottomSheetContent = ({
   closeBottomSheet: () => void;
 }) => {
   const insets = useSafeAreaInsets();
+  const styles = useStyles();
 
   return (
     <View
@@ -42,10 +44,7 @@ export const DatePickerBottomSheetContent = ({
           }
           setDateValue((d && formatISO(d)) ?? "");
         }}
-        style={{
-          alignSelf: "center",
-          backgroundColor: "white",
-        }}
+        style={styles.input}
       />
       <DateTimePicker
         value={dateValue}
@@ -58,19 +57,29 @@ export const DatePickerBottomSheetContent = ({
           }
           setDateValue((d && formatISO(d)) ?? "");
         }}
-        style={{
-          alignSelf: "center",
-          backgroundColor: "white",
-        }}
+        style={styles.input}
       />
       <Button
         type="primary"
-        size="l"
-        containerStyle={{ alignSelf: "center", width: "50%" }}
+        size="m"
+        containerStyle={styles.button}
         onPress={closeBottomSheet}
       >
-        <Typography>Zapisz</Typography>
+        <Typography color="darkBlue">Zapisz</Typography>
       </Button>
     </View>
   );
 };
+
+const useStyles = createStyles((theme) =>
+  StyleSheet.create({
+    input: {
+      backgroundColor: theme.colors.white,
+      alignSelf: "center",
+    },
+    button: {
+      alignSelf: "center",
+      width: "50%",
+    },
+  })
+);

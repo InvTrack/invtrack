@@ -1,5 +1,6 @@
 import { FieldValues, UseControllerProps } from "react-hook-form";
-import { TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { createStyles } from "../theme/useStyles";
 import { useBottomSheet } from "./BottomSheet";
 import { DatePickerBottomSheetContent } from "./BottomSheet/contents/DatePicker";
 import TextInputController from "./TextInputController";
@@ -18,6 +19,7 @@ export const DateInputController = <T extends FieldValues>({
   RHFValue,
 }: DateInputControllerProps<T>) => {
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const styles = useStyles();
 
   const openDateInput = () =>
     openBottomSheet(() => (
@@ -49,8 +51,21 @@ export const DateInputController = <T extends FieldValues>({
             day: "2-digit",
             hour12: false,
           }),
+          containerStyle: styles.mb,
+          inputStyle: styles.input,
         }}
       />
     </TouchableOpacity>
   );
 };
+
+const useStyles = createStyles((theme) =>
+  StyleSheet.create({
+    mb: {
+      marginBottom: theme.spacing * 3,
+    },
+    input: {
+      color: theme.colors.darkBlue,
+    },
+  })
+);

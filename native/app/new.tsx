@@ -1,32 +1,119 @@
-import React, { useState } from "react";
-import { TextInput, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
+import { formatISO } from "date-fns";
+import { useRouter } from "expo-router";
+import { useForm } from "react-hook-form";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
+import { DateInputController } from "../components/DateInputController";
+import TextInputController from "../components/TextInputController";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
+import { createStyles } from "../theme/useStyles";
+
+export type CreateInventoryFormValues = {
+  name: string;
+  date: string;
+};
 
 export default function CreateInventory() {
-  const [data, setData] = useState({
-    name: "new inventory",
-    date: "2023-02-06T00:00:00+00:00",
-  });
-  const { mutate, status: _status } = useCreateInventory();
+  const styles = useStyles();
+  const router = useRouter();
+
+  const now = new Date(Date.now());
+
+  const { control, handleSubmit, getValues, reset } =
+    useForm<CreateInventoryFormValues>({
+      defaultValues: {
+        name: "",
+        date: formatISO(now),
+      },
+      resetOptions: {
+        keepDirtyValues: true,
+      },
+      mode: "onSubmit",
+    });
+
+  const { mutate, data: inventory } = useCreateInventory();
+
+  const onSubmit = (data: CreateInventoryFormValues) => {
+    mutate(data);
+    router.replace("/(tabs)/inventory/" + inventory?.[0].id);
+  };
+
+  const setDateValue = (value: string) => {
+    reset({ ...getValues, date: value });
+  };
+
   return (
-    <View>
-      <Typography>Nazwa:</Typography>
-      <TextInput
-        style={{ borderColor: "#000000" }}
-        onChangeText={(text) => setData((d) => ({ ...d, name: text }))}
-        value={data.name}
+    <SafeAreaView edges={["left", "right"]} style={styles.container}>
+      <Typography
+        underline
+        style={styles.title}
+        variant="xlBold"
+        color="darkBlue"
+      >
+        {`Nowa \ninwentaryzacja`}:
+      </Typography>
+      <View style={styles.mb}>
+        <TextInputController
+          control={control}
+          name="name"
+          rules={{
+            minLength: { value: 3, message: "Minimalna długość" },
+            maxLength: { value: 30, message: "Maksymalna długość" },
+            required: { value: true, message: "Wymagane" },
+          }}
+          textInputProps={{
+            placeholder: "nazwa",
+          }}
+        />
+      </View>
+      <DateInputController
+        control={control}
+        name="date"
+        setDateValue={setDateValue}
+        RHFValue={getValues("date")}
+        dateValue={
+          formatISO(now) === getValues("date")
+            ? now
+            : new Date(getValues("date"))
+        }
       />
-      <TextInput
-        style={{ borderColor: "#000000" }}
-        onChangeText={(text) => setData((d) => ({ ...d, date: text }))}
-        value={data.date}
-      />
-      <Button type="primary" size="xl" onPress={() => mutate(data)}>
-        <Typography>Stwórz inwentaryzację</Typography>
+      <Button
+        type="primary"
+        size="xs"
+        shadow
+        containerStyle={styles.buttonContainer}
+        onPress={handleSubmit(onSubmit)}
+      >
+        <Typography variant="m" color="darkBlue">
+          Dodaj
+        </Typography>
       </Button>
-    </View>
+    </SafeAreaView>
   );
 }
+
+const useStyles = createStyles((theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.lightBlue,
+      height: "100%",
+      paddingHorizontal: theme.spacing * 6,
+    },
+    mb: {
+      marginBottom: theme.spacing * 3,
+    },
+    title: {
+      alignItems: "center",
+      justifyContent: "center",
+      marginBottom: theme.spacing * 10,
+      marginTop: "20%",
+    },
+    buttonContainer: {
+      width: "100%",
+    },
+  })
+);
