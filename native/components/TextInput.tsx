@@ -63,7 +63,6 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
       <View
         style={[
           style.container,
-          invalid ? style.invalid : {},
           focused || _focused ? style.focused : {},
           props.multiline ? style.containerMultiline : {},
           containerStyle,
@@ -98,8 +97,6 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             }
             style={[
               style.input,
-              invalid ? style.invalidInput : {},
-              disabled ? style.disabledInput : {},
               props.multiline ? style.inputMultiline : {},
               inputStyle,
             ]}
@@ -143,11 +140,6 @@ const useStyles = createStyles((theme) =>
     focused: {
       ...theme.baseShadow,
     },
-    invalid: {
-      // TODO
-      // borderColor: theme.colors.danger,
-    },
-    disabled: {},
     input: {
       height: 44,
       flexGrow: 1,
@@ -162,14 +154,6 @@ const useStyles = createStyles((theme) =>
     inputMultiline: {
       height: undefined,
       paddingVertical: 6,
-    },
-    invalidInput: {
-      // TODO
-      // color: theme.colors.danger,
-    },
-    disabledInput: {
-      // TODO
-      // color: theme.colors.dirtyWhite,
     },
     leftElementContainer: {
       flexShrink: 0,

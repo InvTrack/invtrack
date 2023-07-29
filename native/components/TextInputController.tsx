@@ -6,6 +6,7 @@ import {
 } from "react-hook-form";
 
 import { TextInput, TextInputProps } from "./TextInput";
+import { Typography } from "./Typography";
 
 // import { Typography } from "../Typography";
 
@@ -13,7 +14,7 @@ type TextInputControllerProps<T extends FieldValues> = UseControllerProps<T> & {
   textInputProps?: Omit<TextInputProps, "onChange">;
 };
 /**
- * be vary when setting the value explicitly here
+ * be vary when setting the `value` prop explicitly here
  */
 export const TextInputController = <T extends FieldValues>({
   textInputProps,
@@ -21,7 +22,7 @@ export const TextInputController = <T extends FieldValues>({
 }: TextInputControllerProps<T>) => {
   const {
     field: { onChange, onBlur, ref, value },
-    // fieldState: { error },
+    fieldState: { error },
   } = useController(props);
 
   // TODO Error handling
@@ -33,10 +34,16 @@ export const TextInputController = <T extends FieldValues>({
         value={textInputProps?.value || value}
         onBlur={onBlur}
         ref={ref}
-        // error={!!error}
       />
-
-      {/* {error && <Typography variant="error">{error.message}</Typography>} */}
+      {error && (
+        <Typography
+          variant="xs"
+          color="error"
+          style={{ marginLeft: 8, marginTop: 4 }}
+        >
+          {error.message}
+        </Typography>
+      )}
     </>
   );
 };
