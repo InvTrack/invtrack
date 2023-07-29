@@ -1,9 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
+import { Link, usePathname } from "expo-router";
 import { Typography } from "../../../../components/Typography";
 import { useListRecords } from "../../../../db";
-const { Link, usePathname } = require("expo-router");
 
 const getInventoryId = (pathName: string) => pathName.split("/").pop();
 
@@ -12,7 +12,7 @@ export default function InventoryIdIndex() {
   const inventoryId = getInventoryId(pathName);
   const { data, isSuccess } = useListRecords(inventoryId);
 
-  if (!isSuccess || !data) return <Typography>Loading inventory</Typography>;
+  if (!isSuccess || !data) return <Typography>Loading inventories</Typography>;
 
   return (
     <>
