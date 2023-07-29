@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { formatISO } from "date-fns";
+import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
@@ -18,6 +19,7 @@ export type CreateInventoryFormValues = {
 
 export default function CreateInventory() {
   const styles = useStyles();
+  const router = useRouter();
 
   const now = new Date(Date.now());
 
@@ -33,10 +35,11 @@ export default function CreateInventory() {
       mode: "onSubmit",
     });
 
-  const { mutate, status: _status } = useCreateInventory();
+  const { mutate, data: inventory } = useCreateInventory();
 
   const onSubmit = (data: CreateInventoryFormValues) => {
     mutate(data);
+    router.replace("/(tabs)/inventory/" + inventory?.[0].id);
   };
 
   const setDateValue = (value: string) => {
