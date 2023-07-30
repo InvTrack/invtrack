@@ -15,6 +15,7 @@ import { useRecordPanel } from "../../../../db";
 import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
 import { useListRecordIds } from "../../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../../theme/useStyles";
+import { getLastElement } from "../../../../utils";
 import { useRecordPagination } from "../../../../utils/useRecordPagination";
 
 const RecordButton = ({
@@ -46,7 +47,8 @@ const RecordButton = ({
 };
 
 // TODO fix fragile code
-const getRecordId = (pathName: string) => pathName.split("/").splice(-1).pop();
+const getRecordId = (pathName: string) =>
+  getLastElement(pathName.split("/").splice(-1));
 
 const navigateToPreviousRecord =
   (

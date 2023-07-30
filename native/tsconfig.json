@@ -10,5 +10,5 @@
     "incremental": true,
     "noImplicitAny": true
   },
-  "exclude": ["node_modules/**/*", "../node_modules", "expo"]
+  "exclude": ["node_modules", "expo"]
 }
