@@ -16,7 +16,7 @@ export const InventoryCardLink = ({
   inventoryId,
 }: InventoryCardAddProps) => {
   const styles = useStyles();
-  console.log(inventoryId);
+
   return (
     <Link
       href={{

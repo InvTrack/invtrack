@@ -2,9 +2,9 @@ import debounce from "lodash/debounce";
 import React, { forwardRef } from "react";
 import {
   GestureResponderEvent,
-  Pressable,
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   ViewStyle,
 } from "react-native";
 
@@ -43,7 +43,7 @@ export const Button = forwardRef(
     const styles = useStyles();
 
     return (
-      <Pressable
+      <TouchableOpacity
         onPress={debouncedOnPress(onPress ?? (() => undefined))}
         style={[
           styles.buttonBase,
@@ -53,9 +53,10 @@ export const Button = forwardRef(
           containerStyle,
         ]}
         disabled={disabled}
+        activeOpacity={0.8}
       >
         {children}
-      </Pressable>
+      </TouchableOpacity>
     );
   }
 );
