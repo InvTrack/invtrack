@@ -42,6 +42,7 @@ const BottomSheetContent = forwardRef(
             showsVerticalScrollIndicator={false}
             bounces={false}
             scrollEventThrottle={16}
+            keyboardShouldPersistTaps="handled"
           >
             {/* TODO THEMING!! */}
             <View

@@ -68,7 +68,10 @@ const ListIndex = () => {
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        keyboardShouldPersistTaps="handled"
+      >
         {months.map(([month, days]) => (
           <React.Fragment key={month}>
             <MonthTitle title={month} />
