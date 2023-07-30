@@ -5,7 +5,7 @@ import { Link, usePathname } from "expo-router";
 import { Typography } from "../../../../components/Typography";
 import { useListRecords } from "../../../../db";
 
-const getInventoryId = (pathName: string) => pathName.split("/").pop();
+const getInventoryId = (pathName: string) => +pathName.split("/").pop();
 
 export default function InventoryIdIndex() {
   const pathName = usePathname();
