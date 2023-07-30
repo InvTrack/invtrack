@@ -12,7 +12,7 @@ export default function InventoryIdIndex() {
   const inventoryId = getInventoryId(pathName);
   const { data, isSuccess } = useListRecords(inventoryId);
 
-  if (!isSuccess || !data) return <Typography>Loading products</Typography>;
+  if (!isSuccess || !data) return <Typography>Loading records</Typography>;
 
   return (
     <>
@@ -25,8 +25,8 @@ export default function InventoryIdIndex() {
             <Link
               key={id}
               href={{
-                pathname: "/(tabs)/inventory/[inventory]/[product]",
-                params: { inventory: inventoryId, product: id },
+                pathname: "/(tabs)/inventory/[inventory]/[record]",
+                params: { inventory: inventoryId, record: id },
               }}
             >
               <Typography>{name + quantityPostfix}</Typography>
