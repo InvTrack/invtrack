@@ -32,7 +32,7 @@ export default function Register() {
     },
   });
 
-  const onSubmit = async ({ email, password, ...props }: FormValues) => {
+  const onSubmit = async ({ email, password }: FormValues) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -45,6 +45,7 @@ export default function Register() {
       <ScrollView
         contentContainerStyle={[styles.container, styles.background]}
         style={styles.background}
+        keyboardShouldPersistTaps="handled"
       >
         <Typography
           variant="xlBold"

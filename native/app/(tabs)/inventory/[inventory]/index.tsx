@@ -12,7 +12,7 @@ export default function InventoryIdIndex() {
   const inventoryId = getInventoryId(pathName);
   const { data, isSuccess } = useListRecords(inventoryId);
 
-  if (!isSuccess || !data) return <Typography>Loading inventories</Typography>;
+  if (!isSuccess || !data) return <Typography>Loading products</Typography>;
 
   return (
     <>
