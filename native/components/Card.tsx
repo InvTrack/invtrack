@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -16,12 +16,62 @@ interface CardProps {
   padding?: CardPaddings;
   fullWidth?: boolean;
   children: React.ReactNode;
-  color?: ThemeColors;
+  color?: Exclude<ThemeColors, "error" | "grey">;
   style?: StyleProp<ViewStyle>;
   borderTop?: boolean;
   borderBottom?: boolean;
   onPress?: () => void;
 }
+
+export const Card = forwardRef(
+  (
+    {
+      padding = "normal",
+      fullWidth,
+      children,
+      style,
+      color = "mediumBlue",
+      borderTop = false,
+      borderBottom = false,
+      onPress,
+    }: CardProps,
+    _ref
+  ) => {
+    const styles = useStyles();
+    if (onPress) {
+      return (
+        <TouchableOpacity
+          onPress={onPress}
+          style={[
+            borderBottom && styles.borderBottom,
+            borderTop && styles.borderTop,
+            styles[padding],
+            styles[color],
+            fullWidth && styles.fullWidth,
+            style,
+          ]}
+        >
+          {children}
+        </TouchableOpacity>
+      );
+    }
+
+    return (
+      <View
+        style={[
+          borderBottom && styles.borderBottom,
+          borderTop && styles.borderTop,
+          styles[padding],
+          styles[color],
+          fullWidth && styles.fullWidth,
+          style,
+        ]}
+      >
+        {children}
+      </View>
+    );
+  }
+);
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
@@ -52,49 +102,3 @@ const useStyles = createStyles((theme) =>
     darkBlue: { backgroundColor: theme.colors.darkBlue },
   })
 );
-
-export const Card = ({
-  padding = "normal",
-  fullWidth,
-  children,
-  style,
-  color = "mediumBlue",
-  borderTop = false,
-  borderBottom = false,
-  onPress,
-}: CardProps) => {
-  const styles = useStyles();
-
-  if (onPress) {
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={[
-          borderBottom && styles.borderBottom,
-          borderTop && styles.borderTop,
-          styles[padding],
-          styles[color],
-          fullWidth && styles.fullWidth,
-          style,
-        ]}
-      >
-        {children}
-      </TouchableOpacity>
-    );
-  }
-
-  return (
-    <View
-      style={[
-        borderBottom && styles.borderBottom,
-        borderTop && styles.borderTop,
-        styles[padding],
-        styles[color],
-        fullWidth && styles.fullWidth,
-        style,
-      ]}
-    >
-      {children}
-    </View>
-  );
-};
