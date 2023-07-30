@@ -1,6 +1,9 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
+import { usePathname } from "expo-router";
+import { useBottomSheet } from "../../../../components/BottomSheet";
+import { InputBottomSheetContent } from "../../../../components/BottomSheet/contents";
 import { Button } from "../../../../components/Button";
 import {
   ArrowLeftIcon,
@@ -11,7 +14,6 @@ import { Typography } from "../../../../components/Typography";
 import { useRecordPanel } from "../../../../db";
 import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
 import { createStyles } from "../../../../theme/useStyles";
-const { usePathname } = require("expo-router");
 
 const ProductButton = ({
   label,
@@ -49,6 +51,7 @@ export default function Product() {
   const pathName = usePathname();
   const recordId = getRecordId(pathName);
   const recordPanel = useRecordPanel(recordId);
+  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const { data: inventoryName } = useGetInventoryName(
     recordPanel.data?.inventory_id
@@ -65,6 +68,18 @@ export default function Product() {
   const { data, setQuantity, steppers } = recordPanel;
 
   const { name: productName, quantity, unit } = data;
+
+  const openManualInput = (
+    quantity: number,
+    setQuantity: (quantity: number) => void
+  ) =>
+    openBottomSheet(() => (
+      <InputBottomSheetContent
+        quantity={quantity}
+        setQuantity={setQuantity}
+        closeBottomSheet={closeBottomSheet}
+      />
+    ));
 
   return (
     <View style={styles.container}>
@@ -110,8 +125,7 @@ export default function Product() {
                 type="primary"
                 size="xl"
                 containerStyle={styles.editButton}
-                // TODO: make the current quantity editable - convert to a text field with fixed jednostka
-                onPress={() => setQuantity(69)}
+                onPress={() => openManualInput(quantity!, setQuantity)}
               >
                 <PencilIcon size={32} />
               </Button>
