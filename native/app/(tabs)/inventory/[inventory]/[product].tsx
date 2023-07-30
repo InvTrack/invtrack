@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { usePathname } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import { useBottomSheet } from "../../../../components/BottomSheet";
 import { InputBottomSheetContent } from "../../../../components/BottomSheet/contents";
 import { Button } from "../../../../components/Button";
@@ -13,7 +13,9 @@ import {
 import { Typography } from "../../../../components/Typography";
 import { useRecordPanel } from "../../../../db";
 import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
+import { useListRecordIds } from "../../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../../theme/useStyles";
+import { useRecordPagination } from "../../../../utils/useRecordPagination";
 
 const ProductButton = ({
   label,
@@ -46,16 +48,53 @@ const ProductButton = ({
 // TODO fix fragile code
 const getRecordId = (pathName: string) => pathName.split("/").splice(-1).pop();
 
+const navigateToPreviousRecord =
+  (
+    replace: ReturnType<typeof useRouter>["replace"],
+    inventoryId: number | undefined,
+    prevRecordId: number | undefined,
+    isFirst: boolean
+  ) =>
+  () => {
+    !isFirst &&
+      replace({
+        pathname: "/(tabs)/inventory/[inventory]/[product]",
+        params: { inventory: inventoryId, product: prevRecordId },
+      });
+  };
+
+const navigateToNextRecord =
+  (
+    replace: ReturnType<typeof useRouter>["replace"],
+    inventoryId: number | undefined,
+    prevRecordId: number | undefined,
+    isLast: boolean
+  ) =>
+  () => {
+    !isLast &&
+      replace({
+        pathname: "/(tabs)/inventory/[inventory]/[product]",
+        params: { inventory: inventoryId, product: prevRecordId },
+      });
+  };
+
 export default function Product() {
   const styles = useStyles();
   const pathName = usePathname();
   const recordId = getRecordId(pathName);
   const recordPanel = useRecordPanel(recordId);
-  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
-
+  const { data: recordIds } = useListRecordIds(recordPanel.data?.inventory_id);
   const { data: inventoryName } = useGetInventoryName(
     recordPanel.data?.inventory_id
   );
+
+  const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
+    +recordId!,
+    recordIds
+  );
+  const router = useRouter();
+
+  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
   if (
     !recordPanel.isSuccess ||
@@ -108,7 +147,18 @@ export default function Product() {
                   onPress={click}
                 />
               ))}
-              <Button type="primary" size="l">
+              <Button
+                type="primary"
+                size="l"
+                disabled={isFirst}
+                containerStyle={isFirst && styles.firstRecord}
+                onPress={navigateToPreviousRecord(
+                  router.replace,
+                  recordPanel.data.inventory_id,
+                  prevRecordId,
+                  isFirst
+                )}
+              >
                 <ArrowRightIcon size={32} />
               </Button>
             </View>
@@ -138,7 +188,18 @@ export default function Product() {
                   onPress={click}
                 />
               ))}
-              <Button type="primary" size="l">
+              <Button
+                type="primary"
+                size="l"
+                disabled={isLast}
+                containerStyle={isLast && styles.lastRecord}
+                onPress={navigateToNextRecord(
+                  router.replace,
+                  recordPanel.data.inventory_id,
+                  nextRecordId,
+                  isLast
+                )}
+              >
                 <ArrowLeftIcon size={32} />
               </Button>
             </View>
@@ -181,5 +242,7 @@ const useStyles = createStyles((theme) =>
       marginBottom: 58 + 12,
     },
     rightColumn: { flexDirection: "column", alignItems: "flex-end" },
+    firstRecord: { opacity: 0.3 },
+    lastRecord: { opacity: 0.3 },
   })
 );
