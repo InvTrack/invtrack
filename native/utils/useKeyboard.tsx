@@ -12,32 +12,26 @@ const initialValue = {
   end: emptyCoordinates,
 };
 
+// TODO - improve this by creating a global cache + context, that is set (preferably) one time, when the keyboard is first shown.
+// On subsequent keyboard opens, it would return the cached value and compare it to the current height, then act accordingly.
 export function useKeyboard() {
-  const [shown, setShown] = useState(false);
   const [coordinates, setCoordinates] = useState<{
     start: undefined | KeyboardMetrics;
     end: KeyboardMetrics;
   }>(initialValue);
-  // const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
 
   const handleKeyboardWillShow: KeyboardEventListener = (e) => {
     setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
   };
   const handleKeyboardDidShow: KeyboardEventListener = (e) => {
-    setShown(true);
     setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
-    // setKeyboardHeight(e.endCoordinates.height);
   };
   const handleKeyboardWillHide: KeyboardEventListener = (e) => {
     setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
   };
   const handleKeyboardDidHide: KeyboardEventListener = (e) => {
-    setShown(false);
     if (e) {
       setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
-    } else {
-      setCoordinates(initialValue);
-      // setKeyboardHeight(0);
     }
   };
 
@@ -55,8 +49,6 @@ export function useKeyboard() {
   }, []);
 
   return {
-    keyboardShown: shown,
     coordinates,
-    // keyboardHeight,
   };
 }

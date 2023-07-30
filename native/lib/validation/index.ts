@@ -1,4 +1,4 @@
-import { isFinite } from "lodash";
+import isFinite from "lodash/isFinite";
 import { ValidateResult } from "react-hook-form";
 
 // this is currently unused but a nice concept to explore

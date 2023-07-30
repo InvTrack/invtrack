@@ -4,8 +4,10 @@ import { View } from "react-native";
 import { Link, usePathname } from "expo-router";
 import { Typography } from "../../../../components/Typography";
 import { useListRecords } from "../../../../db";
+import { getLastElement } from "../../../../utils";
 
-const getInventoryId = (pathName: string) => +pathName.split("/").pop();
+const getInventoryId = (pathName: string) =>
+  +getLastElement(pathName.split("/"));
 
 export default function InventoryIdIndex() {
   const pathName = usePathname();

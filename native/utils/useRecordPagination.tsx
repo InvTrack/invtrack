@@ -1,5 +1,4 @@
-type NonNullableNumberArray = number[];
-
+// TODO this could be improved by creating a recordIds cache
 export const useRecordPagination = (
   recordId: number | undefined,
   recordIds: (number | null)[] | undefined
@@ -9,7 +8,11 @@ export const useRecordPagination = (
   isLast: boolean;
   isFirst: boolean;
 } => {
-  if (!recordIds || recordIds.length === 0) {
+  if (
+    !recordIds ||
+    recordIds.length === 0 ||
+    recordIds.some((id) => id === null)
+  ) {
     return {
       nextRecordId: undefined,
       prevRecordId: undefined,
@@ -17,9 +20,8 @@ export const useRecordPagination = (
       isFirst: false,
     };
   }
-  const numberRecordIds: NonNullableNumberArray = recordIds.filter(
-    (id): id is number => id !== null
-  );
+
+  const numberRecordIds: number[] = recordIds as number[];
 
   if (numberRecordIds.length === 0) {
     return {
