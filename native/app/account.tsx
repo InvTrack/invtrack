@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Input } from "react-native-elements";
 
+import { useRouter } from "expo-router";
 import { supabase, useGetUser, useUpdateUser } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
-const { useRouter } = require("expo-router");
 
 export default function AccountDetails() {
   const { session } = useSession();
