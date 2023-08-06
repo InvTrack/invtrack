@@ -10,5 +10,6 @@
     "incremental": true,
     "noImplicitAny": true
   },
-  "exclude": ["node_modules", "expo"]
+  "exclude": ["node_modules", "expo"],
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
