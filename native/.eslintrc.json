@@ -5,7 +5,6 @@
     "universe/native",
     "universe/web"
   ],
-  "overrides": [],
   "rules": {
     "linebreak-style": ["error", "unix"],
     "semi": ["error", "always"],
