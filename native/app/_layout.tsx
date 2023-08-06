@@ -41,7 +41,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       retry: 2,
       cacheTime: 1000 * 10,
-      // staleTime: Infinity,
+      staleTime: Infinity,
     },
   },
 });
@@ -129,7 +129,7 @@ export default function Root() {
     }
 
     if (!loggedIn && !onStartPage) {
-      router.replace("(start)/start");
+      router.replace("/(start)/start");
     }
   }, [
     sessionState.loading,
@@ -148,7 +148,6 @@ export default function Root() {
   return (
     <ProvideProviders>
       <Stack
-        // theme not available here yet
         screenOptions={{
           headerTitle: "",
           headerBackVisible: false,
@@ -156,7 +155,11 @@ export default function Root() {
           headerLeft: (props) => (
             <HeaderLeft
               {...props}
-              href={loggedIn ? "/(tabs)/inventory" : "(start)/start"}
+              href={
+                loggedIn
+                  ? ("/(tabs)/inventory/" as const)
+                  : ("/(start)/start" as const)
+              }
             />
           ),
           headerRight: (props) => <HeaderRight {...props} href="/account" />,

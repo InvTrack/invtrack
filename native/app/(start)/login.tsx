@@ -2,13 +2,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
 
+import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
-const { Link } = require("expo-router");
 
 type LoginFormValues = {
   email: string;

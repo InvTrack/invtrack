@@ -6,8 +6,7 @@ import {
   StyleSheet,
   ViewStyle,
 } from "react-native";
-
-import { createStyles } from "../../theme/useStyles";
+import { createStyles } from "../theme/useStyles";
 
 interface SkeletonProps {
   rounded?: "full" | number;
