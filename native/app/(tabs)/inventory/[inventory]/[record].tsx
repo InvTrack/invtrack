@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { usePathname, useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useBottomSheet } from "../../../../components/BottomSheet";
 import { InputBottomSheetContent } from "../../../../components/BottomSheet/contents";
 import { Button } from "../../../../components/Button";
@@ -15,7 +15,7 @@ import { useRecordPanel } from "../../../../db";
 import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
 import { useListRecordIds } from "../../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../../theme/useStyles";
-import { getLastElement } from "../../../../utils";
+
 import { useRecordPagination } from "../../../../utils/useRecordPagination";
 
 const RecordButton = ({
@@ -46,44 +46,42 @@ const RecordButton = ({
   );
 };
 
-// TODO fix fragile code
-const getRecordId = (pathName: string) =>
-  getLastElement(pathName.split("/").splice(-1));
+const navigateToPreviousRecord = (
+  replace: ReturnType<typeof useRouter>["replace"],
+  inventoryId: number,
+  prevRecordId: number | undefined,
+  isFirst: boolean
+) =>
+  prevRecordId === undefined
+    ? () => {}
+    : () => {
+        !isFirst &&
+          replace({
+            pathname: "/(tabs)/inventory/[inventory]/[record]",
+            params: { inventory: inventoryId, record: prevRecordId },
+          });
+      };
 
-const navigateToPreviousRecord =
-  (
-    replace: ReturnType<typeof useRouter>["replace"],
-    inventoryId: number | undefined,
-    prevRecordId: number | undefined,
-    isFirst: boolean
-  ) =>
-  () => {
-    !isFirst &&
-      replace({
-        pathname: "/(tabs)/inventory/[inventory]/[record]",
-        params: { inventory: inventoryId, record: prevRecordId },
-      });
-  };
-
-const navigateToNextRecord =
-  (
-    replace: ReturnType<typeof useRouter>["replace"],
-    inventoryId: number | undefined,
-    prevRecordId: number | undefined,
-    isLast: boolean
-  ) =>
-  () => {
-    !isLast &&
-      replace({
-        pathname: "/(tabs)/inventory/[inventory]/[record]",
-        params: { inventory: inventoryId, record: prevRecordId },
-      });
-  };
+const navigateToNextRecord = (
+  replace: ReturnType<typeof useRouter>["replace"],
+  inventoryId: number,
+  prevRecordId: number | undefined,
+  isLast: boolean
+) =>
+  prevRecordId === undefined
+    ? () => {}
+    : () => {
+        !isLast &&
+          replace({
+            pathname: "/(tabs)/inventory/[inventory]/[record]",
+            params: { inventory: inventoryId, record: prevRecordId },
+          });
+      };
 
 export default function Record() {
   const styles = useStyles();
-  const pathName = usePathname();
-  const recordId = getRecordId(pathName);
+  const localSearchParams = useLocalSearchParams();
+  const recordId = localSearchParams.record as string;
   const recordPanel = useRecordPanel(recordId);
   const { data: recordIds } = useListRecordIds(recordPanel.data?.inventory_id);
   const { data: inventoryName } = useGetInventoryName(

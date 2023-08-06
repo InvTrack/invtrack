@@ -3,9 +3,6 @@ import { useMediaQuery } from "react-responsive";
 
 import { Breakpoints } from "../theme";
 
-export const getLastElement = <T extends unknown>(arr: T[]) =>
-  arr[arr.length - 1];
-
 export function useThemeBreakpoints() {
   const { breakpoints } = useTheme();
   return {

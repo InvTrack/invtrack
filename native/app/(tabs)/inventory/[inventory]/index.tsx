@@ -1,18 +1,14 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Link, usePathname } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { Typography } from "../../../../components/Typography";
 import { useListRecords } from "../../../../db";
-import { getLastElement } from "../../../../utils";
-
-const getInventoryId = (pathName: string) =>
-  +getLastElement(pathName.split("/"));
 
 export default function InventoryIdIndex() {
-  const pathName = usePathname();
-  const inventoryId = getInventoryId(pathName);
-  const { data, isSuccess } = useListRecords(inventoryId);
+  const { inventory: inventoryId } = useLocalSearchParams();
+
+  const { data, isSuccess } = useListRecords(+inventoryId);
 
   if (!isSuccess || !data) return <Typography>Loading records</Typography>;
 
@@ -21,6 +17,9 @@ export default function InventoryIdIndex() {
       <View>
         <Typography>Lista produktów</Typography>
         {data.map(({ name, quantity, unit, id }) => {
+          if (id === null) {
+            return <Typography>Loading</Typography>;
+          }
           const quantityPostfix =
             (unit ? (quantity ? " - " + quantity + unit : null) : null) || "";
           return (
@@ -28,7 +27,7 @@ export default function InventoryIdIndex() {
               key={id}
               href={{
                 pathname: "/(tabs)/inventory/[inventory]/[record]",
-                params: { inventory: inventoryId, record: id },
+                params: { inventory: +inventoryId, record: id },
               }}
             >
               <Typography>{name + quantityPostfix}</Typography>
