@@ -136,6 +136,9 @@ export default function Root() {
     sessionState.loggedIn,
     navigationState?.key,
     loggedIn,
+    onLoginPage,
+    onStartPage,
+    onRegisterPage,
   ]);
 
   React.useEffect(() => {
@@ -157,7 +160,7 @@ export default function Root() {
               {...props}
               href={
                 loggedIn
-                  ? ("/(tabs)/inventory/" as const)
+                  ? ("/(tabs)/list" as const)
                   : ("/(start)/start" as const)
               }
             />

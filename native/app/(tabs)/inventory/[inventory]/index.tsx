@@ -7,7 +7,7 @@ import { useListRecords } from "../../../../db";
 
 export default function InventoryIdIndex() {
   const { inventory: inventoryId } = useLocalSearchParams();
-
+  // TODO - inventoryId is sometimes undefined
   const { data, isSuccess } = useListRecords(+inventoryId);
 
   if (!isSuccess || !data) return <Typography>Loading records</Typography>;

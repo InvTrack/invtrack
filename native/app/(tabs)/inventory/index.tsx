@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
+import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/Button";
 import { Typography } from "../../../components/Typography";
 import { useListInventories } from "../../../db";
 import { createStyles } from "../../../theme/useStyles";
-const { Link } = require("expo-router");
 
 export default function Calendar() {
   const styles = useStyles();
