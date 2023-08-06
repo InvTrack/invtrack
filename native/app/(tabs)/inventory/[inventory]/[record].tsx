@@ -89,7 +89,7 @@ export default function Record() {
   );
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
-    +recordId!,
+    +recordId,
     recordIds
   );
   const router = useRouter();
@@ -98,14 +98,13 @@ export default function Record() {
 
   if (
     !recordPanel.isSuccess ||
-    !recordPanel.data ||
     !recordPanel.data?.steps ||
-    !recordPanel.data?.inventory_id
+    !recordPanel.data?.inventory_id ||
+    !recordPanel.data?.name
   )
     return <Typography>Loading record</Typography>;
 
   const { data, setQuantity, steppers } = recordPanel;
-
   const { name: recordName, quantity, unit } = data;
 
   const openManualInput = (
