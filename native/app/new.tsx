@@ -35,11 +35,16 @@ export default function CreateInventory() {
       mode: "onSubmit",
     });
 
-  const { mutate, data: inventory } = useCreateInventory();
+  const { mutate, data: inventory, isSuccess } = useCreateInventory();
 
   const onSubmit = (data: CreateInventoryFormValues) => {
     mutate(data);
-    router.replace("/(tabs)/inventory/" + inventory?.[0].id);
+
+    if (isSuccess && inventory) {
+      const routeToNewInventory =
+        `/(tabs)/inventory/${inventory[0].id}/` as const;
+      router.replace(routeToNewInventory);
+    }
   };
 
   const setDateValue = (value: string) => {

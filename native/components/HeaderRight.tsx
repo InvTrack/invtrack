@@ -1,12 +1,12 @@
 import { HeaderButtonProps } from "@react-navigation/elements";
-import { Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import * as React from "react";
 import { CogIcon } from "./Icon";
 
-interface HeaderRight extends HeaderButtonProps {
-  href: string;
+interface HeaderRight<T> extends HeaderButtonProps {
+  href: Href<T>;
 }
-export const HeaderRight = (props: HeaderRight) => {
+export const HeaderRight = <T,>(props: HeaderRight<T>) => {
   return (
     <Link href={props.href}>
       <CogIcon size={32} />
