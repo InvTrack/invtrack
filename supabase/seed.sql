@@ -11,13 +11,59 @@ update public.worker set name = 'Adam', company_id = 1 where id = 'f4b8d51e-b172
 
 -- Inwentaryzacje
 insert into public.product (name, unit, company_id)
-    values ('Łyżeczki', 'szt.', 1), ('Szynka', 'kg', 1);
+    values ('Łyżeczki', 'szt.', 1), ('Szynka', 'kg', 1), ('Mąka', 'kg', 1), ('Cukier', 'kg', 1) ;
 
 insert into public.inventory (name, date, company_id)
-    values ('Testowa Inwentaryzacja 1', '2023-02-02 00:00:00+00', 1), ('Testowa Inwentaryzacja 2', '2023-02-03 00:00:00+00', 1);
+    values 
+      ('Testowa Inwentaryzacja 1',  '2023-02-02 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 2',  '2023-02-03 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 3',  '2023-02-04 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 4',  '2023-02-05 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 5',  '2023-02-06 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 6',  '2023-02-07 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 7',  '2023-02-08 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 8',  '2023-02-09 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 9',  '2023-02-10 00:00:00+00', 1),
+      ('Testowa Inwentaryzacja 10', '2023-02-11 00:00:00+00', 1);
 
 insert into public.product_record (inventory_id, product_id, quantity) values 
-    (1, 1, 23),
-    (2, 1, 16),
-    (1, 2, 4.3),
-    (2, 2, 4.8);
+    (1, 1, 5),
+    (1, 2, 31.0),
+    (1, 3, 30.5),
+    (1, 4, 58.5),
+    (2, 1, 20),
+    (2, 2, 32.5),
+    (2, 3, 22.6),
+    (2, 4, 87.7),
+    (3, 1, 84),
+    (3, 2, 3.95),
+    (3, 3, 23.0),
+    (3, 4, 34.7),
+    (4, 1, 47),
+    (4, 2, 22.7),
+    (4, 3, 76.2),
+    (4, 4, 19.2),
+    (5, 1, 31),
+    (5, 2, 33.3),
+    (5, 3, 51.3),
+    (5, 4, 34.4),
+    (6, 1, 50),
+    (6, 2, 16.6),
+    (6, 3, 80.2),
+    (6, 4, 60.0),
+    (7, 1, 27),
+    (7, 2, 12.1),
+    (7, 3, 19.1),
+    (7, 4, 16.6),
+    (8, 1, 31),
+    (8, 2, 89.1),
+    (8, 3, 6.43),
+    (8, 4, 26.5),
+    (9, 1, 64),
+    (9, 2, 79.1),
+    (9, 3, 62.2),
+    (9, 4, 31.0),
+    (10, 1, 61),
+    (10, 2, 11.5),
+    (10, 3, 57.6),
+    (10, 4, 28.3); 

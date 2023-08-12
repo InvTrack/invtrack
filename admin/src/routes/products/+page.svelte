@@ -8,7 +8,6 @@
   import Card from "$lib/main/Card.svelte";
   import { genericGet } from "$lib/genericGet";
 
-  let loading = false;
   let products: Tables<"product">[] | null = null;
   onMount(() => genericGet(supabase.from("product").select(), (x) => (products = x)));
 </script>
