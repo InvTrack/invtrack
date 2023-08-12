@@ -1,10 +1,7 @@
-// import type { Database } from "./database.types";
-// import { supabase } from "./supabase";
 import { goto } from "$app/navigation";
 import type { PostgrestBuilder } from "@supabase/postgrest-js";
 
 
-// export const genericUpdate = async <T, Key extends Database["public"]["Tables"][]>(id: string, update: Partial<T>) => {
 export const genericUpdate = async <T>(builder: PostgrestBuilder<T>, onSuccess: string, setLoading?: (x: boolean) => void) => {
     try {
     //   loading = true;

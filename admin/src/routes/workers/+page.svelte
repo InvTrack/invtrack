@@ -8,7 +8,6 @@
   import Card from "$lib/main/Card.svelte";
   import { genericGet } from "$lib/genericGet";
 
-  let loading = false;
   let workers: Tables<"worker">[] | null = null;
   onMount(() => genericGet(supabase.from("worker").select(), (x) => (workers = x)));
 </script>
@@ -38,7 +37,7 @@
               {worker.created_at}
             </td>
             <td class="px-6 py-4 text-right">
-              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              <a href="/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >Edit</a
               >
             </td>
