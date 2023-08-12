@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Navbar from "../lib/navbar/Navbar.svelte";
+  import Navbar from "$lib/navbar/Navbar.svelte";
   import "./styles.css";
 
   import { onMount } from "svelte";
@@ -67,7 +67,7 @@
 {:else}
   <div class="flex flex-row">
     <Navbar />
-    <main class="flex-1">
+    <main class="flex-1 bg-gray-100">
       <slot />
     </main>
   </div>

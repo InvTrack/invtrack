@@ -23,11 +23,11 @@
         <UsersIcon />
         <span class="flex-1 ml-3 whitespace-nowrap">Workers</span>
       </NavbarItem>
-      <NavbarItem path="/">
+      <NavbarItem path="/inventories">
         <ListIcon />
         <span class="flex-1 ml-3 whitespace-nowrap">Inventories</span>
       </NavbarItem>
-      <NavbarItem path="/">
+      <NavbarItem path="/products">
         <ProductIcon />
         <span class="flex-1 ml-3 whitespace-nowrap">Products</span>
       </NavbarItem>

@@ -9,37 +9,38 @@
   import { genericGet } from "$lib/genericGet";
 
   let loading = false;
-  let workers: Tables<"worker">[] | null = null;
-  onMount(() => genericGet(supabase.from("worker").select(), (x) => (workers = x)));
+  let products: Tables<"product">[] | null = null;
+  onMount(() => genericGet(supabase.from("product").select(), (x) => (products = x)));
 </script>
 
-<Card name="Workers">
-  {#if workers}
+<Card name="Products">
+  {#if products}
     <Table>
       <Head>
         <th scope="col" class="px-6 py-3">Name</th>
-        <th scope="col" class="px-6 py-3">Admin</th>
+        <th scope="col" class="px-6 py-3">Unit</th>
         <th scope="col" class="px-6 py-3">Created at</th>
         <th scope="col" class="px-6 py-3" />
       </Head>
       <tbody>
-        {#each workers as worker}
+        {#each products as product}
           <Row>
             <th
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
-              {worker.name}
+              {product.name}
             </th>
             <td class="px-6 py-4">
-              {worker.is_admin}
+              {product.unit}
             </td>
             <td class="px-6 py-4">
-              {worker.created_at}
+              {product.created_at}
             </td>
             <td class="px-6 py-4 text-right">
-              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >Edit</a
+              <a
+                href={"/products/" + product.id}
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a
               >
             </td>
           </Row>
