@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Database } from './database.types'
 
 // import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@env";
 
@@ -8,7 +9,7 @@ const localAnonKey =
 // const supabaseUrl = SUPABASE_URL;
 // const supabaseAnonKey = SUPABASE_ANON_KEY;
 
-export const supabase = createClient(localUrl, localAnonKey, {
+export const supabase = createClient<Database>(localUrl, localAnonKey, {
   auth: {
     // storage: AsyncStorage as any,
     autoRefreshToken: true,
