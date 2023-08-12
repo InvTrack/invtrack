@@ -1,16 +1,17 @@
 <script lang="ts">
-  import Navbar from "./Navbar.svelte";
+  import Navbar from "../lib/navbar/Navbar.svelte";
   import "./styles.css";
 
   import { onMount } from "svelte";
-  import { supabase } from "../lib/supabase";
+  import { supabase } from "$lib/supabase";
   import type { AuthSession } from "@supabase/supabase-js";
   import { page } from "$app/stores";
-  import { googleAccessToken } from "../lib/store";
+  import { googleAccessToken } from "$lib/store";
+  import Login from "./auth/Login.svelte";
   // import Account from './lib/Account.svelte'
   // import Auth from './lib/Auth.svelte'
 
-  let session: AuthSession;
+  let session: AuthSession | null;
 
   onMount(() => {
     // console.log($page)
@@ -48,56 +49,26 @@
 
     supabase.auth.getSession().then(({ data }) => {
       console.log(data);
-      if (data.session) session = data.session;
+      session = data.session;
     });
 
     supabase.auth.onAuthStateChange((_event, _session) => {
-      if (_session) session = _session;
+      console.log("auth state changed");
+      session = _session;
     });
   });
 </script>
 
-<div class="app">
-  <Navbar />
+<!-- <div class="app">
+</div> -->
 
-  <main>
-    <slot />
-  </main>
-</div>
-
-<style>
-  .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    /* width: 100%; */
-    max-width: 64rem;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-
-  footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-  }
-
-  footer a {
-    font-weight: bold;
-  }
-
-  @media (min-width: 480px) {
-    footer {
-      padding: 12px 0;
-    }
-  }
-</style>
+{#if !session}
+  <Login />
+{:else}
+  <div class="flex flex-row">
+    <Navbar />
+    <main class="flex-1">
+      <slot />
+    </main>
+  </div>
+{/if}
