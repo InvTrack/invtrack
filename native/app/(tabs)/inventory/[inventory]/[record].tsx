@@ -81,11 +81,11 @@ const navigateToNextRecord = (
 export default function Record() {
   const styles = useStyles();
   const localSearchParams = useLocalSearchParams();
-  const recordId = localSearchParams.record as string;
-  const inventoryId = localSearchParams.inventory as string;
+  const recordId = +localSearchParams.record;
+  const inventoryId = +localSearchParams.inventory;
   const recordPanel = useRecordPanel(recordId);
-  const { data: recordIds } = useListRecordIds(+inventoryId);
-  const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const { data: recordIds } = useListRecordIds(inventoryId);
+  const { data: inventoryName } = useGetInventoryName(inventoryId);
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
     +recordId,

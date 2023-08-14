@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "../supabase";
 import { Record, RecordTable } from "../types";
 
-export const useUpdateRecord = (recordId: string) => {
+export const useUpdateRecord = (recordId: number) => {
   const queryClient = useQueryClient();
   return useMutation(
     async (record: Partial<Record>) => {
