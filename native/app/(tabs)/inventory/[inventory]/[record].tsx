@@ -88,7 +88,7 @@ export default function Record() {
   const { data: inventoryName } = useGetInventoryName(inventoryId);
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
-    +recordId,
+    recordId,
     recordIds
   );
   const router = useRouter();
