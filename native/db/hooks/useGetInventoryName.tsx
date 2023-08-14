@@ -4,7 +4,7 @@ import { supabase } from "../supabase";
 import { InventoryTable } from "../types";
 import { useSession } from "./sessionContext";
 
-const getInventoryName = async (inventoryId: number | undefined | null) => {
+const getInventoryName = async (inventoryId: number) => {
   const res = await supabase
     .from<"inventory", InventoryTable>("inventory")
     .select("name")
@@ -15,7 +15,7 @@ const getInventoryName = async (inventoryId: number | undefined | null) => {
   };
 };
 
-export const useGetInventoryName = (inventoryId: number | undefined | null) => {
+export const useGetInventoryName = (inventoryId: number) => {
   const { session } = useSession();
 
   const query = useQuery(
