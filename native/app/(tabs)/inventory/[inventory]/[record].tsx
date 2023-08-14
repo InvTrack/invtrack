@@ -82,11 +82,10 @@ export default function Record() {
   const styles = useStyles();
   const localSearchParams = useLocalSearchParams();
   const recordId = localSearchParams.record as string;
+  const inventoryId = localSearchParams.inventory as string;
   const recordPanel = useRecordPanel(recordId);
-  const { data: recordIds } = useListRecordIds(recordPanel.data?.inventory_id);
-  const { data: inventoryName } = useGetInventoryName(
-    recordPanel.data?.inventory_id
-  );
+  const { data: recordIds } = useListRecordIds(+inventoryId);
+  const { data: inventoryName } = useGetInventoryName(+inventoryId);
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
     +recordId,
