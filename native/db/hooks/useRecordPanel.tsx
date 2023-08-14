@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { useGetRecord } from ".";
+import { useGetRecord } from "./useGetRecord";
 import { useUpdateRecord } from "./useUpdateRecord";
 
 /**
@@ -13,8 +13,7 @@ import { useUpdateRecord } from "./useUpdateRecord";
  * Wystawia też `data` informacje potrzebne do przedstawienia produktu w UI.
  *
  */
-export const useRecordPanel = (recordId: string | undefined) => {
-  if (!recordId) throw new Error("recordId is undefined");
+export const useRecordPanel = (recordId: string) => {
   const { mutate } = useUpdateRecord(recordId);
   const recordResult = useGetRecord(recordId);
   const { data, isSuccess } = recordResult;
