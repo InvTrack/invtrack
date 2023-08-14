@@ -1,4 +1,8 @@
 module.exports = {
-  "**/*.ts?(x)": () => ["npm run format", "npm run typecheck"],
-  "*.{json, js}": () => ["npm run format"],
+  "**/*.{ts,js}?(x)": () => [
+    "npm run format",
+    "npm run typecheck",
+    "npm run lint",
+  ],
+  "*.{json}": () => ["npm run format", "npm run typecheck"],
 };
