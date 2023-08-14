@@ -115,8 +115,7 @@ export default function Root() {
   const onRegisterPage =
     segments[0] === "(start)" && segments[1] === "register";
   const onStartPage = segments[0] === "(start)" && segments[1] === "start";
-  const isInventoryTab =
-    segments[0] === "(tabs)" && segments[1] === "inventory";
+  const isInventoryTab = segments[0] === "(tabs)" && segments[1] !== "list";
   const loggedIn = sessionState.loggedIn;
 
   React.useEffect(() => {

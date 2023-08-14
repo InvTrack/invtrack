@@ -53,7 +53,7 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
     months[capitalizedMonth].push([day, inventories]);
   });
 
-  return Object.entries(months);
+  return Object.entries(months).reverse();
 };
 
 const ListIndex = () => {
