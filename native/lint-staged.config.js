@@ -4,5 +4,5 @@ module.exports = {
     "npm run typecheck",
     "npm run lint",
   ],
-  "*.{json}": () => ["npm run format", "npm run typecheck"],
+  "*.json": () => ["npm run format", "npm run typecheck"],
 };
