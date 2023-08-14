@@ -115,9 +115,10 @@ export default function Root() {
   const onRegisterPage =
     segments[0] === "(start)" && segments[1] === "register";
   const onStartPage = segments[0] === "(start)" && segments[1] === "start";
+  const isInventoryTab =
+    segments[0] === "(tabs)" && segments[1] === "inventory";
   const loggedIn = sessionState.loggedIn;
 
-  //
   React.useEffect(() => {
     if (!navigationState?.key) {
       // Temporary fix for router not being ready.
@@ -125,7 +126,7 @@ export default function Root() {
     }
 
     if (loggedIn && (onLoginPage || onStartPage || onRegisterPage)) {
-      router.replace("/(tabs)/inventory");
+      router.replace("/(tabs)/list/");
     }
 
     if (!loggedIn && !onStartPage) {
@@ -133,12 +134,12 @@ export default function Root() {
     }
   }, [
     sessionState.loading,
-    sessionState.loggedIn,
     navigationState?.key,
     loggedIn,
     onLoginPage,
     onStartPage,
     onRegisterPage,
+    segments,
   ]);
 
   React.useEffect(() => {
@@ -155,16 +156,20 @@ export default function Root() {
           headerTitle: "",
           headerBackVisible: false,
           headerStyle: { backgroundColor: "#EDF6FF" },
-          headerLeft: (props) => (
-            <HeaderLeft
-              {...props}
-              href={
-                loggedIn
-                  ? ("/(tabs)/list" as const)
-                  : ("/(start)/start" as const)
-              }
-            />
-          ),
+          headerLeft: (props) => {
+            return (
+              <HeaderLeft
+                {...props}
+                href={
+                  loggedIn
+                    ? isInventoryTab
+                      ? "../"
+                      : ("/(tabs)/list" as const)
+                    : ("/(start)/start" as const)
+                }
+              />
+            );
+          },
           headerRight: (props) => <HeaderRight {...props} href="/account" />,
         }}
       >
