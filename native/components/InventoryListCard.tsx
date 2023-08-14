@@ -24,7 +24,6 @@ export const InventoryListCard = ({
 
   return (
     <Link
-      key={recordId}
       href={{
         pathname: "/(tabs)/inventory/[inventory]/[record]",
         params: { inventory: inventoryId, record: recordId },

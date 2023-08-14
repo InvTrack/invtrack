@@ -30,6 +30,7 @@ export default function InventoryIdIndex() {
           {recordList.map(({ name, quantity, unit, id }) => (
             // TODO - think of a clever way to check if these are not null, and let TS know
             <InventoryListCard
+              key={id}
               recordId={id!}
               inventoryId={+inventoryId}
               quantity={quantity!}
