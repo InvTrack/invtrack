@@ -9,7 +9,7 @@ const listInventories = async () => {
     .from<"inventory", InventoryTable>("inventory")
     .select()
     .order("created_at", { ascending: false });
-  console.log(res.data?.map((i) => [i.created_at, i.name]));
+
   return {
     ...res,
     data: res.data as Inventory[],
