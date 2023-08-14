@@ -39,17 +39,19 @@ export default function CreateInventory() {
 
   const onSubmit = (data: CreateInventoryFormValues) => {
     mutate(data);
-
-    if (isSuccess && inventory) {
-      const routeToNewInventory =
-        `/(tabs)/inventory/${inventory[0].id}/` as const;
-      router.replace(routeToNewInventory);
-    }
   };
 
   const setDateValue = (value: string) => {
     reset({ ...getValues, date: value });
   };
+
+  React.useEffect(() => {
+    if (isSuccess && inventory) {
+      const routeToNewInventory =
+        `/(tabs)/inventory/${inventory[0].id}/` as const;
+      router.replace(routeToNewInventory);
+    }
+  }, [isSuccess, inventory]);
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
