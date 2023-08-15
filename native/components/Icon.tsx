@@ -117,3 +117,11 @@ export const PlusIcon = (props: IconProps) =>
 const cogIconSrc = require("../assets/images/cog.png");
 export const CogIcon = (props: IconProps) =>
   createIcon({ source: cogIconSrc, props });
+
+const listIconSrc = require("../assets/images/list.png");
+export const ListIcon = (props: IconProps) =>
+  createIcon({ source: listIconSrc, props });
+
+const inventoryIconSrc = require("../assets/images/inventory.png");
+export const InventoryIcon = (props: IconProps) =>
+  createIcon({ source: inventoryIconSrc, props });
