@@ -3,15 +3,15 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InventoryListCard } from "../../../../components/InventoryListCard";
-import { Typography } from "../../../../components/Typography";
-import { useListRecords } from "../../../../db";
-import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
-import { createStyles } from "../../../../theme/useStyles";
+import { InventoryListCard } from "../../../components/InventoryListCard";
+import { Typography } from "../../../components/Typography";
+import { useListRecords } from "../../../db";
+import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
+import { createStyles } from "../../../theme/useStyles";
 
 export default function InventoryIdIndex() {
   const styles = useStyles();
-  // TODO - inventoryId is sometimes undefined
+
   const { inventory: inventoryId } = useLocalSearchParams();
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
