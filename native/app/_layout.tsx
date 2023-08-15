@@ -117,7 +117,6 @@ export default function Root() {
   const onRegisterPage =
     segments[0] === "(start)" && segments[1] === "register";
   const onStartPage = segments[0] === "(start)" && segments[1] === "start";
-  const isInventoryTab = segments[0] === "(tabs)" && segments[1] !== "list";
 
   const loggedIn = sessionState.loggedIn;
 
@@ -168,9 +167,7 @@ export default function Root() {
                 {...props}
                 href={
                   loggedIn
-                    ? isInventoryTab
-                      ? "../"
-                      : ("/(tabs)/list" as const)
+                    ? ("/(tabs)/list" as const)
                     : ("/(start)/start" as const)
                 }
               />
