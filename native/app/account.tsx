@@ -1,27 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import { Button, Input } from "react-native-elements";
+import React from "react";
 
 import { useRouter } from "expo-router";
+import { useForm } from "react-hook-form";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "../components/Button";
+import TextInputController from "../components/TextInputController";
+
 import { supabase, useGetUser, useUpdateUser } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
 
 export default function AccountDetails() {
   const { session } = useSession();
   const { data: user, isLoading } = useGetUser();
-  // TODO try to move to @tanstack/react-query
-  const [username, setUsername] = useState(user?.username || "");
-  const [companyName, setCompanyName] = useState(user?.company_name || "");
-  useEffect(() => {
-    setUsername(user?.username || "");
-    setCompanyName(user?.company_name || "");
-  }, [user]);
+
   const updateUser = useUpdateUser();
   const router = useRouter();
-
+  const { control } = useForm();
   return (
-    <View>
-      <Input label="Email" value={session?.user?.email} disabled />
+    <SafeAreaView edges={["left", "right"]}>
+      <TextInputController
+        control={control}
+        name="email"
+        textInputProps={{
+          placeholder: session?.user?.email,
+        }}
+      />
+      <TextInputController
+        control={control}
+        name="username"
+        textInputProps={{
+          placeholder: user?.username,
+        }}
+      />
+      <TextInputController
+        control={control}
+        name="companyName"
+        textInputProps={{
+          placeholder: user?.company_name,
+        }}
+      />
+      <Button
+        onPress={() =>
+          updateUser.mutate({
+            username: user?.username,
+            companyName: user?.company_name,
+          })
+        }
+        type="primary"
+        size="s"
+        fullWidth
+        disabled={isLoading}
+      >
+        {isLoading ? "Ładowanie ..." : "Aktualizuj"}
+      </Button>
+      <Button
+        onPress={() => {
+          supabase.auth.signOut();
+          router.push("/login");
+        }}
+        type="secondary"
+        size="s"
+        fullWidth
+      >
+        Wyloguj się
+      </Button>
+
+      {/* <Input label="Email" value={session?.user?.email} disabled />
       <Input
         label="Username"
         value={username || ""}
@@ -44,7 +88,7 @@ export default function AccountDetails() {
           supabase.auth.signOut();
           router.push("/login");
         }}
-      />
-    </View>
+      /> */}
+    </SafeAreaView>
   );
 }
