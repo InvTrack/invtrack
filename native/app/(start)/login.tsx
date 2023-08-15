@@ -15,8 +15,6 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
-  // TODO try to move to @tanstack/react-query
-
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
@@ -37,7 +35,10 @@ export default function Login() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      edges={["left", "bottom", "right", "top"]}
+      style={styles.container}
+    >
       <Typography
         variant="xlBold"
         color="darkBlue"
@@ -64,20 +65,17 @@ export default function Login() {
         type="primary"
         size="xs"
         shadow
-        // disabled={loading}
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        <Typography variant="xs" color="darkBlue">
-          Zaloguj się
-        </Typography>
+        Zaloguj się
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
       </Link>
       <Typography style={styles.registerLink}>
         <Typography variant="xs" color="darkBlue" opacity>
-          Nie masz konta
+          Nie masz konta?{" "}
         </Typography>
         <Link href="/register" style={styles.link}>
           Zarejestruj się
@@ -96,7 +94,6 @@ const useStyles = createStyles((theme) =>
     title: {
       alignSelf: "center",
       marginBottom: theme.spacing * 7,
-      marginTop: theme.spacing * 11,
     },
     input: { marginVertical: theme.spacing },
     button: {
