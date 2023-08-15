@@ -10,7 +10,11 @@ export const useGetUser = () => {
   const { session } = useContext(SessionContext);
   return useQuery(["user", session?.user.id], async () => {
     try {
-      if (!session?.user) throw new Error("No user on the session!");
+      if (!session?.user)
+        return {
+          username: null,
+          company_name: null,
+        };
 
       const { data, error, status } = await supabase
         .from("user")
