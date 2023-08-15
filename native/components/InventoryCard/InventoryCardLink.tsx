@@ -20,7 +20,7 @@ export const InventoryCardLink = ({
   return (
     <Link
       href={{
-        pathname: `/(tabs)/inventory/[inventory]/`,
+        pathname: `/(tabs)/[inventory]/`,
         params: { inventory: inventoryId },
       }}
       asChild

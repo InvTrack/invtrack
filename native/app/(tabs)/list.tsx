@@ -2,11 +2,11 @@ import capitalize from "lodash/capitalize";
 import React, { useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InventoryCardAdd } from "../../../components/InventoryCard/InventoryCardAdd";
-import { InventoryCardLink } from "../../../components/InventoryCard/InventoryCardLink";
-import { Typography } from "../../../components/Typography";
-import { useListInventories } from "../../../db";
-import { createStyles } from "../../../theme/useStyles";
+import { InventoryCardAdd } from "../../components/InventoryCard/InventoryCardAdd";
+import { InventoryCardLink } from "../../components/InventoryCard/InventoryCardLink";
+import { Typography } from "../../components/Typography";
+import { useListInventories } from "../../db";
+import { createStyles } from "../../theme/useStyles";
 
 const MonthTitle = ({ title }: { title: string }) => {
   return (
@@ -24,9 +24,9 @@ const DayTitle = ({ title }: { title: string }) => {
 };
 
 const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
-  if (!data) return;
+  if (!data) return null;
   const days: { [key: string]: typeof data } = {};
-  data.forEach((item) => {
+  data.reverse().forEach((item) => {
     const day = new Date(item.created_at).toLocaleString("pl-PL", {
       day: "numeric",
       month: "numeric",
@@ -36,11 +36,11 @@ const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
     }
     days[day].push(item);
   });
-  return Object.entries(days).reverse();
+  return Object.entries(days);
 };
 
 const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
-  if (!groupedByDay) return;
+  if (!groupedByDay) return null;
   const months: { [key: string]: typeof groupedByDay } = {};
   groupedByDay.forEach(([day, inventories]) => {
     const month = new Date(inventories[0].created_at).toLocaleString("pl-PL", {

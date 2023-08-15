@@ -7,7 +7,9 @@ import { useSession } from "./sessionContext";
 const listInventories = async () => {
   const res = await supabase
     .from<"inventory", InventoryTable>("inventory")
-    .select();
+    .select()
+    .order("created_at", { ascending: false });
+
   return {
     ...res,
     data: res.data as Inventory[],

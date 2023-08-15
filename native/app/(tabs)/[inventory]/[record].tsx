@@ -2,21 +2,21 @@ import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useBottomSheet } from "../../../../components/BottomSheet";
-import { InputBottomSheetContent } from "../../../../components/BottomSheet/contents";
-import { Button } from "../../../../components/Button";
+import { useBottomSheet } from "../../../components/BottomSheet";
+import { InputBottomSheetContent } from "../../../components/BottomSheet/contents";
+import { Button } from "../../../components/Button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-} from "../../../../components/Icon";
-import { Typography } from "../../../../components/Typography";
-import { useRecordPanel } from "../../../../db";
-import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
-import { useListRecordIds } from "../../../../db/hooks/useListRecordIds";
-import { createStyles } from "../../../../theme/useStyles";
+} from "../../../components/Icon";
+import { Typography } from "../../../components/Typography";
+import { useRecordPanel } from "../../../db";
+import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
+import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
+import { createStyles } from "../../../theme/useStyles";
 
-import { useRecordPagination } from "../../../../utils/useRecordPagination";
+import { useRecordPagination } from "../../../utils/useRecordPagination";
 
 const RecordButton = ({
   label,
@@ -57,7 +57,7 @@ const navigateToPreviousRecord = (
     : () => {
         !isFirst &&
           replace({
-            pathname: "/(tabs)/inventory/[inventory]/[record]",
+            pathname: "/(tabs)/[inventory]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
@@ -73,7 +73,7 @@ const navigateToNextRecord = (
     : () => {
         !isLast &&
           replace({
-            pathname: "/(tabs)/inventory/[inventory]/[record]",
+            pathname: "/(tabs)/[inventory]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
