@@ -15,7 +15,7 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const { control, handleSubmit, setError } = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
       password: "",
@@ -25,12 +25,15 @@ export default function Login() {
     },
   });
   const styles = useStyles();
+
   const onSubmit = async ({ email, password }: LoginFormValues) => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-
+    if (error?.status === 400) {
+      setError("password", { message: "Nieprawidłowy email lub hasło" });
+    }
     error && console.log(error);
   };
 
@@ -50,15 +53,31 @@ export default function Login() {
       <TextInputController
         control={control}
         name="email"
-        textInputProps={{ containerStyle: styles.input, placeholder: "email" }}
+        textInputProps={{ containerStyle: styles.input, placeholder: "E-mail" }}
+        rules={{
+          required: {
+            value: true,
+            message: "Adres e-mail jest wymagany",
+          },
+        }}
       />
       <TextInputController
         control={control}
         name="password"
         textInputProps={{
           containerStyle: styles.input,
-          placeholder: "password",
+          placeholder: "Hasło",
           secureTextEntry: true,
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "Hasło jest wymagane",
+          },
+          minLength: {
+            value: 6,
+            message: "Hasło musi mieć minimum 6 znaków",
+          },
         }}
       />
       <Button

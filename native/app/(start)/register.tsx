@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ScrollView, StyleSheet } from "react-native";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
@@ -37,7 +37,7 @@ export default function Register() {
       email,
       password,
     });
-    error && console.log(error);
+    error && console.log(error, error.cause, error.status);
   };
 
   return (
@@ -86,6 +86,15 @@ export default function Register() {
             placeholder: "hasło",
             secureTextEntry: true,
             containerStyle: styles.input,
+            // a hack to prevent an ios password strength overlay
+            blurOnSubmit: false,
+            onSubmitEditing: () => Keyboard.dismiss(),
+          }}
+          rules={{
+            minLength: {
+              value: 6,
+              message: "Hasło musi mieć minimum 6 znaków",
+            },
           }}
         />
         <TextInputController
