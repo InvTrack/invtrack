@@ -10,7 +10,7 @@ const TabLayout = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
-            <ListIcon color={focused ? "darkBlue" : "mediumBlue"} size={37} />
+            <ListIcon color={focused ? "mediumBlue" : "darkBlue"} size={37} />
           ),
           headerShown: false,
           lazy: false,
@@ -22,7 +22,7 @@ const TabLayout = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
             <InventoryIcon
-              color={focused ? "darkBlue" : "mediumBlue"}
+              color={focused ? "mediumBlue" : "darkBlue"}
               size={37}
             />
           ),
