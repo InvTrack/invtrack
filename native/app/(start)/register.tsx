@@ -41,7 +41,10 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView style={styles.background}>
+    <SafeAreaView
+      edges={["left", "bottom", "right", "top"]}
+      style={styles.background}
+    >
       <ScrollView
         contentContainerStyle={[styles.container, styles.background]}
         style={styles.background}
@@ -101,9 +104,7 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          <Typography variant="xs" color="darkBlue">
-            Zarejestruj się
-          </Typography>
+          Zarejestruj się
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
@@ -123,9 +124,8 @@ const useStyles = createStyles((theme) =>
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
       alignItems: "center",
-      justifyContent: "center",
     },
-    title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
+    title: { alignSelf: "center", marginBottom: theme.spacing * 7 },
     input: { marginVertical: theme.spacing },
     link: {
       alignSelf: "center",

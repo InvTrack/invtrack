@@ -30,6 +30,7 @@ import { useAppState } from "../utils/useAppState";
 import { useOnlineManager } from "../utils/useOnlineManager";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
+import { ArrowRightIcon } from "../components/Icon";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -113,10 +114,7 @@ export default function Root() {
   const router = useRouter();
   const navigationState = useRootNavigationState();
 
-  const onLoginPage = segments[0] === "(start)" && segments[1] === "login";
-  const onRegisterPage =
-    segments[0] === "(start)" && segments[1] === "register";
-  const onStartPage = segments[0] === "(start)" && segments[1] === "start";
+  const inStartGroup = segments[0] === "(start)";
 
   const loggedIn = sessionState.loggedIn;
 
@@ -126,22 +124,14 @@ export default function Root() {
       return;
     }
 
-    if (loggedIn && (onLoginPage || onStartPage || onRegisterPage)) {
+    if (loggedIn && inStartGroup) {
       router.replace("/(tabs)/list/");
     }
 
-    if (!loggedIn && !onStartPage) {
+    if (!loggedIn && !inStartGroup) {
       router.replace("/(start)/start");
     }
-  }, [
-    sessionState.loading,
-    navigationState?.key,
-    loggedIn,
-    onLoginPage,
-    onStartPage,
-    onRegisterPage,
-    segments,
-  ]);
+  }, [navigationState?.key, loggedIn, inStartGroup]);
 
   React.useEffect(() => {
     StatusBar.setBarStyle("dark-content", true);
@@ -161,22 +151,25 @@ export default function Root() {
           headerTitle: "",
           headerBackVisible: false,
           headerStyle: { backgroundColor: "#EDF6FF" },
-          headerLeft: (props) => {
-            return (
-              <HeaderLeft
-                {...props}
-                href={
-                  loggedIn
-                    ? ("/(tabs)/list" as const)
-                    : ("/(start)/start" as const)
-                }
-              />
-            );
-          },
+          headerLeft: (props) => (
+            <HeaderLeft
+              {...props}
+              href={
+                loggedIn
+                  ? ("/(tabs)/list" as const)
+                  : ("/(start)/start" as const)
+              }
+            />
+          ),
           headerRight: (props) => <HeaderRight {...props} href="/account" />,
         }}
       >
-        <Stack.Screen name="(start)" />
+        <Stack.Screen
+          name="(start)"
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="(tabs)" />
         {/* TODO styling etc. */}
         <Stack.Screen
@@ -190,7 +183,19 @@ export default function Root() {
         <Stack.Screen
           name="account"
           options={{
+            headerLeft: () => (
+              <ArrowRightIcon size={32} onPress={router.back} />
+            ),
+            headerRight: () => null,
             headerTitle: "Ustawienia",
+          }}
+        />
+        <Stack.Screen
+          name="new"
+          options={{
+            headerLeft: () => (
+              <ArrowRightIcon size={32} onPress={router.back} />
+            ),
           }}
         />
       </Stack>
