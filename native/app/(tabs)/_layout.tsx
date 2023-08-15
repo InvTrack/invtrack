@@ -1,16 +1,17 @@
-import { useTheme } from "@react-navigation/native";
 import { Tabs } from "expo-router";
 import React from "react";
+import { InventoryIcon, ListIcon } from "../../components/Icon";
 
 const TabLayout = () => {
-  const theme = useTheme();
   return (
     <Tabs>
       <Tabs.Screen
         name="list"
         options={{
-          tabBarLabel: "list",
-          tabBarActiveTintColor: theme.colors.mediumBlue,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => (
+            <ListIcon color={focused ? "darkBlue" : "mediumBlue"} size={37} />
+          ),
           headerShown: false,
           lazy: false,
         }}
@@ -18,8 +19,13 @@ const TabLayout = () => {
       <Tabs.Screen
         name="[inventory]"
         options={{
-          tabBarLabel: "inventory",
-          tabBarActiveTintColor: theme.colors.mediumBlue,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => (
+            <InventoryIcon
+              color={focused ? "darkBlue" : "mediumBlue"}
+              size={37}
+            />
+          ),
           headerShown: false,
         }}
       />
