@@ -51,6 +51,7 @@ export const Button = forwardRef(
           styles.buttonBase,
           styles[type],
           styles[size],
+          disabled && styles.disabled,
           shadow && styles.shadow,
           fullWidth && styles.fullWidth,
           containerStyle,
@@ -59,7 +60,9 @@ export const Button = forwardRef(
         activeOpacity={0.8}
       >
         {isStringChildren ? (
-          <Typography style={styles.string}>{children}</Typography>
+          <Typography variant={size === "xs" ? "s" : "m"} style={styles.string}>
+            {children}
+          </Typography>
         ) : (
           children
         )}
@@ -94,6 +97,7 @@ const useStyles = createStyles((theme) =>
     string: {
       color: theme.colors.darkBlue,
     },
+    disabled: { opacity: 0.6 },
     // SIZES
     xs: {
       height: 40,
