@@ -31,6 +31,8 @@ import { useOnlineManager } from "../utils/useOnlineManager";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
 
+SplashScreen.preventAutoHideAsync();
+
 const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
@@ -116,6 +118,7 @@ export default function Root() {
     segments[0] === "(start)" && segments[1] === "register";
   const onStartPage = segments[0] === "(start)" && segments[1] === "start";
   const isInventoryTab = segments[0] === "(tabs)" && segments[1] !== "list";
+
   const loggedIn = sessionState.loggedIn;
 
   React.useEffect(() => {
@@ -146,8 +149,12 @@ export default function Root() {
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {
-    return <SplashScreen />;
+    SplashScreen.preventAutoHideAsync();
+    return;
+  } else {
+    SplashScreen.hideAsync();
   }
+
   return (
     <ProvideProviders>
       <Stack
