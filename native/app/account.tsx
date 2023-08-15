@@ -6,10 +6,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import TextInputController from "../components/TextInputController";
 
+import { StyleSheet } from "react-native";
 import { supabase, useGetUser, useUpdateUser } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
+import { createStyles } from "../theme/useStyles";
 
 export default function AccountDetails() {
+  const styles = useStyles();
   const { session } = useSession();
   const { data: user, isLoading } = useGetUser();
 
@@ -17,7 +20,10 @@ export default function AccountDetails() {
   const router = useRouter();
   const { control } = useForm();
   return (
-    <SafeAreaView edges={["left", "right"]}>
+    <SafeAreaView
+      edges={["left", "right", "bottom", "top"]}
+      style={styles.container}
+    >
       <TextInputController
         control={control}
         name="email"
@@ -30,6 +36,7 @@ export default function AccountDetails() {
         name="username"
         textInputProps={{
           placeholder: user?.username,
+          containerStyle: styles.mt,
         }}
       />
       <TextInputController
@@ -37,6 +44,7 @@ export default function AccountDetails() {
         name="companyName"
         textInputProps={{
           placeholder: user?.company_name,
+          containerStyle: styles.mt,
         }}
       />
       <Button
@@ -50,45 +58,40 @@ export default function AccountDetails() {
         size="s"
         fullWidth
         disabled={isLoading}
+        containerStyle={styles.mt}
       >
         {isLoading ? "Ładowanie ..." : "Aktualizuj"}
       </Button>
       <Button
-        onPress={() => {
-          supabase.auth.signOut();
+        onPress={async () => {
+          await supabase.auth.signOut();
           router.push("/login");
         }}
         type="secondary"
         size="s"
         fullWidth
+        containerStyle={styles.mt2}
       >
         Wyloguj się
       </Button>
-
-      {/* <Input label="Email" value={session?.user?.email} disabled />
-      <Input
-        label="Username"
-        value={username || ""}
-        onChangeText={(text) => setUsername(text)}
-      />
-
-      <Input
-        label="Company name"
-        value={companyName || ""}
-        onChangeText={(text) => setCompanyName(text)}
-      />
-      <Button
-        title={isLoading ? "Loading ..." : "Update"}
-        onPress={() => updateUser.mutate({ username, companyName })}
-        disabled={isLoading}
-      />
-      <Button
-        title="Sign Out"
-        onPress={() => {
-          supabase.auth.signOut();
-          router.push("/login");
-        }}
-      /> */}
     </SafeAreaView>
   );
 }
+const useStyles = createStyles((theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.lightBlue,
+      paddingHorizontal: theme.spacing * 2,
+
+      alignItems: "center",
+      height: "100%",
+    },
+    updateButton: {},
+    mt: {
+      marginTop: theme.spacing * 2,
+    },
+    mt2: {
+      marginTop: theme.spacing * 9,
+    },
+  })
+);
