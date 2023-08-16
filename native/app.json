@@ -29,6 +29,15 @@
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b6a4f1dd-336c-4a86-9b7f-4414b475c48b"
+      }
+    },
+    "owner": "michalstruck"
   }
 }
