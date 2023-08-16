@@ -25,7 +25,7 @@ type ButtonProps = {
 };
 
 const BORDER_WIDTH = 4;
-const debouncedOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
+const debounceOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
 
 export const Button = forwardRef(
   (
@@ -46,7 +46,7 @@ export const Button = forwardRef(
     const isStringChildren = typeof children === "string";
     return (
       <TouchableOpacity
-        onPress={debouncedOnPress(onPress ?? (() => undefined))}
+        onPress={debounceOnPress(onPress ?? (() => undefined))}
         style={[
           styles.buttonBase,
           styles[type],

@@ -1,10 +1,15 @@
 import { Stack } from "expo-router";
 import React from "react";
+import { Typography } from "../../../components/Typography";
 import { useListInventories } from "../../../db";
 
 const InventoryLayout = () => {
   const { data } = useListInventories();
-  const inventoryId = data?.[0].id;
+
+  const inventoryId = data?.[0]?.id;
+  const noInventories = !data?.length;
+
+  if (noInventories) return <Typography>Brak inwentaryzacji</Typography>;
   // TODO skeletons or ???
   if (!inventoryId) return null;
 

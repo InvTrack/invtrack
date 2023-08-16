@@ -46,6 +46,9 @@ export default function InventoryIdIndex() {
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.lightBlue,
+    },
     topBar: {
       ...theme.baseShadow,
       width: "100%",
@@ -60,6 +63,7 @@ const useStyles = createStyles((theme) =>
     scroll: {
       width: "100%",
       height: "100%",
+      backgroundColor: theme.colors.lightBlue,
     },
     date: {
       paddingTop: theme.spacing,
