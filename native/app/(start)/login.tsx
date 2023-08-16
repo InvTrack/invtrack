@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,7 +15,8 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
-  const { control, handleSubmit } = useForm<LoginFormValues>({
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { control, handleSubmit, setError } = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
       password: "",
@@ -25,12 +26,19 @@ export default function Login() {
     },
   });
   const styles = useStyles();
+
   const onSubmit = async ({ email, password }: LoginFormValues) => {
+    setIsLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+    setIsLoading(false);
 
+    if (error?.status === 400) {
+      error && console.log(error);
+      setError("password", { message: "Nieprawidłowy email i/lub hasło" });
+    }
     error && console.log(error);
   };
 
@@ -50,15 +58,31 @@ export default function Login() {
       <TextInputController
         control={control}
         name="email"
-        textInputProps={{ containerStyle: styles.input, placeholder: "email" }}
+        textInputProps={{ containerStyle: styles.input, placeholder: "E-mail" }}
+        rules={{
+          required: {
+            value: true,
+            message: "Adres e-mail jest wymagany",
+          },
+        }}
       />
       <TextInputController
         control={control}
         name="password"
         textInputProps={{
           containerStyle: styles.input,
-          placeholder: "password",
+          placeholder: "Hasło",
           secureTextEntry: true,
+        }}
+        rules={{
+          required: {
+            value: true,
+            message: "Hasło jest wymagane",
+          },
+          minLength: {
+            value: 6,
+            message: "Hasło musi mieć minimum 6 znaków",
+          },
         }}
       />
       <Button
@@ -68,7 +92,7 @@ export default function Login() {
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        Zaloguj się
+        {isLoading ? <ActivityIndicator size={17} /> : "Zaloguj się"}
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
