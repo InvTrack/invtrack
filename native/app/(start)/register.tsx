@@ -76,7 +76,10 @@ export default function Register() {
         <TextInputController
           name="name"
           control={control}
-          textInputProps={{ placeholder: "imię", containerStyle: styles.input }}
+          textInputProps={{
+            placeholder: "imię",
+            containerStyle: styles.input,
+          }}
           rules={{
             required: {
               value: true,
@@ -112,6 +115,7 @@ export default function Register() {
           textInputProps={{
             placeholder: "e-mail",
             containerStyle: styles.input,
+            keyboardType: "email-address",
           }}
           rules={{
             pattern: {
