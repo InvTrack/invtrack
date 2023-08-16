@@ -25,18 +25,19 @@ type FormValues = {
 export default function Register() {
   const [isLoading, setIsLoading] = React.useState(false);
   const styles = useStyles();
-  const { control, handleSubmit, watch, trigger } = useForm<FormValues>({
-    defaultValues: {
-      name: "",
-      surname: "",
-      email: "",
-      password: "",
-      passwordRepeat: "",
-    },
-    resetOptions: {
-      keepDirtyValues: true,
-    },
-  });
+  const { control, handleSubmit, watch, trigger, setError } =
+    useForm<FormValues>({
+      defaultValues: {
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        passwordRepeat: "",
+      },
+      resetOptions: {
+        keepDirtyValues: true,
+      },
+    });
 
   React.useEffect(() => {
     trigger("passwordRepeat");
@@ -49,8 +50,12 @@ export default function Register() {
       password,
     });
     setIsLoading(false);
-
-    error && console.log(error, error.cause, error.status);
+    if (error?.message === "User already registered") {
+      setError("passwordRepeat", {
+        message: "Użytkownik już istnieje",
+      });
+    }
+    error && console.log(error, error.cause, error.status, error.message);
   };
 
   return (
