@@ -26,7 +26,7 @@ const DayTitle = ({ title }: { title: string }) => {
 const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
   if (!data) return null;
   const days: { [key: string]: typeof data } = {};
-  data.reverse().forEach((item) => {
+  data.forEach((item) => {
     const day = new Date(item.created_at).toLocaleString("pl-PL", {
       day: "numeric",
       month: "numeric",
