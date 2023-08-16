@@ -43,10 +43,7 @@ export default function Login() {
   };
 
   return (
-    <SafeAreaView
-      edges={["left", "bottom", "right", "top"]}
-      style={styles.container}
-    >
+    <SafeAreaView edges={["left", "bottom", "right"]} style={styles.container}>
       <Typography
         variant="xlBold"
         color="darkBlue"
@@ -114,6 +111,7 @@ const useStyles = createStyles((theme) =>
       backgroundColor: theme.colors.lightBlue,
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
+      paddingTop: theme.spacing * 3,
     },
     title: {
       alignSelf: "center",

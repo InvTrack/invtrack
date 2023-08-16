@@ -22,8 +22,6 @@ import {
   useRouter,
   useSegments,
 } from "expo-router";
-import { HeaderLeft } from "../components/HeaderLeft";
-import { HeaderRight } from "../components/HeaderRight";
 import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
@@ -31,6 +29,7 @@ import { useOnlineManager } from "../utils/useOnlineManager";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
 import { ArrowRightIcon } from "../components/Icon";
+import { Header } from "../components/Header";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -148,20 +147,7 @@ export default function Root() {
     <ProvideProviders>
       <Stack
         screenOptions={{
-          headerTitle: "",
-          headerBackVisible: false,
-          headerStyle: { backgroundColor: "#EDF6FF" },
-          headerLeft: (props) => (
-            <HeaderLeft
-              {...props}
-              href={
-                loggedIn
-                  ? ("/(tabs)/list" as const)
-                  : ("/(start)/start" as const)
-              }
-            />
-          ),
-          headerRight: (props) => <HeaderRight {...props} href="/account" />,
+          header: (p) => <Header {...p} />,
         }}
       >
         <Stack.Screen
@@ -180,16 +166,7 @@ export default function Root() {
             headerShown: false,
           }}
         />
-        <Stack.Screen
-          name="account"
-          options={{
-            headerLeft: () => (
-              <ArrowRightIcon size={32} onPress={router.back} />
-            ),
-            headerRight: () => null,
-            headerTitle: "Ustawienia",
-          }}
-        />
+        <Stack.Screen name="account" />
         <Stack.Screen
           name="new"
           options={{

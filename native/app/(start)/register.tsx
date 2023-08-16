@@ -59,10 +59,7 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView
-      edges={["left", "bottom", "right", "top"]}
-      style={styles.background}
-    >
+    <SafeAreaView edges={["left", "right"]} style={styles.background}>
       <ScrollView
         contentContainerStyle={[styles.container, styles.background]}
         style={styles.background}
@@ -191,6 +188,7 @@ const useStyles = createStyles((theme) =>
     container: {
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
+      paddingTop: theme.spacing * 3,
       alignItems: "center",
     },
     title: { alignSelf: "center", marginBottom: theme.spacing * 7 },

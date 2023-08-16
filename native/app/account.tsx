@@ -20,10 +20,7 @@ export default function AccountDetails() {
   const router = useRouter();
   const { control } = useForm();
   return (
-    <SafeAreaView
-      edges={["left", "right", "bottom", "top"]}
-      style={styles.container}
-    >
+    <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
       <TextInputController
         control={control}
         name="email"
@@ -65,7 +62,7 @@ export default function AccountDetails() {
       <Button
         onPress={async () => {
           await supabase.auth.signOut();
-          router.push("/login");
+          router.push("/(start)/start");
         }}
         type="secondary"
         size="s"
@@ -82,7 +79,7 @@ const useStyles = createStyles((theme) =>
     container: {
       backgroundColor: theme.colors.lightBlue,
       paddingHorizontal: theme.spacing * 2,
-
+      paddingTop: theme.spacing * 2,
       alignItems: "center",
       height: "100%",
     },
