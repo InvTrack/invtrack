@@ -1,10 +1,21 @@
+import { useTheme } from "@react-navigation/native";
 import { Tabs } from "expo-router";
 import React from "react";
 import { InventoryIcon, ListIcon } from "../../components/Icon";
 
 const TabLayout = () => {
+  const theme = useTheme();
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: theme.colors.lightBlue,
+          borderTopWidth: 1,
+          borderTopColor: theme.colors.mediumBlue,
+          borderRadius: 20,
+        },
+      }}
+    >
       <Tabs.Screen
         name="list"
         options={{
