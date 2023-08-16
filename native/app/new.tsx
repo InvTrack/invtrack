@@ -47,7 +47,7 @@ export default function CreateInventory() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      const routeToNewInventory = `/(tabs)/${inventory[0].id}/` as const;
+      const routeToNewInventory = `/(tabs)/${inventory[0].id}` as const;
       router.replace(routeToNewInventory);
     }
   }, [isSuccess, inventory]);
@@ -94,9 +94,7 @@ export default function CreateInventory() {
         containerStyle={styles.buttonContainer}
         onPress={handleSubmit(onSubmit)}
       >
-        <Typography variant="m" color="darkBlue">
-          Dodaj
-        </Typography>
+        Dodaj
       </Button>
     </SafeAreaView>
   );
