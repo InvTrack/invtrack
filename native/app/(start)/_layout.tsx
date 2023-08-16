@@ -1,16 +1,13 @@
-import { useTheme } from "@react-navigation/native";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import React from "react";
-import { ArrowRightIcon } from "../../components/Icon";
+import { Header } from "../../components/Header";
 
 const StartLayout = () => {
-  const theme = useTheme();
-  const router = useRouter();
   return (
     <Stack
       screenOptions={{
         headerShown: true,
-        title: "",
+        header: Header,
       }}
     >
       <Stack.Screen
@@ -21,28 +18,8 @@ const StartLayout = () => {
           headerBackVisible: false,
         }}
       />
-      <Stack.Screen
-        name="login"
-        options={{
-          headerBackTitleVisible: false,
-          headerBackVisible: false,
-          headerLeft: () => <ArrowRightIcon size={32} onPress={router.back} />,
-          headerStyle: {
-            backgroundColor: theme.colors.lightBlue,
-          },
-        }}
-      />
-      <Stack.Screen
-        name="register"
-        options={{
-          headerBackTitleVisible: false,
-          headerBackVisible: false,
-          headerLeft: () => <ArrowRightIcon size={32} onPress={router.back} />,
-          headerStyle: {
-            backgroundColor: theme.colors.lightBlue,
-          },
-        }}
-      />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
     </Stack>
   );
 };

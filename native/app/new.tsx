@@ -60,7 +60,7 @@ export default function CreateInventory() {
         variant="xlBold"
         color="darkBlue"
       >
-        {`Nowa \ninwentaryzacja`}:
+        {`Nowa \ninwentaryzacja:`}
       </Typography>
       <View style={styles.mb}>
         <TextInputController
@@ -105,7 +105,7 @@ const useStyles = createStyles((theme) =>
     container: {
       backgroundColor: theme.colors.lightBlue,
       height: "100%",
-      paddingHorizontal: theme.spacing * 6,
+      paddingHorizontal: theme.spacing * 5,
     },
     mb: {
       marginBottom: theme.spacing * 3,
