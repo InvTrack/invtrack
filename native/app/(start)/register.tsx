@@ -1,6 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Keyboard, ScrollView, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
@@ -18,8 +23,9 @@ type FormValues = {
   passwordRepeat: string;
 };
 export default function Register() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const styles = useStyles();
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control, handleSubmit, watch, trigger } = useForm<FormValues>({
     defaultValues: {
       name: "",
       surname: "",
@@ -32,11 +38,18 @@ export default function Register() {
     },
   });
 
+  React.useEffect(() => {
+    trigger("passwordRepeat");
+  }, [watch("password"), trigger]);
+
   const onSubmit = async ({ email, password }: FormValues) => {
+    setIsLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
     });
+    setIsLoading(false);
+
     error && console.log(error, error.cause, error.status);
   };
 
@@ -62,6 +75,16 @@ export default function Register() {
           name="name"
           control={control}
           textInputProps={{ placeholder: "imię", containerStyle: styles.input }}
+          rules={{
+            required: {
+              value: true,
+              message: "Imię jest wymagane",
+            },
+            minLength: {
+              value: 2,
+              message: "Imię musi mieć minimum 2 znaki",
+            },
+          }}
         />
         <TextInputController
           name="surname"
@@ -70,13 +93,30 @@ export default function Register() {
             placeholder: "nazwisko",
             containerStyle: styles.input,
           }}
+          rules={{
+            required: {
+              value: true,
+              message: "Nazwisko jest wymagane",
+            },
+            minLength: {
+              value: 2,
+              message: "Nazwisko musi mieć minimum 2 znaki",
+            },
+          }}
         />
         <TextInputController
           name="email"
           control={control}
           textInputProps={{
-            placeholder: "e-mail,",
+            placeholder: "e-mail",
             containerStyle: styles.input,
+          }}
+          rules={{
+            pattern: {
+              // TODO: server validation?
+              value: /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/,
+              message: "Nieprawidłowy adres e-mail",
+            },
           }}
         />
         <TextInputController
@@ -91,6 +131,10 @@ export default function Register() {
             onSubmitEditing: () => Keyboard.dismiss(),
           }}
           rules={{
+            required: {
+              value: true,
+              message: "Hasło jest wymagane",
+            },
             minLength: {
               value: 6,
               message: "Hasło musi mieć minimum 6 znaków",
@@ -105,6 +149,16 @@ export default function Register() {
             secureTextEntry: true,
             containerStyle: styles.input,
           }}
+          rules={{
+            required: {
+              value: true,
+              message: "",
+            },
+            validate: (value, formValues) =>
+              value === formValues.password
+                ? true
+                : "Hasła muszą być takie same",
+          }}
         />
         <Button
           type="primary"
@@ -113,7 +167,7 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          Zarejestruj się
+          {isLoading ? <ActivityIndicator size={17} /> : "Zarejestruj się"}
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
