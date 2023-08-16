@@ -55,7 +55,11 @@ export default function Login() {
       <TextInputController
         control={control}
         name="email"
-        textInputProps={{ containerStyle: styles.input, placeholder: "E-mail" }}
+        textInputProps={{
+          containerStyle: styles.input,
+          placeholder: "E-mail",
+          keyboardType: "email-address",
+        }}
         rules={{
           required: {
             value: true,
