@@ -42,6 +42,12 @@
         "projectId": "b6a4f1dd-336c-4a86-9b7f-4414b475c48b"
       }
     },
-    "owner": "michalstruck"
+    "owner": "michalstruck",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b6a4f1dd-336c-4a86-9b7f-4414b475c48b"
+    }
   }
 }
