@@ -14,14 +14,17 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "buildNumber": "1.0.0",
       "supportsTablet": true,
-      "bundleIdentifier": "com.invtrack.invtrack"
+      "bundleIdentifier": "pl.invtrack.invtrack"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "pl.invtrack.invtrack",
+      "versionCode": 1
     },
     "web": {
       "bundler": "metro",
