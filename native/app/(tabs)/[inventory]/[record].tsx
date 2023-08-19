@@ -16,6 +16,8 @@ import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
 import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../theme/useStyles";
 
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
 import { useRecordPagination } from "../../../utils/useRecordPagination";
 
 const RecordButton = ({
@@ -78,20 +80,42 @@ const navigateToNextRecord = (
           });
       };
 
+const onRecordButtonStepperPress =
+  (
+    click: () => void,
+    inventoryId: number,
+    productId: number | null,
+    queryClient: QueryClient
+  ) =>
+  () => {
+    click();
+    queryClient.invalidateQueries(["recordsList", inventoryId]);
+    queryClient.invalidateQueries([
+      "previousRecordQuantity",
+      inventoryId,
+      productId,
+    ]);
+  };
+
 export default function Record() {
   const styles = useStyles();
   const localSearchParams = useLocalSearchParams();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const recordId = +localSearchParams.record;
   const inventoryId = +localSearchParams.inventory;
   const recordPanel = useRecordPanel(recordId);
   const { data: recordIds } = useListRecordIds(inventoryId);
   const { data: inventoryName } = useGetInventoryName(inventoryId);
+  const { data: previousQuantity } = useGetPreviousRecordQuantity(
+    inventoryId,
+    recordPanel.data?.product_id
+  );
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
     recordId,
     recordIds
   );
-  const router = useRouter();
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
@@ -132,9 +156,11 @@ export default function Record() {
           <Typography variant="l" underline style={styles.wasTitle}>
             Ile było:
           </Typography>
-          <Typography variant="xlBold" style={styles.wasAmount}>
-            {/* liczba + jednostka previous*/}
-            10 szt TODO
+          <Typography
+            variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
+            style={styles.wasAmount}
+          >
+            {unit ? previousQuantity + " " + unit : null}
           </Typography>
           <View style={styles.gridRow}>
             <View style={styles.leftColumn}>
@@ -142,7 +168,12 @@ export default function Record() {
                 <RecordButton
                   key={"positive" + step + i}
                   label={`+${step}`}
-                  onPress={click}
+                  onPress={onRecordButtonStepperPress(
+                    click,
+                    inventoryId,
+                    recordPanel.data?.product_id,
+                    queryClient
+                  )}
                 />
               ))}
               <Button
@@ -183,7 +214,12 @@ export default function Record() {
                 <RecordButton
                   key={"negative" + step + i}
                   label={step.toString()}
-                  onPress={click}
+                  onPress={onRecordButtonStepperPress(
+                    click,
+                    inventoryId,
+                    recordPanel.data?.product_id,
+                    queryClient
+                  )}
                 />
               ))}
               <Button
