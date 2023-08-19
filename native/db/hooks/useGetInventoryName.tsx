@@ -8,10 +8,11 @@ export const useGetInventoryName = (inventoryId: number) => {
     const res = await supabase
       .from<"inventory", InventoryTable>("inventory")
       .select("name")
-      .eq("id", inventoryId);
+      .eq("id", inventoryId)
+      .single();
     return {
       ...res,
-      data: res.data?.[0].name,
+      data: res.data?.name,
     };
   });
   return { ...query, data: query.data?.data };
