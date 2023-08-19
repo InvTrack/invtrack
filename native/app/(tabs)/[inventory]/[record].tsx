@@ -164,10 +164,10 @@ export default function Record() {
           </Typography>
           <View style={styles.gridRow}>
             <View style={styles.leftColumn}>
-              {steppers.positive.map(({ click, step }, i) => (
+              {steppers.negative.map(({ click, step }, i) => (
                 <RecordButton
-                  key={"positive" + step + i}
-                  label={`+${step}`}
+                  key={"negative" + step + i}
+                  label={step.toString()}
                   onPress={onRecordButtonStepperPress(
                     click,
                     inventoryId,
@@ -210,10 +210,10 @@ export default function Record() {
               </Button>
             </View>
             <View style={styles.rightColumn}>
-              {steppers.negative.map(({ click, step }, i) => (
+              {steppers.positive.map(({ click, step }, i) => (
                 <RecordButton
-                  key={"negative" + step + i}
-                  label={step.toString()}
+                  key={"positive" + step + i}
+                  label={`+${step}`}
                   onPress={onRecordButtonStepperPress(
                     click,
                     inventoryId,
@@ -255,10 +255,10 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
     },
     container: { backgroundColor: theme.colors.lightBlue, height: "100%" },
-    contentContainer: { paddingHorizontal: 24 },
-    title: { marginTop: 24 },
-    wasTitle: { marginTop: 44 },
-    wasAmount: { marginTop: 16 },
+    contentContainer: { paddingHorizontal: theme.spacing * 3 },
+    title: { paddingTop: theme.spacing * 3 },
+    wasTitle: { marginTop: theme.spacing * 5.5 },
+    wasAmount: { paddingTop: theme.spacing * 2 },
     content: { alignItems: "center" },
     gridRow: { flexDirection: "row" },
     leftColumn: { flexDirection: "column", alignItems: "flex-start" },
@@ -266,17 +266,17 @@ const useStyles = createStyles((theme) =>
       flexDirection: "column",
       justifyContent: "flex-end",
       alignItems: "center",
-      marginHorizontal: 16,
+      marginHorizontal: theme.spacing * 2,
     },
     editButton: {
-      marginTop: 24,
-      borderRadius: 5,
+      marginTop: theme.spacing * 3,
+      borderRadius: theme.borderRadiusSmall,
       width: 72,
       height: 72,
       marginBottom: 58 + 12,
     },
     rightColumn: { flexDirection: "column", alignItems: "flex-end" },
-    firstRecord: { opacity: 0.3 },
-    lastRecord: { opacity: 0.3 },
+    firstRecord: { opacity: theme.opacity / 2 },
+    lastRecord: { opacity: theme.opacity / 2 },
   })
 );
