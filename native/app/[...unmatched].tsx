@@ -9,8 +9,8 @@ export default function Undef() {
   }
   return (
     <>
-      <Unmatched />
       <Redirect href={"/(tabs)/list"} />
+      <Unmatched />
     </>
   );
 }

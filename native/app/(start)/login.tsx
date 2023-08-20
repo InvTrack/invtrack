@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
 import { supabase } from "../../db";
@@ -15,6 +16,8 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
+  const styles = useStyles();
+
   const [isLoading, setIsLoading] = React.useState(false);
   const { control, handleSubmit, setError } = useForm<LoginFormValues>({
     defaultValues: {
@@ -25,7 +28,6 @@ export default function Login() {
       keepDirtyValues: true,
     },
   });
-  const styles = useStyles();
 
   const onSubmit = async ({ email, password }: LoginFormValues) => {
     setIsLoading(true);
@@ -93,7 +95,7 @@ export default function Login() {
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        {isLoading ? <ActivityIndicator size={17} /> : "Zaloguj się"}
+        {isLoading ? <LoadingSpinner /> : "Zaloguj się"}
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
@@ -137,7 +139,7 @@ const useStyles = createStyles((theme) =>
     registerLink: {
       alignSelf: "center",
       justifyContent: "flex-end",
-      marginTop: theme.spacing * 5,
+      paddingTop: theme.spacing * 5,
     },
   })
 );
