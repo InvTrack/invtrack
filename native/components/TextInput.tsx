@@ -12,6 +12,7 @@ import {
   ViewStyle,
 } from "react-native";
 
+import { isAndroid } from "../constants";
 import { createStyles } from "../theme/useStyles";
 
 const BORDER_WIDTH = 4;
@@ -49,12 +50,12 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
     const theme = useTheme();
     const [_focused, setFocused] = React.useState(false);
 
-    const handleFocus = (callback?: any) => {
+    const handleFocus = (callback?: () => void) => {
       setFocused(true);
       callback && callback();
     };
 
-    const handleBlur = (callback?: any) => {
+    const handleBlur = (callback?: () => void) => {
       setFocused(false);
       callback && callback();
     };
@@ -80,15 +81,8 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             accessible
             accessibilityLabel={props.accessibilityLabel}
             editable={!disabled || editable}
-            placeholderTextColor={
-              theme.colors.darkBlue
-              // TODO
-              // invalid
-              //   ? theme.colors.danger
-              //   : disabled
-              //   ? theme.colors.dirtyWhite
-              //   : theme.colors.lightGrey
-            }
+            placeholderTextColor={theme.colors.darkBlue}
+            selectionColor={theme.colors.darkBlue}
             onFocus={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
               handleFocus(onFocus ? () => onFocus(e) : () => undefined)
             }
@@ -116,10 +110,10 @@ const useStyles = createStyles((theme) =>
       ...theme.text.s,
       borderRadius: theme.borderRadiusFull,
       height: 44,
-      justifyContent: "center",
+      justifyContent: isAndroid ? undefined : "center",
       borderColor: theme.colors.mediumBlue,
       borderWidth: BORDER_WIDTH,
-      padding: theme.spacing - BORDER_WIDTH,
+      padding: theme.spacing + (isAndroid ? 0 : -BORDER_WIDTH),
     },
     containerMultiline: {
       height: undefined,
@@ -146,10 +140,6 @@ const useStyles = createStyles((theme) =>
       flexShrink: 1,
       width: "100%",
       paddingHorizontal: theme.spacing * 2,
-      // TODO
-      // fontSize: theme.fontSizes.field,
-      // TODO
-      // color: theme.colors.veryDarkBlue,
     },
     inputMultiline: {
       height: undefined,
