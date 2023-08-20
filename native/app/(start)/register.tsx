@@ -1,17 +1,12 @@
-import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  ActivityIndicator,
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
 
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
 const { Link } = require("expo-router");
@@ -25,7 +20,7 @@ type FormValues = {
 };
 export default function Register() {
   const styles = useStyles();
-  const theme = useTheme();
+
   const [isLoading, setIsLoading] = React.useState(false);
   const { control, handleSubmit, watch, trigger, setError } =
     useForm<FormValues>({
@@ -175,11 +170,7 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          {isLoading ? (
-            <ActivityIndicator size={17} color={theme.colors.darkBlue} />
-          ) : (
-            "Zarejestruj się"
-          )}
+          {isLoading ? <LoadingSpinner /> : "Zarejestruj się"}
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
