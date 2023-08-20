@@ -12,7 +12,8 @@ export const useCreateInventory = () => {
       const { data, error } = await supabase
         .from<"inventory", InventoryTable>("inventory")
         .insert({ ...inventory, company_id: companyId })
-        .select();
+        .select()
+        .single();
       if (error) throw new Error(error.message);
       return data;
     },

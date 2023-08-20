@@ -99,6 +99,9 @@ export const DateInputController = <T extends FieldValues>({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    button: {
+      width: "100%",
+    },
     mb: {
       marginBottom: theme.spacing * 3,
     },

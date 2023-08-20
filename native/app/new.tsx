@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { formatISO } from "date-fns";
 import { useRouter } from "expo-router";
@@ -47,7 +47,7 @@ export default function CreateInventory() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      const routeToNewInventory = `/(tabs)/${inventory[0].id}` as const;
+      const routeToNewInventory = `/(tabs)/${inventory.id}` as const;
       router.push(routeToNewInventory);
     }
   }, [isSuccess, inventory]);
@@ -62,20 +62,19 @@ export default function CreateInventory() {
       >
         {`Nowa \ninwentaryzacja:`}
       </Typography>
-      <View style={styles.mb}>
-        <TextInputController
-          control={control}
-          name="name"
-          rules={{
-            minLength: { value: 3, message: "Minimalna długość" },
-            maxLength: { value: 30, message: "Maksymalna długość" },
-            required: { value: true, message: "Wymagane" },
-          }}
-          textInputProps={{
-            placeholder: "nazwa",
-          }}
-        />
-      </View>
+      <TextInputController
+        control={control}
+        name="name"
+        rules={{
+          minLength: { value: 3, message: "Minimalna długość" },
+          maxLength: { value: 30, message: "Maksymalna długość" },
+          required: { value: true, message: "Wymagane" },
+        }}
+        textInputProps={{
+          placeholder: "nazwa",
+          containerStyle: styles.mb,
+        }}
+      />
       <DateInputController
         control={control}
         name="date"
@@ -92,6 +91,7 @@ export default function CreateInventory() {
         size="xs"
         shadow
         containerStyle={styles.buttonContainer}
+        // looks werid but prevents a synthetic event warn
         onPress={() => handleSubmit(onSubmit)()}
       >
         Dodaj
