@@ -6,7 +6,6 @@ import { createStyles } from "../../../theme/useStyles";
 import { Button } from "../../Button";
 import { Typography } from "../../Typography";
 
-// TODO Android styling
 export const DatePickerBottomSheetContent = ({
   dateValue,
   setDateValue,
@@ -42,7 +41,7 @@ export const DatePickerBottomSheetContent = ({
           if (e.type === "dismissed") {
             return;
           }
-          setDateValue((d && formatISO(d)) ?? "");
+          d && setDateValue(formatISO(d));
         }}
         style={styles.input}
       />
@@ -55,7 +54,7 @@ export const DatePickerBottomSheetContent = ({
           if (e.type === "dismissed") {
             return;
           }
-          setDateValue((d && formatISO(d)) ?? "");
+          d && setDateValue(formatISO(d));
         }}
         style={styles.input}
       />
