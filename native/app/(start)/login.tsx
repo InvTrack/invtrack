@@ -1,11 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
 import { supabase } from "../../db";
@@ -16,7 +16,6 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
-  const theme = useTheme();
   const styles = useStyles();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -96,11 +95,7 @@ export default function Login() {
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        {isLoading ? (
-          <ActivityIndicator size={17} color={theme.colors.darkBlue} />
-        ) : (
-          "Zaloguj się"
-        )}
+        {isLoading ? <LoadingSpinner /> : "Zaloguj się"}
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
