@@ -1,3 +1,4 @@
+import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -6,7 +7,6 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
@@ -24,8 +24,9 @@ type FormValues = {
   passwordRepeat: string;
 };
 export default function Register() {
-  const [isLoading, setIsLoading] = React.useState(false);
   const styles = useStyles();
+  const theme = useTheme();
+  const [isLoading, setIsLoading] = React.useState(false);
   const { control, handleSubmit, watch, trigger, setError } =
     useForm<FormValues>({
       defaultValues: {
@@ -174,7 +175,11 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          {isLoading ? <ActivityIndicator size={17} /> : "Zarejestruj się"}
+          {isLoading ? (
+            <ActivityIndicator size={17} color={theme.colors.darkBlue} />
+          ) : (
+            "Zarejestruj się"
+          )}
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
