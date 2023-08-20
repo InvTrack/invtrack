@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { ActivityIndicator, StyleSheet } from "react-native";
 
+import { useTheme } from "@react-navigation/native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
@@ -15,6 +16,9 @@ type LoginFormValues = {
   password: string;
 };
 export default function Login() {
+  const theme = useTheme();
+  const styles = useStyles();
+
   const [isLoading, setIsLoading] = React.useState(false);
   const { control, handleSubmit, setError } = useForm<LoginFormValues>({
     defaultValues: {
@@ -25,7 +29,6 @@ export default function Login() {
       keepDirtyValues: true,
     },
   });
-  const styles = useStyles();
 
   const onSubmit = async ({ email, password }: LoginFormValues) => {
     setIsLoading(true);
@@ -93,7 +96,11 @@ export default function Login() {
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
       >
-        {isLoading ? <ActivityIndicator size={17} /> : "Zaloguj się"}
+        {isLoading ? (
+          <ActivityIndicator size={17} color={theme.colors.darkBlue} />
+        ) : (
+          "Zaloguj się"
+        )}
       </Button>
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
