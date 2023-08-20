@@ -47,7 +47,7 @@ export default function CreateInventory() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      const routeToNewInventory = `/(tabs)/${inventory[0].id}` as const;
+      const routeToNewInventory = `/(tabs)/${inventory.id}` as const;
       router.push(routeToNewInventory);
     }
   }, [isSuccess, inventory]);
@@ -92,6 +92,7 @@ export default function CreateInventory() {
         size="xs"
         shadow
         containerStyle={styles.buttonContainer}
+        // looks werid but prevents a synthetic event warn
         onPress={() => handleSubmit(onSubmit)()}
       >
         Dodaj
