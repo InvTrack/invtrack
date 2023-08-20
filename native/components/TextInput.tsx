@@ -83,6 +83,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             editable={!disabled || editable}
             placeholderTextColor={theme.colors.darkBlue}
             selectionColor={theme.colors.darkBlue}
+            cursorColor={theme.colors.darkBlue}
             onFocus={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
               handleFocus(onFocus ? () => onFocus(e) : () => undefined)
             }
