@@ -1,36 +1,43 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+
 import { Alert } from "react-native";
 
 import { supabase } from "../supabase";
 // import { UserTable } from "../types";
-import { SessionContext } from "./sessionContext";
+import { useSession } from "../auth";
 
 export const useGetUser = () => {
-  const { session } = useContext(SessionContext);
-  return useQuery(["user", session?.user.id], async () => {
-    try {
-      if (!session?.user)
-        return {
-          username: null,
-          company_name: null,
-        };
+  const { session } = useSession();
 
-      const { data, error, status } = await supabase
-        .from("user")
-        .select(`username, company_name`)
-        .eq("id", session?.user.id)
-        .single();
+  return useQuery(
+    ["user", session?.user.id],
+    async () => {
+      try {
+        if (!session?.user)
+          return {
+            username: null,
+            company_name: null,
+          };
 
-      if (error && status !== 406) {
-        throw error;
+        const { data, error, status } = await supabase
+          .from("user")
+          .select(`username, company_name`)
+          .eq("id", session?.user.id)
+          .single();
+
+        if (error && status !== 406) {
+          throw error;
+        }
+
+        return data;
+      } catch (error) {
+        if (error instanceof Error) {
+          Alert.alert(error.message);
+        }
       }
-
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
+    },
+    {
+      enabled: !!session?.user.id,
     }
-  });
+  );
 };
