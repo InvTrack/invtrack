@@ -200,7 +200,7 @@ const useStyles = createStyles((theme) =>
     input: { marginVertical: theme.spacing },
     link: {
       alignSelf: "center",
-      marginTop: theme.spacing * 2.5,
+      paddingTop: theme.spacing * 2.5,
       color: theme.colors.darkBlue,
       textDecorationLine: "underline",
       opacity: theme.opacity,
@@ -209,7 +209,7 @@ const useStyles = createStyles((theme) =>
     registerLink: {
       alignSelf: "center",
       justifyContent: "flex-end",
-      marginTop: theme.spacing * 5,
+      paddingTop: theme.spacing * 5,
     },
     button: {
       marginTop: theme.spacing * 5,
