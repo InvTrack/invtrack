@@ -27,13 +27,7 @@ export const DatePickerBottomSheetContent = ({
         backgroundColor: "#fff",
       }}
     >
-      <Typography
-        style={{
-          alignSelf: "center",
-        }}
-      >
-        Wybierz datę
-      </Typography>
+      <Typography style={styles.dateTitle}>Wybierz datę</Typography>
       <DateTimePicker
         value={dateValue}
         mode={"date"}
@@ -73,6 +67,9 @@ export const DatePickerBottomSheetContent = ({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    dateTitle: {
+      alignSelf: "center",
+    },
     input: {
       backgroundColor: theme.colors.white,
       alignSelf: "center",

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { formatISO } from "date-fns";
 import { useRouter } from "expo-router";
@@ -62,20 +62,19 @@ export default function CreateInventory() {
       >
         {`Nowa \ninwentaryzacja:`}
       </Typography>
-      <View style={styles.mb}>
-        <TextInputController
-          control={control}
-          name="name"
-          rules={{
-            minLength: { value: 3, message: "Minimalna długość" },
-            maxLength: { value: 30, message: "Maksymalna długość" },
-            required: { value: true, message: "Wymagane" },
-          }}
-          textInputProps={{
-            placeholder: "nazwa",
-          }}
-        />
-      </View>
+      <TextInputController
+        control={control}
+        name="name"
+        rules={{
+          minLength: { value: 3, message: "Minimalna długość" },
+          maxLength: { value: 30, message: "Maksymalna długość" },
+          required: { value: true, message: "Wymagane" },
+        }}
+        textInputProps={{
+          placeholder: "nazwa",
+          containerStyle: styles.mb,
+        }}
+      />
       <DateInputController
         control={control}
         name="date"
