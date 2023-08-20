@@ -137,7 +137,7 @@ const useStyles = createStyles((theme) =>
     registerLink: {
       alignSelf: "center",
       justifyContent: "flex-end",
-      marginTop: theme.spacing * 5,
+      paddingTop: theme.spacing * 5,
     },
   })
 );
