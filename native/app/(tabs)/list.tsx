@@ -27,7 +27,7 @@ const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
   if (!data) return null;
   const days: { [key: string]: typeof data } = {};
   data.forEach((item) => {
-    const day = new Date(item.created_at).toLocaleString("pl-PL", {
+    const day = new Date(item.date).toLocaleString("pl-PL", {
       day: "numeric",
       month: "numeric",
     });
@@ -43,7 +43,7 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
   if (!groupedByDay) return null;
   const months: { [key: string]: typeof groupedByDay } = {};
   groupedByDay.forEach(([day, inventories]) => {
-    const month = new Date(inventories[0].created_at).toLocaleString("pl-PL", {
+    const month = new Date(inventories[0].date).toLocaleString("pl-PL", {
       month: "long",
     });
     const capitalizedMonth = capitalize(month);
@@ -63,7 +63,7 @@ const ListIndex = () => {
     () => groupDaysByMonth(groupByDay(inventoryList)),
     [inventoryList]
   );
-
+  console.log(inventoryList?.map((inv) => inv.date));
   if (!inventoryList || !months) return null;
 
   return (
