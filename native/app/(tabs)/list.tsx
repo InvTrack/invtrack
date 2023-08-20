@@ -9,8 +9,14 @@ import { useListInventories } from "../../db";
 import { createStyles } from "../../theme/useStyles";
 
 const MonthTitle = ({ title }: { title: string }) => {
+  const styles = useStyles();
   return (
-    <Typography underline variant="xlBold" color="darkBlue">
+    <Typography
+      underline
+      variant="xlBold"
+      color="darkBlue"
+      style={styles.monthTitle}
+    >
       {title}
     </Typography>
   );
@@ -103,6 +109,8 @@ const useStyles = createStyles((theme) =>
     },
     scroll: {
       paddingHorizontal: theme.spacing * 4,
+    },
+    monthTitle: {
       paddingTop: theme.spacing * 2,
     },
     card: {
