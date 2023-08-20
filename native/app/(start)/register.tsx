@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
+
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
 const { Link } = require("expo-router");
@@ -59,7 +60,7 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView edges={["left", "right"]} style={styles.background}>
+    <SafeAreaView edges={["left", "right"]} style={[styles.background]}>
       <ScrollView
         contentContainerStyle={[styles.container, styles.background]}
         style={styles.background}
@@ -190,7 +191,7 @@ export default function Register() {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      height: "100%",
+      height: "120%",
       paddingHorizontal: theme.spacing * 6,
       paddingTop: theme.spacing * 3,
       alignItems: "center",
