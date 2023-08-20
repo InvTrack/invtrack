@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Keyboard, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { isAndroid } from "../../../constants";
 import { createStyles } from "../../../theme/useStyles";
 import { useKeyboard } from "../../../utils/useKeyboard";
 import { Button } from "../../Button";
@@ -22,13 +23,13 @@ export const InputBottomSheetContent = ({
   setQuantity: (quantity: number) => void;
   closeBottomSheet: () => void;
 }) => {
+  const styles = useStyles();
   const insets = useSafeAreaInsets();
   const {
     coordinates: {
       end: { height: keyboardHeight },
     },
   } = useKeyboard();
-  const styles = useStyles();
   const { control, handleSubmit, setFocus, formState } =
     useForm<InputBottomSheetForm>({
       defaultValues: {
@@ -40,6 +41,13 @@ export const InputBottomSheetContent = ({
   const isErrored = !!formState.errors.quantity?.message;
 
   useEffect(() => {
+    // hack needed to make android focus the input
+    if (isAndroid) {
+      setTimeout(() => {
+        setFocus("quantity");
+      }, 1);
+      return;
+    }
     setFocus("quantity");
   }, []);
 
@@ -47,9 +55,16 @@ export const InputBottomSheetContent = ({
     const keyboardWillHide = Keyboard.addListener("keyboardWillHide", () =>
       setFocus("quantity")
     );
-
+    const keyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
+      setFocus("quantity")
+    );
+    const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () => {
+      setFocus("quantity");
+    });
     return () => {
       keyboardWillHide.remove();
+      keyboardDidHide.remove();
+      keyboardDidShow.remove();
     };
   }, [isErrored, setFocus, handleSubmit]);
 
@@ -64,7 +79,7 @@ export const InputBottomSheetContent = ({
       style={[
         styles.container,
         {
-          height: keyboardHeight + 156,
+          height: keyboardHeight + (isAndroid ? 0 : 156),
           paddingBottom: insets.bottom + 16,
         },
       ]}
