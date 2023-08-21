@@ -2,21 +2,23 @@ import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useBottomSheet } from "../../../../components/BottomSheet";
-import { InputBottomSheetContent } from "../../../../components/BottomSheet/contents";
-import { Button } from "../../../../components/Button";
+import { useBottomSheet } from "../../../components/BottomSheet";
+import { InputBottomSheetContent } from "../../../components/BottomSheet/contents";
+import { Button } from "../../../components/Button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
-} from "../../../../components/Icon";
-import { Typography } from "../../../../components/Typography";
-import { useRecordPanel } from "../../../../db";
-import { useGetInventoryName } from "../../../../db/hooks/useGetInventoryName";
-import { useListRecordIds } from "../../../../db/hooks/useListRecordIds";
-import { createStyles } from "../../../../theme/useStyles";
+} from "../../../components/Icon";
+import { Typography } from "../../../components/Typography";
+import { useRecordPanel } from "../../../db";
+import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
+import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
+import { createStyles } from "../../../theme/useStyles";
 
-import { useRecordPagination } from "../../../../utils/useRecordPagination";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
+import { useRecordPagination } from "../../../utils/useRecordPagination";
 
 const RecordButton = ({
   label,
@@ -57,7 +59,7 @@ const navigateToPreviousRecord = (
     : () => {
         !isFirst &&
           replace({
-            pathname: "/(tabs)/inventory/[inventory]/[record]",
+            pathname: "/(tabs)/[inventory]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
@@ -73,26 +75,47 @@ const navigateToNextRecord = (
     : () => {
         !isLast &&
           replace({
-            pathname: "/(tabs)/inventory/[inventory]/[record]",
+            pathname: "/(tabs)/[inventory]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
 
+const onRecordButtonStepperPress =
+  (
+    click: () => void,
+    inventoryId: number,
+    productId: number | null,
+    queryClient: QueryClient
+  ) =>
+  () => {
+    click();
+    queryClient.invalidateQueries(["recordsList", inventoryId]);
+    queryClient.invalidateQueries([
+      "previousRecordQuantity",
+      inventoryId,
+      productId,
+    ]);
+  };
+
 export default function Record() {
   const styles = useStyles();
   const localSearchParams = useLocalSearchParams();
-  const recordId = localSearchParams.record as string;
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const recordId = +localSearchParams.record;
+  const inventoryId = +localSearchParams.inventory;
   const recordPanel = useRecordPanel(recordId);
-  const { data: recordIds } = useListRecordIds(recordPanel.data?.inventory_id);
-  const { data: inventoryName } = useGetInventoryName(
-    recordPanel.data?.inventory_id
+  const { data: recordIds } = useListRecordIds(inventoryId);
+  const { data: inventoryName } = useGetInventoryName(inventoryId);
+  const { data: previousQuantity } = useGetPreviousRecordQuantity(
+    inventoryId,
+    recordPanel.data?.product_id
   );
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
-    +recordId,
+    recordId,
     recordIds
   );
-  const router = useRouter();
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
@@ -133,17 +156,24 @@ export default function Record() {
           <Typography variant="l" underline style={styles.wasTitle}>
             Ile było:
           </Typography>
-          <Typography variant="xlBold" style={styles.wasAmount}>
-            {/* liczba + jednostka previous*/}
-            10 szt TODO
+          <Typography
+            variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
+            style={styles.wasAmount}
+          >
+            {unit ? previousQuantity + " " + unit : null}
           </Typography>
           <View style={styles.gridRow}>
             <View style={styles.leftColumn}>
-              {steppers.positive.map(({ click, step }, i) => (
+              {steppers.negative.map(({ click, step }, i) => (
                 <RecordButton
-                  key={"positive" + step + i}
-                  label={`+${step}`}
-                  onPress={click}
+                  key={"negative" + step + i}
+                  label={step.toString()}
+                  onPress={onRecordButtonStepperPress(
+                    click,
+                    inventoryId,
+                    recordPanel.data?.product_id,
+                    queryClient
+                  )}
                 />
               ))}
               <Button
@@ -180,11 +210,16 @@ export default function Record() {
               </Button>
             </View>
             <View style={styles.rightColumn}>
-              {steppers.negative.map(({ click, step }, i) => (
+              {steppers.positive.map(({ click, step }, i) => (
                 <RecordButton
-                  key={"negative" + step + i}
-                  label={step.toString()}
-                  onPress={click}
+                  key={"positive" + step + i}
+                  label={`+${step}`}
+                  onPress={onRecordButtonStepperPress(
+                    click,
+                    inventoryId,
+                    recordPanel.data?.product_id,
+                    queryClient
+                  )}
                 />
               ))}
               <Button
@@ -220,10 +255,10 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
     },
     container: { backgroundColor: theme.colors.lightBlue, height: "100%" },
-    contentContainer: { paddingHorizontal: 24 },
-    title: { marginTop: 24 },
-    wasTitle: { marginTop: 44 },
-    wasAmount: { marginTop: 16 },
+    contentContainer: { paddingHorizontal: theme.spacing * 3 },
+    title: { paddingTop: theme.spacing * 3 },
+    wasTitle: { marginTop: theme.spacing * 5.5 },
+    wasAmount: { paddingTop: theme.spacing * 2 },
     content: { alignItems: "center" },
     gridRow: { flexDirection: "row" },
     leftColumn: { flexDirection: "column", alignItems: "flex-start" },
@@ -231,17 +266,17 @@ const useStyles = createStyles((theme) =>
       flexDirection: "column",
       justifyContent: "flex-end",
       alignItems: "center",
-      marginHorizontal: 16,
+      marginHorizontal: theme.spacing * 2,
     },
     editButton: {
-      marginTop: 24,
-      borderRadius: 5,
+      marginTop: theme.spacing * 3,
+      borderRadius: theme.borderRadiusSmall,
       width: 72,
       height: 72,
       marginBottom: 58 + 12,
     },
     rightColumn: { flexDirection: "column", alignItems: "flex-end" },
-    firstRecord: { opacity: 0.3 },
-    lastRecord: { opacity: 0.3 },
+    firstRecord: { opacity: theme.opacity / 2 },
+    lastRecord: { opacity: theme.opacity / 2 },
   })
 );

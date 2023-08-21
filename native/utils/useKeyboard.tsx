@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import { Keyboard, KeyboardEventListener, KeyboardMetrics } from "react-native";
-
+import {
+  Dimensions,
+  Keyboard,
+  KeyboardEventListener,
+  KeyboardMetrics,
+} from "react-native";
+const { height } = Dimensions.get("window");
 const emptyCoordinates = Object.freeze({
   screenX: 0,
   screenY: 0,
   width: 0,
-  height: 0,
+  height: height * 0.2,
 });
 const initialValue = {
   start: emptyCoordinates,
@@ -30,9 +35,7 @@ export function useKeyboard() {
     setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
   };
   const handleKeyboardDidHide: KeyboardEventListener = (e) => {
-    if (e) {
-      setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
-    }
+    setCoordinates({ start: e.startCoordinates, end: e.endCoordinates });
   };
 
   useEffect(() => {

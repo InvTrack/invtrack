@@ -1,11 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ScrollView, StyleSheet } from "react-native";
-
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
+
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
 const { Link } = require("expo-router");
@@ -19,29 +20,43 @@ type FormValues = {
 };
 export default function Register() {
   const styles = useStyles();
-  const { control, handleSubmit } = useForm<FormValues>({
-    defaultValues: {
-      name: "",
-      surname: "",
-      email: "",
-      password: "",
-      passwordRepeat: "",
-    },
-    resetOptions: {
-      keepDirtyValues: true,
-    },
-  });
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { control, handleSubmit, watch, trigger, setError } =
+    useForm<FormValues>({
+      defaultValues: {
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        passwordRepeat: "",
+      },
+      resetOptions: {
+        keepDirtyValues: true,
+      },
+    });
+
+  React.useEffect(() => {
+    trigger("passwordRepeat");
+  }, [watch("password"), trigger]);
 
   const onSubmit = async ({ email, password }: FormValues) => {
+    setIsLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
     });
-    error && console.log(error);
+    setIsLoading(false);
+    if (error?.message === "User already registered") {
+      setError("passwordRepeat", {
+        message: "Użytkownik już istnieje",
+      });
+    }
+    error && console.log(error, error.cause, error.status, error.message);
   };
 
   return (
-    <SafeAreaView style={styles.background}>
+    <SafeAreaView edges={["left", "right"]} style={[styles.background]}>
       <ScrollView
         contentContainerStyle={[styles.container, styles.background]}
         style={styles.background}
@@ -58,7 +73,20 @@ export default function Register() {
         <TextInputController
           name="name"
           control={control}
-          textInputProps={{ placeholder: "imię", containerStyle: styles.input }}
+          textInputProps={{
+            placeholder: "imię",
+            containerStyle: styles.input,
+          }}
+          rules={{
+            required: {
+              value: true,
+              message: "Imię jest wymagane",
+            },
+            minLength: {
+              value: 2,
+              message: "Imię musi mieć minimum 2 znaki",
+            },
+          }}
         />
         <TextInputController
           name="surname"
@@ -67,13 +95,31 @@ export default function Register() {
             placeholder: "nazwisko",
             containerStyle: styles.input,
           }}
+          rules={{
+            required: {
+              value: true,
+              message: "Nazwisko jest wymagane",
+            },
+            minLength: {
+              value: 2,
+              message: "Nazwisko musi mieć minimum 2 znaki",
+            },
+          }}
         />
         <TextInputController
           name="email"
           control={control}
           textInputProps={{
-            placeholder: "e-mail,",
+            placeholder: "e-mail",
             containerStyle: styles.input,
+            keyboardType: "email-address",
+          }}
+          rules={{
+            pattern: {
+              // TODO: server validation?
+              value: /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,4}$/,
+              message: "Nieprawidłowy adres e-mail",
+            },
           }}
         />
         <TextInputController
@@ -83,6 +129,19 @@ export default function Register() {
             placeholder: "hasło",
             secureTextEntry: true,
             containerStyle: styles.input,
+            // a hack to prevent an ios password strength overlay
+            blurOnSubmit: false,
+            onSubmitEditing: () => Keyboard.dismiss(),
+          }}
+          rules={{
+            required: {
+              value: true,
+              message: "Hasło jest wymagane",
+            },
+            minLength: {
+              value: 6,
+              message: "Hasło musi mieć minimum 6 znaków",
+            },
           }}
         />
         <TextInputController
@@ -93,6 +152,16 @@ export default function Register() {
             secureTextEntry: true,
             containerStyle: styles.input,
           }}
+          rules={{
+            required: {
+              value: true,
+              message: "",
+            },
+            validate: (value, formValues) =>
+              value === formValues.password
+                ? true
+                : "Hasła muszą być takie same",
+          }}
         />
         <Button
           type="primary"
@@ -101,9 +170,7 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          <Typography variant="xs" color="darkBlue">
-            Zarejestruj się
-          </Typography>
+          {isLoading ? <LoadingSpinner /> : "Zarejestruj się"}
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
@@ -120,16 +187,16 @@ export default function Register() {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      height: "100%",
+      height: "120%",
       paddingHorizontal: theme.spacing * 6,
+      paddingTop: theme.spacing * 3,
       alignItems: "center",
-      justifyContent: "center",
     },
-    title: { alignSelf: "center", marginVertical: theme.spacing * 7 },
+    title: { alignSelf: "center", marginBottom: theme.spacing * 7 },
     input: { marginVertical: theme.spacing },
     link: {
       alignSelf: "center",
-      marginTop: theme.spacing * 2.5,
+      paddingTop: theme.spacing * 2.5,
       color: theme.colors.darkBlue,
       textDecorationLine: "underline",
       opacity: theme.opacity,
@@ -138,7 +205,7 @@ const useStyles = createStyles((theme) =>
     registerLink: {
       alignSelf: "center",
       justifyContent: "flex-end",
-      marginTop: theme.spacing * 5,
+      paddingTop: theme.spacing * 5,
     },
     button: {
       marginTop: theme.spacing * 5,

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { createStyles } from "../theme/useStyles";
-import { TypographyProps } from "./Typography";
+import { Typography, TypographyProps } from "./Typography";
 
 export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
@@ -20,11 +20,12 @@ type ButtonProps = {
   type: "primary" | "secondary";
   size: "xs" | "s" | "m" | "l" | "xl";
   shadow?: boolean;
+  fullWidth?: boolean;
   children?: React.ReactNode;
 };
 
 const BORDER_WIDTH = 4;
-const debouncedOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
+const debounceOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
 
 export const Button = forwardRef(
   (
@@ -36,26 +37,35 @@ export const Button = forwardRef(
       type,
       size,
       shadow = false,
+      fullWidth = false,
       children,
     }: ButtonProps,
     _ref
   ) => {
     const styles = useStyles();
-
+    const isStringChildren = typeof children === "string";
     return (
       <TouchableOpacity
-        onPress={debouncedOnPress(onPress ?? (() => undefined))}
+        onPress={debounceOnPress(onPress ?? (() => undefined))}
         style={[
           styles.buttonBase,
           styles[type],
           styles[size],
+          disabled && styles.disabled,
           shadow && styles.shadow,
+          fullWidth && styles.fullWidth,
           containerStyle,
         ]}
         disabled={disabled}
         activeOpacity={0.8}
       >
-        {children}
+        {isStringChildren ? (
+          <Typography variant={size === "xs" ? "s" : "m"} style={styles.string}>
+            {children}
+          </Typography>
+        ) : (
+          children
+        )}
       </TouchableOpacity>
     );
   }
@@ -81,6 +91,13 @@ const useStyles = createStyles((theme) =>
       padding: theme.spacing - BORDER_WIDTH,
     },
     shadow: { ...theme.baseShadow },
+    fullWidth: {
+      width: "100%",
+    },
+    string: {
+      color: theme.colors.darkBlue,
+    },
+    disabled: { opacity: 0.6 },
     // SIZES
     xs: {
       height: 40,

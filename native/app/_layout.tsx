@@ -22,14 +22,18 @@ import {
   useRouter,
   useSegments,
 } from "expo-router";
-import { HeaderLeft } from "../components/HeaderLeft";
-import { HeaderRight } from "../components/HeaderRight";
 import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
 import { useOnlineManager } from "../utils/useOnlineManager";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
+import { ArrowRightIcon } from "../components/Icon";
+import { Header } from "../components/Header";
+import * as ScreenOrientation from "expo-screen-orientation";
+
+ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -111,64 +115,49 @@ export default function Root() {
   const router = useRouter();
   const navigationState = useRootNavigationState();
 
-  const onLoginPage = segments[0] === "(start)" && segments[1] === "login";
-  const onRegisterPage =
-    segments[0] === "(start)" && segments[1] === "register";
-  const onStartPage = segments[0] === "(start)" && segments[1] === "start";
+  const inStartGroup = segments[0] === "(start)";
+
   const loggedIn = sessionState.loggedIn;
 
-  //
   React.useEffect(() => {
     if (!navigationState?.key) {
       // Temporary fix for router not being ready.
       return;
     }
 
-    if (loggedIn && (onLoginPage || onStartPage || onRegisterPage)) {
-      router.replace("/(tabs)/inventory");
+    if (loggedIn && inStartGroup) {
+      router.replace("/(tabs)/list/");
     }
 
-    if (!loggedIn && !onStartPage) {
+    if (!loggedIn && !inStartGroup) {
       router.replace("/(start)/start");
     }
-  }, [
-    sessionState.loading,
-    sessionState.loggedIn,
-    navigationState?.key,
-    loggedIn,
-    onLoginPage,
-    onStartPage,
-    onRegisterPage,
-  ]);
+  }, [navigationState?.key, loggedIn, inStartGroup]);
 
   React.useEffect(() => {
     StatusBar.setBarStyle("dark-content", true);
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {
-    return <SplashScreen />;
+    SplashScreen.preventAutoHideAsync();
+    return;
+  } else {
+    SplashScreen.hideAsync();
   }
+
   return (
     <ProvideProviders>
       <Stack
         screenOptions={{
-          headerTitle: "",
-          headerBackVisible: false,
-          headerStyle: { backgroundColor: "#EDF6FF" },
-          headerLeft: (props) => (
-            <HeaderLeft
-              {...props}
-              href={
-                loggedIn
-                  ? ("/(tabs)/list" as const)
-                  : ("/(start)/start" as const)
-              }
-            />
-          ),
-          headerRight: (props) => <HeaderRight {...props} href="/account" />,
+          header: (p) => <Header {...p} />,
         }}
       >
-        <Stack.Screen name="(start)" />
+        <Stack.Screen
+          name="(start)"
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="(tabs)" />
         {/* TODO styling etc. */}
         <Stack.Screen
@@ -179,10 +168,13 @@ export default function Root() {
             headerShown: false,
           }}
         />
+        <Stack.Screen name="account" />
         <Stack.Screen
-          name="account"
+          name="new"
           options={{
-            headerTitle: "Ustawienia",
+            headerLeft: () => (
+              <ArrowRightIcon size={32} onPress={router.back} />
+            ),
           }}
         />
       </Stack>
