@@ -1,39 +1,49 @@
 import { Link } from "expo-router";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { createStyles } from "../../theme/useStyles";
-import { Card } from "../Card";
-import { SmallerArrowRightIcon } from "../Icon";
-import { Typography } from "../Typography";
+import { createStyles } from "../theme/useStyles";
+import { Card } from "./Card";
+import { Typography } from "./Typography";
 
-type InventoryCardAddProps = {
-  title: string;
+type InventoryListCardProps = {
+  name: string;
   inventoryId: number;
+  recordId: number;
+  quantity: number;
+  unit: string;
 };
 
-export const InventoryCardLink = ({
-  title,
+export const InventoryListCard = ({
+  name,
   inventoryId,
-}: InventoryCardAddProps) => {
+  recordId,
+  quantity,
+  unit,
+}: InventoryListCardProps) => {
   const styles = useStyles();
 
   return (
     <Link
       href={{
-        pathname: `/(tabs)/[inventory]/`,
-        params: { inventory: inventoryId },
+        pathname: "/(tabs)/[inventory]/[record]",
+        params: { inventory: inventoryId, record: recordId },
       }}
       asChild
     >
       <Card color="mediumBlue" style={styles.card} padding="none">
         <Typography
           color="darkBlue"
-          variant={title.length > 15 ? "sBold" : "lBold"}
+          variant={name.length > 15 ? "sBold" : "lBold"}
           numberOfLines={2}
         >
-          {title}
+          {name}
         </Typography>
-        <SmallerArrowRightIcon size={25} />
+        <Typography
+          color="darkBlue"
+          variant={name.length > 15 ? "sBold" : "lBold"}
+        >
+          {quantity + " " + unit}
+        </Typography>
       </Card>
     </Link>
   );

@@ -2,15 +2,19 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 
 import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
-import { Typography } from "../../components/Typography";
+
 import { createStyles } from "../../theme/useStyles";
 const { Link } = require("expo-router");
 
 export default function Start() {
   const styles = useStyles();
+  const { top: safeAreaTopInset } = useSafeAreaInsets();
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
@@ -19,7 +23,11 @@ export default function Start() {
           headerShown: false,
         }}
       />
-      <Card borderBottom padding="normal" style={styles.card}>
+      <Card
+        borderBottom
+        padding="normal"
+        style={[styles.card, { paddingTop: safeAreaTopInset }]}
+      >
         <Image
           source={require("../../assets/images/logo.png")}
           resizeMode="contain"
@@ -28,12 +36,12 @@ export default function Start() {
       </Card>
       <Link href="/register" asChild>
         <Button type="primary" size="l" containerStyle={styles.button}>
-          <Typography variant="l">Register</Typography>
+          Zarejestruj się
         </Button>
       </Link>
       <Link href="/login" asChild>
         <Button type="secondary" size="l" containerStyle={styles.button}>
-          <Typography variant="l">Login</Typography>
+          Zaloguj się
         </Button>
       </Link>
       <Link href="">Regulamin</Link>
