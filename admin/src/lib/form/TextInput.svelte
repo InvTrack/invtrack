@@ -1,6 +1,6 @@
 <script lang="ts">
   export let name: string;
-  export let value: string | undefined;
+  export let value: string | undefined | null;
 </script>
 
 <div class="mb-6">

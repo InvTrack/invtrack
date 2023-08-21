@@ -38,7 +38,7 @@
 </script>
 
 {#if product}
-  <Card name={"Product - " + product.name}>
+  <Card header={"Product - " + product.name}>
     <form method="post" on:submit|preventDefault={update}>
       <TextInput name="name" bind:value={name}>Name</TextInput>
       <TextInput name="unit" bind:value={unit}>Unit</TextInput>

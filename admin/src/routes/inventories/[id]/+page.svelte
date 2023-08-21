@@ -29,7 +29,7 @@
         .from("inventory")
         .update({
           name,
-          date
+          date,
         })
         .eq("id", id),
       "/inventories",
@@ -38,7 +38,7 @@
 </script>
 
 {#if inventory}
-  <Card name={"Inventory - " + inventory.name}>
+  <Card header={"Inventory - " + inventory.name}>
     <form method="post" on:submit|preventDefault={update}>
       <TextInput name="name" bind:value={name}>Name</TextInput>
       <TextInput name="date" bind:value={date}>Date</TextInput>
