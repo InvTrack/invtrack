@@ -9,10 +9,15 @@
   import { genericGet } from "$lib/genericGet";
 
   let inventories: Tables<"inventory">[] | null = null;
-  onMount(() => genericGet(supabase.from("inventory").select().order('date', {ascending:false}), (x) => (inventories = x)));
+  onMount(() =>
+    genericGet(
+      supabase.from("inventory").select().order("date", { ascending: false }),
+      (x) => (inventories = x)
+    )
+  );
 </script>
 
-<Card name="Inventories">
+<Card header="Inventories">
   {#if inventories}
     <Table>
       <Head>
