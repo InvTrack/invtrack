@@ -2,34 +2,38 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
-  import Head from "$lib/table/Head.svelte";
-  import Table from "$lib/table/Table.svelte";
-  import Row from "$lib/table/Row.svelte";
-  import Card from "$lib/main/Card.svelte";
+
   import { genericGet } from "$lib/genericGet";
+  import {
+    Card,
+    Heading,
+    Table,
+    TableBody,
+    TableBodyRow,
+    TableHead,
+    TableHeadCell,
+  } from "flowbite-svelte";
+  import ScreenCard from "$lib/ScreenCard.svelte";
 
   let products: Tables<"product">[] | null = null;
   onMount(() => genericGet(supabase.from("product").select(), (x) => (products = x)));
 </script>
 
-<Card header="Products">
+<ScreenCard header="Products">
   {#if products}
-    <Table>
-      <Head>
+    <Table striped>
+      <TableHead class="dark:bg-gray-700 bg-gray-50">
         <th scope="col" class="px-6 py-3">Name</th>
         <th scope="col" class="px-6 py-3">Unit</th>
         <th scope="col" class="px-6 py-3">Created at</th>
         <th scope="col" class="px-6 py-3" />
-      </Head>
-      <tbody>
+      </TableHead>
+      <TableBody>
         {#each products as product}
-          <Row>
-            <th
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+          <TableBodyRow>
+            <TableHeadCell scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
               {product.name}
-            </th>
+            </TableHeadCell>
             <td class="px-6 py-4">
               {product.unit}
             </td>
@@ -42,9 +46,9 @@
                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a
               >
             </td>
-          </Row>
+          </TableBodyRow>
         {/each}
-      </tbody>
+      </TableBody>
     </Table>
   {/if}
-</Card>
+</ScreenCard>
