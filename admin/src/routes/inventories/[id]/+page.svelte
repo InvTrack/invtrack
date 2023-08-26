@@ -8,6 +8,8 @@
   import { genericUpdate } from "$lib/genericUpdate";
   import SubmitButton from "$lib/form/SubmitButton.svelte";
   import TextInput from "$lib/form/TextInput.svelte";
+  import ScreenCard from "$lib/ScreenCard.svelte";
+  import { Button, Input, Label, Span } from "flowbite-svelte";
 
   let loading = false;
   let inventory: Tables<"inventory"> | null = null;
@@ -38,11 +40,19 @@
 </script>
 
 {#if inventory}
-  <Card header={"Inventory - " + inventory.name}>
-    <form method="post" on:submit|preventDefault={update}>
-      <TextInput name="name" bind:value={name}>Name</TextInput>
-      <TextInput name="date" bind:value={date}>Date</TextInput>
-      <SubmitButton>{loading ? "Saving ..." : "Update inventory"}</SubmitButton>
+  <ScreenCard header={"Inventory - " + inventory.name}>
+    <form on:submit|preventDefault={update}>
+      <Label class="space-y-2">
+        <Span>Name</Span>
+        <Input type="text" name="name" placeholder="Name" bind:value={name} />
+      </Label>
+      <Label class="space-y-2 mt-2">
+        <Span>Date</Span>
+        <Input type="text" name="date" placeholder="Date" bind:value={date} />
+      </Label>
+      <Button type="submit" class="mt-4" color="primary"
+        >{loading ? "Saving ..." : "Update inventory"}</Button
+      >
     </form>
-  </Card>
+  </ScreenCard>
 {/if}
