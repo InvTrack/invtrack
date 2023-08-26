@@ -67,7 +67,6 @@
           />
         </svelte:fragment>
         <SidebarDropdownItem label="Sign out" on:click={handleLogout} />
-        <SidebarDropdownItem label="Toggle theme" on:click={toggleDarkMode} />
       </SidebarDropdownWrapper>
     </SidebarGroup>
     <SidebarGroup class="absolute bottom-24 flex flex-col mt-8">
