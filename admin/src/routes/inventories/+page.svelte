@@ -6,6 +6,7 @@
   import { genericGet } from "$lib/genericGet";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Table, TableBodyRow, TableHead } from "flowbite-svelte";
+  import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   let inventories: Tables<"inventory">[] | null = null;
   onMount(() =>
@@ -35,10 +36,10 @@
               {inventory.name}
             </th>
             <td class="px-6 py-4">
-              {inventory.date}
+              {parseISODatestring(inventory.date)}
             </td>
             <td class="px-6 py-4">
-              {inventory.created_at}
+              {parseISODatestring(inventory.created_at)}
             </td>
             <td class="px-6 py-4 text-right">
               <a
