@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Navbar from "$lib/navbar/Navbar.svelte";
+  import Sidebar from "$lib/sidebar/Sidebar.svelte";
   import "./styles.css";
 
   import { onMount } from "svelte";
@@ -8,10 +8,12 @@
   import { page } from "$app/stores";
   import { googleAccessToken } from "$lib/store";
   import Login from "./auth/Login.svelte";
+  import { initializeDarkMode } from "$lib/scripts/darkMode";
 
   let session: AuthSession | null;
 
   onMount(() => {
+    initializeDarkMode();
     const urlStringOriginal = $page.url.href;
     if (urlStringOriginal?.includes("#access_token")) {
       const urlString = urlStringOriginal.replace("#access_token", "?access_token");
@@ -49,7 +51,7 @@
   <Login />
 {:else}
   <div class="flex flex-row">
-    <Navbar />
+    <Sidebar />
     <main class="flex-1 bg-gray-100">
       <slot />
     </main>
