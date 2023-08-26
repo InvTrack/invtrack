@@ -14,6 +14,7 @@
     TableHeadCell,
   } from "flowbite-svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
+  import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   let products: Tables<"product">[] | null = null;
   onMount(() => genericGet(supabase.from("product").select(), (x) => (products = x)));
@@ -38,7 +39,7 @@
               {product.unit}
             </td>
             <td class="px-6 py-4">
-              {product.created_at}
+              {parseISODatestring(product.created_at)}
             </td>
             <td class="px-6 py-4 text-right">
               <a
