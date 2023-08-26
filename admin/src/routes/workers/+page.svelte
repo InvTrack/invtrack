@@ -2,14 +2,20 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
   import type { Enums, Tables, Views } from "$lib/helpers";
-  import Head from "$lib/table/Head.svelte";
-  import Table from "$lib/table/Table.svelte";
-  import Row from "$lib/table/Row.svelte";
-  import Card from "$lib/main/Card.svelte";
   import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
-  import SubmitButton from "$lib/form/SubmitButton.svelte";
-  import TextInput from "$lib/form/TextInput.svelte";
+  import ScreenCard from "$lib/ScreenCard.svelte";
+  import {
+    Button,
+    Checkbox,
+    Input,
+    Table,
+    TableBody,
+    TableBodyCell,
+    TableBodyRow,
+    TableHead,
+  } from "flowbite-svelte";
+  import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   let loading = false;
   let workers: Tables<"worker">[] | null = null;
@@ -22,72 +28,69 @@
 
   let name: Tables<"worker">["name"] = null;
   let is_admin: Tables<"worker">["is_admin"] = false;
-
-  const update = () =>
-    genericUpdate(
-      supabase
-        .from("worker")
-        .update({
-          is_admin,
-          name,
-        })
-        .eq("company_id", company_id),
-      "/workers",
-      (x) => (loading = x)
-    );
+  supabase.auth.getUser().then((x) => console.log(x));
+  const update = () => {};
+  // genericUpdate((
+  //   supabase
+  //     .from("worker")
+  //     .insert({
+  //       is_admin,
+  //       name,
+  //       company_id,
+  //     })
+  //     .eq("company_id", company_id),
+  //   "/workers",
+  //   (x) => (loading = x)
+  // );)
 </script>
 
-<Card header="Workers">
-  <Table>
-    <Head>
-      <th scope="col" class="px-6 py-3">Name</th>
-      <th scope="col" class="px-6 py-3">Admin</th>
-      <th scope="col" class="px-6 py-3" />
-    </Head>
-    <tbody>
-      <Row>
-        <th>
-          <TextInput name="name" bind:value={name}>Name</TextInput>
-        </th>
-        <td>
-          <input type="checkbox" bind:checked={is_admin} />
-        </td>
-        <td class="flex-1" />
-      </Row>
-      <SubmitButton>{loading ? "Saving ..." : "Add"}</SubmitButton>
-    </tbody>
-  </Table>
+<ScreenCard header="Workers">
   {#if workers}
     <Table>
-      <Head>
+      <TableHead>
         <th scope="col" class="px-6 py-3">Name</th>
         <th scope="col" class="px-6 py-3">Admin</th>
         <th scope="col" class="px-6 py-3">Created at</th>
         <th scope="col" class="px-6 py-3" />
-      </Head>
-      <tbody>
+      </TableHead>
+      <TableBody>
+        <TableBodyRow>
+          <TableBodyCell
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            <Input name="name" bind:value={name} size="sm" class="w-64" />
+          </TableBodyCell>
+          <TableBodyCell class="px-6 py-4">
+            <Checkbox bind:checked={is_admin} />
+          </TableBodyCell>
+          <TableBodyCell class="px-6 py-4"
+            >{parseISODatestring(new Date(Date.now()).toISOString())}</TableBodyCell
+          >
+          <TableBodyCell class="px-6 py-4 text-right">
+            <Button type="submit" on:click={update}>Add</Button>
+          </TableBodyCell>
+        </TableBodyRow>
         {#each workers as worker}
-          <Row>
-            <th
+          <TableBodyRow>
+            <TableBodyCell
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
               {worker.name}
-            </th>
-            <td class="px-6 py-4">
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4">
               {worker.is_admin}
-            </td>
-            <td class="px-6 py-4">
-              {worker.created_at}
-            </td>
-            <td class="px-6 py-4 text-right">
-              <a href="/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >Edit</a
-              >
-            </td>
-          </Row>
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4">
+              {parseISODatestring(worker.created_at)}
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 text-right">
+              <Button href={`/workers/${worker.id}`}>Edit</Button>
+            </TableBodyCell>
+          </TableBodyRow>
         {/each}
-      </tbody>
+      </TableBody>
     </Table>
   {/if}
-</Card>
+</ScreenCard>
