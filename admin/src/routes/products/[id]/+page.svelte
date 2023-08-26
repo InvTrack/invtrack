@@ -3,11 +3,10 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
-  import Card from "$lib/main/Card.svelte";
   import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
-  import SubmitButton from "$lib/form/SubmitButton.svelte";
-  import TextInput from "$lib/form/TextInput.svelte";
+  import ScreenCard from "$lib/ScreenCard.svelte";
+  import { Label, Span, Input, Button } from "flowbite-svelte";
 
   let loading = false;
   let product: Tables<"product"> | null = null;
@@ -38,11 +37,19 @@
 </script>
 
 {#if product}
-  <Card header={"Product - " + product.name}>
-    <form method="post" on:submit|preventDefault={update}>
-      <TextInput name="name" bind:value={name}>Name</TextInput>
-      <TextInput name="unit" bind:value={unit}>Unit</TextInput>
-      <SubmitButton>{loading ? "Saving ..." : "Update product"}</SubmitButton>
+  <ScreenCard header={"Product - " + product.name}>
+    <form on:submit|preventDefault={update}>
+      <Label class="space-y-2">
+        <Span>Name</Span>
+        <Input type="text" name="name" placeholder="•••••" required bind:value={name} />
+      </Label>
+      <Label class="space-y-2 mt-2">
+        <Span>Unit</Span>
+        <Input type="text" name="unit" placeholder="•••••" required bind:value={unit} />
+      </Label>
+      <Button type="submit" class="mt-4" color="primary"
+        >{loading ? "Saving ..." : "Update product"}</Button
+      >
     </form>
-  </Card>
+  </ScreenCard>
 {/if}
