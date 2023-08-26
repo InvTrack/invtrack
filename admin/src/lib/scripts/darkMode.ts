@@ -19,6 +19,7 @@ export const toggleDarkMode = () => {
     }
   }
 };
+
 export const initializeDarkMode = () => {
   if (
     localStorage.getItem("color-theme") === "dark" ||
