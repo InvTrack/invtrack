@@ -12,21 +12,22 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-      // colors: {
-      //   // flowbite-svelte
-      //   primary: {
-      //     50: "#FFF5F2",
-      //     100: "#FFF1EE",
-      //     200: "#FFE4DE",
-      //     300: "#FFD5CC",
-      //     400: "#FFBCAD",
-      //     500: "#FE795D",
-      //     600: "#EF562F",
-      //     700: "#EB4F27",
-      //     800: "#CC4522",
-      //     900: "#A5371B",
-      //   },
-      // },
+      colors: {
+        // flowbite-svelte
+        // from https://htmlcolorcodes.com/color-chart/flat-design-color-chart/  the peter river scheme
+        primary: {
+          50: "#EBF5FB",
+          100: "#D6EAF8",
+          200: "#AED6F1",
+          300: "#85C1E9",
+          400: "#%DADE2",
+          500: "#3498DB",
+          600: "#2E86C1",
+          700: "#2874A6",
+          800: "#21618C",
+          900: "#1B4F72",
+        },
+      },
     },
   },
 };
