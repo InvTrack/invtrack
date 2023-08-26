@@ -1,6 +1,6 @@
 <script lang="ts">
   import { supabase } from "$lib/supabase";
-  import { Card, Button, Label, Input, Checkbox } from "flowbite-svelte";
+  import { Card, Button, Label, Input, Checkbox, Span, Heading } from "flowbite-svelte";
 
   let loading = false;
   let email = "";
@@ -44,13 +44,13 @@
 <div class="grid h-screen place-items-center">
   <Card class="w-full max-w-md">
     <form class="flex flex-col space-y-6" on:submit|preventDefault={handleLogin}>
-      <h3 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h3>
+      <Heading tag="h3">Sign in to our platform</Heading>
       <Label class="space-y-2">
-        <span>Email</span>
+        <Span>Email</Span>
         <Input type="email" name="email" placeholder="Your email" required bind:value={email} />
       </Label>
       <Label class="space-y-2">
-        <span>Your password</span>
+        <Span>Your password</Span>
         <Input type="password" name="password" placeholder="•••••" required bind:value={password} />
       </Label>
       <div class="flex items-start">
