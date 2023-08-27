@@ -1,60 +1,89 @@
 <script lang="ts">
   import { onMount } from "svelte";
+
   import { supabase } from "$lib/supabase";
-  import type { Tables } from "$lib/helpers";
+  import { convertRemToPixels, getMaxColumns, type Tables } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
+  import {
+    Pagination,
+    Table,
+    TableBody,
+    TableBodyCell,
+    TableBodyRow,
+    TableHead,
+    TableHeadCell,
+  } from "flowbite-svelte";
+  import { parseISODatestring } from "$lib/dates/parseISODatestring";
+  import ScreenCard from "$lib/ScreenCard.svelte";
+  import { Icon } from "flowbite-svelte-icons";
 
   let inventories: Tables<"inventory">[] | null = null;
   let products: (Tables<"product"> & { product_record: Tables<"product_record">[] })[] | null =
     null;
+  let range: [number, number] = [0, getMaxColumns(window.innerWidth, convertRemToPixels(10))];
 
   onMount(() => {
-    genericGet(supabase.from("inventory").select(), (x) => {
-      console.log(x);
-      inventories = x;
-    });
+    genericGet(
+      supabase
+        .from("inventory")
+        .select()
+        .range(...range),
+      (x) => {
+        inventories = x;
+      }
+    );
 
-    genericGet(supabase.from("product").select(`*, product_record (*)`), (x) => {
-      console.log(x);
-      products = x;
-    });
+    genericGet(
+      supabase
+        .from("product")
+        .select(`*, product_record (*)`)
+        .range(...range, {
+          foreignTable: "product_record",
+        }),
+      (x) => {
+        products = x;
+      }
+    );
   });
 </script>
 
-<h1 class="ml-10 mt-10 text-4xl dark:text-white">Overview</h1>
-{#if inventories && products}
-  <div class="bg-white mx-10 my-10 relative border overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-l text-gray-700 uppercase dark:text-gray-400">
-        <tr class="border-b divide-x">
-          <th scope="col" class="inventory bg-gray-50 dark:bg-gray-800" />
-          {#each inventories as inventory}
-            <th scope="col" class="inventory py-6 bg-gray-50 dark:bg-gray-800"
-              >{inventory.date.split("T")[0]}</th
-            >
-          {/each}
-        </tr>
-      </thead>
-      <tbody>
+<ScreenCard header="Overview">
+  <Pagination icon>
+    <svelte:fragment slot="prev">
+      <span class="sr-only">Previous</span>
+      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" />
+    </svelte:fragment>
+    <svelte:fragment slot="next">
+      <span class="sr-only">Next</span>
+      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" />
+    </svelte:fragment>
+  </Pagination>
+  {#if inventories && products}
+    <!-- <div class="bg-white mx-10 my-10 relative border overflow-x-auto shadow-md sm:rounded-lg"> -->
+    <Table>
+      <TableHead>
+        <TableHeadCell scope="col" />
+        {#each inventories as inventory}
+          <TableHeadCell scope="col" class="p-4 place-items-center border-l"
+            >{parseISODatestring(inventory.date)}</TableHeadCell
+          >
+        {/each}
+      </TableHead>
+
+      <TableBody>
         {#each products as product}
-          <tr class="border-b divide-x border-gray-200 dark:border-gray-700">
+          <TableBodyRow class="border-b divide-x border-gray-200 dark:border-gray-700">
             <th
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
               >{product.name}</th
             >
             {#each product.product_record as record}
-              <td class="px-6 py-4">{record.quantity} {product.unit}</td>
+              <TableBodyCell>{record.quantity} {product.unit}</TableBodyCell>
             {/each}
-          </tr>
+          </TableBodyRow>
         {/each}
-      </tbody>
-    </table>
-  </div>
-{/if}
-
-<style>
-  .inventory {
-    writing-mode: vertical-rl;
-  }
-</style>
+      </TableBody>
+    </Table>
+  {/if}
+</ScreenCard>
