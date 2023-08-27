@@ -16,11 +16,13 @@
       product = x;
       name = product.name;
       unit = product.unit;
+      steps = product.steps;
     })
   );
 
   let name: string | undefined = undefined;
   let unit: string | undefined = undefined;
+  let steps: number[] = [];
 
   const update = () =>
     genericUpdate(
@@ -29,6 +31,7 @@
         .update({
           name,
           unit,
+          steps,
         })
         .eq("id", id),
       "/products",
@@ -41,11 +44,19 @@
     <form on:submit|preventDefault={update}>
       <Label class="space-y-2">
         <Span>Name</Span>
-        <Input type="text" name="name" placeholder="•••••" required bind:value={name} />
+        <Input type="text" name="name" required bind:value={name} />
       </Label>
       <Label class="space-y-2 mt-2">
         <Span>Unit</Span>
-        <Input type="text" name="unit" placeholder="•••••" required bind:value={unit} />
+        <Input type="text" name="unit" required bind:value={unit} />
+      </Label>
+      <Label class="space-y-2 mt-2">
+        <Span>Steps</Span>
+        <div class="flex flex-row gap-4">
+          <Input type="text" name="steps" required bind:value={steps[0]} />
+          <Input type="text" name="steps" required bind:value={steps[1]} />
+          <Input type="text" name="steps" required bind:value={steps[2]} />
+        </div>
       </Label>
       <Button type="submit" class="mt-4" color="primary"
         >{loading ? "Saving ..." : "Update product"}</Button
