@@ -16,3 +16,7 @@ export const convertRemToPixels = (rem: number) =>
 export const getMaxColumns = (width: number, columnWidth: number) => {
   return Math.floor(width / columnWidth);
 };
+export const getPaginationRange = (page: number, width: number): [number, number] => [
+  page * getMaxColumns(window.innerWidth, convertRemToPixels(width)),
+  (page + 1) * getMaxColumns(window.innerWidth, convertRemToPixels(width)),
+];
