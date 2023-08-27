@@ -13,19 +13,39 @@
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Icon } from "flowbite-svelte-icons";
+  import { onMount } from "svelte";
+  import { supabase } from "$lib/supabase.js";
 
-  export let data;
-
+  let inventories: Tables<"inventory">[] = [];
+  let products: (Tables<"product"> & { product_record: Tables<"product_record">[] })[] = [];
   let page = 1;
   $: range = getPaginationRange(page, 10);
 
+  onMount(() => {
+    genericGet(
+      supabase
+        .from("inventory")
+        .select()
+        .range(...range),
+      (x) => (inventories = x)
+    );
+
+    genericGet(
+      supabase
+        .from("product")
+        .select(`*, product_record (*)`)
+        .range(...range, {
+          foreignTable: "product_record",
+        }),
+      (x) => (products = x)
+    );
+  });
   const handleNext = async () => {
     page += 1;
   };
   const handlePrev = () => {
     page -= 1;
   };
-  $: console.log(data);
 </script>
 
 <ScreenCard header="Overview">
@@ -39,12 +59,12 @@
       <Icon name="chevron-right-outline" class="w-2.5 h-2.5" on:click={handleNext} />
     </svelte:fragment>
   </Pagination>
-  {#if data.inventories && data.products}
+  {#if inventories && products}
     <!-- <div class="bg-white mx-10 my-10 relative border overflow-x-auto shadow-md sm:rounded-lg"> -->
     <Table>
       <TableHead>
         <TableHeadCell scope="col" />
-        {#each data.inventories as inventory}
+        {#each inventories as inventory}
           <TableHeadCell scope="col" class="p-4 place-items-center border-l"
             >{parseISODatestring(inventory.date)}</TableHeadCell
           >
@@ -52,7 +72,7 @@
       </TableHead>
 
       <TableBody>
-        {#each data.products as product}
+        {#each products as product}
           <TableBodyRow class="border-b divide-x border-gray-200 dark:border-gray-700">
             <th
               scope="row"
