@@ -29,19 +29,17 @@
   let name: Tables<"worker">["name"] = null;
   let is_admin: Tables<"worker">["is_admin"] = false;
   supabase.auth.getUser().then((x) => console.log(x));
-  const update = () => {};
-  // genericUpdate((
+  const update = () => {}; // genericUpdate(
   //   supabase
   //     .from("worker")
   //     .insert({
   //       is_admin,
   //       name,
-  //       company_id,
+  //       company_id
   //     })
-  //     .eq("company_id", company_id),
   //   "/workers",
   //   (x) => (loading = x)
-  // );)
+  // );
 </script>
 
 <ScreenCard header="Workers">
