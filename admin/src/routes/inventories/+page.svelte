@@ -5,7 +5,7 @@
 
   import { genericGet } from "$lib/genericGet";
   import ScreenCard from "$lib/ScreenCard.svelte";
-  import { Table, TableBodyRow, TableHead } from "flowbite-svelte";
+  import { Button, Table, TableBodyRow, TableHead } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   let inventories: Tables<"inventory">[] | null = null;
@@ -42,10 +42,7 @@
               {parseISODatestring(inventory.created_at)}
             </td>
             <td class="px-6 py-4 text-right">
-              <a
-                href={"/inventories/" + inventory.id}
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a
-              >
+              <Button class="hover:underline" href={`/inventories/${inventory.id}`}>Edit</Button>
             </td>
           </TableBodyRow>
         {/each}

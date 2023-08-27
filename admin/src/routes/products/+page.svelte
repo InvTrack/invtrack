@@ -4,7 +4,14 @@
   import type { Tables } from "$lib/helpers";
 
   import { genericGet } from "$lib/genericGet";
-  import { Table, TableBody, TableBodyRow, TableHead, TableHeadCell } from "flowbite-svelte";
+  import {
+    Button,
+    Table,
+    TableBody,
+    TableBodyRow,
+    TableHead,
+    TableHeadCell,
+  } from "flowbite-svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
@@ -38,10 +45,7 @@
               {product.steps.map((step) => " " + step)}
             </td>
             <td class="px-6 py-4 text-right">
-              <a
-                href={"/products/" + product.id}
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a
-              >
+              <Button class="hover:underline" href={`/products/${product.id}`}>Edit</Button>
             </td>
           </TableBodyRow>
         {/each}

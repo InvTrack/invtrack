@@ -68,7 +68,7 @@
             >{parseISODatestring(new Date(Date.now()).toISOString())}</TableBodyCell
           >
           <TableBodyCell class="px-6 py-4 text-right">
-            <Button type="submit" on:click={update}>Add</Button>
+            <Button class="hover:underline" type="submit" on:click={update}>Add</Button>
           </TableBodyCell>
         </TableBodyRow>
         {#each workers as worker}
@@ -86,7 +86,7 @@
               {parseISODatestring(worker.created_at)}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 text-right">
-              <Button href={`/workers/${worker.id}`}>Edit</Button>
+              <Button class="hover:underline" href={`/workers/${worker.id}`}>Edit</Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
