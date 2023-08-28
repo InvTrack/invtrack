@@ -39,6 +39,15 @@
       loading = false;
     }
   };
+  const handleSendLink = async () => {
+    const res = await supabase.auth.signInWithOtp({
+      email: "felix.lipski7@gmail.com",
+      options: {
+        emailRedirectTo: "https://example.com/welcome",
+      },
+    });
+    console.log(res);
+  };
 </script>
 
 <div class="grid h-screen place-items-center">
@@ -60,6 +69,7 @@
         </a>
       </div>
       <Button type="submit" class="w-full" color="primary">Login to your account</Button>
+      <Button on:click={handleGoogleLogin} class="w-full" color="primary">Login with Google</Button>
       <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered? <a href="/" class="text-primary-800 hover:underline dark:text-primary-500">
           Create account

@@ -66,7 +66,7 @@
             >{parseISODatestring(new Date(Date.now()).toISOString())}</TableBodyCell
           >
           <TableBodyCell class="px-6 py-4 text-right">
-            <Button class="hover:underline" type="submit" on:click={update}>Add</Button>
+            <Button class="hover:underline" type="submit" on:click={update}>Edit</Button>
           </TableBodyCell>
         </TableBodyRow>
         {#each workers as worker}
@@ -91,4 +91,5 @@
       </TableBody>
     </Table>
   {/if}
+  <Button class="hover:underline" href={`/workers/add`}>Add</Button>
 </ScreenCard>
