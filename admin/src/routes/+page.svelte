@@ -70,7 +70,18 @@
           >
         {/each}
       </TableHead>
-      <TableBody />
+      {#if records[0]}
+        <TableBody>
+          {#each records[0].record_view as product, i}
+            <TableBodyRow>
+              <TableBodyCell>{product.name}</TableBodyCell>
+              {#each records as record}
+                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
+              {/each}
+            </TableBodyRow>
+          {/each}
+        </TableBody>
+      {/if}
     </Table>
   {/if}
 </ScreenCard>
