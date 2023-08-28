@@ -13,7 +13,7 @@
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Icon } from "flowbite-svelte-icons";
-  import { onMount, tick } from "svelte";
+  import { onMount } from "svelte";
   import { supabase } from "$lib/supabase.js";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
@@ -21,11 +21,11 @@
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     const range = getPaginationRange(page, 10);
-    console.log(range, records);
     genericGet(
       supabase
         .from("inventory")
         .select(`date, record_view (*)`)
+        // .eq("company_id", company_id)
         .range(...range)
         .order("date"),
       (x) => {
@@ -41,8 +41,12 @@
       }
     );
   };
-
   onMount(() => {
+    genericGet(
+      supabase.from("inventory").select("id", { count: "exact" }),
+      // .eq("company_id", company_id)
+      (x) => console.log({ x })
+    );
     getRecords(currentPage, "first");
   });
 
