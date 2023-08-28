@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getPaginationRange, type Tables } from "$lib/helpers";
+  import { getPaginationRange, type Tables, type Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import {
     Pagination,
@@ -16,75 +16,85 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase.js";
 
-  let inventories: Tables<"inventory">[] = [];
-  let products: (Tables<"product"> & { product_record: Tables<"product_record">[] })[] = [];
-  let page = 1;
-  $: range = getPaginationRange(page, 10);
+  let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
+  let currentPage = 0;
 
-  onMount(() => {
+  const getRecords = (page: number, movement: "next" | "previous" | "first") => {
+    const range = getPaginationRange(page, 10);
     genericGet(
       supabase
         .from("inventory")
-        .select()
-        .range(...range),
-      (x) => (inventories = x)
+        .select(`date, record_view (*)`)
+        // .eq("company_id", company_id)
+        .range(...range)
+        .order("date"),
+      (x) => {
+        if (movement == "next" && x.length == 0) {
+          currentPage = Math.max(currentPage - 1, 0);
+          return;
+        }
+        if (movement == "previous" && x.length == 0) {
+          currentPage = 0;
+          return;
+        }
+        records = x;
+      }
     );
-
-    genericGet(
-      supabase
-        .from("product")
-        .select(`*, product_record (*)`)
-        .range(...range, {
-          foreignTable: "product_record",
-        }),
-      (x) => (products = x)
-    );
-  });
-  const handleNext = async () => {
-    page += 1;
   };
-  const handlePrev = () => {
-    page -= 1;
+  onMount(() => {
+    genericGet(
+      supabase.from("inventory").select("id", { count: "exact" }),
+      // .eq("company_id", company_id)
+      (x) => console.log({ x })
+    );
+    getRecords(currentPage, "first");
+  });
+
+  const handleNext = async () => {
+    currentPage += 1;
+    getRecords(currentPage, "next");
+  };
+
+  const handlePrev = async () => {
+    if (currentPage === 0) return;
+    currentPage -= 1;
+    getRecords(currentPage, "previous");
   };
 </script>
 
 <ScreenCard header="Overview">
-  <Pagination icon>
+  <Pagination icon on:next={handleNext} on:previous={handlePrev}>
     <svelte:fragment slot="prev">
       <span class="sr-only">Previous</span>
-      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" on:click={handlePrev} />
+      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" />
     </svelte:fragment>
     <svelte:fragment slot="next">
       <span class="sr-only">Next</span>
-      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" on:click={handleNext} />
+      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" />
     </svelte:fragment>
   </Pagination>
-  {#if inventories && products}
-    <!-- <div class="bg-white mx-10 my-10 relative border overflow-x-auto shadow-md sm:rounded-lg"> -->
+  {#if records}
     <Table>
       <TableHead>
         <TableHeadCell scope="col" />
-        {#each inventories as inventory}
+        {#each records as record}
           <TableHeadCell scope="col" class="p-4 place-items-center border-l"
-            >{parseISODatestring(inventory.date)}</TableHeadCell
+            >{parseISODatestring(record.date)}</TableHeadCell
           >
         {/each}
       </TableHead>
-
-      <TableBody>
-        {#each products as product}
-          <TableBodyRow class="border-b divide-x border-gray-200 dark:border-gray-700">
-            <th
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
-              >{product.name}</th
-            >
-            {#each product.product_record as record}
-              <TableBodyCell>{record.quantity} {product.unit}</TableBodyCell>
-            {/each}
-          </TableBodyRow>
-        {/each}
-      </TableBody>
+      {#if records[0]}
+        <TableBody>
+          {#each records[0].record_view as product, i}
+            <TableBodyRow>
+              <TableBodyCell>{product.name}</TableBodyCell>
+              {#each records as record}
+                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
+              {/each}
+            </TableBodyRow>
+          {/each}
+        </TableBody>
+      {/if}
     </Table>
   {/if}
 </ScreenCard>
