@@ -18,7 +18,7 @@
 
   let inventories: Tables<"inventory">[] = [];
   let products: (Tables<"product"> & { product_record: Tables<"product_record">[] })[] = [];
-  let page = 1;
+  let page = 0;
   $: range = getPaginationRange(page, 10);
 
   onMount(() => {
