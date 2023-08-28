@@ -15,38 +15,47 @@
   import { Icon } from "flowbite-svelte-icons";
   import { onMount, tick } from "svelte";
   import { supabase } from "$lib/supabase.js";
-  import { get } from "svelte/store";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
-  $: page = 0;
-  $: range = getPaginationRange(page, 10);
+  let currentPage = 0;
 
-  const getRecords = () =>
+  const getRecords = (page: number, movement: "next" | "previous" | "first") => {
+    const range = getPaginationRange(page, 10);
+    console.log(range, records);
     genericGet(
       supabase
         .from("inventory")
         .select(`date, record_view (*)`)
         .range(...range)
         .order("date"),
-      (x) => (records = x)
+      (x) => {
+        if (movement == "next" && x.length == 0) {
+          currentPage = Math.max(currentPage - 1, 0);
+          return;
+        }
+        if (movement == "previous" && x.length == 0) {
+          currentPage = 0;
+          return;
+        }
+        records = x;
+      }
     );
+  };
 
   onMount(() => {
-    getRecords();
+    getRecords(currentPage, "first");
   });
 
   const handleNext = async () => {
-    // if (inventories.length <= range[1] - range[0]) return;
-    page += 1;
-    getRecords();
+    currentPage += 1;
+    getRecords(currentPage, "next");
   };
 
   const handlePrev = async () => {
-    if (page === 0) return;
-    page -= 1;
-    getRecords();
+    if (currentPage === 0) return;
+    currentPage -= 1;
+    getRecords(currentPage, "previous");
   };
-  $: console.log(records);
 </script>
 
 <ScreenCard header="Overview">
