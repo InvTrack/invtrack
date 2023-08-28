@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getPaginationRange, type Tables } from "$lib/helpers";
+  import { getPaginationRange, type Tables, type Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import {
     Pagination,
@@ -13,78 +13,64 @@
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Icon } from "flowbite-svelte-icons";
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { supabase } from "$lib/supabase.js";
+  import { get } from "svelte/store";
 
-  let inventories: Tables<"inventory">[] = [];
-  let products: (Tables<"product"> & { product_record: Tables<"product_record">[] })[] = [];
-  let page = 1;
+  let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
+  $: page = 0;
   $: range = getPaginationRange(page, 10);
 
-  onMount(() => {
+  const getRecords = () =>
     genericGet(
       supabase
         .from("inventory")
-        .select()
-        .range(...range),
-      (x) => (inventories = x)
+        .select(`date, record_view (*)`)
+        .range(...range)
+        .order("date"),
+      (x) => (records = x)
     );
 
-    genericGet(
-      supabase
-        .from("product")
-        .select(`*, product_record (*)`)
-        .range(...range, {
-          foreignTable: "product_record",
-        }),
-      (x) => (products = x)
-    );
+  onMount(() => {
+    getRecords();
   });
+
   const handleNext = async () => {
+    // if (inventories.length <= range[1] - range[0]) return;
     page += 1;
+    getRecords();
   };
-  const handlePrev = () => {
+
+  const handlePrev = async () => {
+    if (page === 0) return;
     page -= 1;
+    getRecords();
   };
+  $: console.log(records);
 </script>
 
 <ScreenCard header="Overview">
-  <Pagination icon>
+  <Pagination icon on:next={handleNext} on:previous={handlePrev}>
     <svelte:fragment slot="prev">
       <span class="sr-only">Previous</span>
-      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" on:click={handlePrev} />
+      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" />
     </svelte:fragment>
     <svelte:fragment slot="next">
       <span class="sr-only">Next</span>
-      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" on:click={handleNext} />
+      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" />
     </svelte:fragment>
   </Pagination>
-  {#if inventories && products}
-    <!-- <div class="bg-white mx-10 my-10 relative border overflow-x-auto shadow-md sm:rounded-lg"> -->
+  {#if records}
     <Table>
       <TableHead>
         <TableHeadCell scope="col" />
-        {#each inventories as inventory}
+        {#each records as record}
           <TableHeadCell scope="col" class="p-4 place-items-center border-l"
-            >{parseISODatestring(inventory.date)}</TableHeadCell
+            >{parseISODatestring(record.date)}</TableHeadCell
           >
         {/each}
       </TableHead>
-
-      <TableBody>
-        {#each products as product}
-          <TableBodyRow class="border-b divide-x border-gray-200 dark:border-gray-700">
-            <th
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800"
-              >{product.name}</th
-            >
-            {#each product.product_record as record}
-              <TableBodyCell>{record.quantity} {product.unit}</TableBodyCell>
-            {/each}
-          </TableBodyRow>
-        {/each}
-      </TableBody>
+      <TableBody />
     </Table>
   {/if}
 </ScreenCard>
