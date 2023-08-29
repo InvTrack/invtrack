@@ -21,14 +21,15 @@
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     const range = getPaginationRange(page, 10);
+    console.log(...range);
     genericGet(
       supabase
         .from("inventory")
-        .select(`date, record_view (*)`)
+        .select(`date, record_view (*)`, { count: "exact", head: false })
         // .eq("company_id", company_id)
         .range(...range)
         .order("date"),
-      (x) => {
+      (x, count) => {
         if (movement == "next" && x.length == 0) {
           currentPage = Math.max(currentPage - 1, 0);
           return;
@@ -42,11 +43,6 @@
     );
   };
   onMount(() => {
-    genericGet(
-      supabase.from("inventory").select("id", { count: "exact" }),
-      // .eq("company_id", company_id)
-      (x) => console.log({ x })
-    );
     getRecords(currentPage, "first");
   });
 
