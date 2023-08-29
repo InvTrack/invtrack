@@ -17,10 +17,16 @@
   import { supabase } from "$lib/supabase.js";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
+  let maxTableLength = 0;
   let currentPage = 0;
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
-    const range = getPaginationRange(page, 10);
+    let range = getPaginationRange(currentPage, 10);
+    if (movement !== "first" && range[0] > maxTableLength) {
+      currentPage -= 1;
+      getRecords(currentPage, movement);
+      return;
+    }
     genericGet(
       supabase
         .from("inventory")
@@ -29,6 +35,7 @@
         .range(...range)
         .order("date"),
       (x, count) => {
+        maxTableLength = count ?? 0;
         if (movement === "next" && x.length == 0) {
           currentPage = Math.max(currentPage - 1, 0);
           return;
@@ -58,7 +65,7 @@
 </script>
 
 <ScreenCard header="Overview">
-  <Pagination icon on:next={handleNext} on:previous={handlePrev}>
+  <Pagination icon class="flex justify-end" on:next={handleNext} on:previous={handlePrev}>
     <svelte:fragment slot="prev">
       <span class="sr-only">Previous</span>
       <Icon name="chevron-left-outline" class="w-2.5 h-2.5" />
