@@ -21,7 +21,6 @@
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     const range = getPaginationRange(page, 10);
-    console.log(...range);
     genericGet(
       supabase
         .from("inventory")
@@ -30,11 +29,11 @@
         .range(...range)
         .order("date"),
       (x, count) => {
-        if (movement == "next" && x.length == 0) {
+        if (movement === "next" && x.length == 0) {
           currentPage = Math.max(currentPage - 1, 0);
           return;
         }
-        if (movement == "previous" && x.length == 0) {
+        if (movement === "previous" && x.length == 0) {
           currentPage = 0;
           return;
         }
