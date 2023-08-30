@@ -65,14 +65,14 @@
 </script>
 
 <ScreenCard header="Overview">
-  <Pagination icon class="flex justify-end" on:next={handleNext} on:previous={handlePrev}>
+  <Pagination icon class="flex justify-evenly mb-4" on:next={handleNext} on:previous={handlePrev}>
     <svelte:fragment slot="prev">
+      <Icon name="arrow-left-solid" class="w-5 h-5" />
       <span class="sr-only">Previous</span>
-      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" />
     </svelte:fragment>
     <svelte:fragment slot="next">
       <span class="sr-only">Next</span>
-      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" />
+      <Icon name="arrow-right-solid" class="w-5 h-5" />
     </svelte:fragment>
   </Pagination>
   {#if records}
