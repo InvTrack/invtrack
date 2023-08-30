@@ -2,7 +2,9 @@
   import { getPaginationRange, type Tables, type Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import {
+    Heading,
     Pagination,
+    PaginationItem,
     Table,
     TableBody,
     TableBodyCell,
@@ -65,16 +67,16 @@
 </script>
 
 <ScreenCard header="Overview">
-  <Pagination icon class="flex justify-evenly mb-4" on:next={handleNext} on:previous={handlePrev}>
-    <svelte:fragment slot="prev">
+  <div class="flex justify-between">
+    <PaginationItem class="mb-4" on:next={handleNext} on:previous={handlePrev}>
       <Icon name="arrow-left-solid" class="w-5 h-5" />
-      <span class="sr-only">Previous</span>
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">Next</span>
+      <Heading tag="h6" class="ml-4">Poprzedni</Heading>
+    </PaginationItem>
+    <PaginationItem class="mb-4" on:next={handleNext} on:previous={handlePrev}>
+      <Heading tag="h6" class="mr-4">Następny</Heading>
       <Icon name="arrow-right-solid" class="w-5 h-5" />
-    </svelte:fragment>
-  </Pagination>
+    </PaginationItem>
+  </div>
   {#if records}
     <Table>
       <TableHead>
