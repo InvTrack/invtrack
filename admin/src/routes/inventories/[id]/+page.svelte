@@ -3,17 +3,15 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
-  import Card from "$lib/main/Card.svelte";
   import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
-  import SubmitButton from "$lib/form/SubmitButton.svelte";
-  import TextInput from "$lib/form/TextInput.svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Button, Input, Label, Span } from "flowbite-svelte";
 
   let loading = false;
   let inventory: Tables<"inventory"> | null = null;
   const id = $page.params.id;
+
   onMount(() =>
     genericGet(supabase.from("inventory").select().eq("id", id).single(), (x) => {
       inventory = x;
@@ -37,11 +35,14 @@
       "/inventories",
       (x) => (loading = x)
     );
+
+  const deleteInventory = () =>
+    genericUpdate(supabase.from("inventory").delete().eq("id", id), "/inventories");
 </script>
 
 {#if inventory}
-  <ScreenCard header={"Inventory - " + inventory.name}>
-    <form on:submit|preventDefault={update}>
+  <ScreenCard header={"Inventory - " + inventory.name} class="flex flex-col">
+    <form on:submit|preventDefault={update} class="flex-1">
       <Label class="space-y-2">
         <Span>Name</Span>
         <Input type="text" name="name" placeholder="Name" bind:value={name} />
@@ -54,5 +55,8 @@
         >{loading ? "Saving ..." : "Update inventory"}</Button
       >
     </form>
+    <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventory}
+      >Delete this</Button
+    >
   </ScreenCard>
 {/if}
