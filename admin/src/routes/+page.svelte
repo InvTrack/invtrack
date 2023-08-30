@@ -2,7 +2,9 @@
   import { getPaginationRange, type Tables, type Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import {
+    Heading,
     Pagination,
+    PaginationItem,
     Table,
     TableBody,
     TableBodyCell,
@@ -17,23 +19,30 @@
   import { supabase } from "$lib/supabase.js";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
+  let maxTableLength = 0;
   let currentPage = 0;
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
-    const range = getPaginationRange(page, 10);
+    let range = getPaginationRange(currentPage, 10);
+    if (movement !== "first" && range[0] > maxTableLength) {
+      currentPage -= 1;
+      getRecords(currentPage, movement);
+      return;
+    }
     genericGet(
       supabase
         .from("inventory")
-        .select(`date, record_view (*)`)
+        .select(`date, record_view (*)`, { count: "exact", head: false })
         // .eq("company_id", company_id)
         .range(...range)
         .order("date"),
-      (x) => {
-        if (movement == "next" && x.length == 0) {
+      (x, count) => {
+        maxTableLength = count ?? 0;
+        if (movement === "next" && x.length == 0) {
           currentPage = Math.max(currentPage - 1, 0);
           return;
         }
-        if (movement == "previous" && x.length == 0) {
+        if (movement === "previous" && x.length == 0) {
           currentPage = 0;
           return;
         }
@@ -42,11 +51,6 @@
     );
   };
   onMount(() => {
-    genericGet(
-      supabase.from("inventory").select("id", { count: "exact" }),
-      // .eq("company_id", company_id)
-      (x) => console.log({ x })
-    );
     getRecords(currentPage, "first");
   });
 
@@ -63,16 +67,16 @@
 </script>
 
 <ScreenCard header="Overview">
-  <Pagination icon on:next={handleNext} on:previous={handlePrev}>
-    <svelte:fragment slot="prev">
-      <span class="sr-only">Previous</span>
-      <Icon name="chevron-left-outline" class="w-2.5 h-2.5" />
-    </svelte:fragment>
-    <svelte:fragment slot="next">
-      <span class="sr-only">Next</span>
-      <Icon name="chevron-right-outline" class="w-2.5 h-2.5" />
-    </svelte:fragment>
-  </Pagination>
+  <div class="flex justify-between">
+    <PaginationItem class="mb-4" on:next={handleNext} on:previous={handlePrev}>
+      <Icon name="arrow-left-solid" class="w-5 h-5" />
+      <Heading tag="h6" class="ml-4">Poprzedni</Heading>
+    </PaginationItem>
+    <PaginationItem class="mb-4" on:next={handleNext} on:previous={handlePrev}>
+      <Heading tag="h6" class="mr-4">Następny</Heading>
+      <Icon name="arrow-right-solid" class="w-5 h-5" />
+    </PaginationItem>
+  </div>
   {#if records}
     <Table>
       <TableHead>
