@@ -24,6 +24,7 @@
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     let range = getPaginationRange(currentPage, 10);
+    console.log(range);
     if (movement !== "first" && range[0] > maxTableLength) {
       currentPage -= 1;
       getRecords(currentPage, movement);
@@ -39,7 +40,7 @@
       (x, count) => {
         maxTableLength = count ?? 0;
         if (movement === "next" && x.length == 0) {
-          currentPage = Math.max(currentPage - 1, 0);
+          currentPage = Math.max(page - 1, 0);
           return;
         }
         if (movement === "previous" && x.length == 0) {
@@ -68,11 +69,11 @@
 
 <ScreenCard header="Overview">
   <div class="flex justify-between">
-    <PaginationItem class="mb-4" on:next={handleNext} on:previous={handlePrev}>
+    <PaginationItem class="mb-4" on:click={handlePrev}>
       <Icon name="arrow-left-solid" class="w-5 h-5" />
       <Heading tag="h6" class="ml-4">Poprzedni</Heading>
     </PaginationItem>
-    <PaginationItem class="mb-4" on:next={handleNext} on:previous={handlePrev}>
+    <PaginationItem class="mb-4" on:click={handleNext}>
       <Heading tag="h6" class="mr-4">Następny</Heading>
       <Icon name="arrow-right-solid" class="w-5 h-5" />
     </PaginationItem>

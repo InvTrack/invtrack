@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
-  import type { Enums, Tables, Views } from "$lib/helpers";
+  import type { Tables, Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
@@ -14,6 +14,7 @@
     TableBodyCell,
     TableBodyRow,
     TableHead,
+    TableHeadCell,
   } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
@@ -46,41 +47,33 @@
   {#if workers}
     <Table>
       <TableHead>
-        <th scope="col" class="px-6 py-3">Name</th>
-        <th scope="col" class="px-6 py-3">Admin</th>
-        <th scope="col" class="px-6 py-3">Created at</th>
-        <th scope="col" class="px-6 py-3" />
+        <TableHeadCell>Name</TableHeadCell>
+        <TableHeadCell>Admin</TableHeadCell>
+        <TableHeadCell>Created at</TableHeadCell>
+        <TableHeadCell />
       </TableHead>
       <TableBody>
         <TableBodyRow>
-          <TableBodyCell
-            scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
+          <TableBodyCell>
             <Input name="name" bind:value={name} size="sm" class="w-64" />
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4">
+          <TableBodyCell>
             <Checkbox bind:checked={is_admin} />
           </TableBodyCell>
-          <TableBodyCell class="px-6 py-4"
-            >{parseISODatestring(new Date(Date.now()).toISOString())}</TableBodyCell
-          >
+          <TableBodyCell>{parseISODatestring(new Date(Date.now()).toISOString())}</TableBodyCell>
           <TableBodyCell class="px-6 py-4 text-right">
             <Button class="hover:underline" type="submit" on:click={update}>Add</Button>
           </TableBodyCell>
         </TableBodyRow>
         {#each workers as worker}
           <TableBodyRow>
-            <TableBodyCell
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+            <TableBodyCell>
               {worker.name}
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4">
+            <TableBodyCell>
               {worker.is_admin}
             </TableBodyCell>
-            <TableBodyCell class="px-6 py-4">
+            <TableBodyCell>
               {parseISODatestring(worker.created_at)}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 text-right">
