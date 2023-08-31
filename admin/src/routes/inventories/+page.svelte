@@ -5,7 +5,14 @@
 
   import { genericGet } from "$lib/genericGet";
   import ScreenCard from "$lib/ScreenCard.svelte";
-  import { Button, Table, TableBodyRow, TableHead } from "flowbite-svelte";
+  import {
+    Button,
+    Table,
+    TableBodyCell,
+    TableBodyRow,
+    TableHead,
+    TableHeadCell,
+  } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   let inventories: Tables<"inventory">[] | null = null;
@@ -21,29 +28,26 @@
   {#if inventories}
     <Table>
       <TableHead>
-        <th scope="col" class="px-6 py-3">Name</th>
-        <th scope="col" class="px-6 py-3">Date</th>
-        <th scope="col" class="px-6 py-3">Created at</th>
-        <th scope="col" class="px-6 py-3" />
+        <TableHeadCell>Name</TableHeadCell>
+        <TableHeadCell>Date</TableHeadCell>
+        <TableHeadCell>Created at</TableHeadCell>
+        <TableHeadCell />
       </TableHead>
       <tbody>
         {#each inventories as inventory}
           <TableBodyRow>
-            <th
-              scope="row"
-              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
+            <TableBodyCell>
               {inventory.name}
-            </th>
-            <td class="px-6 py-4">
+            </TableBodyCell>
+            <TableBodyCell>
               {parseISODatestring(inventory.date)}
-            </td>
-            <td class="px-6 py-4">
+            </TableBodyCell>
+            <TableBodyCell>
               {parseISODatestring(inventory.created_at)}
-            </td>
-            <td class="px-6 py-4 text-right">
+            </TableBodyCell>
+            <TableBodyCell>
               <Button class="hover:underline" href={`/inventories/${inventory.id}`}>Edit</Button>
-            </td>
+            </TableBodyCell>
           </TableBodyRow>
         {/each}
       </tbody>

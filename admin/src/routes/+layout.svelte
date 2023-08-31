@@ -56,7 +56,7 @@
 {:else}
   <div class="flex flex-row">
     <Sidebar />
-    <main class="flex-1 bg-primary-100 dark:bg-primary-900">
+    <main class="flex-1 bg-white dark:bg-primary-900">
       <slot />
     </main>
   </div>
