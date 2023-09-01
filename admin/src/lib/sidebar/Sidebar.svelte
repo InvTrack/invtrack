@@ -18,7 +18,10 @@
   $: activeUrl = $page.url.pathname;
 </script>
 
-<Sidebar {activeUrl} class="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800 px-4 w-72">
+<Sidebar
+  {activeUrl}
+  class="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800 px-4 w-72 min-w-[18rem]"
+>
   <SidebarWrapper>
     <SidebarGroup>
       <SidebarItem label="Overview" href="/">
