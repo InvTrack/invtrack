@@ -1,6 +1,7 @@
 <script lang="ts">
   import { supabase } from "$lib/supabase";
-  import { Card, Button, Label, Input, Checkbox, Span, Heading } from "flowbite-svelte";
+  import { Card, Button, Label, Input, Checkbox, Span, Heading, Hr } from "flowbite-svelte";
+  import { Icon } from "flowbite-svelte-icons";
 
   let loading = false;
   let email = "";
@@ -60,6 +61,11 @@
         </a>
       </div>
       <Button type="submit">Login to your account</Button>
+      <Hr />
+      <Button class="flex justify-center" on:click={handleGoogleLogin}>
+        <Icon name="google-solid" class="mr-2" />
+        Sign in with Google
+      </Button>
       <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
         Not registered? <a href="/" class="text-primary-800 hover:underline dark:text-primary-500">
           Create account
