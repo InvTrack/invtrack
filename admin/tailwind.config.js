@@ -13,7 +13,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // flowbite-svelte
         // from https://htmlcolorcodes.com/color-chart/flat-design-color-chart/  the peter river scheme
         primary: {
           50: "#EBF5FB",
@@ -25,7 +24,7 @@ export default {
           600: "#2E86C1",
           700: "#2874A6",
           800: "#21618C",
-          900: "#1B4F72",
+          900: "#111827",
         },
       },
     },
