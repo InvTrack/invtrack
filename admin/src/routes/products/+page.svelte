@@ -8,6 +8,7 @@
     Button,
     Table,
     TableBody,
+    TableBodyCell,
     TableBodyRow,
     TableHead,
     TableHeadCell,
@@ -21,32 +22,32 @@
 
 <ScreenCard header="Products">
   {#if products}
-    <Table striped>
-      <TableHead class="dark:bg-gray-700 bg-gray-50">
-        <TableHeadCell scope="col" class="px-6 py-3">Name</TableHeadCell>
-        <TableHeadCell scope="col" class="px-6 py-3">Unit</TableHeadCell>
-        <TableHeadCell scope="col" class="px-6 py-3">Created at</TableHeadCell>
-        <TableHeadCell scope="col" class="px-6 py-3">Steps</TableHeadCell>
-        <TableHeadCell scope="col" class="px-6 py-3" />
+    <Table>
+      <TableHead>
+        <TableHeadCell>Name</TableHeadCell>
+        <TableHeadCell>Unit</TableHeadCell>
+        <TableHeadCell>Created at</TableHeadCell>
+        <TableHeadCell>Steps</TableHeadCell>
+        <TableHeadCell />
       </TableHead>
       <TableBody>
         {#each products as product}
           <TableBodyRow>
-            <TableHeadCell scope="row" class="px-6 py-4 font-medium  whitespace-nowrap ">
+            <TableBodyCell>
               {product.name}
-            </TableHeadCell>
-            <td class="px-6 py-4">
+            </TableBodyCell>
+            <TableBodyCell>
               {product.unit}
-            </td>
-            <td class="px-6 py-4">
+            </TableBodyCell>
+            <TableBodyCell>
               {parseISODatestring(product.created_at)}
-            </td>
-            <td class="px-6 py-4">
+            </TableBodyCell>
+            <TableBodyCell>
               {product.steps.map((step) => " " + step)}
-            </td>
-            <td class="px-6 py-4 text-right">
+            </TableBodyCell>
+            <TableBodyCell>
               <Button class="hover:underline" href={`/products/${product.id}`}>Edit</Button>
-            </td>
+            </TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
