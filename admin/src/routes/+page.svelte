@@ -67,7 +67,7 @@
   };
 </script>
 
-<ScreenCard header="Overview" class="max-h-152 h-152 overflow-y-auto relative px-8 pb-8 pt-0">
+<ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0">
   <div class="flex justify-between pt-8">
     <PaginationItem class="mb-4" on:click={handlePrev}>
       <Icon name="arrow-left-solid" class="w-5 h-5" />
@@ -88,114 +88,6 @@
           >
         {/each}
       </TableHead>
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
-          {/each}
-        </TableBody>
-      {/if}
       {#if records[0]}
         <TableBody>
           {#each records[0].record_view as product, i}
