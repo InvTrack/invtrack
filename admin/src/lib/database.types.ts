@@ -249,22 +249,6 @@ export interface Database {
           is_admin: boolean | null
           name: string | null
         }
-        Insert: {
-          company_id?: number | null
-          created_at?: string | null
-          email?: string | null
-          id?: string | null
-          is_admin?: boolean | null
-          name?: string | null
-        }
-        Update: {
-          company_id?: number | null
-          created_at?: string | null
-          email?: string | null
-          id?: string | null
-          is_admin?: boolean | null
-          name?: string | null
-        }
         Relationships: [
           {
             foreignKeyName: "worker_company_id_fkey"
