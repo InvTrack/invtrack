@@ -34,7 +34,8 @@ $function$
 CREATE OR REPLACE VIEW worker_for_current_user AS
     (SELECT *
       FROM worker
-      WHERE id = auth.uid());
+      WHERE id = auth.uid()
+      LIMIT 1);
 
 
 create policy "Admins can update unassigned workers"
