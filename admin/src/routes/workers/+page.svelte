@@ -3,12 +3,9 @@
   import { supabase } from "$lib/supabase";
   import type { Tables, Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
-  import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import {
     Button,
-    Checkbox,
-    Input,
     Table,
     TableBody,
     TableBodyCell,
@@ -23,8 +20,10 @@
   let company_id: Views<"current_company_id">["id"];
 
   onMount(() => {
-    genericGet(supabase.from("worker").select(), (x) => (workers = x));
-    genericGet(supabase.from("current_company_id").select().single(), (x) => (company_id = x.id));
+    genericGet(supabase.from("current_company_id").select().single(), (x) => {
+      company_id = x.id;
+      genericGet(supabase.from("worker").select().eq("company_id", x.id), (y) => (workers = y));
+    });
   });
 
   let name: Tables<"worker">["name"] = null;
@@ -48,15 +47,18 @@
     <Table>
       <TableHead>
         <TableHeadCell>Name</TableHeadCell>
+        <TableHeadCell>Email</TableHeadCell>
         <TableHeadCell>Admin</TableHeadCell>
         <TableHeadCell>Created at</TableHeadCell>
         <TableHeadCell />
       </TableHead>
       <TableBody>
-        <TableBodyRow>
+        <!-- TODO: implement filtering -->
+        <!-- <TableBodyRow>
           <TableBodyCell>
             <Input name="name" bind:value={name} size="sm" class="w-64" />
           </TableBodyCell>
+          <TableBodyCell />
           <TableBodyCell>
             <Checkbox bind:checked={is_admin} />
           </TableBodyCell>
@@ -64,11 +66,14 @@
           <TableBodyCell class="px-6 py-4 text-right">
             <Button class="hover:underline" type="submit" on:click={update}>Edit</Button>
           </TableBodyCell>
-        </TableBodyRow>
+        </TableBodyRow> -->
         {#each workers as worker}
           <TableBodyRow>
             <TableBodyCell>
               {worker.name}
+            </TableBodyCell>
+            <TableBodyCell>
+              {worker.email}
             </TableBodyCell>
             <TableBodyCell>
               {worker.is_admin}
