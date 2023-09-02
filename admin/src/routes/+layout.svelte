@@ -9,6 +9,7 @@
   import { googleAccessToken } from "$lib/store";
   import Login from "./auth/Login.svelte";
   import { initializeDarkMode } from "$lib/scripts/darkMode";
+  import Gate from "./auth/Gate.svelte";
 
   let session: AuthSession | null;
 
@@ -54,10 +55,12 @@
 {#if !session}
   <Login />
 {:else}
-  <div class="flex flex-row">
-    <Sidebar />
-    <main class="flex-1 bg-white dark:bg-primary-900">
-      <slot />
-    </main>
-  </div>
+  <Gate>
+    <div class="flex flex-row">
+      <Sidebar />
+      <main class="flex-1 bg-white dark:bg-primary-900">
+        <slot />
+      </main>
+    </div>
+  </Gate>
 {/if}

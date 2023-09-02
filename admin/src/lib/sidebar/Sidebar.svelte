@@ -36,7 +36,7 @@
       <SidebarItem label="Workers" href="/workers">
         <svelte:fragment slot="icon">
           <Icon
-            active={activeUrl === "/"}
+            active={activeUrl === "/workers"}
             name="users-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
@@ -45,7 +45,7 @@
       <SidebarItem label="Inventories" href="/inventories">
         <svelte:fragment slot="icon">
           <Icon
-            active={activeUrl === "/"}
+            active={activeUrl === "/inventories"}
             name="list-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
@@ -54,7 +54,7 @@
       <SidebarItem label="Products" href="/products">
         <svelte:fragment slot="icon">
           <Icon
-            active={activeUrl === "/"}
+            active={activeUrl === "/products"}
             name="briefcase-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           /></svelte:fragment
