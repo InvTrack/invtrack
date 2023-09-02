@@ -158,6 +158,7 @@ export interface Database {
         Row: {
           company_id: number | null
           created_at: string
+          email: string
           id: string
           is_admin: boolean
           name: string | null
@@ -165,6 +166,7 @@ export interface Database {
         Insert: {
           company_id?: number | null
           created_at?: string
+          email?: string
           id: string
           is_admin?: boolean
           name?: string | null
@@ -172,6 +174,7 @@ export interface Database {
         Update: {
           company_id?: number | null
           created_at?: string
+          email?: string
           id?: string
           is_admin?: boolean
           name?: string | null
@@ -217,6 +220,7 @@ export interface Database {
           id: number | null
           inventory_id: number | null
           name: string | null
+          product_id: number | null
           quantity: number | null
           steps: number[] | null
           unit: string | null
@@ -226,6 +230,52 @@ export interface Database {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             referencedRelation: "inventory"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_record_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "product"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      worker_for_current_user: {
+        Row: {
+          company_id: number | null
+          created_at: string | null
+          email: string | null
+          id: string | null
+          is_admin: boolean | null
+          name: string | null
+        }
+        Insert: {
+          company_id?: number | null
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          is_admin?: boolean | null
+          name?: string | null
+        }
+        Update: {
+          company_id?: number | null
+          created_at?: string | null
+          email?: string | null
+          id?: string | null
+          is_admin?: boolean | null
+          name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_company_id_fkey"
+            columns: ["company_id"]
+            referencedRelation: "company"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "worker_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
@@ -244,6 +294,32 @@ export interface Database {
           product_id: number
           quantity: number
         }
+      }
+      assign_new_worker_to_company: {
+        Args: {
+          new_company_id: number
+          worker_email: string
+        }
+        Returns: string
+      }
+      get_previous_inventory: {
+        Args: {
+          inventory_id: number
+        }
+        Returns: {
+          company_id: number | null
+          created_at: string
+          date: string
+          id: number
+          name: string
+        }[]
+      }
+      get_previous_product_record_quantity: {
+        Args: {
+          current_inventory_id: number
+          current_product_id: number
+        }
+        Returns: number
       }
       handle_new_inventory_func: {
         Args: {
