@@ -40,6 +40,15 @@
       loading = false;
     }
   };
+  const handleSendLink = async () => {
+    const res = await supabase.auth.signInWithOtp({
+      email: "felix.lipski7@gmail.com",
+      options: {
+        emailRedirectTo: "https://example.com/welcome",
+      },
+    });
+    console.log(res);
+  };
 </script>
 
 <div class="grid h-screen place-items-center">
