@@ -38,15 +38,28 @@ CREATE OR REPLACE VIEW worker_for_current_user AS
       LIMIT 1);
 
 
-create policy "Admins can update unassigned workers"
+create policy "Admins can assign unassigned workers"
 on "public"."worker"
 as permissive
 for update
 to authenticated
-using (((company_id IS NULL) AND (( SELECT worker_for_current_user.is_admin
-   FROM worker_for_current_user) = true)))
+using ((
+    (company_id IS NULL) AND 
+    (( SELECT worker_for_current_user.is_admin FROM worker_for_current_user) = true)
+  ))
 with check ((company_id = ( SELECT current_company_id.id
    FROM current_company_id)));
+
+create policy "Admins can update workers within company"
+on "public"."worker"
+as permissive
+for update
+to authenticated
+using ((
+    (( SELECT worker_for_current_user.company_id FROM worker_for_current_user) = company_id) AND 
+    (( SELECT worker_for_current_user.is_admin FROM worker_for_current_user) = true)
+  ))
+with check (true);
 
 
 create policy "Admins can view all unassigned workers"
@@ -54,5 +67,7 @@ on "public"."worker"
 as permissive
 for select
 to public
-using (((company_id IS NULL) AND (( SELECT worker_for_current_user.is_admin
-   FROM worker_for_current_user) = true)));
+using ((
+    (company_id IS NULL) AND
+    (( SELECT worker_for_current_user.is_admin FROM worker_for_current_user) = true)
+  ));
