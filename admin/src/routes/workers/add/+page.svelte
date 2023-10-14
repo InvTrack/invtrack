@@ -1,6 +1,6 @@
 <script lang="ts">
   import { supabase } from "$lib/supabase";
-  import { Card, Button, Label, Input, Checkbox, Span, Heading } from "flowbite-svelte";
+  import { Button, Label, Input, Span } from "flowbite-svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { goto } from "$app/navigation";
 
@@ -26,9 +26,9 @@
 <ScreenCard header="Add worker">
   <form on:submit|preventDefault={update}>
     <Label class="space-y-2">
-      <Span>Email</Span>
+      <Span>E-mail</Span>
       <Input type="email" name="email" required bind:value={email} />
     </Label>
-    <Button type="submit" class="mt-4" color="primary">Add worker</Button>
+    <Button type="submit" class="mt-4" color="primary">Dodaj pracownika</Button>
   </form>
 </ScreenCard>

@@ -44,11 +44,11 @@
   <ScreenCard header={"Inventory - " + inventory.name} class="flex flex-col">
     <form on:submit|preventDefault={update} class="flex-1">
       <Label class="space-y-2">
-        <Span>Name</Span>
+        <Span>Nazwa</Span>
         <Input type="text" name="name" placeholder="Name" bind:value={name} />
       </Label>
       <Label class="space-y-2 mt-2">
-        <Span>Date</Span>
+        <Span>Data</Span>
         <Input type="text" name="date" placeholder="Date" bind:value={date} />
       </Label>
       <Button type="submit" class="mt-4" color="primary"
@@ -56,7 +56,7 @@
       >
     </form>
     <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventory}
-      >Delete this</Button
+      >Usuń tę inwentaryzację</Button
     >
   </ScreenCard>
 {/if}
