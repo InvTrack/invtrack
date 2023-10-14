@@ -49,8 +49,8 @@
 </script>
 
 <svelte:head>
-  <title>Invtrack Dashboard</title>
-  <meta name="description" content="Invtrack Dashboard" />
+  <title>Invtrack</title>
+  <meta name="description" content="Invtrack" />
 </svelte:head>
 {#if !session}
   <Login />

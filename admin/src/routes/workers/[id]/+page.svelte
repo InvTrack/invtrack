@@ -40,7 +40,7 @@
   <ScreenCard header={"Worker - " + worker.name}>
     <form on:submit|preventDefault={update}>
       <Label class="space-y-2">
-        <Span>Name</Span>
+        <Span>Nazwa</Span>
         <Input type="text" name="name" placeholder="•••••" required bind:value={name} />
       </Label>
       <Label class="space-y-2 mt-2">

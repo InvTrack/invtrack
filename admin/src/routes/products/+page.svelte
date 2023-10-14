@@ -24,10 +24,10 @@
   {#if products}
     <Table>
       <TableHead>
-        <TableHeadCell>Name</TableHeadCell>
-        <TableHeadCell>Unit</TableHeadCell>
-        <TableHeadCell>Created at</TableHeadCell>
-        <TableHeadCell>Steps</TableHeadCell>
+        <TableHeadCell>Nazwa</TableHeadCell>
+        <TableHeadCell>Jednostka</TableHeadCell>
+        <TableHeadCell>Data utworzenia</TableHeadCell>
+        <TableHeadCell>Step</TableHeadCell>
         <TableHeadCell />
       </TableHead>
       <TableBody>
@@ -46,7 +46,7 @@
               {product.steps.map((step) => " " + step)}
             </TableBodyCell>
             <TableBodyCell>
-              <Button class="hover:underline" href={`/products/${product.id}`}>Edit</Button>
+              <Button class="hover:underline" href={`/products/${product.id}`}>Edytuj</Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
