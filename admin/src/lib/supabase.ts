@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import type { Database } from './database.types'
+import type { Database } from "./database.types";
 
 // import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@env";
 
