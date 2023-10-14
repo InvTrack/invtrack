@@ -24,7 +24,7 @@
   );
 </script>
 
-<ScreenCard header="Inventories">
+<ScreenCard header="Inwentaryzacje">
   {#if inventories}
     <Table>
       <TableHead>
