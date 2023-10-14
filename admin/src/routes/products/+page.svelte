@@ -20,7 +20,7 @@
   onMount(() => genericGet(supabase.from("product").select("*"), (x) => (products = x)));
 </script>
 
-<ScreenCard header="Products">
+<ScreenCard header="Produkty">
   {#if products}
     <Table>
       <TableHead>
