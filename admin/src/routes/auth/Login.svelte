@@ -1,7 +1,7 @@
 <script lang="ts">
   import { supabase } from "$lib/supabase";
   import { Card, Button, Label, Input, Checkbox, Span, Heading, Hr } from "flowbite-svelte";
-  import { Icon } from "flowbite-svelte-icons";
+  import { GoogleSolid } from "flowbite-svelte-icons";
 
   let loading = false;
   let email = "";
@@ -72,7 +72,7 @@
       <Button type="submit">Zaloguj się</Button>
       <Hr />
       <Button class="flex justify-center" on:click={handleGoogleLogin}>
-        <Icon name="google-solid" class="mr-2" />
+        <GoogleSolid class="mr-2" />
         Zaloguj się z Google
       </Button>
       <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">

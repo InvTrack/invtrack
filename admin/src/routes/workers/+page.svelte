@@ -42,7 +42,7 @@
   // );
 </script>
 
-<ScreenCard header="Workers">
+<ScreenCard header="Pracownicy">
   {#if workers}
     <Table>
       <TableHead>
