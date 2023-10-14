@@ -12,5 +12,4 @@
 <div class={"dark:bg-gray-800 bg-white rounded-lg mx-8 mt-4 p-8 " + $$props.class}>
   <slot />
 </div>
-
 {/if}
