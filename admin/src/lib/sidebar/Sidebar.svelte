@@ -11,7 +11,7 @@
     SidebarWrapper,
     Toggle,
   } from "flowbite-svelte";
-  import { Icon } from "flowbite-svelte-icons";
+  import { BriefcaseSolid, HomeSolid, ListSolid, MoonSolid, SunSolid, UsersSolid } from "flowbite-svelte-icons";
 
   const handleLogout = () => supabase.auth.signOut();
   $: isThemeDark = getIsThemeDark();
@@ -24,48 +24,43 @@
 >
   <SidebarWrapper>
     <SidebarGroup>
-      <SidebarItem label="Overview" href="/">
+      <SidebarItem label="Podsumowanie" href="/">
         <svelte:fragment slot="icon">
-          <Icon
+          <HomeSolid
             active={activeUrl === "/"}
-            name="home-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
         </svelte:fragment>
       </SidebarItem>
-      <SidebarItem label="Workers" href="/workers">
+      <SidebarItem label="Pracownicy" href="/workers">
         <svelte:fragment slot="icon">
-          <Icon
+          <UsersSolid
             active={activeUrl === "/workers"}
-            name="users-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
         </svelte:fragment>
       </SidebarItem>
-      <SidebarItem label="Inventories" href="/inventories">
+      <SidebarItem label="Inwentaryzacje" href="/inventories">
         <svelte:fragment slot="icon">
-          <Icon
+          <ListSolid
             active={activeUrl === "/inventories"}
-            name="list-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
         </svelte:fragment>
       </SidebarItem>
-      <SidebarItem label="Products" href="/products">
+      <SidebarItem label="Produkty" href="/products">
         <svelte:fragment slot="icon">
-          <Icon
+          <BriefcaseSolid
             active={activeUrl === "/products"}
-            name="briefcase-solid"
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           /></svelte:fragment
         >
       </SidebarItem>
     </SidebarGroup>
     <SidebarGroup border>
-      <SidebarDropdownWrapper label="Account">
+      <SidebarDropdownWrapper label="Twoje konto">
         <svelte:fragment slot="icon">
-          <Icon
-            name="user-solid"
+          <UsersSolid
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
         </svelte:fragment>
@@ -74,12 +69,12 @@
     </SidebarGroup>
     <SidebarGroup class="absolute bottom-24 flex flex-col mt-8">
       <h3 class="w-full text-base font-normal text-gray-900 rounded-lg dark:text-white">
-        Toggle theme
+        Zmień motyw
       </h3>
       <div class="flex flex-row">
-        <Icon name="sun-solid" class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" />
+        <SunSolid class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" />
         <Toggle checked={isThemeDark} on:click={toggleDarkMode} />
-        <Icon name="moon-solid" class="w-6 h-6 text-gray-500 dark:text-gray-400" />
+        <MoonSolid class="w-6 h-6 text-gray-500 dark:text-gray-400" />
       </div>
     </SidebarGroup>
   </SidebarWrapper>
