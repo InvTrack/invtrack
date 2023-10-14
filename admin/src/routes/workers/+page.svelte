@@ -46,10 +46,10 @@
   {#if workers}
     <Table>
       <TableHead>
-        <TableHeadCell>Name</TableHeadCell>
-        <TableHeadCell>Email</TableHeadCell>
+        <TableHeadCell>Imię</TableHeadCell>
+        <TableHeadCell>E-mail</TableHeadCell>
         <TableHeadCell>Admin</TableHeadCell>
-        <TableHeadCell>Created at</TableHeadCell>
+        <TableHeadCell>Data utworzenia</TableHeadCell>
         <TableHeadCell />
       </TableHead>
       <TableBody>
@@ -82,12 +82,12 @@
               {parseISODatestring(worker.created_at)}
             </TableBodyCell>
             <TableBodyCell class="px-6 py-4 text-right">
-              <Button class="hover:underline" href={`/workers/${worker.id}`}>Edit</Button>
+              <Button class="hover:underline" href={`/workers/${worker.id}`}>Edytuj</Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
       </TableBody>
     </Table>
   {/if}
-  <Button class="hover:underline" href={`/workers/add`}>Add</Button>
+  <Button class="hover:underline" href={`/workers/add`}>Dodaj</Button>
 </ScreenCard>

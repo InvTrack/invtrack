@@ -54,32 +54,32 @@
 <div class="grid h-screen place-items-center">
   <Card class="w-full max-w-md">
     <form class="flex flex-col space-y-6" on:submit|preventDefault={handleLogin}>
-      <Heading tag="h3">Sign in to our platform</Heading>
+      <Heading tag="h3">Logowanie</Heading>
       <Label class="space-y-2">
-        <Span>Email</Span>
+        <Span>E-mail</Span>
         <Input type="email" name="email" placeholder="Your email" required bind:value={email} />
       </Label>
       <Label class="space-y-2">
-        <Span>Your password</Span>
+        <Span>Hasło</Span>
         <Input type="password" name="password" placeholder="•••••" required bind:value={password} />
       </Label>
       <div class="flex items-start">
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox>Zapamiętaj mnie</Checkbox>
         <a href="/" class="ml-auto text-sm text-primary-800 hover:underline dark:text-primary-500">
-          Lost password?
+          Przypomnij hasło
         </a>
       </div>
-      <Button type="submit">Login to your account</Button>
+      <Button type="submit">Zaloguj się</Button>
       <Hr />
       <Button class="flex justify-center" on:click={handleGoogleLogin}>
         <Icon name="google-solid" class="mr-2" />
-        Sign in with Google
+        Zaloguj się z Google
       </Button>
-      <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-        Not registered? <a href="/" class="text-primary-800 hover:underline dark:text-primary-500">
+      <!-- <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+         <a href="/" class="text-primary-800 hover:underline dark:text-primary-500">
           Create account
         </a>
-      </div>
+      </div> -->
     </form>
   </Card>
 </div>

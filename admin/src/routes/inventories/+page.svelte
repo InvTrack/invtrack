@@ -28,9 +28,9 @@
   {#if inventories}
     <Table>
       <TableHead>
-        <TableHeadCell>Name</TableHeadCell>
-        <TableHeadCell>Date</TableHeadCell>
-        <TableHeadCell>Created at</TableHeadCell>
+        <TableHeadCell>Nazwa</TableHeadCell>
+        <TableHeadCell>Data</TableHeadCell>
+        <TableHeadCell>Data utworzenia</TableHeadCell>
         <TableHeadCell />
       </TableHead>
       <tbody>
@@ -46,7 +46,7 @@
               {parseISODatestring(inventory.created_at)}
             </TableBodyCell>
             <TableBodyCell>
-              <Button class="hover:underline" href={`/inventories/${inventory.id}`}>Edit</Button>
+              <Button class="hover:underline" href={`/inventories/${inventory.id}`}>Edytuj</Button>
             </TableBodyCell>
           </TableBodyRow>
         {/each}
