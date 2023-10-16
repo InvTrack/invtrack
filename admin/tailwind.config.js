@@ -36,3 +36,4 @@ export default {
     },
   },
 };
+// pie chart colors ["#F47A1F", "#FDBB2F", "#377B2B", "#7AC142", "#6050DC", "#D52DB7"]
