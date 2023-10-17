@@ -4,8 +4,8 @@ body {
   font-size: var(--header-h1-size);
   color: var(--color-gray);
   font-family: var(--paragraph-p2-medium);
-  max-width: 120rem;
   margin: 0 auto;
+  max-width: 150rem;
 }
 * {
   overflow: visible;
@@ -14,7 +14,7 @@ body {
 .header-section,
 .header-section-reversed {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center !important;
   flex-direction: row;
   align-items: center;
   padding: 6.25rem var(--padding-13xl);
@@ -43,7 +43,14 @@ body {
 .heading-reversed {
   padding-left: 2rem;
 }
-.text-block {
+.heading-centered {
+  align-items: center;
+    display: flex;
+  flex-direction: column;
+  gap: var(--gap-41xl);
+}
+.text-block,
+.banner-text-block {
   align-self: stretch;
   display: flex;
   flex-direction: column;
@@ -70,9 +77,8 @@ body {
   opacity: 1;
 }
 .main-header,
-.main-description {
-  align-self: stretch;
-  position: relative;
+.main-description,
+.banner-header,.banner-description {
   letter-spacing: -0.02em;
 }
 
@@ -119,6 +125,33 @@ body {
   height: 28.52rem;
   flex-shrink: 0;
 }
+
+.darkslateblue-banner {
+  background-color: var(--color-darkslateblue);
+  color: var(--color-white);
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: center;
+  width: 100%;
+  padding: var(--padding-121xl) 0;
+  flex-shrink: 0;
+}
+
+.banner-text-block {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.banner-main-header {
+  align-items: center;
+}
+
+.banner-description {
+  align-items: center;
+  font-size: var(--paragraph-p2-medium-size);
+}
+
 /* under this line not sure ab the styles */
 
 .efektywno-w-liczbach {
@@ -296,20 +329,12 @@ body {
 .rozpocznij-transformacj-swoje {
   align-self: stretch;
   position: relative;
-  font-size: var(--paragraph-p2-medium-size);
+
   letter-spacing: -0.02em;
-  line-height: 1.88rem;
   text-align: center;
   z-index: 2;
 }
-.text-block3 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-  gap: var(--gap-5xl);
-}
+
 .background-icon {
   position: absolute;
   margin: 0 !important;
@@ -338,20 +363,9 @@ body {
   justify-content: flex-start;
   z-index: 2;
 }
-.btn-try,
-.heading3,
-.your-work {
+.btn-try{
   display: flex;
   align-items: center;
-}
-.heading3,
-.your-work {
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.heading3 {
-  align-self: stretch;
-  gap: var(--gap-41xl);
 }
 
 .btn-try {
@@ -364,12 +378,7 @@ body {
   gap: var(--gap-3xs);
   font-size: var(--paragraph-p2-medium-size);
 }
-.your-work {
-  background-color: var(--color-darkslateblue);
-  padding: var(--padding-121xl) var(--padding-13xl);
-  box-sizing: border-box;
-  color: var(--color-white);
-}
+
 .element-icon4 {
   position: absolute;
   margin: 0 !important;
