@@ -23,6 +23,7 @@
     ArrowUpSolid,
     ChevronDownSolid,
     ChevronRightSolid,
+    CloseSolid,
     UserGroupSolid,
   } from "flowbite-svelte-icons";
 
@@ -239,7 +240,7 @@
 </script>
 
 <div class="flex flex-row justify-between mb-4">
-  <ScreenCard>
+  <ScreenCard class='mt-16'>
     <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
       <dl>
         <dt class="text-base font-normal text-gray-900 dark:text-white pb-1">
@@ -279,7 +280,7 @@
       </div>
     </div>
   </ScreenCard>
-  <ScreenCard class="flex-1">
+  <ScreenCard class="flex-1 mt-16">
     <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
       <div class="flex items-center">
         <div
@@ -327,7 +328,7 @@
 
 <ScreenCard header="Pracownicy">
   {#if workers}
-    <Table>
+    <Table class='overflow-hidden'>
       <TableHead>
         <TableHeadCell>Imię</TableHeadCell>
         <TableHeadCell>E-mail</TableHeadCell>
@@ -353,13 +354,47 @@
         {#each workers as worker}
           <TableBodyRow>
             <TableBodyCell>
-              {worker.name}
+              Adriana
             </TableBodyCell>
             <TableBodyCell>
-              {worker.email}
+              Adriana@example.com
+            </TableBodyCell>
+            <TableBodyCell class='mx-auto'>
+              <CloseSolid  />
             </TableBodyCell>
             <TableBodyCell>
-              {worker.is_admin}
+              {parseISODatestring(worker.created_at)}
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 text-right">
+              <Button class="hover:underline" href={`/workers/${worker.id}`}>Edytuj</Button>
+            </TableBodyCell>
+          </TableBodyRow>
+          <TableBodyRow>
+            <TableBodyCell>
+              Sara
+            </TableBodyCell>
+            <TableBodyCell>
+              sara@example.com
+            </TableBodyCell>
+            <TableBodyCell class='mx-auto'>
+              <CloseSolid  />
+            </TableBodyCell>
+            <TableBodyCell>
+              {parseISODatestring(worker.created_at)}
+            </TableBodyCell>
+            <TableBodyCell class="px-6 py-4 text-right">
+              <Button class="hover:underline" href={`/workers/${worker.id}`}>Edytuj</Button>
+            </TableBodyCell>
+          </TableBodyRow>
+          <TableBodyRow>
+            <TableBodyCell>
+              Jan
+            </TableBodyCell>
+            <TableBodyCell>
+              jan@example.com
+            </TableBodyCell>
+            <TableBodyCell class='mx-auto'>
+              <CloseSolid  />
             </TableBodyCell>
             <TableBodyCell>
               {parseISODatestring(worker.created_at)}
