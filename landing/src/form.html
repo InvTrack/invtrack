@@ -15,45 +15,114 @@
       href="https://fonts.googleapis.com/css2?family=DM Sans:wght@500&display=swap"
     />
   </head>
-  <body class="flex flex-col justify-center items-center">
-    <a href="./index.html" class="w-64 h-24 bg-blue-400 block text-xl">invtrack i chuj</a>
+  <body class="flex flex-col justify-center items-center mx-16">
+    <a href="./index.html" class="w-64 h-24 bg-blue-400 block text-md"
+      >invtrack i chuj</a
+    >
+    <div class="flex flex-row mt-16">
+      <div class="image-container image-shadow mr-8">
+        <img src="./img/img-4.png" class="image" />
+      </div>
+      <div class="flex flex-col self-center">
+        <h1 class="text-2xl leading-[4.5rem] font-semibold text-blue-900">
+          Zrewolucjonizuj zarządzanie towarem z InvTrack
+        </h1>
+        <h3 class="text-s leading-tight text-blue-900 mt-4">
+          Zachęcamy do umówienia się na prezentację i rozmowę z
+          przedstawicielem. Dowiedz się więcej o tym, jak InvTrack dostosuje się
+          do unikalnych potrzeb Twojego biznesu.
+        </h3>
+        <a href="#form" class="self-center">
+          <svg
+            class="w-16 h-16 fill-blue-900 mt-6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+          >
+            <path
+              d="M480-339.5 234.261-585.239 283-633.978l197 198 197-197 48.739 48.739L480-339.5Z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div
+      class="flex flex-col py-8 justify-center items-center w-[120%] h-96 px-[7%] mt-24 bg-blue-900"
+    >
+      <h1 class="text-xl leading-tight font-medium text-white">
+        Skontaktuj się z nami poprzez poniższy formularz!
+      </h1>
+      <h3 class="text-base leading-tight text-white mt-4">
+        InvTrack już wkrótce będzie dostępny w App Store i Google Play. W
+        międzyczasie zapraszamy do kontaktu z nami poprzez poniższy formularz.
+      </h3>
+      <a href="#form">
+        <svg
+          class="w-16 h-16 fill-white mt-6"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 -960 960 960"
+        >
+          <path
+            d="M480-339.5 234.261-585.239 283-633.978l197 198 197-197 48.739 48.739L480-339.5Z"
+          />
+        </svg>
+      </a>
+    </div>
     <form
       action="removemehttps://submit-form.com/CyD6665Jremoveme"
-      class="flex flex-col"
+      class="flex flex-col my-24 max-w-5xl px-12 pt-6 pb-12 rounded-xl image-shadow"
+      id="form"
     >
-      <div class="flex flex-col">
-        <label for="name" class="text-5xl">Name</label>
+      <div class="flex flex-col justify-center">
+        <label for="name" class="text-s text-blue-900 font-medium">Imię</label>
         <input
           type="text"
           id="name"
           name="name"
-          placeholder="Name"
+          placeholder="Imię"
           required=""
-          class="text-5xl rounded-md border-blue-300 border-solid border-4"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
         />
       </div>
-      <div class="flex flex-col">
-        <label for="email" class="text-5xl">Email</label>
+      <div class="flex flex-col justify-center mt-8">
+        <label for="email" class="text-s text-blue-900 font-medium">Adres email</label>
         <input
           type="email"
           id="email"
           name="email"
-          placeholder="Email"
+          placeholder="Twój email"
           required=""
-          class="text-5xl rounded-md border-blue-300 border-solid border-4"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
         />
       </div>
-      <div class="flex flex-col">
-        <label for="message" class="text-5xl">Message</label>
+      <div class="flex flex-col justify-center mt-8">
+        <label for="branza" class="text-s text-blue-900 font-medium">Branża</label>
+        <input
+          type="text"
+          id="branza"
+          name="branza"
+          placeholder="Branża"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+        />
+      </div>
+      <div class="flex flex-col justify-center mt-8">
+        <label for="message" class="text-s text-blue-900 font-medium"
+          >Opcjonalne, dodatkowe informacje</label
+        >
+        <!-- <label for="message" class="text-s text-blue-900">Chętnie poznamy twoje oczekiwania wobec InvTrack, liczbę pracowników, czy obecne wyzwania w zarządzaniu towarem. </label> -->
         <textarea
           id="message"
           name="message"
-          placeholder="Message"
-          required=""
-          class="text-5xl rounded-md border-blue-300 border-solid border-4"
+          placeholder="Chętnie poznamy twoje oczekiwania wobec InvTrack, liczbę pracowników, czy obecne wyzwania w zarządzaniu towarem."
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light h-64"
         ></textarea>
       </div>
-      <button type="submit">Send</button>
+      <button
+        type="submit"
+        class="flex items-center justify-center bg-blue-400 rounded-lg text-white text-md flex-row mt-8 p-4"
+      >
+        <h5 class="header-button-text text-s">Wyślij</h5>
+        <img class="ml-4 w-5 h-5" alt="" src="./img/group.svg" />
+      </button>
     </form>
   </body>
 </html>

@@ -2,9 +2,12 @@
 
 body {
   margin: 0;
-  line-height: normal;
+  line-height: normal; 
 }
 
+html {
+	scroll-behavior: smooth;
+}
 :root {
   /* fonts */
   --paragraph-p2-medium: Inter;
