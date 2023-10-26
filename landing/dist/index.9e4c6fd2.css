@@ -102,6 +102,10 @@ body {
   display: flex;
 }
 
+.main-header-button:hover {
+  background-color: var(--color-cornflowerblue-hover);
+}
+
 .header-button-text {
   font-weight: 500;
 }

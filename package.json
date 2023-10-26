@@ -4,7 +4,8 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "husky": "^8.0.3"
+    "husky": "^8.0.3",
+    "tailwindcss": "^3.3.5"
   },
   "dependencies": {
     "react-native-dotenv": "^3.4.8"
