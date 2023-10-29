@@ -1,10 +1,10 @@
 {
-  "name": "locofy-html-css-project",
+  "name": "invtrack-ladning-page",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "start": "parcel ./src/*.html ",
-    "build": "parcel build ./src/*.html  --dist-dir ./build"
+    "build": "parcel build ./src/*.html  --public-url ./ --dist-dir ./build --no-autoinstall"
   },
   "author": "",
   "license": "ISC",
