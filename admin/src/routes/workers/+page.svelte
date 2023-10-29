@@ -239,7 +239,7 @@
   };
 </script>
 
-<div class="flex flex-row justify-between mb-4">
+<div class="flex flex-row justify-between mb-4 mt-32">
   <ScreenCard class='mt-16'>
     <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
       <dl>

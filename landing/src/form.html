@@ -27,7 +27,7 @@
         <h1 class="text-2xl leading-[4.5rem] font-semibold text-blue-900">
           Zrewolucjonizuj zarządzanie towarem z InvTrack
         </h1>
-        <h3 class="text-s leading-tight text-blue-900 mt-4">
+        <h3 class="text-base leading-tight text-blue-900 mt-4">
           Zachęcamy do umówienia się na prezentację i rozmowę z
           przedstawicielem. Dowiedz się więcej o tym, jak InvTrack dostosuje się
           do unikalnych potrzeb Twojego biznesu.
@@ -52,7 +52,7 @@
         Skontaktuj się z nami poprzez poniższy formularz!
       </h1>
       <h3 class="text-base leading-tight text-white mt-4">
-        InvTrack już wkrótce będzie dostępny w App Store i Google Play. W
+        InvTrack już wkrótce będzie dostępny w sprzedaży. W
         międzyczasie zapraszamy do kontaktu z nami poprzez poniższy formularz.
       </h3>
       <a href="#form">
@@ -68,9 +68,10 @@
       </a>
     </div>
     <form
-      action="removemehttps://submit-form.com/CyD6665Jremoveme"
+      action="removemehttps://submit-form.com/CyD6665J"
       class="flex flex-col my-24 max-w-5xl px-12 pt-6 pb-12 rounded-xl image-shadow"
       id="form"
+      method="post"
     >
       <div class="flex flex-col justify-center">
         <label for="name" class="text-s text-blue-900 font-medium">Imię</label>
@@ -79,29 +80,36 @@
           id="name"
           name="name"
           placeholder="Imię"
-          required=""
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+          required
+          minlength="3"
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
-        <label for="email" class="text-s text-blue-900 font-medium">Adres email</label>
+        <label for="email" class="text-s text-blue-900 font-medium"
+          >Adres email</label
+        >
         <input
           type="email"
           id="email"
           name="email"
           placeholder="Twój email"
-          required=""
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+          required
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
-        <label for="branza" class="text-s text-blue-900 font-medium">Branża</label>
+        <label for="branza" class="text-s text-blue-900 font-medium"
+          >Branża</label
+        >
         <input
           type="text"
           id="branza"
           name="branza"
           placeholder="Branża"
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+          required
+          minlength="2"
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
@@ -113,7 +121,7 @@
           id="message"
           name="message"
           placeholder="Chętnie poznamy twoje oczekiwania wobec InvTrack, liczbę pracowników, czy obecne wyzwania w zarządzaniu towarem."
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light h-64"
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60 h-64"
         ></textarea>
       </div>
       <button

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+input:not(:focus):not(:placeholder-shown):invalid {
+  @apply border-opacity-60 border-red-400 bg-red-50
+}
+input:not(:placeholder-shown):invalid {
+  @apply border-opacity-60 border-red-400 bg-red-50
+}
+
 body {
   background-color: var(--color-white);
   text-align: left;

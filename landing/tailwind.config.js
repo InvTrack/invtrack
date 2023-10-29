@@ -14,7 +14,14 @@ module.exports = {
         lg: "3.38rem",
         md: "2.25rem",
         s: "1.75rem",
-        base: "1rem",
+        base: "1.13rem",
+      },
+      colors: {
+        blue: {
+          400: "#4f9cf9",
+          500: "#3986e5",
+          900: "#043873",
+        },
       },
     },
   },
