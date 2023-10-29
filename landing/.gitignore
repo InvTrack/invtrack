@@ -21,5 +21,6 @@ Desktop.ini # Windows desktop icon settings
 *.log   # Log files
 .parcel-cache
 dist/
+**/.DS_Store
 .DS_Store
 /build
