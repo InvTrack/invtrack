@@ -15,11 +15,11 @@
       href="https://fonts.googleapis.com/css2?family=DM Sans:wght@500&display=swap"
     />
   </head>
-  <body class="flex flex-col justify-center items-center mx-16">
-    <a href="./index.html" class="w-64 h-24 bg-blue-400 block text-md"
+  <body class="flex flex-col justify-center items-center">
+    <a href="./index.html" alt='invtrack dashboard on a computer monitor' class="w-64 h-24 bg-blue-400 block text-md"
       >invtrack i chuj</a
     >
-    <div class="flex flex-row mt-16">
+    <div class="flex flex-row mt-16 mx-16">
       <div class="image-container image-shadow mr-8">
         <img src="./img/img-4.png" class="image" />
       </div>
@@ -27,7 +27,7 @@
         <h1 class="text-2xl leading-[4.5rem] font-semibold text-blue-900">
           Zrewolucjonizuj zarządzanie towarem z InvTrack
         </h1>
-        <h3 class="text-s leading-tight text-blue-900 mt-4">
+        <h3 class="text-base leading-tight text-blue-900 mt-4">
           Zachęcamy do umówienia się na prezentację i rozmowę z
           przedstawicielem. Dowiedz się więcej o tym, jak InvTrack dostosuje się
           do unikalnych potrzeb Twojego biznesu.
@@ -46,13 +46,13 @@
       </div>
     </div>
     <div
-      class="flex flex-col py-8 justify-center items-center w-[120%] h-96 px-[7%] mt-24 bg-blue-900"
+      class="flex flex-col py-8 justify-center items-center w-screen h-[28rem] mt-48 bg-blue-900"
     >
-      <h1 class="text-xl leading-tight font-medium text-white">
+      <b class="text-xl leading-tight text-white">
         Skontaktuj się z nami poprzez poniższy formularz!
-      </h1>
+      </b>
       <h3 class="text-base leading-tight text-white mt-4">
-        InvTrack już wkrótce będzie dostępny w App Store i Google Play. W
+        InvTrack już wkrótce będzie dostępny w sprzedaży. W
         międzyczasie zapraszamy do kontaktu z nami poprzez poniższy formularz.
       </h3>
       <a href="#form">
@@ -68,9 +68,10 @@
       </a>
     </div>
     <form
-      action="removemehttps://submit-form.com/CyD6665Jremoveme"
-      class="flex flex-col my-24 max-w-5xl px-12 pt-6 pb-12 rounded-xl image-shadow"
+      action="removemehttps://submit-form.com/CyD6665J"
+      class="flex flex-col max-w-3xl px-12 pt-6 pb-12 mt-48 rounded-xl image-shadow mx-16"
       id="form"
+      method="post"
     >
       <div class="flex flex-col justify-center">
         <label for="name" class="text-s text-blue-900 font-medium">Imię</label>
@@ -79,29 +80,36 @@
           id="name"
           name="name"
           placeholder="Imię"
-          required=""
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+          required
+          minlength="3"
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
-        <label for="email" class="text-s text-blue-900 font-medium">Adres email</label>
+        <label for="email" class="text-s text-blue-900 font-medium"
+          >Adres email</label
+        >
         <input
           type="email"
           id="email"
           name="email"
           placeholder="Twój email"
-          required=""
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+          required
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
-        <label for="branza" class="text-s text-blue-900 font-medium">Branża</label>
+        <label for="branza" class="text-s text-blue-900 font-medium"
+          >Branża</label
+        >
         <input
           type="text"
           id="branza"
           name="branza"
           placeholder="Branża"
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light"
+          required
+          minlength="2"
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
@@ -113,7 +121,7 @@
           id="message"
           name="message"
           placeholder="Chętnie poznamy twoje oczekiwania wobec InvTrack, liczbę pracowników, czy obecne wyzwania w zarządzaniu towarem."
-          class="text-s rounded-md pl-2 py-1 shadow-lg border-blue-300 border-solid border-2 mt-2 font-light h-64"
+          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60 h-64"
         ></textarea>
       </div>
       <button
@@ -123,6 +131,37 @@
         <h5 class="header-button-text text-s">Wyślij</h5>
         <img class="ml-4 w-5 h-5" alt="" src="./img/group.svg" />
       </button>
+      <h5 class="text-[0.75rem] text-blue-900 mt-4">
+        Klikając "Wyślij", wyrażam zgodę na przetwarzanie przez InvTrack moich danych osobowych w postaci adresu poczty elektronicznej oraz imienia w celu przesyłania mi informacji marketingowych dotyczących produktów i usług oferowanych przez InvTrack za pomocą środków komunikacji elektronicznej, stosownie do treści przepisu art. 10 ust. 1 i 2 ustawy o świadczeniu usług drogą elektroniczną.
+      </h5>
     </form>
   </body>
+  <footer
+  class="w-screen h-96 bg-blue-900 grid grid-cols-3 grid-rows-1 place-items-center text-md text-white p-16 mt-48"
+>
+  <div class="self-start">
+    <<-LOGO->> InvTrack i krotki opisik pzdr byczku mordeczko
+  </div>
+
+  <div class="flex flex-col gap-4 self-start">
+    <b>Linki</b>
+    <a class="text-base" href="#pricing">Oferta</a>
+    <a class="text-base" href="form.html/#form">Kontakt</a>
+  </div>
+  <div class="self-start">
+    <b>Dowiedz się więcej</b>
+    <h5 class="text-base mt-2">
+      Skontaktuj się z nami, aby dowiedzieć się więcej o InvTrack i naszej
+      ofercie.
+    </h5>
+    <a href="form.html" class="main-header-button w-fit mt-4">
+      <div class="header-button-text">Wypróbuj InvTrack</div>
+      <img
+        class="header-button-icon"
+        alt="button arrow"
+        src="./img/group.svg"
+      />
+    </a>
+  </div>
+</footer>
 </html>
