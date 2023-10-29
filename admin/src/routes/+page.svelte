@@ -197,6 +197,7 @@
       },
     },
     legend: {
+      show:false,
       horizontalAlign: "left",
       position: "bottom",
       fontFamily: "Inter, sans-serif",
@@ -229,7 +230,7 @@
 
 <Heading tag="h2" class="px-8 pt-4 text-gray-900 dark:text-white">Podsumowanie</Heading>
 <div class="flex flex-row justify-between">
-  <ScreenCard class="max-h-128 overflow-y-auto relative px-8 pb-8 flex-1">
+  <ScreenCard class="max-h-128 overflow-y-auto relative px-8 pb-8 flex-[2]">
     <div class="flex justify-between">
       <div class="flex flex-row">
         <h5 class="leading-none text-3xl font-bold">Przybyło:</h5>
@@ -270,12 +271,12 @@
       </div>
     </div>
   </ScreenCard>
-  <ScreenCard class="max-h-128 overflow-y-auto relative mr-8 px-8 pb-8">
+  <ScreenCard class="max-h-128 overflow-y-auto relative mr-8 px-8 pb-8 flex-1">
     <div class="flex justify-between items-start w-full">
       <div class="flex-col items-center">
         <div class="flex items-center mb-1">
           <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mr-1">
-            Produkty w dostawie
+            Produkty 
           </h5>
           <InfoCircleSolid
             id="pie1"
