@@ -22,4 +22,5 @@ Desktop.ini # Windows desktop icon settings
 .parcel-cache
 dist/
 **/.DS_Store
+.DS_Store
 /build
