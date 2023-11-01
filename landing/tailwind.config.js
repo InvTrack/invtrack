@@ -13,7 +13,7 @@ module.exports = {
         xl: "4rem",
         lg: "3.38rem",
         md: "2.25rem",
-        s: "1.75rem",
+        s: "1.25rem",
         base: "1.13rem",
       },
       colors: {
