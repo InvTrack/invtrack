@@ -4,6 +4,36 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./favicons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./favicons/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="./favicons/safari-pinned-tab.svg"
+      color="#3986e5"
+    />
+    <link rel="shortcut icon" href="./favicons/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="InvTrack" />
+    <meta name="application-name" content="InvTrack" />
+    <meta name="msapplication-TileColor" content="#2b5797" />
+    <meta name="msapplication-config" content="./favicons/browserconfig.xml" />
+    <meta name="theme-color" content="#ffffff" />
+
     <link rel="stylesheet" href="./global.css" />
     <link rel="stylesheet" type="text/css" href="./index.css" />
     <link
@@ -14,12 +44,16 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=DM Sans:wght@500&display=swap"
     />
+    <title>InvTrack - innowacja w zarządzaniu zasobami</title>
   </head>
   <body class="flex flex-col justify-center items-center">
-    <a href="./index.html" alt='invtrack dashboard on a computer monitor' class="w-64 h-24 bg-blue-400 block text-md"
-      >invtrack i chuj</a
-    >
-    <div class="flex flex-row mt-16 mx-16">
+    <header class="self-start ml-8 mt-4">
+      <a href="./index.html" class="flex flex-row items-end">
+        <img src="./img/logo.svg" alt="invtrack logo" class="w-32 h-32" />
+        <b class="text-xl text-blue-900 ml-4 leading-snug">InvTrack</b>
+      </a>
+    </header>
+    <div class="flex flex-row mt-48 mx-16">
       <div class="image-container image-shadow mr-8">
         <img src="./img/img-4.png" class="image" />
       </div>
@@ -46,18 +80,18 @@
       </div>
     </div>
     <div
-      class="flex flex-col py-8 justify-center items-center w-screen h-[28rem] mt-48 bg-blue-900"
+      class="flex flex-col pt-32 pb-16 justify-center items-center text-center w-screen h-fit mt-48 bg-blue-900"
     >
       <b class="text-xl leading-tight text-white">
         Skontaktuj się z nami poprzez poniższy formularz!
       </b>
       <h3 class="text-base leading-tight text-white mt-4">
-        InvTrack już wkrótce będzie dostępny w sprzedaży. W
-        międzyczasie zapraszamy do kontaktu z nami poprzez poniższy formularz.
+        InvTrack już wkrótce będzie dostępny w sprzedaży. W międzyczasie
+        zapraszamy do kontaktu z nami poprzez poniższy formularz.
       </h3>
       <a href="#form">
         <svg
-          class="w-16 h-16 fill-white mt-6"
+          class="w-16 h-16 fill-white mt-24"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 -960 960 960"
         >
@@ -69,7 +103,7 @@
     </div>
     <form
       action="removemehttps://submit-form.com/CyD6665J"
-      class="flex flex-col max-w-3xl px-12 pt-6 pb-12 mt-48 rounded-xl image-shadow mx-16"
+      class="flex flex-col max-w-xl px-12 pt-6 pb-12 mt-48 rounded-xl image-shadow mx-16"
       id="form"
       method="post"
     >
@@ -82,7 +116,7 @@
           placeholder="Imię"
           required
           minlength="3"
-          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
@@ -95,7 +129,7 @@
           name="email"
           placeholder="Twój email"
           required
-          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
@@ -109,7 +143,7 @@
           placeholder="Branża"
           required
           minlength="2"
-          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60"
         />
       </div>
       <div class="flex flex-col justify-center mt-8">
@@ -121,7 +155,7 @@
           id="message"
           name="message"
           placeholder="Chętnie poznamy twoje oczekiwania wobec InvTrack, liczbę pracowników, czy obecne wyzwania w zarządzaniu towarem."
-          class="text-[1.5rem] rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60 h-64"
+          class="text-s rounded-md pl-2 py-1 shadow-lg border-gray-400 border-solid border-2 mt-2 font-light focus:outline-none focus:border-opacity-100 border-opacity-60 h-64"
         ></textarea>
       </div>
       <button
@@ -132,36 +166,52 @@
         <img class="ml-4 w-5 h-5" alt="" src="./img/group.svg" />
       </button>
       <h5 class="text-[0.75rem] text-blue-900 mt-4">
-        Klikając "Wyślij", wyrażam zgodę na przetwarzanie przez InvTrack moich danych osobowych w postaci adresu poczty elektronicznej oraz imienia w celu przesyłania mi informacji marketingowych dotyczących produktów i usług oferowanych przez InvTrack za pomocą środków komunikacji elektronicznej, stosownie do treści przepisu art. 10 ust. 1 i 2 ustawy o świadczeniu usług drogą elektroniczną.
+        Klikając "Wyślij", wyrażam zgodę na przetwarzanie przez InvTrack moich
+        danych osobowych w postaci adresu poczty elektronicznej oraz imienia w
+        celu przesyłania mi informacji marketingowych dotyczących produktów i
+        usług oferowanych przez InvTrack za pomocą środków komunikacji
+        elektronicznej, stosownie do treści przepisu art. 10 ust. 1 i 2 ustawy o
+        świadczeniu usług drogą elektroniczną.
       </h5>
     </form>
   </body>
   <footer
-  class="w-screen h-96 bg-blue-900 grid grid-cols-3 grid-rows-1 place-items-center text-md text-white p-16 mt-48"
->
-  <div class="self-start">
-    <<-LOGO->> InvTrack i krotki opisik pzdr byczku mordeczko
-  </div>
-
-  <div class="flex flex-col gap-4 self-start">
-    <b>Linki</b>
-    <a class="text-base" href="#pricing">Oferta</a>
-    <a class="text-base" href="form.html/#form">Kontakt</a>
-  </div>
-  <div class="self-start">
-    <b>Dowiedz się więcej</b>
-    <h5 class="text-base mt-2">
-      Skontaktuj się z nami, aby dowiedzieć się więcej o InvTrack i naszej
-      ofercie.
-    </h5>
-    <a href="form.html" class="main-header-button w-fit mt-4">
-      <div class="header-button-text">Wypróbuj InvTrack</div>
-      <img
-        class="header-button-icon"
-        alt="button arrow"
-        src="./img/group.svg"
-      />
-    </a>
-  </div>
-</footer>
+    class="w-full h-fit bg-blue-900 flex items-center justify-between text-md text-white p-16 mt-48"
+  >
+    <div class="flex-1">
+      <div class="flex flex-row items-end">
+        <img src="./img/logo.svg" alt="invtrack logo" class="w-32 h-32" />
+        <b class="text-xl ml-4 leading-snug">InvTrack</b>
+      </div>
+      <h5 class="text-sm ml-4 pr-[30%]">
+        InvTrack to innowacyjne narzędzie, które stawia sobie za cel rewolucję w
+        zarządzaniu towarem. Umożliwiamy małym i średnim przedsiębiorstwom pełną
+        kontrolę nad ich inwentarzem. Z InvTrack zyskujesz efektywne
+        zarządzanie, elastyczność w dostosowywaniu się do zmieniających się
+        potrzeb oraz pewność, że Twój biznes idzie w kierunku sukcesu.
+      </h5>
+    </div>
+    <div class="flex flex-1 flex-row justify-between">
+      <div class="flex flex-1 flex-col gap-4">
+        <b>Linki</b>
+        <a class="text-base" href="#pricing">Oferta</a>
+        <a class="text-base" href="form.html/#form">Kontakt</a>
+      </div>
+      <div class="flex-1">
+        <b>Dowiedz się więcej</b>
+        <h5 class="text-base mt-2">
+          Skontaktuj się z nami, aby dowiedzieć się więcej o InvTrack i naszej
+          ofercie.
+        </h5>
+        <a href="form.html" class="main-header-button w-fit mt-4">
+          <div class="header-button-text">Wypróbuj InvTrack</div>
+          <img
+            class="header-button-icon"
+            alt="button arrow"
+            src="./img/group.svg"
+          />
+        </a>
+      </div>
+    </div>
+  </footer>
 </html>
