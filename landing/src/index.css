@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  margin: 0;
+  line-height: normal;
+  text-align: left;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
 input:not(:focus):not(:placeholder-shown):invalid {
   @apply border-opacity-60 border-red-400 bg-red-50;
 }
@@ -9,17 +20,10 @@ input:not(:placeholder-shown):invalid {
   @apply border-opacity-60 border-red-400 bg-red-50;
 }
 
-body {
-  background-color: var(--color-white);
-  text-align: left;
-  font-size: var(--header-h1-size);
-  font-family: var(--paragraph-p2-medium);
-  margin: 0 auto;
-  max-width: 150rem;
-}
 * {
   overflow: visible;
 }
+
 @layer base {
   .-leading-02 {
     letter-spacing: -0.02em;
