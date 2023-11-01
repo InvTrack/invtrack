@@ -1,51 +1,8 @@
-
-
 body {
   margin: 0;
-  line-height: normal; 
+  line-height: normal;
 }
 
 html {
-	scroll-behavior: smooth;
-}
-:root {
-  /* fonts */
-  --paragraph-p2-medium: Inter;
-  --font-dm-sans: Inter;
-
-  /* font sizes */
-  --paragraph-p2-medium-size: 1.13rem;
-  --header-h1-size: 4.5rem;
-  --header-h5-size: 1.75rem;
-  --paragraph-p3-regular-size: 1rem;
-  --header-h4-size: 2.25rem;
-  --header-h3-size: 3.38rem;
-  --header-h2-size: 4rem;
-
-  /* Colors */
-  --color-white: #fff;
-  --color-cornflowerblue: #4f9cf9;
-  --color-cornflowerblue-hover: #3986e5;
-  --color-darkslateblue: #043873;
-
-  /* Gaps */
-  --gap-81xl: 6.25rem;
-  --gap-41xl: 3.75rem;
-  --gap-3xs: 0.63rem;
-  --gap-5xl: 1.5rem;
-  --gap-13xl: 2rem;
-  --gap-base: 1rem;
-  --gap-mini: 0.94rem;
-  --gap-6xl: 1.56rem;
-  --gap-lgi: 1.19rem;
-
-  /* Paddings */
-  --padding-121xl: 8.75rem;
-  --padding-13xl: 2rem;
-  --padding-xl: 1.25rem;
-  --padding-21xl: 2.5rem;
-  --padding-base: 1rem;
-
-  /* Border radiuses */
-  --br-5xs: 8px;
+  scroll-behavior: smooth;
 }
