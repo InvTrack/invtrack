@@ -12,7 +12,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
 input:not(:focus):not(:placeholder-shown):invalid {
   @apply border-opacity-60 border-red-400 bg-red-50;
 }
@@ -22,7 +21,7 @@ input:not(:placeholder-shown):invalid {
 
 * {
   overflow: visible;
-  @apply transition-all
+  @apply transition-all;
 }
 
 @layer base {
