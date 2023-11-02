@@ -22,6 +22,7 @@ input:not(:placeholder-shown):invalid {
 
 * {
   overflow: visible;
+  @apply transition-all
 }
 
 @layer base {
