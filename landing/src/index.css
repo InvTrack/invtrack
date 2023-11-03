@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  width: fit-content;
+}
+
 body {
   margin: 0;
   line-height: normal;
@@ -19,7 +23,7 @@ input:not(:placeholder-shown):invalid {
   @apply border-opacity-60 border-red-400 bg-red-50;
 }
 
-* {
+*:not(img) {
   overflow: visible;
   @apply transition-all;
 }

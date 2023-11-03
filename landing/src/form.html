@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="viewport" content="width=device-width" />
 
     <link
       rel="apple-touch-icon"
@@ -53,16 +53,18 @@
       </a>
     </header>
     <div
-      class="flex justify-center flex-row-reverse items-center py-24 px-8 text-xl text-blue-900 mt-48"
+      class="flex justify-center flex-col-reverse lg:flex-row items-center py-24 text-xl text-blue-900 mt-24 text-center lg:text-left mx-8"
     >
-      <div class="flex flex-1 flex-col justify-start items-start gap-16">
+      <div
+        class="flex flex-1 flex-col lg:justify-start lg:items-start items-center justify-center gap-16"
+      >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
-          <h1 class="text-2xl -leading-02 font-semibold text-blue-900">
+          <b class="text-2xl tracking-tight leading-none mt-10 lg:mt-0">
             Zrewolucjonizuj zarządzanie towarem z InvTrack
-          </h1>
-          <h3 class="text-base leading-7-5 -leading-02 text-blue-900 mt-4">
+          </b>
+          <h3 class="text-base leading-7-5 tracking-tight mt-4">
             Zachęcamy do umówienia się na prezentację i rozmowę z
             przedstawicielem. Dowiedz się więcej o tym, jak InvTrack dostosuje
             się do unikalnych potrzeb Twojego biznesu.
@@ -81,7 +83,7 @@
         </a>
       </div>
       <div
-        class="flex justify-start flex-col items-start rounded-xl max-w-[50%] max-h-[30%] overflow-hidden mr-8"
+        class="flex justify-start flex-col items-start rounded-xl lg:max-w-[50%] lg:max-h-[30%] lg:ml-8 w-full h-full overflow-hidden"
       >
         <img
           src="./img/img-4.png"
@@ -90,12 +92,12 @@
       </div>
     </div>
     <div
-      class="flex flex-col pt-32 pb-16 justify-center items-center text-center w-screen h-fit mt-48 bg-blue-900"
+      class="flex flex-col h-fit w-full pt-32 pb-16 justify-center items-center text-center mt-48 bg-blue-900 px-8"
     >
-      <b class="text-xl leading-tight text-white">
+      <b class="text-xl leading-tight tracking-tight text-white">
         Skontaktuj się z nami poprzez poniższy formularz!
       </b>
-      <h3 class="text-base leading-tight text-white mt-4">
+      <h3 class="text-s leading-tight tracking-tight text-white mt-4">
         InvTrack już wkrótce będzie dostępny w sprzedaży. W międzyczasie
         zapraszamy do kontaktu z nami poprzez poniższy formularz.
       </h3>
@@ -173,7 +175,7 @@
         class="flex items-center justify-center bg-blue-400 rounded-lg text-white text-md flex-row mt-8 p-4"
       >
         <h5 class="font-medium text-s">Wyślij</h5>
-        <img class="ml-4 w-5 h-5" alt="" src="./img/group.svg" />
+        <img class="ml-4 w-5 h-5" alt="arrow right" src="./img/group.svg" />
       </button>
       <h5 class="text-[0.75rem] text-blue-900 mt-4">
         Klikając "Wyślij", wyrażam zgodę na przetwarzanie przez InvTrack moich
@@ -186,14 +188,14 @@
     </form>
   </body>
   <footer
-    class="w-full h-fit bg-blue-900 flex items-center justify-between text-md text-white p-16 mt-48"
+    class="h-fit bg-blue-900 flex items-center justify-between text-md text-white p-16 mt-48 lg:flex-row flex-col"
   >
     <div class="flex-1">
       <div class="flex flex-row items-end">
         <img src="./img/logo.svg" alt="invtrack logo" class="w-32 h-32" />
-        <b class="text-xl ml-4 leading-snug">InvTrack</b>
+        <b class="text-xl lg:ml-4 leading-snug">InvTrack</b>
       </div>
-      <h5 class="text-sm ml-4 pr-[30%] mt-2">
+      <h5 class="text-sm lg:ml-4 lg:mr-[30%] mt-2">
         InvTrack to innowacyjne narzędzie, które stawia sobie za cel rewolucję w
         zarządzaniu towarem. Umożliwiamy małym i średnim przedsiębiorstwom pełną
         kontrolę nad ich inwentarzem. Z InvTrack zyskujesz efektywne
@@ -201,20 +203,20 @@
         potrzeb oraz pewność, że Twój biznes idzie w kierunku sukcesu.
       </h5>
     </div>
-    <div class="flex flex-1 flex-row justify-between">
+    <div class="flex flex-1 flex-row justify-between mt-8 lg:mt-0">
       <div class="flex flex-1 flex-col gap-4">
         <b>Linki</b>
-        <a class="text-base" href="#pricing">Oferta</a>
-        <a class="text-base" href="form.html/#form">Kontakt</a>
+        <a class="text-base" href="./index.html/#pricing">Oferta</a>
+        <a class="text-base" href="#form">Kontakt</a>
       </div>
-      <div class="flex-1">
+      <div class="flex-1 self-end">
         <b>Dowiedz się więcej</b>
         <h5 class="text-base mt-4">
           Skontaktuj się z nami, aby dowiedzieć się więcej o InvTrack i naszej
           ofercie.
         </h5>
         <a
-          href="form.html"
+          href="#form"
           class="flex justify-start rounded-lg bg-blue-400 hover:bg-blue-500 flex-row items-center p-5 gap-3 text-base text-white w-fit mt-8"
         >
           <div class="font-medium">Wypróbuj InvTrack</div>
