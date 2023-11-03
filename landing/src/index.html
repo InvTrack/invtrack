@@ -1,9 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="Sitemap"
+      href="./sitemap.xml"
+    />
+    <meta
+      name="description"
+      content="InvTrack to innowacyjne narzędzie do zarządzania towarem, oferujące efektywność, elastyczność i pełną kontrolę dla małych i średnich firm. Sprawdź nasze proste plany cenowe, eksportuj dane do formatu XLS/CSV i doświadcz rewolucji w zarządzaniu inwentarzem. Dołącz do naszej społeczności już dziś!"
+    />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <style>
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF,
+          U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F,
+          U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F,
+          U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2)
+          format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+          U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF,
+          U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F,
+          U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F,
+          U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2)
+          format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+          U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      /* cyrillic-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa2JL7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF,
+          U+A640-A69F, U+FE2E-FE2F;
+      }
+      /* cyrillic */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa0ZL7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* latin-ext */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa25L7W0Q5n-wU.woff2)
+          format("woff2");
+        unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F,
+          U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F,
+          U+A720-A7FF;
+      }
+      /* latin */
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2)
+          format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+          U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+          U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+    </style>
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -35,30 +184,29 @@
     <meta name="theme-color" content="#ffffff" />
 
     <link rel="stylesheet" href="./index.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=DM Sans:wght@500&display=swap"
-    />
+
     <title>InvTrack - innowacja w zarządzaniu zasobami</title>
   </head>
   <body>
-    <header class="self-start flex flex-row justify-start items-end ml-8 mt-4">
-      <img src="./img/logo.svg" alt="invtrack logo" class="w-32 h-32" />
-      <b class="text-xl text-blue-900 ml-4 leading-snug">InvTrack</b>
+    <header class="self-start ml-8 mt-4">
+      <div class="flex flex-row items-end">
+        <img src="./img/logo.svg" alt="invtrack logo" class="w-32 h-32" />
+        <b class="text-xl text-blue-900 ml-4 leading-snug">InvTrack</b>
+      </div>
     </header>
     <div
-      class="flex justify-center flex-row items-center py-24 px-8 text-xl text-blue-400 mt-24"
+      class="flex justify-center flex-col-reverse lg:flex-row items-center py-24 text-xl text-blue-900 mt-24 text-center lg:text-left mx-8"
     >
-      <div class="flex flex-1 flex-col justify-start items-start gap-16">
+      <div
+        class="flex flex-1 flex-col lg:justify-start lg:items-start items-center justify-center gap-16"
+      >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
-          <b class="-leading-02">Optymalizuj swój biznes dzięki InvTrack!</b>
-          <div class="text-base leading-7-5 -leading-02">
+          <b class="text-2xl tracking-tight leading-none mt-10 lg:mt-0"
+            >Optymalizuj swój biznes dzięki InvTrack!</b
+          >
+          <div class="text-base leading-7-5 tracking-tight mt-4">
             Przyspiesz proces inwentaryzacji i zapanuj nad stanem zapasów za
             pomocą intuicyjnej aplikacji InvTrack. Dzięki bogatemu w
             funkcjonalności interfejsowi, inwentaryzacja staje się łatwa i
@@ -70,28 +218,43 @@
           class="flex justify-start rounded-lg bg-blue-400 hover:bg-blue-500 flex-row items-center p-5 gap-3 text-base text-white"
         >
           <div class="font-medium">Zacznij zmianę z InvTrack</div>
-          <img class="w-4 h-4 relative" src="./img/group.svg" />
+          <img
+            class="w-4 h-4 relative"
+            alt="arrow right"
+            src="./img/group.svg"
+          />
         </a>
       </div>
       <div
-        class="flex justify-start flex-col items-start rounded-xl max-w-[50%] max-h-[30%] overflow-hidden"
+        class="flex justify-start flex-col lg:items-start items-center rounded-xl lg:max-w-[50%] lg:max-h-[30%] w-full h-full overflow-hidden"
       >
         <img
-          src="./img/img-1.png"
-          class="w-full h-full object-contain overflow-hidden"
+          sizes="(max-width: 2170px) 100vw, 2170px"
+          srcset="
+            ./img/img-1_rcto5h_c_scale,w_550.png   550w,
+            ./img/img-1_rcto5h_c_scale,w_1144.png 1144w,
+            ./img/img-1_rcto5h_c_scale,w_1541.png 1541w,
+            ./img/img-1_rcto5h_c_scale,w_1890.png 1890w,
+            ./img/img-1_rcto5h_c_scale,w_2170.png 2170w
+          "
+          src="./img/img-1_rcto5h_c_scale,w_2170.png"
           alt="invtrack app on multiple smartphones"
         />
       </div>
     </div>
     <div
-      class="flex justify-center flex-row-reverse items-center py-24 px-8 text-xl text-blue-900 mt-48"
+      class="flex justify-center flex-col-reverse lg:flex-row-reverse items-center py-24 text-xl text-blue-900 mt-24 text-center lg:text-left mx-8"
     >
-      <div class="flex flex-1 flex-col justify-start items-start gap-16 pl-8">
+      <div
+        class="flex flex-1 flex-col lg:justify-start lg:items-start items-center justify-center gap-16"
+      >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
-          <b class="-leading-02">Mobilność w twoich rękach</b>
-          <div class="text-base leading-7-5 -leading-02">
+          <b class="text-2xl tracking-tight leading-none mt-10 lg:mt-0"
+            >Mobilność w twoich rękach</b
+          >
+          <div class="text-base leading-7-5 tracking-tight mt-4">
             Aplikacja mobilna InvTrack na iOS i Android to klucz do
             efektywności. Zbieraj dane w terenie, skanuj produkty błyskawicznie
             i zwiększ wydajność pracy zespołu. Oszczędzaj czas, który możesz
@@ -105,32 +268,48 @@
           <div class="font-medium">Rozpocznij optymalizację dziś</div>
           <img
             class="w-4 h-4 relative"
-            alt="invtrack dashboard on a tablet, and invtrack app on a phone"
+            alt="arrow right"
             src="./img/group.svg"
             loading="lazy"
           />
         </a>
       </div>
       <div
-        class="flex justify-start flex-col items-start rounded-xl max-w-[50%] max-h-[30%] overflow-hidden shadow-xl"
+        class="flex justify-start flex-col items-start rounded-xl lg:max-w-[50%] lg:max-h-[30%] lg:mr-8 w-full h-full overflow-hidden shadow-xl"
       >
         <img
+          sizes="(max-width: 2170px) 100vw, 2170px"
+          srcset="
+            ./img/img-2_qsn3tk_c_scale,w_550.png   550w,
+            ./img/img-2_qsn3tk_c_scale,w_1151.png 1151w,
+            ./img/img-2_qsn3tk_c_scale,w_1547.png 1547w,
+            ./img/img-2_qsn3tk_c_scale,w_1891.png 1891w,
+            ./img/img-2_qsn3tk_c_scale,w_2170.png 2170w
+          "
+          src="./img/img-2_qsn3tk_c_scale,w_2170.png"
+          loading="lazy"
+          alt="invtrack dashboard on a tablet, and invtrack app on a phone"
+        />
+        <!-- <img
           src="./img/img-2.png"
           class="w-full h-full object-contain overflow-hidden"
-        />
+          alt="invtrack dashboard on a tablet, and invtrack app on a phone"
+        /> -->
       </div>
-
-      <div class="content2"></div>
     </div>
     <div
-      class="flex justify-center flex-row items-center py-24 px-8 text-xl text-blue-900 mt-48"
+      class="flex justify-center flex-col-reverse lg:flex-row-reverse items-center py-24 text-xl text-blue-900 mt-24 text-center lg:text-left mx-8"
     >
-      <div class="flex flex-1 flex-col justify-start items-start gap-16">
+      <div
+        class="flex flex-1 flex-col lg:justify-start lg:items-start items-center justify-center gap-16"
+      >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
-          <b class="-leading-02">Wgląd na wyciągnięcie ręki</b>
-          <div class="text-base leading-7-5 -leading-02">
+          <b class="text-2xl tracking-tight leading-none mt-10 lg:mt-0">
+            Wgląd na wyciągnięcie ręki
+          </b>
+          <div class="text-base leading-7-5 tracking-tight mt-4">
             Dzięki Panelowi WWW InvTrack, właściciele mają pełen wgląd w
             inwentaryzację i wydajność zespołu. Statystyki, edycje, konfiguracje
             – zarządzaj wszystkim z jednego miejsca. Zwiększ efektywność i
@@ -144,31 +323,49 @@
           <div class="font-medium">Zdobądź InvTrack dla swojej firmy</div>
           <img
             class="w-4 h-4 relative"
+            alt="arrow right"
             alt="button arrow"
             src="./img/group.svg"
           />
         </a>
       </div>
       <div
-        class="flex justify-start flex-col items-start rounded-xl max-w-[50%] max-h-[30%] overflow-hidden"
+        class="flex justify-start flex-col items-start rounded-xl lg:max-w-[50%] lg:max-h-[30%] w-full h-full overflow-hidden"
       >
         <img
-          class="w-full h-full object-contain overflow-hidden"
+          sizes="(max-width: 2170px) 100vw, 2170px"
+          srcset="
+            ./img/img-3_taxo5o_c_scale,w_550.png   550w,
+            ./img/img-3_taxo5o_c_scale,w_1130.png 1130w,
+            ./img/img-3_taxo5o_c_scale,w_1565.png 1565w,
+            ./img/img-3_taxo5o_c_scale,w_2000.png 2000w,
+            ./img/img-3_taxo5o_c_scale,w_2170.png 2170w
+          "
+          src="./img/img-3_taxo5o_c_scale,w_2170.png"
+          loading="lazy"
           alt="invtrack on a mac computer"
+        />
+        <!-- <img
+          class="w-full h-full object-contain overflow-hidden"
           src="./img/img-3.png"
           loading="lazy"
-        />
+          alt="invtrack on a mac computer"
+        /> -->
       </div>
     </div>
     <div
-      class="flex justify-center flex-row-reverse items-center py-24 px-8 text-xl text-blue-900 pl-4 mt-48"
+      class="flex justify-center flex-col-reverse lg:flex-row items-center py-24 text-xl text-blue-900 mt-24 text-center lg:text-left mx-8"
     >
-      <div class="flex flex-1 flex-col justify-start items-start gap-16 pl-8">
+      <div
+        class="flex flex-1 flex-col lg:justify-start lg:items-start items-center justify-center gap-16"
+      >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
-          <b class="-leading-02">Pełna kontrola nad twoimi danymi</b>
-          <div class="text-base leading-7-5 -leading-02">
+          <b class="text-2xl tracking-tight leading-none mt-10 lg:mt-0"
+            >Pełna kontrola nad twoimi danymi</b
+          >
+          <div class="text-base leading-7-5 tracking-tight">
             Z InvTrack, nie tylko zarządzasz swoimi danymi - masz nad nimi pełną
             kontrolę! Eksportuj dane do formatu XLS/CSV i prowadź własne analizy
             w swoim oprogramowaniu, takim jak Excel. Optymalizuj procesy,
@@ -183,13 +380,14 @@
           <div class="font-medium">Zainwestuj w sukces swojego biznesu</div>
           <img
             class="w-4 h-4 relative"
+            alt="arrow right"
             alt="button arrow"
             src="./img/group.svg"
           />
         </a>
       </div>
       <div
-        class="flex justify-start flex-col items-start rounded-xl max-w-[50%] max-h-[30%] overflow-hidden"
+        class="flex justify-center flex-col items-center lg:items-end rounded-xl lg:max-w-[50%] lg:max-h-[30%] w-full h-full overflow-hidden"
       >
         <img
           src="./img/circling-image.svg"
@@ -199,17 +397,17 @@
       </div>
     </div>
     <div
-      class="flex justify-center items-center flex-col text-blue-900 mt-48"
+      class="flex justify-center items-center flex-col text-blue-900 mt-12 lg:mt-48"
       id="pricing"
     >
       <div
-        class="flex justify-center flex-row items-center py-24 px-8 text-xl text-blue-900 mb-12"
+        class="flex justify-center flex-row items-center my-24 px-8 text-xl text-blue-900"
       >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
           <b class="self-center">Nasza oferta</b>
-          <div class="text-base leading-7-5 -leading-02 mx-[20%] text-center">
+          <div class="text-base leading-7-5 tracking-tight text-center">
             Zarządzaj swoim biznesem z InvTrack już dziś! Nasz prosty i klarowny
             plan cenowy został stworzony, aby dostarczyć Ci niezbędnych narzędzi
             w najbardziej przystępny sposób.
@@ -217,13 +415,13 @@
         </div>
       </div>
       <div
-        class="flex justify-center items-center self-stretch flex-row text-base mb-64 mt-12"
+        class="flex justify-center items-center self-stretch flex-row text-base mb-64 md:mt-24"
       >
         <div
           class="rounded-xl bg-white shadow-2xl flex-col items-start pb-16 pt-12 px-11"
         >
           <div class="flex flex-col">
-            <b class="text-lg self-start">59zł</b>
+            <b class="text-lg self-start">59zł/miesiąc</b>
             <b class="text-md self-start mt-4">Dlaczego InvTrack?</b>
           </div>
           <div
@@ -257,6 +455,7 @@
             <div class="font-medium">Dowiedz się więcej</div>
             <img
               class="w-4 h-4 relative"
+              alt="arrow right"
               alt="button arrow"
               src="./img/group.svg"
             />
@@ -265,18 +464,18 @@
       </div>
     </div>
     <div
-      class="flex px-8 text-xl bg-blue-900 text-white flex-col justify-start items-center self-center w-full py-36 shrink-0"
+      class="flex px-8 text-xl bg-blue-900 text-white flex-col justify-start items-center self-center w-full py-36 shrink-0 text-center"
     >
       <div class="flex items-center flex-col gap-16">
         <div
           class="flex items-center justify-start self-stretch flex-col gap-6"
         >
-          <b class="-leading-02">Zacznij dziś! Zdobądź InvTrack.</b>
-          <div class="items-center mx-[10%] text-s text-center -leading-02">
+          <b class="tracking-tight">Zacznij dziś! Zdobądź InvTrack.</b>
+          <h3 class="items-center text-s tracking-tight">
             Rozpocznij transformację swojego biznesu już teraz! Kliknij poniżej,
             aby dołączyć do społeczności InvTrack i otrzymywać najnowsze
             aktualizacje oraz ekskluzywne oferty.
-          </div>
+          </h3>
         </div>
         <a
           href="form.html"
@@ -285,6 +484,7 @@
           <div class="font-medium">Dołącz teraz</div>
           <img
             class="w-4 h-4 relative"
+            alt="arrow right"
             alt="button arrow"
             src="./img/group.svg"
           />
@@ -292,14 +492,18 @@
       </div>
     </div>
     <div
-      class="flex justify-center flex-row items-center py-24 px-8 text-xl text-blue-900 mt-48"
+      class="flex justify-center flex-col-reverse lg:flex-row items-center py-24 text-xl text-blue-900 mt-24 text-center lg:text-left mx-8"
     >
-      <div class="headline">
+      <div
+        class="flex flex-1 flex-col lg:justify-start lg:items-start items-center justify-center gap-16"
+      >
         <div
           class="flex self-stretch flex-col justify-center items-start gap-6"
         >
-          <b class="-leading-02">Bezpieczeństwo danych na pierwszym miejscu</b>
-          <div class="text-base leading-7-5 -leading-02">
+          <b class="text-2xl tracking-tight leading-none mt-10 lg:mt-0"
+            >Bezpieczeństwo danych na pierwszym miejscu</b
+          >
+          <div class="text-base leading-7-5 tracking-tight">
             Dbamy o Twoje dane tak samo, jak Ty o swój biznes. InvTrack
             gwarantuje bezpieczne, szyfrowane połączenia oraz nowoczesne metody
             ochrony danych. Skoncentruj się na rozwoju swojego biznesu, a my
@@ -313,13 +517,14 @@
           <div class="font-medium">Dowiedz się więcej</div>
           <img
             class="w-4 h-4 relative"
+            alt="arrow right"
             alt="button arrow"
             src="./img/group.svg"
           />
         </a>
       </div>
       <div
-        class="flex justify-start flex-col items-start rounded-xl max-w-[50%] max-h-[30%] overflow-hidden"
+        class="flex justify-start flex-col items-start rounded-xl lg:max-w-[50%] lg:max-h-[30%] w-full h-full overflow-hidden"
       >
         <img
           src="./img/safety-element.svg"
@@ -330,14 +535,14 @@
     </div>
   </body>
   <footer
-    class="w-full h-fit bg-blue-900 flex items-center justify-between text-md text-white p-16 mt-48"
+    class="h-fit bg-blue-900 flex items-center justify-between text-md text-white p-16 mt-48 lg:flex-row flex-col"
   >
     <div class="flex-1">
       <div class="flex flex-row items-end">
         <img src="./img/logo.svg" alt="invtrack logo" class="w-32 h-32" />
-        <b class="text-xl ml-4 leading-snug">InvTrack</b>
+        <b class="text-xl lg:ml-4 leading-snug">InvTrack</b>
       </div>
-      <h5 class="text-sm ml-4 pr-[30%]">
+      <h5 class="text-sm lg:ml-4 lg:mr-[30%] mt-2">
         InvTrack to innowacyjne narzędzie, które stawia sobie za cel rewolucję w
         zarządzaniu towarem. Umożliwiamy małym i średnim przedsiębiorstwom pełną
         kontrolę nad ich inwentarzem. Z InvTrack zyskujesz efektywne
@@ -345,15 +550,15 @@
         potrzeb oraz pewność, że Twój biznes idzie w kierunku sukcesu.
       </h5>
     </div>
-    <div class="flex flex-1 flex-row justify-between">
+    <div class="flex flex-1 flex-row justify-between mt-8 lg:mt-0">
       <div class="flex flex-1 flex-col gap-4">
         <b>Linki</b>
         <a class="text-base" href="#pricing">Oferta</a>
         <a class="text-base" href="form.html/#form">Kontakt</a>
       </div>
-      <div class="flex-1">
+      <div class="flex-1 self-end">
         <b>Dowiedz się więcej</b>
-        <h5 class="text-base mt-2">
+        <h5 class="text-base mt-4">
           Skontaktuj się z nami, aby dowiedzieć się więcej o InvTrack i naszej
           ofercie.
         </h5>
@@ -364,6 +569,7 @@
           <div class="font-medium">Wypróbuj InvTrack</div>
           <img
             class="w-4 h-4 relative"
+            alt="arrow right"
             alt="button arrow"
             src="./img/group.svg"
           />
