@@ -23,7 +23,7 @@
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
   let maxTableLength = 0;
   let currentPage = 0;
-  let company_id: number | null;
+  let company_id: number | undefined | null;
 
   currentCompanyId.subscribe((id) => {
     if (id) {
@@ -43,6 +43,7 @@
       supabase
         .from("inventory")
         .select(`date, record_view (*)`, { count: "exact", head: false })
+        // company_id is sometimes undefined
         .eq("company_id", company_id)
         .range(...range)
         .order("date"),
