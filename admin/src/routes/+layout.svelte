@@ -6,10 +6,12 @@
   import { supabase } from "$lib/supabase";
   import type { AuthSession } from "@supabase/supabase-js";
   import { page } from "$app/stores";
-  import { googleAccessToken } from "$lib/store";
+  import { googleAccessToken, currentCompanyId } from "$lib/store";
   import Login from "./auth/Login.svelte";
   import { initializeDarkMode } from "$lib/scripts/darkMode";
   import Gate from "./auth/Gate.svelte";
+  import type { CurrentCompanyIdTable } from "$lib/helpers";
+  import { genericGet } from "$lib/genericGet";
 
   let session: AuthSession | null;
 
@@ -45,6 +47,14 @@
     supabase.auth.onAuthStateChange((_event, _session) => {
       session = _session;
     });
+
+    genericGet(
+      supabase
+        .from<"current_company_id", CurrentCompanyIdTable>("current_company_id")
+        .select()
+        .single(),
+      (x) => currentCompanyId.set(x?.id)
+    );
   });
 </script>
 
