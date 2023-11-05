@@ -2,6 +2,7 @@
   import { getPaginationRange, type Tables, type Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import {
+    Button,
     Heading,
     Pagination,
     PaginationItem,
@@ -14,17 +15,25 @@
   } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
   import ScreenCard from "$lib/ScreenCard.svelte";
-  import { Icon } from "flowbite-svelte-icons";
+  import { ArrowLeftSolid, ArrowRightSolid } from "flowbite-svelte-icons";
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase.js";
+  import { currentCompanyId } from "$lib/store";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
   let maxTableLength = 0;
   let currentPage = 0;
+  let company_id: number | null;
+
+  currentCompanyId.subscribe((id) => {
+    if (id) {
+      company_id = id;
+    }
+  });
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     let range = getPaginationRange(currentPage, 10);
-    console.log(range);
+    console.log(company_id);
     if (movement !== "first" && range[0] > maxTableLength) {
       currentPage -= 1;
       getRecords(currentPage, movement);
@@ -34,7 +43,7 @@
       supabase
         .from("inventory")
         .select(`date, record_view (*)`, { count: "exact", head: false })
-        // .eq("company_id", company_id)
+        .eq("company_id", company_id)
         .range(...range)
         .order("date"),
       (x, count) => {
@@ -50,6 +59,19 @@
         records = x;
       }
     );
+  };
+  const downloadCsv = async () => {
+    const { data: csv } = await supabase.functions.invoke("csv-export");
+    if (csv) {
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.setAttribute("hidden", "");
+      a.setAttribute("href", url);
+      a.setAttribute("download", "inventory.csv");
+      document.body.appendChild(a);
+      a.click();
+    }
   };
   onMount(() => {
     getRecords(currentPage, "first");
@@ -67,15 +89,16 @@
   };
 </script>
 
+<Button class="mb-4" color="primary" on:click={() => downloadCsv()}>pobierz</Button>
 <ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0">
   <div class="flex justify-between pt-8">
     <PaginationItem class="mb-4" on:click={handlePrev}>
-      <Icon name="arrow-left-solid" class="w-5 h-5" />
+      <ArrowLeftSolid class="w-5 h-5" />
       <Heading tag="h6" class="ml-4">Poprzedni</Heading>
     </PaginationItem>
     <PaginationItem class="mb-4" on:click={handleNext}>
       <Heading tag="h6" class="mr-4">Następny</Heading>
-      <Icon name="arrow-right-solid" class="w-5 h-5" />
+      <ArrowRightSolid class="w-5 h-5" />
     </PaginationItem>
   </div>
   {#if records}
