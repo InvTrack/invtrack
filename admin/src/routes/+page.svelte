@@ -62,7 +62,9 @@
     );
   };
   const downloadCsv = async () => {
-    const { data: csv } = await supabase.functions.invoke("csv-export");
+    const { data: csv } = await supabase.functions.invoke("csv-export", {
+      body: { company_id },
+    });
     if (csv) {
       const blob = new Blob([csv], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
