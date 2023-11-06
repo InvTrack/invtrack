@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "papaparse": "https://esm.sh/papaparse@5.4.1",
+    "postgres": "https://deno.land/x/postgres@v0.17.0/mod.ts"
+  }
+}

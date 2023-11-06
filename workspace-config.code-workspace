@@ -1,0 +1,33 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "./"
+    },
+    {
+      "name": "native",
+      "path": "native"
+    },
+    {
+      "name": "admin",
+      "path": "admin"
+    },
+    {
+      "name": "landing",
+      "path": "landing"
+    },
+    {
+      "name": "supabase-functions",
+      "path": "supabase/functions"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "native/": true,
+      "admin/": true,
+      "landing/": true,
+      "supabase/functions/": true
+    },
+    "deno.importMap": "./supabase/functions/import_map.json"
+  }
+}
