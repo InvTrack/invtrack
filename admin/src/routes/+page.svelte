@@ -138,9 +138,9 @@
     on:click={() => downloadCsv()}
   >
     {#if loadingCsv}
-      Eksportuj dane
-    {:else}
       <Spinner size="8" color="white" />
+    {:else}
+      Eksportuj dane
     {/if}
   </Button>
 </main>
