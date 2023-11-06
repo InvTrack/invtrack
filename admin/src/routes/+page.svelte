@@ -4,8 +4,8 @@
   import {
     Button,
     Heading,
-    Pagination,
     PaginationItem,
+    Spinner,
     Table,
     TableBody,
     TableBodyCell,
@@ -24,6 +24,7 @@
   let maxTableLength = 0;
   let currentPage = 0;
   let company_id: number | undefined | null;
+  let loadingCsv = false;
 
   currentCompanyId.subscribe((id) => {
     if (id) {
@@ -62,6 +63,7 @@
     );
   };
   const downloadCsv = async () => {
+    loadingCsv = true;
     const { data: csv } = await supabase.functions.invoke("csv-export", {
       body: { company_id },
     });
@@ -75,6 +77,7 @@
       document.body.appendChild(a);
       a.click();
     }
+    loadingCsv = false;
   };
   onMount(() => {
     getRecords(currentPage, "first");
@@ -92,40 +95,52 @@
   };
 </script>
 
-<Button class="mb-4" color="primary" on:click={() => downloadCsv()}>pobierz</Button>
-<ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0">
-  <div class="flex justify-between pt-8">
-    <PaginationItem class="mb-4" on:click={handlePrev}>
-      <ArrowLeftSolid class="w-5 h-5" />
-      <Heading tag="h6" class="ml-4">Poprzedni</Heading>
-    </PaginationItem>
-    <PaginationItem class="mb-4" on:click={handleNext}>
-      <Heading tag="h6" class="mr-4">Następny</Heading>
-      <ArrowRightSolid class="w-5 h-5" />
-    </PaginationItem>
-  </div>
-  {#if records}
-    <Table divClass="relative" class="border-separate">
-      <TableHead theadClass="sticky top-0">
-        <TableHeadCell class="" />
-        {#each records as record}
-          <TableHeadCell class="border-l place-items-center"
-            >{parseISODatestring(record.date)}</TableHeadCell
-          >
-        {/each}
-      </TableHead>
-      {#if records[0]}
-        <TableBody>
-          {#each records[0].record_view as product, i}
-            <TableBodyRow>
-              <TableBodyCell>{product.name}</TableBodyCell>
-              {#each records as record}
-                <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
-              {/each}
-            </TableBodyRow>
+<main class="flex flex-col">
+  <ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0">
+    <div class="flex justify-between pt-8">
+      <PaginationItem class="mb-4" on:click={handlePrev}>
+        <ArrowLeftSolid class="w-5 h-5" />
+        <Heading tag="h6" class="ml-4">Poprzedni</Heading>
+      </PaginationItem>
+      <PaginationItem class="mb-4" on:click={handleNext}>
+        <Heading tag="h6" class="mr-4">Następny</Heading>
+        <ArrowRightSolid class="w-5 h-5" />
+      </PaginationItem>
+    </div>
+    {#if records}
+      <Table divClass="relative" class="border-separate">
+        <TableHead theadClass="sticky top-0">
+          <TableHeadCell class="" />
+          {#each records as record}
+            <TableHeadCell class="border-l place-items-center"
+              >{parseISODatestring(record.date)}</TableHeadCell
+            >
           {/each}
-        </TableBody>
-      {/if}
-    </Table>
-  {/if}
-</ScreenCard>
+        </TableHead>
+        {#if records[0]}
+          <TableBody>
+            {#each records[0].record_view as product, i}
+              <TableBodyRow>
+                <TableBodyCell>{product.name}</TableBodyCell>
+                {#each records as record}
+                  <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
+                {/each}
+              </TableBodyRow>
+            {/each}
+          </TableBody>
+        {/if}
+      </Table>
+    {/if}
+  </ScreenCard>
+  <Button
+    class="mx-8 mt-4 w-[10.75rem] h-12 self-end text-lg font-bold"
+    color="primary"
+    on:click={() => downloadCsv()}
+  >
+    {#if loadingCsv}
+      Eksportuj dane
+    {:else}
+      <Spinner size="8" color="white" />
+    {/if}
+  </Button>
+</main>
