@@ -11,6 +11,9 @@ export type DbResult<T> = T extends PromiseLike<infer U> ? U : never;
 export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never;
 export type DbResultErr = PostgrestError;
 
+export type CurrentCompanyId = CurrentCompanyIdTable["Row"];
+export type CurrentCompanyIdTable = Database["public"]["Views"]["current_company_id"];
+
 export const convertRemToPixels = (rem: number) =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
