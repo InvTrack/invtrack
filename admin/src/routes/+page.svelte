@@ -34,7 +34,6 @@
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     let range = getPaginationRange(currentPage, 10);
-    console.log(company_id);
     if (movement !== "first" && range[0] > maxTableLength) {
       currentPage -= 1;
       getRecords(currentPage, movement);
@@ -44,8 +43,6 @@
       supabase
         .from("inventory")
         .select(`date, record_view (*)`, { count: "exact", head: false })
-        // company_id is sometimes undefined
-        .eq("company_id", company_id)
         .range(...range)
         .order("date"),
       (x, count) => {
