@@ -6,7 +6,6 @@ import { createStyles } from "../../../theme/useStyles";
 import { Button } from "../../Button";
 import { Typography } from "../../Typography";
 
-// TODO Android styling
 export const DatePickerBottomSheetContent = ({
   dateValue,
   setDateValue,
@@ -27,13 +26,7 @@ export const DatePickerBottomSheetContent = ({
         backgroundColor: "#fff",
       }}
     >
-      <Typography
-        style={{
-          alignSelf: "center",
-        }}
-      >
-        Wybierz datę
-      </Typography>
+      <Typography style={styles.dateTitle}>Wybierz datę</Typography>
       <DateTimePicker
         value={dateValue}
         mode={"date"}
@@ -42,7 +35,7 @@ export const DatePickerBottomSheetContent = ({
           if (e.type === "dismissed") {
             return;
           }
-          setDateValue((d && formatISO(d)) ?? "");
+          d && setDateValue(formatISO(d));
         }}
         style={styles.input}
       />
@@ -55,7 +48,7 @@ export const DatePickerBottomSheetContent = ({
           if (e.type === "dismissed") {
             return;
           }
-          setDateValue((d && formatISO(d)) ?? "");
+          d && setDateValue(formatISO(d));
         }}
         style={styles.input}
       />
@@ -73,6 +66,9 @@ export const DatePickerBottomSheetContent = ({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    dateTitle: {
+      alignSelf: "center",
+    },
     input: {
       backgroundColor: theme.colors.white,
       alignSelf: "center",

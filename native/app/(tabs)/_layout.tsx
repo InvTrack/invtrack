@@ -12,7 +12,6 @@ const TabLayout = () => {
           backgroundColor: theme.colors.lightBlue,
           borderTopWidth: 1,
           borderTopColor: theme.colors.mediumBlue,
-          borderRadius: 20,
         },
       }}
     >

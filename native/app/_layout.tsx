@@ -30,7 +30,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
 import { ArrowRightIcon } from "../components/Icon";
 import { Header } from "../components/Header";
+import * as ScreenOrientation from "expo-screen-orientation";
 
+ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient({

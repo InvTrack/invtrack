@@ -1,16 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  ActivityIndicator,
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
-
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../components/Button";
 import TextInputController from "../../components/TextInputController";
 import { Typography } from "../../components/Typography";
+
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { supabase } from "../../db";
 import { createStyles } from "../../theme/useStyles";
 const { Link } = require("expo-router");
@@ -23,8 +19,9 @@ type FormValues = {
   passwordRepeat: string;
 };
 export default function Register() {
-  const [isLoading, setIsLoading] = React.useState(false);
   const styles = useStyles();
+
+  const [isLoading, setIsLoading] = React.useState(false);
   const { control, handleSubmit, watch, trigger, setError } =
     useForm<FormValues>({
       defaultValues: {
@@ -59,7 +56,7 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView edges={["left", "right"]} style={styles.background}>
+    <SafeAreaView edges={["left", "right"]} style={[styles.background]}>
       <ScrollView
         contentContainerStyle={[styles.container, styles.background]}
         style={styles.background}
@@ -173,7 +170,7 @@ export default function Register() {
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          {isLoading ? <ActivityIndicator size={17} /> : "Zarejestruj się"}
+          {isLoading ? <LoadingSpinner /> : "Zarejestruj się"}
         </Button>
         <Typography style={styles.registerLink}>
           <Typography variant="xs" color="darkBlue" opacity>
@@ -190,7 +187,7 @@ export default function Register() {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      height: "100%",
+      height: "120%",
       paddingHorizontal: theme.spacing * 6,
       paddingTop: theme.spacing * 3,
       alignItems: "center",
@@ -199,7 +196,7 @@ const useStyles = createStyles((theme) =>
     input: { marginVertical: theme.spacing },
     link: {
       alignSelf: "center",
-      marginTop: theme.spacing * 2.5,
+      paddingTop: theme.spacing * 2.5,
       color: theme.colors.darkBlue,
       textDecorationLine: "underline",
       opacity: theme.opacity,
@@ -208,7 +205,7 @@ const useStyles = createStyles((theme) =>
     registerLink: {
       alignSelf: "center",
       justifyContent: "flex-end",
-      marginTop: theme.spacing * 5,
+      paddingTop: theme.spacing * 5,
     },
     button: {
       marginTop: theme.spacing * 5,
