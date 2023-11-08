@@ -8,7 +8,7 @@ const listInventories = async () => {
   const res = await supabase
     .from<"inventory", InventoryTable>("inventory")
     .select()
-    .order("created_at", { ascending: false });
+    .order("date", { ascending: false });
 
   return {
     ...res,

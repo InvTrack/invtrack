@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  width: fit-content;
+}
+
+body {
+  margin: 0;
+  line-height: normal;
+  text-align: left;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input:not(:focus):not(:placeholder-shown):invalid {
+  @apply border-opacity-60 border-red-400 bg-red-50;
+}
+input:not(:placeholder-shown):invalid {
+  @apply border-opacity-60 border-red-400 bg-red-50;
+}
+
+*:not(img) {
+  overflow: visible;
+  @apply transition-all;
+}
+
+@layer base {
+  .-leading-02 {
+    letter-spacing: -0.02em;
+  }
+  .leading-7-5 {
+    line-height: 1.88rem;
+  }
+}
