@@ -4,6 +4,7 @@
     "slug": "invtrack",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "invtrack",
     "icon": "./assets/images/icon.png",
     "scheme": "invtrack",
     "userInterfaceStyle": "automatic",
@@ -16,15 +17,15 @@
     "ios": {
       "buildNumber": "1.0.0",
       "supportsTablet": true,
-      "bundleIdentifier": "pl.invtrack.invtrack"
+      "bundleIdentifier": "app.invtrack.invtrack"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "pl.invtrack.invtrack",
-      "versionCode": 1
+      "package": "app.invtrack.invtrack",
+      "versionCode": 1000
     },
     "web": {
       "bundler": "metro",
@@ -39,15 +40,14 @@
         "origin": false
       },
       "eas": {
-        "projectId": "b6a4f1dd-336c-4a86-9b7f-4414b475c48b"
+        "projectId": "07cea1ba-c2e4-420b-ac38-664a39522dcb"
       }
     },
-    "owner": "michalstruck",
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/b6a4f1dd-336c-4a86-9b7f-4414b475c48b"
+      "url": "https://u.expo.dev/07cea1ba-c2e4-420b-ac38-664a39522dcb"
     }
   }
 }
