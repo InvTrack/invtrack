@@ -51,6 +51,7 @@ const queryClient = new QueryClient({
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
       cacheTime: Infinity,
       staleTime: Infinity,
+      networkMode: "offlineFirst",
     },
   },
 });
