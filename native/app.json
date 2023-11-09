@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "invtrack",
+    "name": "InvTrack",
     "slug": "invtrack",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,18 +11,18 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#C9E0F6"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "buildNumber": "1.0.0",
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "app.invtrack.invtrack"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#C9E0F6"
       },
       "package": "app.invtrack.invtrack",
       "versionCode": 1000

@@ -1,7 +1,6 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
-import { Stack } from "expo-router";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -9,8 +8,9 @@ import {
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 
+import { Link } from "expo-router";
+import { Typography } from "../../components/Typography";
 import { createStyles } from "../../theme/useStyles";
-const { Link } = require("expo-router");
 
 export default function Start() {
   const styles = useStyles();
@@ -18,11 +18,6 @@ export default function Start() {
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-      />
       <Card
         borderBottom
         padding="normal"
@@ -33,6 +28,9 @@ export default function Start() {
           resizeMode="contain"
           style={styles.logoImage}
         />
+        <Typography color="darkBlue" style={styles.logoText}>
+          InvTrack
+        </Typography>
       </Card>
       <Link href="/register" asChild>
         <Button type="primary" size="l" containerStyle={styles.button}>
@@ -44,7 +42,7 @@ export default function Start() {
           Zaloguj się
         </Button>
       </Link>
-      <Link href="">Regulamin</Link>
+      <Link href="/">Regulamin</Link>
     </SafeAreaView>
   );
 }
@@ -58,14 +56,22 @@ const useStyles = createStyles((theme) =>
     },
     card: {
       ...theme.baseShadow,
+      display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
       marginBottom: theme.spacing * 11,
       width: "100%",
     },
     logoImage: {
-      width: 256,
-      height: 256,
+      width: 249,
+      height: 228,
+    },
+    logoText: {
+      fontSize: 64,
+      fontFamily: "latoBold",
+      paddingTop: theme.spacing * 5,
+      paddingBottom: "10%",
     },
     button: {
       marginHorizontal: "auto",
