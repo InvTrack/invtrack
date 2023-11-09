@@ -25,7 +25,15 @@ type ButtonProps = {
 };
 
 const BORDER_WIDTH = 4;
-const debounceOnPress = (onPress: ButtonOnPress) => debounce(onPress, 50);
+
+// weird, but needed to supress errors, related to keeping the event around in an async context
+const debounceOnPress = (
+  e: GestureResponderEvent,
+  onPress: ButtonOnPress | undefined
+) => {
+  e.persist();
+  return debounce(onPress ?? (() => undefined), 50)(e);
+};
 
 export const Button = forwardRef(
   (
@@ -46,7 +54,7 @@ export const Button = forwardRef(
     const isStringChildren = typeof children === "string";
     return (
       <TouchableOpacity
-        onPress={debounceOnPress(onPress ?? (() => undefined))}
+        onPress={(e) => debounceOnPress(e, onPress)}
         style={[
           styles.buttonBase,
           styles[type],
