@@ -35,16 +35,21 @@ import * as ScreenOrientation from "expo-screen-orientation";
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
 
+const ONE_SECOND = 1000;
 const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
       cacheTime: Infinity,
-      retry: 0,
+      retry: 100,
+      retryDelay: (attemptIndex) =>
+        Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
     },
     queries: {
       refetchOnWindowFocus: false,
-      retry: 2,
-      cacheTime: 1000 * 10,
+      retry: 5,
+      retryDelay: (attemptIndex) =>
+        Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
+      cacheTime: Infinity,
       staleTime: Infinity,
     },
   },
@@ -52,10 +57,6 @@ const queryClient = new QueryClient({
 
 const asyncPersist = createAsyncStoragePersister({
   storage: AsyncStorage,
-  // dehydrateOptions: {
-  //   dehydrateMutations: true,
-  //   dehydrateQueries: false,
-  // },
   throttleTime: 1000,
 });
 
@@ -78,6 +79,10 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
             persistOptions={{
               maxAge: Infinity,
               persister: asyncPersist,
+              dehydrateOptions: {
+                dehydrateMutations: true,
+                dehydrateQueries: false,
+              },
             }}
             onSuccess={() =>
               queryClient
