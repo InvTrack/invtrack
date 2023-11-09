@@ -7,7 +7,7 @@ import { Typography } from "../components/Typography";
 export default function Landing() {
   return (
     <View>
-      <Typography>Landing page</Typography>
+      <Typography>Expo updated this</Typography>
     </View>
   );
 }
