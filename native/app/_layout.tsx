@@ -4,7 +4,12 @@ import "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemeProvider } from "@react-navigation/native";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import { focusManager, QueryClient } from "@tanstack/react-query";
+import {
+  focusManager,
+  onlineManager,
+  QueryClient,
+} from "@tanstack/react-query";
+import NetInfo from "@react-native-community/netinfo";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
 import React, { useEffect } from "react";
@@ -25,7 +30,7 @@ import {
 import { SessionContext, useSession } from "../db";
 import { mainTheme } from "../theme";
 import { useAppState } from "../utils/useAppState";
-import { useOnlineManager } from "../utils/useOnlineManager";
+// import { useOnlineManager } from "../utils/useOnlineManager";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
 import { ArrowRightIcon } from "../components/Icon";
@@ -46,11 +51,13 @@ const queryClient = new QueryClient({
     },
     queries: {
       refetchOnWindowFocus: false,
-      retry: 5,
+      refetchOnReconnect: true,
+      refetchOnMount: true,
+      retry: 100,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
       cacheTime: Infinity,
-      staleTime: Infinity,
+      staleTime: 60 * 60 * ONE_SECOND,
       networkMode: "offlineFirst",
     },
   },
@@ -78,17 +85,12 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
           <PersistQueryClientProvider
             client={queryClient}
             persistOptions={{
-              maxAge: Infinity,
               persister: asyncPersist,
-              dehydrateOptions: {
-                dehydrateMutations: true,
-                dehydrateQueries: false,
-              },
             }}
             onSuccess={() =>
               queryClient
                 .resumePausedMutations()
-                .then(() => queryClient.invalidateQueries())
+                .then(() => queryClient.refetchQueries())
             }
           >
             <ThemeProvider
@@ -105,7 +107,14 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
 
 export default function Root() {
   useAppState(onAppStateChange);
-  useOnlineManager();
+
+  onlineManager.setEventListener((setOnline) => {
+    return NetInfo.addEventListener((state) => {
+      setOnline(!!state.isConnected);
+      console.warn(onlineManager.isOnline());
+    });
+  });
+
   const [fontsLoaded, fontsError] = useFonts({
     latoBold: require("../assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
