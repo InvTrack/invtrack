@@ -111,7 +111,6 @@ export default function Root() {
   onlineManager.setEventListener((setOnline) => {
     return NetInfo.addEventListener((state) => {
       setOnline(!!state.isConnected);
-      console.warn(onlineManager.isOnline());
     });
   });
 
@@ -167,6 +166,10 @@ export default function Root() {
           header: (p) => <Header {...p} />,
         }}
       >
+        <Stack.Screen
+          name="index"
+          // redirect
+        />
         <Stack.Screen
           name="(start)"
           options={{
