@@ -1,6 +1,7 @@
 import { BarCodeScanningResult, Camera, CameraType } from "expo-camera";
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { TapGestureHandler } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { CameraSwitchIcon } from "../components/Icon";
@@ -57,17 +58,22 @@ export default function Landing() {
 
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={type}
-        onBarCodeScanned={handleBarCodeScan}
+      <TapGestureHandler
+        onHandlerStateChange={toggleCameraType}
+        numberOfTaps={2}
       >
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <CameraSwitchIcon size={64} />
-          </TouchableOpacity>
-        </View>
-      </Camera>
+        <Camera
+          style={styles.camera}
+          type={type}
+          onBarCodeScanned={handleBarCodeScan}
+        >
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+              <CameraSwitchIcon size={32} color="mediumBlue" />
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      </TapGestureHandler>
     </SafeAreaView>
   );
 }
@@ -84,14 +90,19 @@ const useStyles = createStyles((theme) =>
       flex: 1,
     },
     buttonContainer: {
-      flex: 1,
       flexDirection: "row",
       backgroundColor: "transparent",
-      marginBottom: 32,
+      marginTop: 32,
+      marginRight: 16,
+      justifyContent: "flex-end",
+      alignItems: "flex-start",
     },
     button: {
-      flex: 1,
-      alignSelf: "flex-end",
+      width: 64,
+      height: 64,
+      borderRadius: 32,
+      backgroundColor: "rgba(0, 0, 0, 0.3)",
+      justifyContent: "center",
       alignItems: "center",
     },
     text: {

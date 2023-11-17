@@ -36,7 +36,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Zezwól $(PRODUCT_NAME) na dostęp do kamery."
+          "cameraPermission": "Pozwól $(PRODUCT_NAME) na dostęp do kamery."
         }
       ]
     ],
