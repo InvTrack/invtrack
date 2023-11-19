@@ -166,10 +166,7 @@ export default function Root() {
           header: (p) => <Header {...p} />,
         }}
       >
-        <Stack.Screen
-          name="index"
-          // redirect
-        />
+        <Stack.Screen name="index" redirect />
         <Stack.Screen
           name="(start)"
           options={{
@@ -180,6 +177,15 @@ export default function Root() {
         {/* TODO styling etc. */}
         <Stack.Screen
           name="modal"
+          options={{
+            presentation: "modal",
+            // needs a custom header
+            headerShown: false,
+          }}
+        />
+        {/* maybe a bottomsheet? */}
+        <Stack.Screen
+          name="barcode_modal"
           options={{
             presentation: "modal",
             // needs a custom header
