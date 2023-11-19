@@ -1,0 +1,1 @@
+ALTER TABLE "public"."product" ADD COLUMN "barcodes" text[] DEFAULT NULL
