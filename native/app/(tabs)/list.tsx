@@ -69,7 +69,7 @@ const ListIndex = () => {
     () => groupDaysByMonth(groupByDay(inventoryList)),
     [inventoryList]
   );
-  console.log(inventoryList?.map((inv) => inv.date));
+
   if (!inventoryList || !months) return null;
 
   return (
