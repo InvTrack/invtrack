@@ -11,7 +11,7 @@
     "lint": "eslint --fix --cache",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "gen-types": "supabase gen types typescript --project-id 'xysdrumggpxdpxoysaib' --schema public > db/types/generated.ts"
+    "gen-types": "npx supabase gen types typescript --local > db/types/generated.ts"
   },
   "jest": {
     "preset": "jest-expo"
