@@ -7,19 +7,30 @@ import { BarcodeScanner } from "../components/BarcodeScanner";
 import { Button } from "../components/Button";
 
 import { Typography } from "../components/Typography";
+
+import { useLocalSearchParams } from "expo-router";
+import { useListBarcodes } from "../db/hooks/useListBarcodes";
 import { createStyles } from "../theme/useStyles";
 
 export default function BarcodeModal() {
   const styles = useStyles();
 
+  const { inventoryId } = useLocalSearchParams<{ inventoryId: string }>();
+  const { data } = useListBarcodes({ inventoryId: +inventoryId });
+
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
   if (!permission) {
     // Camera permissions are still loading
-    return <View />;
+    console.log(data);
+    return (
+      <View
+        style={{ backgroundColor: "#fff", width: "100%", height: "100%" }}
+      />
+    );
   }
 
-  if (!permission.granted) {
+  if (!permission?.granted) {
     // Camera permissions are not granted yet
     return (
       <SafeAreaView
