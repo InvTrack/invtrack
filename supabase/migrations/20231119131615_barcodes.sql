@@ -1,4 +1,5 @@
-ALTER TABLE "public"."product" ADD COLUMN "barcodes" text[] DEFAULT NULL
+ALTER TABLE "public"."product" ADD COLUMN "barcodes" text[] DEFAULT '{}'::text[] NOT NULL;
+
 CREATE OR REPLACE FUNCTION check_unique_barcodes()
 RETURNS TRIGGER AS $$
 BEGIN
