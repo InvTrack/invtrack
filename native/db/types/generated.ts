@@ -85,7 +85,7 @@ export interface Database {
       };
       product: {
         Row: {
-          barcodes: string[] | null;
+          barcodes: string[];
           company_id: number | null;
           created_at: string;
           id: number;
@@ -94,7 +94,7 @@ export interface Database {
           unit: string;
         };
         Insert: {
-          barcodes?: string[] | null;
+          barcodes?: string[];
           company_id?: number | null;
           created_at?: string;
           id?: number;
@@ -103,7 +103,7 @@ export interface Database {
           unit?: string;
         };
         Update: {
-          barcodes?: string[] | null;
+          barcodes?: string[];
           company_id?: number | null;
           created_at?: string;
           id?: number;
