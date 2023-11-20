@@ -1,9 +1,18 @@
 import { BarCodeScanningResult, Camera, CameraType, Point } from "expo-camera";
+import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Animated,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { useListBarcodes } from "../../db/hooks/useListBarcodes";
 import { createStyles } from "../../theme/useStyles";
 import { CameraSwitchIcon } from "../Icon";
+import { Typography } from "../Typography";
 import { BarcodeOutline } from "./BarcodeOutline";
 
 const setCornerXY =
@@ -21,10 +30,10 @@ const setCornerXY =
       }),
     ]).start();
 
-export const BarcodeScanner = () => {
+export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
   const styles = useStyles();
-  const [type, setType] = useState(CameraType.back);
 
+  const [type, setType] = useState(CameraType.back);
   const animatedTLCornerX = useRef(new Animated.Value(0));
   const animatedTLCornerY = useRef(new Animated.Value(0));
   const animatedBLCornerX = useRef(new Animated.Value(0));
@@ -33,6 +42,9 @@ export const BarcodeScanner = () => {
   const animatedBRCornerY = useRef(new Animated.Value(0));
   const animatedTRCornerX = useRef(new Animated.Value(0));
   const animatedTRCornerY = useRef(new Animated.Value(0));
+
+  const router = useRouter();
+  const { data: barcodeList, isLoading } = useListBarcodes({ inventoryId });
 
   const toggleCameraType = () => {
     setType((current) =>
@@ -64,10 +76,30 @@ export const BarcodeScanner = () => {
     setBRCornerAnimation(corners[2]);
     setTRCornerAnimation(corners[3]);
   };
+  console.log("component", isLoading, barcodeList);
+  if (isLoading && !barcodeList) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
+
+  if (!isLoading && !barcodeList) {
+    // TODO
+    return (
+      <View style={styles.container}>
+        <Typography>
+          Nie znaleziono kodów kreskowych dla tej inwentaryzacji
+        </Typography>
+      </View>
+    );
+  }
 
   const handleBarCodeScan = (event: BarCodeScanningResult) => {
-    const { cornerPoints } = event;
+    const { cornerPoints, data } = event;
     setCorners(cornerPoints);
+    router.push(`/(tabs)/${inventoryId}/${barcodeList?.[data]}`);
   };
 
   return (
