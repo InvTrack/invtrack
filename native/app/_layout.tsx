@@ -44,7 +44,7 @@ const ONE_SECOND = 1000;
 const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
-      cacheTime: Infinity,
+      cacheTime: ONE_SECOND * 60 * 5,
       retry: 100,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
@@ -56,9 +56,8 @@ const queryClient = new QueryClient({
       retry: 100,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
-      cacheTime: Infinity,
-      staleTime: 60 * 60 * ONE_SECOND,
-      networkMode: "offlineFirst",
+      cacheTime: ONE_SECOND * 60 * 5,
+      staleTime: ONE_SECOND * 60,
     },
   },
 });
