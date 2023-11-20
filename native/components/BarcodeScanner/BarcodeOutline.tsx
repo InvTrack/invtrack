@@ -46,9 +46,6 @@ export const BarcodeOutline = ({
               { translateX: interpolateY(animatedTLCornerY.current) },
             ],
           },
-          {
-            top: -TRACER_SIZE,
-          },
         ]}
       />
       {/* bottom left */}
@@ -62,9 +59,6 @@ export const BarcodeOutline = ({
               },
               { translateX: interpolateY(animatedBLCornerY.current) },
             ],
-          },
-          {
-            top: TRACER_SIZE,
           },
         ]}
       />
@@ -80,9 +74,6 @@ export const BarcodeOutline = ({
               { translateX: interpolateY(animatedBRCornerY.current) },
             ],
           },
-          {
-            top: TRACER_SIZE,
-          },
         ]}
       />
       {/* top right */}
@@ -96,9 +87,6 @@ export const BarcodeOutline = ({
               },
               { translateX: interpolateY(animatedTRCornerY.current) },
             ],
-          },
-          {
-            top: -TRACER_SIZE,
           },
         ]}
       />

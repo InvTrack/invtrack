@@ -76,7 +76,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
     setBRCornerAnimation(corners[2]);
     setTRCornerAnimation(corners[3]);
   };
-  console.log("component", isLoading, barcodeList);
+
   if (isLoading && !barcodeList) {
     return (
       <View style={styles.container}>
@@ -99,7 +99,13 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
   const handleBarCodeScan = (event: BarCodeScanningResult) => {
     const { cornerPoints, data } = event;
     setCorners(cornerPoints);
-    router.push(`/(tabs)/${inventoryId}/${barcodeList?.[data]}`);
+    const mappedBarcode = barcodeList?.[data];
+    if (!mappedBarcode) {
+      // TODO an alert?
+      router.back();
+      return;
+    }
+    router.push(`/(tabs)/${inventoryId}/${mappedBarcode}`);
   };
 
   return (

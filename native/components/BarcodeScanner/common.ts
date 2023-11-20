@@ -7,12 +7,12 @@ export const interpolatableX =
   (height: number, topInset: number) => (x: Animated.Value) => {
     return x.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, height - 2 * TRACER_SIZE - TOP_BAR_HEIGHT - topInset],
+      outputRange: [0, height - TOP_BAR_HEIGHT - topInset],
     });
   };
 
 export const interpolatableY = (width: number) => (y: Animated.Value) =>
   y.interpolate({
     inputRange: [0, 1],
-    outputRange: [width - TRACER_SIZE, 0],
+    outputRange: [width, 0],
   });
