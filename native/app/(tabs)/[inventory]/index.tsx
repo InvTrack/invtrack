@@ -1,8 +1,10 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-import { useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Button } from "../../../components/Button";
+import { ScanBarcodeIcon } from "../../../components/Icon";
 import { InventoryListCard } from "../../../components/InventoryListCard";
 import { Typography } from "../../../components/Typography";
 import { useListRecords } from "../../../db";
@@ -27,6 +29,24 @@ export default function InventoryIdIndex() {
         </View>
         <View style={styles.listContainer}>
           <View style={styles.date}></View>
+          <Link
+            href={{
+              pathname: "/barcode_modal",
+              params: { inventoryId },
+            }}
+            asChild
+          >
+            <Button
+              containerStyle={{
+                alignSelf: "flex-end",
+                marginBottom: 16,
+              }}
+              size="l"
+              type="primary"
+            >
+              <ScanBarcodeIcon size={34} />
+            </Button>
+          </Link>
           {recordList.map(({ name, quantity, unit, id }) => (
             // TODO - think of a clever way to check if these are not null, and let TS know
             <InventoryListCard
@@ -57,9 +77,7 @@ const useStyles = createStyles((theme) =>
       justifyContent: "center",
       alignItems: "center",
     },
-    listContainer: {
-      paddingHorizontal: theme.spacing * 4,
-    },
+    listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
       width: "100%",
       height: "100%",

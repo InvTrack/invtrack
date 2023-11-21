@@ -44,7 +44,7 @@ const ONE_SECOND = 1000;
 const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
-      cacheTime: Infinity,
+      cacheTime: ONE_SECOND * 60 * 5,
       retry: 100,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
@@ -56,9 +56,8 @@ const queryClient = new QueryClient({
       retry: 100,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
-      cacheTime: Infinity,
-      staleTime: 60 * 60 * ONE_SECOND,
-      networkMode: "offlineFirst",
+      cacheTime: ONE_SECOND * 60 * 5,
+      staleTime: ONE_SECOND * 60,
     },
   },
 });
@@ -111,7 +110,6 @@ export default function Root() {
   onlineManager.setEventListener((setOnline) => {
     return NetInfo.addEventListener((state) => {
       setOnline(!!state.isConnected);
-      console.warn(onlineManager.isOnline());
     });
   });
 
@@ -167,6 +165,7 @@ export default function Root() {
           header: (p) => <Header {...p} />,
         }}
       >
+        <Stack.Screen name="index" redirect />
         <Stack.Screen
           name="(start)"
           options={{
@@ -177,6 +176,15 @@ export default function Root() {
         {/* TODO styling etc. */}
         <Stack.Screen
           name="modal"
+          options={{
+            presentation: "modal",
+            // needs a custom header
+            headerShown: false,
+          }}
+        />
+        {/* maybe a bottomsheet? */}
+        <Stack.Screen
+          name="barcode_modal"
           options={{
             presentation: "modal",
             // needs a custom header

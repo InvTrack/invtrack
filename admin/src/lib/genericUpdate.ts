@@ -1,9 +1,9 @@
 import { goto } from "$app/navigation";
-import type { PostgrestBuilder } from "@supabase/postgrest-js";
+import type { PostgrestError, PostgrestBuilder } from "@supabase/postgrest-js";
 
 export const genericUpdate = async <T>(
   builder: PostgrestBuilder<T>,
-  onSuccess: string,
+  onSuccess?: string,
   setLoading?: (x: boolean) => void
 ) => {
   try {
@@ -11,11 +11,10 @@ export const genericUpdate = async <T>(
     setLoading && setLoading(true);
     let { error } = await builder;
     if (error) throw error;
-    goto(onSuccess);
+    if (onSuccess) goto(onSuccess);
   } catch (error) {
-    if (error instanceof Error) alert(error.message);
+    if (error) alert((error as PostgrestError).message);
   } finally {
     setLoading && setLoading(false);
-    //   loading = false;
   }
 };

@@ -79,6 +79,7 @@ export interface Database {
       };
       product: {
         Row: {
+          barcodes: string[] | null;
           company_id: number | null;
           created_at: string;
           id: number;
@@ -87,6 +88,7 @@ export interface Database {
           unit: string;
         };
         Insert: {
+          barcodes?: string[] | null;
           company_id?: number | null;
           created_at?: string;
           id?: number;
@@ -95,6 +97,7 @@ export interface Database {
           unit?: string;
         };
         Update: {
+          barcodes?: string[] | null;
           company_id?: number | null;
           created_at?: string;
           id?: number;
@@ -147,6 +150,21 @@ export interface Database {
             referencedColumns: ["id"];
           }
         ];
+      };
+      test_tenant: {
+        Row: {
+          details: string | null;
+          id: number;
+        };
+        Insert: {
+          details?: string | null;
+          id?: number;
+        };
+        Update: {
+          details?: string | null;
+          id?: number;
+        };
+        Relationships: [];
       };
       worker: {
         Row: {
