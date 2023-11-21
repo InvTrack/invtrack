@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Animated,
   StyleSheet,
   TouchableOpacity,
@@ -42,6 +43,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
   const animatedBRCornerY = useRef(new Animated.Value(0));
   const animatedTRCornerX = useRef(new Animated.Value(0));
   const animatedTRCornerY = useRef(new Animated.Value(0));
+  const [alertShown, setAlertShown] = useState(false);
 
   const router = useRouter();
   const { data: barcodeList, isLoading } = useListBarcodes({ inventoryId });
@@ -86,10 +88,15 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
   }
 
   if (!isLoading && !barcodeList) {
-    // TODO
     return (
-      <View style={styles.container}>
-        <Typography>
+      <View style={[styles.container, styles.paddingH]}>
+        <Typography
+          align="center"
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           Nie znaleziono kodów kreskowych dla tej inwentaryzacji
         </Typography>
       </View>
@@ -101,8 +108,16 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
     setCorners(cornerPoints);
     const mappedBarcode = barcodeList?.[data];
     if (!mappedBarcode) {
-      // TODO an alert?
-      router.back();
+      !alertShown &&
+        Alert.alert("Nie znaleziono kodu kreskowego", "", [
+          {
+            text: "Cofnij",
+            onPress: () => {
+              router.back();
+            },
+          },
+        ]);
+      setAlertShown(true);
       return;
     }
     router.push(`/(tabs)/${inventoryId}/${mappedBarcode}`);
@@ -166,6 +181,9 @@ const useStyles = createStyles((theme) =>
       fontSize: 24,
       fontWeight: "bold",
       color: "white",
+    },
+    paddingH: {
+      paddingHorizontal: theme.spacing,
     },
   })
 );
