@@ -1,9 +1,10 @@
 import capitalize from "lodash/capitalize";
 import React, { useMemo } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { InventoryCardAdd } from "../../components/InventoryCard/InventoryCardAdd";
 import { InventoryCardLink } from "../../components/InventoryCard/InventoryCardLink";
+import { Skeleton } from "../../components/Skeleton";
 import { Typography } from "../../components/Typography";
 import { useListInventories } from "../../db";
 import { createStyles } from "../../theme/useStyles";
@@ -22,8 +23,9 @@ const MonthTitle = ({ title }: { title: string }) => {
   );
 };
 const DayTitle = ({ title }: { title: string }) => {
+  const styles = useStyles();
   return (
-    <Typography variant="l" color="grey" style={{ paddingVertical: 16 }}>
+    <Typography variant="l" color="grey" style={styles.dayTitle}>
       {title}
     </Typography>
   );
@@ -70,7 +72,31 @@ const ListIndex = () => {
     [inventoryList]
   );
 
-  if (!inventoryList || !months) return null;
+  if (!inventoryList || !months) {
+    return (
+      <SafeAreaView edges={["left", "right"]} style={styles.screen}>
+        <View style={styles.scroll}>
+          <View style={styles.monthTitle}>
+            <Skeleton style={{ width: "60%", height: 70 }} />
+          </View>
+          <View style={styles.dayTitle}>
+            <Skeleton style={{ width: "40%", height: 30 }} />
+          </View>
+          <View>
+            <Skeleton style={styles.skeletonListItem} />
+            <Skeleton style={styles.skeletonListItem} />
+            <Skeleton style={styles.skeletonListItem} />
+          </View>
+          <View style={styles.dayTitle}>
+            <Skeleton style={{ width: "40%", height: 30 }} />
+          </View>
+          <View>
+            <Skeleton style={styles.skeletonListItem} />
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.screen}>
@@ -113,6 +139,9 @@ const useStyles = createStyles((theme) =>
     monthTitle: {
       paddingTop: theme.spacing * 2,
     },
+    dayTitle: {
+      paddingVertical: theme.spacing * 2,
+    },
     card: {
       flexDirection: "row",
       alignItems: "center",
@@ -128,6 +157,16 @@ const useStyles = createStyles((theme) =>
       borderRadius: theme.borderRadiusSmall,
       alignItems: "center",
       justifyContent: "center",
+    },
+    skeletonListItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingLeft: theme.spacing * 3,
+      paddingRight: theme.spacing * 2,
+      marginBottom: theme.spacing * 2,
+      height: 45,
+      borderRadius: theme.borderRadiusSmall,
     },
   })
 );
