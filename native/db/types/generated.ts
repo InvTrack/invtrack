@@ -3,7 +3,7 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[];
 
 export interface Database {
@@ -85,6 +85,7 @@ export interface Database {
       };
       product: {
         Row: {
+          barcodes: string[];
           company_id: number | null;
           created_at: string;
           id: number;
@@ -93,6 +94,7 @@ export interface Database {
           unit: string;
         };
         Insert: {
+          barcodes?: string[];
           company_id?: number | null;
           created_at?: string;
           id?: number;
@@ -101,6 +103,7 @@ export interface Database {
           unit?: string;
         };
         Update: {
+          barcodes?: string[];
           company_id?: number | null;
           created_at?: string;
           id?: number;
@@ -154,10 +157,26 @@ export interface Database {
           }
         ];
       };
+      test_tenant: {
+        Row: {
+          details: string | null;
+          id: number;
+        };
+        Insert: {
+          details?: string | null;
+          id?: number;
+        };
+        Update: {
+          details?: string | null;
+          id?: number;
+        };
+        Relationships: [];
+      };
       worker: {
         Row: {
           company_id: number | null;
           created_at: string;
+          email: string;
           id: string;
           is_admin: boolean;
           name: string | null;
@@ -165,6 +184,7 @@ export interface Database {
         Insert: {
           company_id?: number | null;
           created_at?: string;
+          email?: string;
           id: string;
           is_admin?: boolean;
           name?: string | null;
@@ -172,6 +192,7 @@ export interface Database {
         Update: {
           company_id?: number | null;
           created_at?: string;
+          email?: string;
           id?: string;
           is_admin?: boolean;
           name?: string | null;
@@ -237,6 +258,30 @@ export interface Database {
           }
         ];
       };
+      worker_for_current_user: {
+        Row: {
+          company_id: number | null;
+          created_at: string | null;
+          email: string | null;
+          id: string | null;
+          is_admin: boolean | null;
+          name: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "worker_company_id_fkey";
+            columns: ["company_id"];
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "worker_id_fkey";
+            columns: ["id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
     };
     Functions: {
       add_next_product_record: {
@@ -252,6 +297,13 @@ export interface Database {
           quantity: number;
         };
       };
+      assign_new_worker_to_company: {
+        Args: {
+          new_company_id: number;
+          worker_email: string;
+        };
+        Returns: string;
+      };
       get_previous_inventory: {
         Args: {
           inventory_id: number;
@@ -263,19 +315,6 @@ export interface Database {
           id: number;
           name: string;
         }[];
-      };
-      get_previous_product_record: {
-        Args: {
-          current_inventory_id: number;
-          current_product_id: number;
-        };
-        Returns: {
-          created_at: string;
-          id: number;
-          inventory_id: number;
-          product_id: number;
-          quantity: number;
-        };
       };
       get_previous_product_record_quantity: {
         Args: {
@@ -413,12 +452,6 @@ export interface Database {
             foreignKeyName: "objects_bucketId_fkey";
             columns: ["bucket_id"];
             referencedRelation: "buckets";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "objects_owner_fkey";
-            columns: ["owner"];
-            referencedRelation: "users";
             referencedColumns: ["id"];
           }
         ];
