@@ -17,6 +17,7 @@ import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../theme/useStyles";
 
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { Skeleton } from "../../../components/Skeleton";
 import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
 import { useRecordPagination } from "../../../utils/useRecordPagination";
 
@@ -125,7 +126,30 @@ export default function Record() {
     !recordPanel.data?.inventory_id ||
     !recordPanel.data?.name
   )
-    return <Typography>Loading record</Typography>;
+    return (
+      <View style={styles.container}>
+        <View style={styles.topBar}>
+          <Skeleton style={styles.skeletonTopbar} />
+        </View>
+        <View style={styles.contentContainer}>
+          <Skeleton style={styles.skeletonTitle} />
+          <View style={styles.skeletonQuantity}>
+            <Skeleton />
+          </View>
+          <View style={styles.skeletonColumns}>
+            <View style={styles.skeletonColumnContainer}>
+              <Skeleton style={styles.skeletonColumn} />
+            </View>
+            <View style={styles.skeletonColumnContainer}>
+              <Skeleton style={styles.skeletonColumn} />
+            </View>
+            <View style={styles.skeletonColumnContainer}>
+              <Skeleton style={styles.skeletonColumn} />
+            </View>
+          </View>
+        </View>
+      </View>
+    );
 
   const { data, setQuantity, steppers } = recordPanel;
   const { name: recordName, quantity, unit } = data;
@@ -278,5 +302,28 @@ const useStyles = createStyles((theme) =>
     rightColumn: { flexDirection: "column", alignItems: "flex-end" },
     firstRecord: { opacity: theme.opacity / 2 },
     lastRecord: { opacity: theme.opacity / 2 },
+    skeletonColumn: {
+      height: "60%",
+    },
+    skeletonColumnContainer: {
+      width: "25%",
+    },
+    skeletonColumns: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 16,
+      gap: 16,
+    },
+    skeletonQuantity: {
+      aspectRatio: 1,
+      width: "40%",
+      alignSelf: "center",
+      marginTop: 32,
+    },
+    skeletonTitle: { marginTop: 32, width: "70%", height: 50 },
+    skeletonTopbar: {
+      width: "70%",
+      height: 20,
+    },
   })
 );
