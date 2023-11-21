@@ -11,8 +11,6 @@ import {
 import { MainTheme, ThemeColors } from "../theme";
 import { createStyles } from "../theme/useStyles";
 
-type Align = Capitalize<Required<TypographyProps>["align"]>;
-
 export type TypographyProps = {
   children: React.ReactNode;
   color?: ThemeColors;
@@ -45,7 +43,7 @@ export const Typography = ({
       style={[
         color && { color: theme.colors[color] },
         styles[variant],
-        align && styles[`align${align.toUpperCase() as Align}`],
+        align && styles[`align${align}`],
         underline && styles.underline,
         opacity && styles.opacity,
         style,
@@ -60,19 +58,19 @@ export const Typography = ({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    alignLeft: {
+    alignleft: {
       textAlign: "left",
     },
-    alignCenter: {
+    aligncenter: {
       textAlign: "center",
     },
-    alignRight: {
+    alignright: {
       textAlign: "right",
     },
-    alignAuto: {
+    alignauto: {
       textAlign: "auto",
     },
-    alignJustify: {
+    alignjustify: {
       textAlign: "justify",
     },
     xs: { ...theme.text.xs },
