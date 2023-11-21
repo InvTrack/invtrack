@@ -31,6 +31,7 @@ export const DatePickerBottomSheetContent = ({
         value={dateValue}
         mode={"date"}
         display="spinner"
+        themeVariant="light"
         onChange={(e, d) => {
           if (e.type === "dismissed") {
             return;
@@ -43,6 +44,7 @@ export const DatePickerBottomSheetContent = ({
         value={dateValue}
         mode={"time"}
         display="spinner"
+        themeVariant="light"
         is24Hour={true}
         onChange={(e, d) => {
           if (e.type === "dismissed") {
