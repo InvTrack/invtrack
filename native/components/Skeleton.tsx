@@ -1,28 +1,17 @@
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  Platform,
-  StyleProp,
-  StyleSheet,
-  ViewStyle,
-} from "react-native";
+import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { createStyles } from "../theme/useStyles";
 
 interface SkeletonProps {
-  rounded?: "full" | number;
+  borderRadius?: ViewStyle["borderRadius"];
   style?: StyleProp<ViewStyle>;
 }
-const roundedFull = 99999;
-const startOpacity = 0.1;
-const endOpacity = 0.2;
-const defaultRadius = 20;
 
-/**
- * Special props:
- *
- * rounded (same as border radius) - "full" or a number, where full is a circle
- */
-export const Skeleton = React.memo(({ rounded, style }: SkeletonProps) => {
+const startOpacity = 0.15;
+const endOpacity = 0.25;
+const defaultRadius = 25;
+
+export const Skeleton = React.memo(({ borderRadius, style }: SkeletonProps) => {
   const styles = useStyles();
   const opacityRef = useRef(new Animated.Value(startOpacity));
 
@@ -31,12 +20,12 @@ export const Skeleton = React.memo(({ rounded, style }: SkeletonProps) => {
       Animated.sequence([
         Animated.timing(opacityRef.current, {
           toValue: endOpacity,
-          useNativeDriver: Platform.OS !== "web",
+          useNativeDriver: true,
           duration: 500,
         }),
         Animated.timing(opacityRef.current, {
           toValue: startOpacity,
-          useNativeDriver: Platform.OS !== "web",
+          useNativeDriver: true,
           duration: 500,
         }),
       ])
@@ -50,23 +39,19 @@ export const Skeleton = React.memo(({ rounded, style }: SkeletonProps) => {
         style,
         {
           opacity: opacityRef.current,
-          borderRadius:
-            rounded === "full" ? roundedFull : rounded ?? defaultRadius,
+          borderRadius: borderRadius || defaultRadius,
         },
       ]}
     />
   );
 });
 
-Skeleton.displayName = "Skeleton";
-
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     defaultSkeletonStyle: {
       height: "100%",
       width: "100%",
-      backgroundColor: theme.colors.white,
-      borderRadius: defaultRadius,
+      backgroundColor: theme.colors.darkBlue,
     },
   })
 );
