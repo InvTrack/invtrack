@@ -46,7 +46,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
   const [alertShown, setAlertShown] = useState(false);
 
   const router = useRouter();
-  const { data: barcodeList, isLoading } = useListBarcodes({ inventoryId });
+  const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
 
   const toggleCameraType = () => {
     setType((current) =>
@@ -106,7 +106,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
   const handleBarCodeScan = (event: BarCodeScanningResult) => {
     const { cornerPoints, data } = event;
     setCorners(cornerPoints);
-    const mappedBarcode = barcodeList?.[data];
+    const mappedBarcode = barcodeList?.[data].recordId;
     if (!mappedBarcode) {
       !alertShown &&
         Alert.alert("Nie znaleziono kodu kreskowego", "", [
@@ -114,6 +114,12 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
             text: "Cofnij",
             onPress: () => {
               router.back();
+            },
+          },
+          {
+            text: "Dodaj kod kreskowy",
+            onPress: () => {
+              router.push(`/(tabs)/${inventoryId}/new_barcode`);
             },
           },
         ]);
