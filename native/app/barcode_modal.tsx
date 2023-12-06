@@ -1,6 +1,6 @@
 import { Camera } from "expo-camera";
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Linking, StyleSheet, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BarcodeScanner } from "../components/BarcodeScanner";
@@ -8,7 +8,7 @@ import { Button } from "../components/Button";
 
 import { Typography } from "../components/Typography";
 
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { createStyles } from "../theme/useStyles";
 
 export default function BarcodeModal() {
@@ -17,6 +17,7 @@ export default function BarcodeModal() {
   const { inventoryId } = useLocalSearchParams<{ inventoryId: string }>();
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const router = useRouter();
 
   if (!permission) {
     return (
@@ -26,7 +27,46 @@ export default function BarcodeModal() {
     );
   }
 
-  if (!permission?.granted) {
+  if (!permission?.granted && !permission?.canAskAgain) {
+    // Camera permissions are not granted and can not be asked again
+    return (
+      <SafeAreaView
+        edges={["left", "right", "bottom"]}
+        style={styles.container}
+      >
+        <Typography
+          variant="l"
+          color="darkBlue"
+          style={{ textAlign: "center" }}
+        >
+          Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.
+        </Typography>
+        <Typography
+          variant="l"
+          color="darkBlue"
+          style={{
+            textAlign: "center",
+            marginTop: 32,
+            alignSelf: "center",
+          }}
+        >
+          Zmień to w ustawieniach telefonu.
+        </Typography>
+        <Button
+          // onPress={Linking.openSettings}
+          onPress={() => router.push(`/(tabs)/${inventoryId}/new_barcode`)}
+          size="l"
+          type="primary"
+          shadow
+          containerStyle={{ marginTop: 32, width: 200, alignSelf: "center" }}
+        >
+          Ustawienia
+        </Button>
+      </SafeAreaView>
+    );
+  }
+
+  if (!permission?.granted && permission?.canAskAgain) {
     // Camera permissions are not granted yet
     return (
       <SafeAreaView
