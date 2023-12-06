@@ -28,6 +28,12 @@ const InventoryLayout = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="new_barcode"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };
