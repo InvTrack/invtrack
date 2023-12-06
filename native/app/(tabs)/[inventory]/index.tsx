@@ -63,7 +63,6 @@ export default function InventoryIdIndex() {
             </Button>
           </Link>
           {recordList.map(({ name, quantity, unit, id }) => (
-            // TODO - think of a clever way to check if these are not null, and let TS know
             <InventoryListCard
               key={id}
               recordId={id!}
