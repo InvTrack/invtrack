@@ -91,7 +91,7 @@ export default function NewBarcode() {
             { bottom: tabBarHeight },
             {
               width: "80%",
-              position: "fixed",
+              position: "absolute",
               alignSelf: "center",
             },
           ]}
