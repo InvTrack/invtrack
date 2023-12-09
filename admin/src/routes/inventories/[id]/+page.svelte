@@ -7,8 +7,15 @@
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Button, Input, Label, Span } from "flowbite-svelte";
+  import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
+  import { beforeNavigate, goto } from "$app/navigation";
+  import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   let loading = false;
+  let unsavedChanges = false;
+  let unsavedChangesModal = false;
+  let confirmationModal = false;
+  let navigateTo: URL | undefined = undefined;
   let inventory: Tables<"inventory"> | null = null;
   const id = $page.params.id;
 
@@ -19,6 +26,16 @@
       date = inventory.date;
     })
   );
+
+  beforeNavigate(({ cancel, to }) => {
+    if (!unsavedChanges) {
+      return;
+    }
+    cancel();
+    unsavedChangesModal = true;
+    navigateTo = to?.url;
+    return;
+  });
 
   let name: string | undefined = undefined;
   let date: string = "";
@@ -35,13 +52,40 @@
       { setLoading: (x) => (loading = x), onSuccess: "/inventories" }
     );
 
-  const deleteInventory = () =>
+  const deleteInventory = () => {
     genericUpdate(supabase.from("inventory").delete().eq("id", id), { onSuccess: "/inventories" });
+  };
+  const deleteInventoryConfirmation = () => {
+    confirmationModal = true;
+  };
+
+  const onUnsavedWarningContinue = () => {
+    unsavedChanges = false;
+    unsavedChangesModal = false;
+    if (navigateTo) {
+      goto(navigateTo);
+    }
+  };
+
+  const onFormChange = () => {
+    unsavedChanges = true;
+  };
 </script>
 
 {#if inventory}
   <ScreenCard header={"Inventory - " + inventory.name} class="flex flex-col">
-    <form on:submit|preventDefault={update} class="flex-1">
+    <UnsavedWarningModal
+      bind:open={unsavedChangesModal}
+      onContinue={onUnsavedWarningContinue}
+      onStay={() => (unsavedChangesModal = false)}
+    />
+    <ConfirmationModal
+      bind:open={confirmationModal}
+      message="Czy na pewno chcesz usunąć tę inwentaryzację?"
+      onConfirm={deleteInventory}
+    />
+
+    <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
       <Label class="space-y-2">
         <Span>Nazwa</Span>
         <Input type="text" name="name" placeholder="Name" bind:value={name} />
@@ -54,7 +98,7 @@
         >{loading ? "Saving ..." : "Update inventory"}</Button
       >
     </form>
-    <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventory}
+    <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventoryConfirmation}
       >Usuń tę inwentaryzację</Button
     >
   </ScreenCard>

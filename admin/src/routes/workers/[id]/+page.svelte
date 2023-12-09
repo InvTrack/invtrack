@@ -7,8 +7,13 @@
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button, Checkbox } from "flowbite-svelte";
+  import { beforeNavigate, goto } from "$app/navigation";
+  import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   let loading = false;
+  let unsavedChanges = false;
+  let unsavedChangesModal = false;
+  let navigateTo: URL | undefined = undefined;
   let worker: Tables<"worker"> | null = null;
   const id = $page.params.id;
   onMount(() =>
@@ -18,6 +23,16 @@
       is_admin = worker.is_admin;
     })
   );
+
+  beforeNavigate(({ cancel, to }) => {
+    if (!unsavedChanges) {
+      return;
+    }
+    cancel();
+    unsavedChangesModal = true;
+    navigateTo = to?.url;
+    return;
+  });
 
   let name: string | undefined | null = undefined;
   let is_admin: boolean | undefined = true;
@@ -33,11 +48,28 @@
         .eq("id", id),
       { onSuccess: "/workers", setLoading: (x) => (loading = x) }
     );
+
+  const onUnsavedWarningContinue = () => {
+    unsavedChanges = false;
+    unsavedChangesModal = false;
+    if (navigateTo) {
+      goto(navigateTo);
+    }
+  };
+
+  const onFormChange = () => {
+    unsavedChanges = true;
+  };
 </script>
 
 {#if worker}
   <ScreenCard header={"Worker - " + worker.name}>
-    <form on:submit|preventDefault={update}>
+    <UnsavedWarningModal
+      bind:open={unsavedChangesModal}
+      onContinue={onUnsavedWarningContinue}
+      onStay={() => (unsavedChangesModal = false)}
+    />
+    <form on:submit|preventDefault={update} on:change={onFormChange}>
       <Label class="space-y-2">
         <Span>Nazwa</Span>
         <Input type="text" name="name" placeholder="•••••" required bind:value={name} />
