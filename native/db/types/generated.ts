@@ -289,6 +289,16 @@ export interface Database {
         };
         Returns: string;
       };
+      delete_barcode: {
+        Args: {
+          product_id: number;
+          barcode_to_delete: string;
+        };
+        Returns: {
+          updated_product_id: number;
+          updated_barcodes: string[];
+        }[];
+      };
       get_previous_inventory: {
         Args: {
           inventory_id: number;
@@ -324,6 +334,17 @@ export interface Database {
       insert_barcode: {
         Args: {
           product_id: number;
+          new_barcode: string;
+        };
+        Returns: {
+          updated_product_id: number;
+          updated_barcodes: string[];
+        }[];
+      };
+      update_barcode: {
+        Args: {
+          product_id: number;
+          old_barcode: string;
           new_barcode: string;
         };
         Returns: {
