@@ -8,16 +8,14 @@ import { Button } from "../components/Button";
 
 import { Typography } from "../components/Typography";
 
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { createStyles } from "../theme/useStyles";
 
 export default function BarcodeModal() {
   const styles = useStyles();
 
   const { inventoryId } = useLocalSearchParams<{ inventoryId: string }>();
-
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const router = useRouter();
 
   if (!permission) {
     return (
@@ -53,8 +51,7 @@ export default function BarcodeModal() {
           Zmień to w ustawieniach telefonu.
         </Typography>
         <Button
-          // onPress={Linking.openSettings}
-          onPress={() => router.push(`/(tabs)/${inventoryId}/new_barcode`)}
+          onPress={Linking.openSettings}
           size="l"
           type="primary"
           shadow

@@ -15,11 +15,12 @@ const insertBarcode = async ({
     new_barcode,
     product_id,
   });
+
   console.log("useUpdateBarcode", data, error);
+
   if (error) {
-    Alert.alert(
-      "Nie udało się dodać kodu kreskowego. Jest już przypisany do innego produktu."
-    );
+    Alert.alert("Błąd", "Kod kreskowy jest już przypisany do innego produktu.");
+    return;
   }
 
   return data;
