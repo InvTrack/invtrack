@@ -10,7 +10,7 @@ if (Platform.OS !== "web") {
 
 // import { SUPABASE_URL, SUPABASE_ANON_KEY } from "@env";
 // router
-// const localUrl = "http://192.168.0.104:54321";
+// const localUrl = "http://192.168.0.108:54321";
 const localUrl = "http://172.20.10.14:54321";
 const localAnonKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0";

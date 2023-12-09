@@ -10,19 +10,13 @@ type ListBarcodePostgrestRes =
       record_view: [
         {
           id: RecordView["id"];
-          name: RecordView["name"];
-          product_id: RecordView["product_id"];
         } | null
       ];
     }[]
   | null;
 
 export type ListBarcodeReturn = {
-  [barcode: Product["barcodes"][number]]: {
-    recordId: RecordView["id"];
-    recordName: RecordView["name"];
-    productId: RecordView["product_id"];
-  };
+  [barcode: Product["barcodes"][number]]: RecordView["id"];
 };
 
 const listBarcodes = async (inventory_id: number) => {
@@ -37,11 +31,9 @@ const listBarcodes = async (inventory_id: number) => {
   const reducedData = data.reduce((result, item) => {
     const barcodes = item.barcodes;
     const recordId = item.record_view?.[0]?.id;
-    const recordName = item.record_view?.[0]?.name;
-    const productId = item.record_view?.[0]?.product_id;
-    if (!recordId || !recordName || !productId) return result;
+    if (!recordId) return result;
     barcodes.forEach((barcode) => {
-      result[barcode] = { recordId, recordName, productId };
+      result[barcode] = recordId;
     });
     return result;
   }, {} as ListBarcodeReturn);

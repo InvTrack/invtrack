@@ -2,48 +2,42 @@ import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/Button";
 import { NewBarcodeListItem } from "../../../components/NewBarcodeListItem";
 import { Skeleton } from "../../../components/Skeleton";
 import { Typography } from "../../../components/Typography";
-import { supabase, useListRecords } from "../../../db";
+import { useListRecords } from "../../../db";
 
-import { useListBarcodes } from "../../../db/hooks/useListBarcodes";
 import { useInsertBarcode } from "../../../db/hooks/useUpdateBarcode";
 import { createStyles } from "../../../theme/useStyles";
 
 type NewBarcodeLocalSearchParams = {
   inventory: string;
-  barcode: string;
+  new_barcode: string;
 };
 
 export default function NewBarcode() {
   const styles = useStyles();
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
-  const { inventory: inventoryId, barcode } =
+  const router = useRouter();
+  const { inventory: inventoryId, new_barcode } =
     useLocalSearchParams<NewBarcodeLocalSearchParams>();
   const tabBarHeight = useBottomTabBarHeight();
 
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
-  const { data: barcodeList, isLoading } = useListBarcodes(+inventoryId);
   const { mutate } = useInsertBarcode(+inventoryId);
 
-  const handleSaveNewBarcode = async () => {
-    // if (
-    //   !highlighted
-    //   || !barcode
-    // )
-    //   return;
-    mutate({
-      new_barcode: "d",
-      product_id: 2,
-    });
+  const handleSaveNewBarcode = () => {
+    if (!highlighted || !new_barcode) return;
+
+    mutate({ new_barcode, product_id: highlighted });
+    router.back();
   };
 
-  if (!isSuccess || isLoading || (recordList && recordList.length === 0))
+  if (!isSuccess || (recordList && recordList.length === 0))
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
@@ -68,22 +62,22 @@ export default function NewBarcode() {
         </View>
         <View style={styles.listContainer}>
           <View style={styles.date}></View>
-          {/* {Object.values(barcodeList ?? {}).map(({ recordName, productId }) => (
+          {Object.values(recordList ?? {}).map(({ name, product_id }) => (
             <Pressable
-              key={recordName}
+              key={name}
               onPress={() =>
-                highlighted == productId
+                highlighted == product_id
                   ? setHighlighted(null)
-                  : setHighlighted(productId)
+                  : setHighlighted(product_id)
               }
             >
               <NewBarcodeListItem
-                highlighted={highlighted == productId}
+                highlighted={highlighted == product_id}
                 inventoryId={+inventoryId}
-                name={recordName!}
+                name={name!}
               />
             </Pressable>
-          ))} */}
+          ))}
         </View>
       </ScrollView>
       <View>
@@ -92,7 +86,7 @@ export default function NewBarcode() {
           size="l"
           type="primary"
           shadow
-          // disabled={!highlighted || !barcode}
+          disabled={!highlighted || !new_barcode}
           containerStyle={[
             { bottom: tabBarHeight },
             {
