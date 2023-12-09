@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import { beforeNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
@@ -8,33 +9,67 @@
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
   import { CloseCircleSolid } from "flowbite-svelte-icons";
+  import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
+  import ErrorModal from "$lib/modals/ErrorModal.svelte";
 
+  let navigateTo: URL | undefined = undefined;
+  let isFirstPreventedNavigation = true;
   let loading = false;
+  let unsavedChanges = false;
+  let unsavedChangesModal = false;
+  let barcodeErrorModal = false;
   let product: Tables<"product"> | null = null;
   const id = $page.params.id;
-  onMount(() =>
+
+  onMount(() => {
     genericGet(supabase.from("product").select().eq("id", id).single(), (x) => {
       product = x;
       name = product.name;
       unit = product.unit;
       steps = product.steps;
       barcodes = product.barcodes ?? [];
-    })
-  );
+    });
+  });
+
+  beforeNavigate(({ cancel, to }) => {
+    if (!unsavedChanges) {
+      return;
+    }
+    if (isFirstPreventedNavigation) {
+      cancel();
+      unsavedChangesModal = true;
+      navigateTo = to?.url;
+      isFirstPreventedNavigation = false;
+      return;
+    }
+  });
 
   let name: string | undefined = undefined;
   let unit: string | undefined = undefined;
   let steps: number[] = [];
   let barcodes: string[] = [];
   let newBarcode: string | null = null;
+  let newBarcodes: string[] = [];
+  let deleteBarcodes: string[] = [];
 
   const addBarcode = () => {
     if (!newBarcode) return;
+    if (barcodes.find((v) => v === newBarcode) || newBarcodes.find((v) => v === newBarcode)) {
+      barcodeErrorModal = true;
+      return;
+    }
     barcodes = [...barcodes, newBarcode];
+    newBarcodes = [...newBarcodes, newBarcode];
     newBarcode = null;
   };
 
-  const update = () =>
+  const deleteBarcode = (barcodeIndex: number) => {
+    unsavedChanges = true;
+    deleteBarcodes = [...deleteBarcodes, barcodes[barcodeIndex]];
+    barcodes = barcodes.filter((_, i) => i !== barcodeIndex);
+  };
+
+  const update = async () => {
     genericUpdate(
       supabase
         .from("product")
@@ -42,17 +77,64 @@
           name,
           unit,
           steps,
-          barcodes: barcodes?.concat(newBarcode ?? []),
         })
         .eq("id", id),
-      undefined,
-      (x) => (loading = x)
+      { setLoading: (x) => (loading = x) }
     );
+    if (newBarcodes) {
+      newBarcodes.forEach((newBarcode) => {
+        genericUpdate(
+          supabase.rpc("insert_barcode", { new_barcode: newBarcode, product_id: +id }),
+          {
+            setLoading: (x) => (loading = x),
+            onError: () => {
+              barcodeErrorModal = true;
+            },
+          }
+        );
+      });
+    }
+    if (deleteBarcodes) {
+      deleteBarcodes.forEach((barcodeToDelete) => {
+        genericUpdate(
+          supabase.rpc("delete_barcode", { barcode_to_delete: barcodeToDelete, product_id: +id }),
+          {
+            setLoading: (x) => (loading = x),
+          }
+        );
+      });
+    }
+    unsavedChanges = false;
+  };
+
+  const onUnsavedWarningContinue = () => {
+    unsavedChanges = false;
+    unsavedChangesModal = false;
+    if (navigateTo) {
+      goto(navigateTo);
+    }
+  };
+  const onFormChange = () => {
+    if (newBarcode) {
+      unsavedChanges = false;
+      return;
+    }
+    unsavedChanges = true;
+  };
 </script>
 
 {#if product}
   <ScreenCard header={"Produkt - " + product.name}>
-    <form on:submit|preventDefault={update}>
+    <UnsavedWarningModal open={unsavedChangesModal} onContinue={onUnsavedWarningContinue} />
+    <ErrorModal
+      open={barcodeErrorModal}
+      message="Nie udało się dodać kodu - już istnieje dla innego produktu"
+      confirmText="OK"
+      onConfirm={() => {
+        barcodeErrorModal = false;
+      }}
+    />
+    <form on:submit|preventDefault={update} on:change={onFormChange}>
       <Label class="space-y-2">
         <Span>Nazwa</Span>
         <Input type="text" name="name" required bind:value={name} />
@@ -81,23 +163,25 @@
                 class="h-min w-full"
                 bind:value={newBarcode}
               />
-              <Button type="submit" color="primary" class="shrink-0" on:click={addBarcode}
-                >Dodaj kod</Button
-              >
+              <Button color="primary" class="shrink-0" on:click={addBarcode}>Dodaj kod</Button>
             </div>
             {#each barcodes as _barcode, i}
-              <Input type="text" name="steps" class="h-fit" required bind:value={barcodes[i]}>
-                <CloseCircleSolid
-                  slot="right"
-                  on:click={() => (barcodes = barcodes.filter((_, j) => i !== j))}
-                />
+              <Input
+                type="text"
+                name="steps"
+                readonly
+                class="h-fit focus:ring-0 focus:border-gray-300 focus:dark:border-gray-600"
+                required
+                bind:value={barcodes[i]}
+              >
+                <CloseCircleSolid slot="right" on:click={() => deleteBarcode(i)} />
               </Input>
             {/each}
           </div>
         </div>
       </div>
       <Button type="submit" class="mt-4" color="primary"
-        >{loading ? "Saving ..." : "Aktualizuj produkt"}</Button
+        >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
       >
     </form>
   </ScreenCard>

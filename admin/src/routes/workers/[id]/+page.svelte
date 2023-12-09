@@ -31,8 +31,7 @@
           is_admin,
         })
         .eq("id", id),
-      "/workers",
-      (x) => (loading = x)
+      { onSuccess: "/workers", setLoading: (x) => (loading = x) }
     );
 </script>
 
