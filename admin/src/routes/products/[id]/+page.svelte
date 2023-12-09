@@ -35,13 +35,10 @@
     if (!unsavedChanges) {
       return;
     }
-    if (isFirstPreventedNavigation) {
-      cancel();
-      unsavedChangesModal = true;
-      navigateTo = to?.url;
-      isFirstPreventedNavigation = false;
-      return;
-    }
+    cancel();
+    unsavedChangesModal = true;
+    navigateTo = to?.url;
+    return;
   });
 
   let name: string | undefined = undefined;
@@ -61,6 +58,7 @@
     barcodes = [...barcodes, newBarcode];
     newBarcodes = [...newBarcodes, newBarcode];
     newBarcode = null;
+    unsavedChanges = true;
   };
 
   const deleteBarcode = (barcodeIndex: number) => {
@@ -70,6 +68,7 @@
   };
 
   const update = async () => {
+    // TODO - handle error when request fails
     genericUpdate(
       supabase
         .from("product")
@@ -93,6 +92,8 @@
           }
         );
       });
+      // TODO - handle error when request fails
+      newBarcodes = [];
     }
     if (deleteBarcodes) {
       deleteBarcodes.forEach((barcodeToDelete) => {
@@ -103,6 +104,8 @@
           }
         );
       });
+      // TODO - handle error when request fails
+      deleteBarcodes = [];
     }
     unsavedChanges = false;
   };
@@ -125,10 +128,14 @@
 
 {#if product}
   <ScreenCard header={"Produkt - " + product.name}>
-    <UnsavedWarningModal open={unsavedChangesModal} onContinue={onUnsavedWarningContinue} />
+    <UnsavedWarningModal
+      bind:open={unsavedChangesModal}
+      onContinue={onUnsavedWarningContinue}
+      onStay={() => (unsavedChangesModal = false)}
+    />
     <ErrorModal
       open={barcodeErrorModal}
-      message="Nie udało się dodać kodu - już istnieje dla innego produktu"
+      message="Nie udało się dodać kodu - już istnieje dla tego lub innego produktu"
       confirmText="OK"
       onConfirm={() => {
         barcodeErrorModal = false;
