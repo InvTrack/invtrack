@@ -11,6 +11,14 @@ import {
 import { createStyles } from "../theme/useStyles";
 import { Typography, TypographyProps } from "./Typography";
 
+export const BUTTON_SIZE = {
+  xs: 40,
+  s: 48,
+  m: 54,
+  l: 58,
+  xl: 58,
+} as const;
+
 export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {
   onPress?: ButtonOnPress;
@@ -18,7 +26,7 @@ type ButtonProps = {
   labelStyle?: TypographyProps["style"];
   disabled?: boolean;
   type: "primary" | "secondary";
-  size: "xs" | "s" | "m" | "l" | "xl";
+  size: keyof typeof BUTTON_SIZE;
   shadow?: boolean;
   fullWidth?: boolean;
   children?: React.ReactNode;
@@ -108,27 +116,27 @@ const useStyles = createStyles((theme) =>
     disabled: { opacity: 0.6 },
     // SIZES
     xs: {
-      height: 40,
-      width: 40,
+      height: BUTTON_SIZE.xs,
+      width: BUTTON_SIZE.xs,
       paddingHorizontal: 16,
     },
     s: {
-      height: 48,
-      width: 48,
+      height: BUTTON_SIZE.s,
+      width: BUTTON_SIZE.s,
       paddingHorizontal: 18,
     },
     m: {
-      height: 54,
-      width: 54,
+      height: BUTTON_SIZE.m,
+      width: BUTTON_SIZE.m,
       paddingHorizontal: 20,
     },
     l: {
-      height: 58,
-      width: 58,
+      height: BUTTON_SIZE.l,
+      width: BUTTON_SIZE.l,
     },
     xl: {
-      height: 58,
-      width: 58,
+      height: BUTTON_SIZE.xl,
+      width: BUTTON_SIZE.xl,
     },
   })
 );
