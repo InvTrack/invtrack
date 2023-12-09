@@ -28,10 +28,7 @@ export default function BarcodeModal() {
   if (!permission?.granted && !permission?.canAskAgain) {
     // Camera permissions are not granted and can not be asked again
     return (
-      <SafeAreaView
-        edges={["left", "right", "bottom"]}
-        style={styles.container}
-      >
+      <SafeAreaView style={styles.container}>
         <Typography
           variant="l"
           color="darkBlue"
@@ -66,10 +63,7 @@ export default function BarcodeModal() {
   if (!permission?.granted && permission?.canAskAgain) {
     // Camera permissions are not granted yet
     return (
-      <SafeAreaView
-        edges={["left", "right", "bottom"]}
-        style={styles.container}
-      >
+      <SafeAreaView style={styles.container}>
         <Typography
           variant="l"
           color="darkBlue"
