@@ -32,12 +32,11 @@
           date,
         })
         .eq("id", id),
-      "/inventories",
-      (x) => (loading = x)
+      { setLoading: (x) => (loading = x), onSuccess: "/inventories" }
     );
 
   const deleteInventory = () =>
-    genericUpdate(supabase.from("inventory").delete().eq("id", id), "/inventories");
+    genericUpdate(supabase.from("inventory").delete().eq("id", id), { onSuccess: "/inventories" });
 </script>
 
 {#if inventory}
