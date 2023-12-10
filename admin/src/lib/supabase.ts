@@ -17,3 +17,12 @@ export const supabase = createClient<Database>(localUrl, localAnonKey, {
     detectSessionInUrl: false,
   },
 });
+
+export function createTemporaryClient() {
+  return createClient<Database>(localUrl, localAnonKey, {
+    auth: {
+      persistSession: false,
+      detectSessionInUrl: false,
+    },
+  });
+}
