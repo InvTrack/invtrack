@@ -100,14 +100,6 @@ export default function Login() {
       <Link href="/login" style={styles.link}>
         Resetowanie hasła
       </Link>
-      <Typography style={styles.registerLink}>
-        <Typography variant="xs" color="darkBlue" opacity>
-          Nie masz konta?{" "}
-        </Typography>
-        <Link href="/register" style={styles.link}>
-          Zarejestruj się
-        </Link>
-      </Typography>
     </SafeAreaView>
   );
 }
@@ -135,11 +127,6 @@ const useStyles = createStyles((theme) =>
       textDecorationLine: "underline",
       opacity: theme.opacity,
       ...theme.text.xs,
-    },
-    registerLink: {
-      alignSelf: "center",
-      justifyContent: "flex-end",
-      paddingTop: theme.spacing * 5,
     },
   })
 );

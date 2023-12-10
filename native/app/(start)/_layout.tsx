@@ -19,7 +19,6 @@ const StartLayout = () => {
         }}
       />
       <Stack.Screen name="login" />
-      <Stack.Screen name="register" />
     </Stack>
   );
 };
