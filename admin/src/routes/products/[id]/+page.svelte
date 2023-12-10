@@ -13,7 +13,6 @@
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
 
   let navigateTo: URL | undefined = undefined;
-  let isFirstPreventedNavigation = true;
   let loading = false;
   let unsavedChanges = false;
   let unsavedChangesModal = false;
