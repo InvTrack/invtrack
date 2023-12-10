@@ -32,11 +32,6 @@ export default function Start() {
           InvTrack
         </Typography>
       </Card>
-      <Link href="/register" asChild>
-        <Button type="primary" size="l" containerStyle={styles.button}>
-          Zarejestruj się
-        </Button>
-      </Link>
       <Link href="/login" asChild>
         <Button type="secondary" size="l" containerStyle={styles.button}>
           Zaloguj się
