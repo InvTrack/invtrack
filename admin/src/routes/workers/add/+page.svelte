@@ -1,17 +1,30 @@
 <script lang="ts">
-  import { supabase } from "$lib/supabase";
+  import { createTemporaryClient } from "$lib/supabase";
   import { Button, Label, Input, Span } from "flowbite-svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { goto } from "$app/navigation";
+  import { currentCompanyId } from "$lib/store";
 
   let email = "";
+  let full_name = "";
+  let password = "";
   let loading = false;
+  let company_id: number | null = null;
+
+  currentCompanyId.subscribe((id) => {
+    if (id) {
+      company_id = id;
+    }
+  });
+
   const update = async () => {
     try {
       loading = true;
-      let { error } = await supabase.rpc("assign_new_worker_to_company", {
-        new_company_id: 1,
-        worker_email: email,
+      const tempClient = createTemporaryClient();
+      const { data, error } = await tempClient.auth.signUp({
+        email,
+        password,
+        options: { data: { company_id, full_name } },
       });
       if (error) throw error;
       goto("/workers");
@@ -26,8 +39,16 @@
 <ScreenCard header="Add worker">
   <form on:submit|preventDefault={update}>
     <Label class="space-y-2">
+      <Span>Imię</Span>
+      <Input type="text" name="full_name" required bind:value={full_name} />
+    </Label>
+    <Label class="space-y-2">
       <Span>E-mail</Span>
       <Input type="email" name="email" required bind:value={email} />
+    </Label>
+    <Label class="space-y-2">
+      <Span>Hasło</Span>
+      <Input type="password" name="password" required bind:value={password} />
     </Label>
     <Button type="submit" class="mt-4" color="primary">Dodaj pracownika</Button>
   </form>
