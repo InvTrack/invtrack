@@ -90,6 +90,7 @@ export interface Database {
           created_at: string
           id: number
           name: string
+          notification_threshold: number
           steps: number[]
           unit: string
         }
@@ -99,6 +100,7 @@ export interface Database {
           created_at?: string
           id?: number
           name?: string
+          notification_threshold?: number
           steps?: number[]
           unit?: string
         }
@@ -108,6 +110,7 @@ export interface Database {
           created_at?: string
           id?: number
           name?: string
+          notification_threshold?: number
           steps?: number[]
           unit?: string
         }
@@ -214,6 +217,23 @@ export interface Database {
             foreignKeyName: "worker_company_id_fkey"
             columns: ["id"]
             referencedRelation: "company"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      low_quantity: {
+        Row: {
+          inventory_id: number | null
+          name: string | null
+          notification_threshold: number | null
+          product_record_id: number | null
+          quantity: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_record_inventory_id_fkey"
+            columns: ["inventory_id"]
+            referencedRelation: "inventory"
             referencedColumns: ["id"]
           }
         ]
