@@ -5,7 +5,8 @@
     "setup:app": "cd native && npm install && cd ..",
     "setup:landing": "cd landing && npm install && cd ..",
     "setup:admin": "cd admin && npm install && cd ..",
-    "setup": "npm run setup:app ; npm run setup:landing ; npm run setup:admin"
+    "setup": "npm run setup:app ; npm run setup:landing ; npm run setup:admin",
+    "gen-types": "admin && npm run gen-types;native && npm run gen-types"
   },
   "devDependencies": {
     "husky": "^8.0.3"
