@@ -2,15 +2,17 @@ ALTER TABLE "public"."product" ADD COLUMN "notification_threshold" numeric NOT N
 
 -- the WITH clause makes the view apply the underlying table's RLS policy
 DROP VIEW IF EXISTS "public"."low_quantity_product_records_view";
-CREATE OR REPLACE VIEW "public"."low_quantity" WITH (security_invoker) AS
+CREATE OR REPLACE VIEW "public"."low_quantity_product_records_view" WITH (security_invoker) AS
 SELECT "name",
     "notification_threshold",
     "quantity",
     "inventory_id",
-    "id" AS "product_record_id"
+    "id" AS "product_record_id",
+    "unit"
 FROM (
     SELECT "product"."name",
         "product"."notification_threshold",
+        "product"."unit",
         "product_record"."quantity",
         "product_record"."inventory_id",
         "product_record"."id",
