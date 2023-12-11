@@ -1,8 +1,10 @@
-<script>
+<script lang="ts">
   import { page } from "$app/stores";
   import { getIsThemeDark, toggleDarkMode } from "$lib/scripts/darkMode";
   import { supabase } from "$lib/supabase";
   import {
+    Badge,
+    Select,
     Sidebar,
     SidebarDropdownItem,
     SidebarDropdownWrapper,
@@ -11,19 +13,70 @@
     SidebarWrapper,
     Toggle,
   } from "flowbite-svelte";
-  import { BriefcaseSolid, HomeSolid, ListSolid, MoonSolid, SunSolid, UsersSolid } from "flowbite-svelte-icons";
+  import {
+    BellActiveAltSolid,
+    BriefcaseSolid,
+    HomeSolid,
+    ListSolid,
+    MoonSolid,
+    SunSolid,
+    UsersSolid,
+  } from "flowbite-svelte-icons";
+  import logo_dark from "$lib/assets/logo-dark.png";
+  import logo_light from "$lib/assets/logo-light.png";
+  import { onMount } from "svelte";
+  import { genericGet } from "$lib/genericGet";
+  import NotificationCenterModal from "$lib/modals/NotificationCenterModal.svelte";
+  import type { LowQuantityProductRecords } from "$lib/helpers";
+  import type { Notification } from "$lib/modals/notificationCenter.types";
 
   const handleLogout = () => supabase.auth.signOut();
   $: isThemeDark = getIsThemeDark();
   $: activeUrl = $page.url.pathname;
+  let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
+  let lowQuantityNotifications: Notification[] | null = null;
+  onMount(() => {
+    genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
+      lowQuantityProductRecords = x;
+    });
+  });
+
+  $: lowQuantityNotifications =
+    lowQuantityProductRecords &&
+    lowQuantityProductRecords.map((x) => {
+      return {
+        data: {
+          quantity: x.quantity!,
+          notificationThreshold: x.notification_threshold!,
+          unit: x.unit!,
+        },
+        name: x.name!,
+        type: "low_quantity",
+      };
+    });
 </script>
 
 <Sidebar
   {activeUrl}
-  class="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800 px-4 w-72 min-w-[18rem]"
+  class="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10"
 >
+  <NotificationCenterModal open={true} notifications={lowQuantityNotifications} />
+  <img src={isThemeDark ? logo_dark : logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
   <SidebarWrapper>
-    <SidebarGroup>
+    <SidebarGroup class="mt-8 flex justify-start">
+      <SidebarItem class="w-fit">
+        <svelte:fragment slot="icon">
+          <BellActiveAltSolid
+            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white "
+          />
+          <Badge class="relative -top-2 -left-3 rounded-full px-1 w-fit h-fit"
+            >{lowQuantityProductRecords.length}!</Badge
+          >
+        </svelte:fragment>
+        <SidebarDropdownItem label="Sign out" on:click={handleLogout} />
+      </SidebarItem>
+    </SidebarGroup>
+    <SidebarGroup border>
       <SidebarItem label="Podsumowanie" href="/">
         <svelte:fragment slot="icon">
           <HomeSolid

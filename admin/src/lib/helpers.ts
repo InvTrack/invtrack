@@ -14,6 +14,10 @@ export type DbResultErr = PostgrestError;
 export type CurrentCompanyId = CurrentCompanyIdTable["Row"];
 export type CurrentCompanyIdTable = Database["public"]["Views"]["current_company_id"];
 
+export type LowQuantityProductRecords = LowQuantityProductRecordsView["Row"];
+export type LowQuantityProductRecordsView =
+  Database["public"]["Views"]["low_quantity_product_records_view"];
+
 export const convertRemToPixels = (rem: number) =>
   rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
