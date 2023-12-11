@@ -31,7 +31,7 @@
                   {@const quantityUnit = notification.data.quantity + " " + notification.data.unit}
                   <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
                     Niski stan produktu {notification.name} - minimalna porządana ilość: {notificationThresholdUnit},
-                    obecnie jest: {quantityUnit}.
+                    obecnie jest: {quantityUnit}
                   </p>
                 {/if}
               </div>
