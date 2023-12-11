@@ -33,6 +33,7 @@
   const handleLogout = () => supabase.auth.signOut();
   $: isThemeDark = getIsThemeDark();
   $: activeUrl = $page.url.pathname;
+  let isNotificationCenterModalOpen = false;
   let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
   let lowQuantityNotifications: Notification[] | null = null;
   onMount(() => {
@@ -60,20 +61,34 @@
   {activeUrl}
   class="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10"
 >
-  <NotificationCenterModal open={true} notifications={lowQuantityNotifications} />
-  <img src={isThemeDark ? logo_dark : logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
+  <NotificationCenterModal
+    bind:open={isNotificationCenterModalOpen}
+    notifications={lowQuantityNotifications}
+  />
+  {#if isThemeDark}
+    <img src={logo_dark} class="mt-8 mb-8" alt="InvTrack logo" />
+  {:else}
+    <img src={logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
+  {/if}
   <SidebarWrapper>
-    <SidebarGroup class="mt-8 flex justify-start">
-      <SidebarItem class="w-fit">
+    <SidebarGroup>
+      <SidebarItem
+        label="Powiadomienia"
+        spanClass="flex-1 ms-3 whitespace-nowrap"
+        on:click={() => (isNotificationCenterModalOpen = true)}
+      >
         <svelte:fragment slot="icon">
           <BellActiveAltSolid
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white "
+            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           />
-          <Badge class="relative -top-2 -left-3 rounded-full px-1 w-fit h-fit"
-            >{lowQuantityProductRecords.length}!</Badge
-          >
         </svelte:fragment>
-        <SidebarDropdownItem label="Sign out" on:click={handleLogout} />
+        <svelte:fragment slot="subtext">
+          <span
+            class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-primary-200 rounded-full dark:bg-primary-900 dark:text-primary-200"
+          >
+            {lowQuantityProductRecords.length}
+          </span>
+        </svelte:fragment>
       </SidebarItem>
     </SidebarGroup>
     <SidebarGroup border>
