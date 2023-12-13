@@ -12,6 +12,7 @@
   import Gate from "./auth/Gate.svelte";
   import type { CurrentCompanyIdTable } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
+  import Auth from "./auth/Auth.svelte";
 
   let session: AuthSession | null;
 
@@ -63,7 +64,7 @@
   <meta name="description" content="Invtrack" />
 </svelte:head>
 {#if !session}
-  <Login />
+  <Auth />
 {:else}
   <Gate>
     <div class="flex flex-row">
