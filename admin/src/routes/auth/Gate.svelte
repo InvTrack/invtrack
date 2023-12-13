@@ -2,7 +2,7 @@
   import { supabase } from "$lib/supabase";
   import { onMount } from "svelte";
   import type { Views } from "$lib/helpers";
-  import { Card } from "flowbite-svelte";
+  import CenterCard from "./CenterCard.svelte";
 
   let current_worker: Views<"worker_for_current_user"> | null = null;
   let loading = true;
@@ -27,17 +27,21 @@
 </script>
 
 {#if loading}
-  <Card>Ładowanie...</Card>
+  <CenterCard>Ładowanie...</CenterCard>
 {:else if !current_worker}
-  <Card>Pracownik nie został znaleziony<button on:click={handleLogout}>Wyloguj</button></Card>
-{:else if !current_worker.company_id}
-  <Card
-    >Twoje konto nie jest przypisane do żadnej firmy! Skontaktuj się z pomocą techniczną.<button
-      on:click={handleLogout}>Wyloguj</button
-    ></Card
+  <CenterCard
+    >Pracownik nie został znaleziony<button on:click={handleLogout}>Wyloguj</button></CenterCard
   >
+{:else if !current_worker.company_id}
+  <CenterCard>
+    Twoje konto nie jest przypisane do żadnej firmy! Skontaktuj się z pomocą techniczną.<button
+      on:click={handleLogout}>Wyloguj</button
+    >
+  </CenterCard>
 {:else if !current_worker.is_admin}
-  <Card>Nie masz uprawnień do edycji firmy!<button on:click={handleLogout}>Wyloguj</button></Card>
+  <CenterCard
+    >Nie masz uprawnień do edycji firmy!<button on:click={handleLogout}>Wyloguj</button></CenterCard
+  >
 {:else}
   <slot />
 {/if}
