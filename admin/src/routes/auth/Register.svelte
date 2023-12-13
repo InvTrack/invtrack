@@ -13,6 +13,7 @@
   export let switchSiteState = () => {};
 
   const handleSubmit = async () => {
+    if (password !== passwordRepeat) return (errorMessage = "Hasła nie są takie same!");
     try {
       loading = true;
       const { data, error } = await supabase.auth.signUp({
@@ -40,14 +41,14 @@
   </Label>
   <Label class="space-y-2">
     <Span>Hasło</Span>
-    <Input type="password" name="password" placeholder="•••••" required bind:value={password} />
+    <Input type="password" name="password" placeholder="••••••" required bind:value={password} />
   </Label>
   <Label class="space-y-2">
     <Span>Powtórz hasło</Span>
     <Input
       type="password"
       name="password-repeat"
-      placeholder="•••••"
+      placeholder="••••••"
       required
       bind:value={passwordRepeat}
     />
