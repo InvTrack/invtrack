@@ -39,7 +39,7 @@
   </Label>
   <Label class="space-y-2">
     <Span>Hasło</Span>
-    <Input type="password" name="password" placeholder="•••••" required bind:value={password} />
+    <Input type="password" name="password" placeholder="••••••" required bind:value={password} />
   </Label>
   {#if errorMessage}
     <div class="text-red-500">{errorMessage}</div>
