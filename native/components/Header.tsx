@@ -32,11 +32,7 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
   const loggedIn = sessionState.loggedIn;
   const router = useRouter();
 
-  if (
-    route.name === "account" ||
-    route.name === "login" ||
-    route.name === "register"
-  ) {
+  if (route.name === "account" || route.name === "login") {
     return (
       <HeaderWrapper>
         <ArrowRightIcon size={32} onPress={router.back} />

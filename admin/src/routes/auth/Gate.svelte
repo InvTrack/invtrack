@@ -6,6 +6,7 @@
 
   let current_worker: Views<"worker_for_current_user"> | null = null;
   let loading = true;
+  const handleLogout = () => supabase.auth.signOut();
 
   onMount(async () => {
     try {
@@ -26,13 +27,17 @@
 </script>
 
 {#if loading}
-  <Card>Loading...</Card>
+  <Card>Ładowanie...</Card>
 {:else if !current_worker}
-  <Card>Worker not found</Card>
+  <Card>Pracownik nie został znaleziony<button on:click={handleLogout}>Wyloguj</button></Card>
 {:else if !current_worker.company_id}
-  <Card>Your account is not assigned to any company! Contact support.</Card>
+  <Card
+    >Twoje konto nie jest przypisane do żadnej firmy! Skontaktuj się z pomocą techniczną.<button
+      on:click={handleLogout}>Wyloguj</button
+    ></Card
+  >
 {:else if !current_worker.is_admin}
-  <Card>You are not authorized to edit a company!</Card>
+  <Card>Nie masz uprawnień do edycji firmy!<button on:click={handleLogout}>Wyloguj</button></Card>
 {:else}
   <slot />
 {/if}
