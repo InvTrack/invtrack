@@ -3,8 +3,6 @@
   import { getIsThemeDark, toggleDarkMode } from "$lib/scripts/darkMode";
   import { supabase } from "$lib/supabase";
   import {
-    Badge,
-    Select,
     Sidebar,
     SidebarDropdownItem,
     SidebarDropdownWrapper,
