@@ -27,8 +27,12 @@
   import NotificationCenterModal from "$lib/modals/NotificationCenterModal.svelte";
   import type { LowQuantityProductRecords } from "$lib/helpers";
   import type { Notification } from "$lib/modals/notificationCenter.types";
+  import OneSignal from "react-onesignal";
 
-  const handleLogout = () => supabase.auth.signOut();
+  const handleLogout = () => {
+    supabase.auth.signOut();
+    OneSignal.logout();
+  };
   $: isThemeDark = getIsThemeDark();
   $: activeUrl = $page.url.pathname;
   let isNotificationCenterModalOpen = false;
