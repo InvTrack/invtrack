@@ -74,6 +74,10 @@
       (x) => currentCompanyId.set(x?.id)
     );
   });
+
+  $: if (session) {
+    OneSignal.login(session.user.id);
+  }
 </script>
 
 <svelte:head>
