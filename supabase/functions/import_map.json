@@ -1,6 +1,7 @@
 {
   "imports": {
     "papaparse": "https://esm.sh/papaparse@5.4.1",
-    "@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2"
+    "@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2",
+    "@onesignal/node-onesignal": "https://esm.sh/@onesignal/node-onesignal@2.0.1-beta2?target=deno&no-check"
   }
 }
