@@ -14,6 +14,8 @@
   import { genericGet } from "$lib/genericGet";
   import OneSignal from "react-onesignal";
   import { browser } from "$app/environment";
+  import Auth from "./auth/Auth.svelte";
+
   let session: AuthSession | null;
 
   onMount(() => {
@@ -85,7 +87,7 @@
   <meta name="description" content="Invtrack" />
 </svelte:head>
 {#if !session}
-  <Login />
+  <Auth />
 {:else}
   <Gate>
     <div class="flex flex-row">
