@@ -1,7 +1,7 @@
 import { useTheme } from "@react-navigation/native";
 import { Tabs } from "expo-router";
 import React from "react";
-import { InventoryIcon, ListIcon } from "../../components/Icon";
+import { DeliveryIcon, InventoryIcon, ListIcon } from "../../components/Icon";
 
 const TabLayout = () => {
   const theme = useTheme();
@@ -44,7 +44,7 @@ const TabLayout = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
-            <InventoryIcon
+            <DeliveryIcon
               color={focused ? "mediumBlue" : "darkBlue"}
               size={37}
             />
