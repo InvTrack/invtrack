@@ -3,6 +3,8 @@
 // This enables autocomplete, go to definition, etc.
 import { corsHeaders } from "../_shared/cors.ts";
 import * as OneSignal from "@onesignal/node-onesignal";
+import { createClient } from "@supabase/supabase-js@2";
+import { Database } from "../_shared/database.types.ts";
 
 const _OnesignalAppId_ = Deno.env.get("ONESIGNAL_APP_ID")!;
 const _OnesignalUserAuthKey_ = Deno.env.get("USER_AUTH_KEY")!;
@@ -23,23 +25,62 @@ Deno.serve(async (req) => {
   if (req.method !== "POST") {
     return new Response("Method not allowed", { status: 405 });
   }
-  // const { record } = await req.json();
-  // console.log(record);
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  // assume that the provided auth token allows service_role access
+  const supabase = createClient<Database>(
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false },
+    }
+  );
+
+  const { data, error } = await supabase
+    .from("low_quantity_notifications_user_id_view")
+    .select(`*`);
+
+  if (!data) {
+    return new Response(error ? String(error.message) : "No data to return.", {
+      status: 500,
+    });
+  }
+
+  const user_ids_to_notify = data.map((row) => row.user_id);
+
+  if (!user_ids_to_notify.length) {
+    console.log("No user_ids to notify. Aborting.");
+    return new Response("No user_ids to notify.", {
+      status: 200,
+    });
+  }
 
   try {
     // Build OneSignal notification object
     const notification = new OneSignal.Notification();
     notification.app_id = _OnesignalAppId_;
     // should be notification.include_aliases = {external_id: ["user_ids"]}
-    // but the sdk is kinda broken I guess. The method is not deprecated yet.
-    notification.include_external_user_ids = ["user_ids from request"];
+    // but the sdk is kinda broken I guess. The property is not deprecated yet.
+    notification.include_external_user_ids = user_ids_to_notify;
     // en messages are necessary for the notification to be sent
     notification.contents = {
-      en: `Message in en`,
-      pl: `Message in pl`,
+      en: `W inwentaryzacji są produkty o stanie poniżej progu.`,
+      pl: `W inwentaryzacji są produkty o stanie poniżej progu.`,
     };
     const oneSignalNotificationResponse =
       await oneSignalClient.createNotification(notification);
+
+    await supabase
+      .from("inventory")
+      .update({ low_quantity_notification_sent: true })
+      .in(
+        "id",
+        data.map((row) => row.inventory_id)
+      );
 
     return new Response(JSON.stringify(oneSignalNotificationResponse), {
       headers: {
@@ -49,7 +90,7 @@ Deno.serve(async (req) => {
       status: 200,
     });
   } catch (e) {
-    console.error("Failed to create OneSignal notification", e);
+    console.error(e);
     return new Response("Server error. Could not create notification.", {
       headers: { "Content-Type": "application/json" },
       status: 400,
