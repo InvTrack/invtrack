@@ -27,7 +27,20 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="[inventory]"
+        name="inventory-[inventory_id]"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => (
+            <InventoryIcon
+              color={focused ? "mediumBlue" : "darkBlue"}
+              size={37}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="delivery-[inventory_id]"
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (

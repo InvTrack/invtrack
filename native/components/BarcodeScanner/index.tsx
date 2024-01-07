@@ -120,7 +120,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
             text: "Dodaj kod kreskowy",
             onPress: () => {
               router.push({
-                pathname: `/(tabs)/${inventoryId}/new_barcode`,
+                pathname: `/(tabs)/inventory-${inventoryId}/new_barcode`,
                 // TODO ?? Maybe fix - not clear how to pass params to router.push, that aren't in the route
                 params: { new_barcode: data } as any,
               });
@@ -130,7 +130,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
       setAlertShown(true);
       return;
     }
-    router.push(`/(tabs)/${inventoryId}/${barcodeMappedToId}`);
+    router.push(`/(tabs)/inventory-${inventoryId}/${barcodeMappedToId}`);
   };
 
   return (

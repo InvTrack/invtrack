@@ -47,7 +47,7 @@ export default function CreateInventory() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      const routeToNewInventory = `/(tabs)/${inventory.id}` as const;
+      const routeToNewInventory = `/(tabs)/inventory-${inventory.id}` as const;
       router.push(routeToNewInventory);
     }
   }, [isSuccess, inventory]);
