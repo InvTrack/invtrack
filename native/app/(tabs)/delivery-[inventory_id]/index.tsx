@@ -50,7 +50,7 @@ export default function InventoryIdIndex() {
           <Link
             href={{
               pathname: "/barcode_modal",
-              params: { inventoryId },
+              params: { inventoryId, route: "delivery" },
             }}
             asChild
           >

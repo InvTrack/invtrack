@@ -31,7 +31,13 @@ const setCornerXY =
       }),
     ]).start();
 
-export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
+export const BarcodeScanner = ({
+  inventoryId,
+  route,
+}: {
+  inventoryId: number;
+  route: "delivery" | "inventory";
+}) => {
   const styles = useStyles();
 
   const [type, setType] = useState(CameraType.back);
@@ -119,8 +125,9 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
           {
             text: "Dodaj kod kreskowy",
             onPress: () => {
+              // FIXME - as any
               router.push({
-                pathname: `/(tabs)/inventory-${inventoryId}/new_barcode`,
+                pathname: `/(tabs)/${route}-${inventoryId}/new_barcode` as any,
                 // TODO ?? Maybe fix - not clear how to pass params to router.push, that aren't in the route
                 params: { new_barcode: data } as any,
               });
@@ -130,7 +137,7 @@ export const BarcodeScanner = ({ inventoryId }: { inventoryId: number }) => {
       setAlertShown(true);
       return;
     }
-    router.push(`/(tabs)/inventory-${inventoryId}/${barcodeMappedToId}`);
+    router.push(`/(tabs)/${route}-${inventoryId}/${barcodeMappedToId}`);
   };
 
   return (
