@@ -2,16 +2,20 @@
   "scripts": {
     "precommit": "cd native && npm run precommit",
     "prepare": "husky install",
-    "setup:app": "cd native && npm install && cd ..",
-    "setup:landing": "cd landing && npm install && cd ..",
-    "setup:admin": "cd admin && npm install && cd ..",
+    "setup:app": "cd native && npm install",
+    "setup:landing": "cd landing && npm install",
+    "setup:admin": "cd admin && npm install",
     "setup": "npm run setup:app ; npm run setup:landing ; npm run setup:admin",
-    "gen-types": "admin && npm run gen-types;native && npm run gen-types"
+    "gen-types": "supabase gen types typescript --local > database.types.ts && cd native && npm run gen-types && cd ../admin && npm run gen-types",
+    "start": "supabase start",
+    "reset-db": "supabase db reset",
+    "status": "supabase status"
   },
   "devDependencies": {
     "husky": "^8.0.3"
   },
   "dependencies": {
-    "react-native-dotenv": "^3.4.8"
+    "react-native-dotenv": "^3.4.8",
+    "supabase": "^1.110.1"
   }
 }

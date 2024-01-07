@@ -4,6 +4,7 @@ import { Database } from "./generated";
  * Inwentaryzacja - zbiór "wpisów" o tym ile jakiego rodzaju towaru posiadało przedsiębiorstwo w danym czasie
  */
 export type Inventory = InventoryTable["Row"];
+export type InventoryInsert = InventoryTable["Insert"];
 export type InventoryTable = Database["public"]["Tables"]["inventory"];
 
 /**
