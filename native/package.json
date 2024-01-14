@@ -37,7 +37,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
-    "expo-updates": "~0.18.17",
+    "expo-updates": "~0.18.19",
     "expo-web-browser": "~12.3.2",
     "lodash": "^4.17.21",
     "prettier-plugin-organize-imports": "^3.2.2",
