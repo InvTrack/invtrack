@@ -15,7 +15,7 @@ import { createStyles } from "../../../theme/useStyles";
 export default function InventoryIdIndex() {
   const styles = useStyles();
 
-  const { inventory: inventoryId } = useLocalSearchParams();
+  const { id: inventoryId } = useLocalSearchParams();
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
 

@@ -27,7 +27,7 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="inventory-[inventory_id]"
+        name="inventory-[id]"
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
@@ -40,7 +40,7 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="delivery-[inventory_id]"
+        name="delivery-[id]"
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (

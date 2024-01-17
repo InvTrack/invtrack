@@ -6,12 +6,13 @@ import { useListInventories } from "../../../db";
 const InventoryLayout = () => {
   const { data } = useListInventories();
 
-  const inventoryId = data?.[0]?.id;
+  const id = data?.find((item) => !item.is_delivery)?.id;
+
   const noInventories = !data?.length;
 
   if (noInventories) return <Typography>Brak inwentaryzacji</Typography>;
   // TODO skeletons or ???
-  if (!inventoryId) return null;
+  if (!id) return <Typography>Brak inwentaryzacji</Typography>;
 
   return (
     <Stack>
@@ -20,7 +21,7 @@ const InventoryLayout = () => {
         options={{
           headerShown: false,
         }}
-        initialParams={{ inventory: inventoryId }}
+        initialParams={{ id }}
       />
       <Stack.Screen
         name="[record]"

@@ -60,7 +60,7 @@ const navigateToPreviousRecord = (
     : () => {
         !isFirst &&
           replace({
-            pathname: "/(tabs)/inventory-[inventory_id]/[record]",
+            pathname: "/(tabs)/delivery-[id]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
@@ -76,7 +76,7 @@ const navigateToNextRecord = (
     : () => {
         !isLast &&
           replace({
-            pathname: "/(tabs)/inventory-[inventory_id]/[record]",
+            pathname: "/(tabs)/delivery-[id]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
@@ -105,6 +105,7 @@ export default function Record() {
   const queryClient = useQueryClient();
   const recordId = +localSearchParams.record;
   const inventoryId = +localSearchParams.inventory;
+
   const recordPanel = useRecordPanel(recordId);
   const { data: recordIds } = useListRecordIds(inventoryId);
   const { data: inventoryName } = useGetInventoryName(inventoryId);
@@ -182,7 +183,7 @@ export default function Record() {
           </Typography>
           <Typography
             variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
-            style={styles.wasAmount}
+            style={styles.previousQuantity}
           >
             {unit ? previousQuantity + " " + unit : null}
           </Typography>
@@ -282,7 +283,7 @@ const useStyles = createStyles((theme) =>
     contentContainer: { paddingHorizontal: theme.spacing * 3 },
     title: { paddingTop: theme.spacing * 3 },
     wasTitle: { marginTop: theme.spacing * 5.5 },
-    wasAmount: { paddingTop: theme.spacing * 2 },
+    previousQuantity: { paddingTop: theme.spacing * 2 },
     content: { alignItems: "center" },
     gridRow: { flexDirection: "row" },
     leftColumn: { flexDirection: "column", alignItems: "flex-start" },

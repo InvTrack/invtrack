@@ -60,7 +60,7 @@ const navigateToPreviousRecord = (
     : () => {
         !isFirst &&
           replace({
-            pathname: "/(tabs)/delivery-[inventory_id]/[record]",
+            pathname: "/(tabs)/inventory-[id]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };
@@ -76,7 +76,7 @@ const navigateToNextRecord = (
     : () => {
         !isLast &&
           replace({
-            pathname: "/(tabs)/delivery-[inventory_id]/[record]",
+            pathname: "/(tabs)/inventory-[id]/[record]",
             params: { inventory: inventoryId, record: prevRecordId },
           });
       };

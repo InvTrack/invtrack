@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { createStyles } from "../../theme/useStyles";
 import { Card } from "../Card";
 import { SmallerArrowRightIcon } from "../Icon";
@@ -8,20 +8,26 @@ import { Typography } from "../Typography";
 
 type InventoryCardAddProps = {
   title: string;
-  inventoryId: number;
+  id: number;
+  isDelivery: boolean;
 };
 
-export const InventoryCardLink = ({
+const getPathname = (isDelivery: boolean) =>
+  isDelivery ? `/(tabs)/delivery-[id]/` : `/(tabs)/inventory-[id]/`;
+
+export const ListCardLink = ({
   title,
-  inventoryId,
+  id,
+  isDelivery,
 }: InventoryCardAddProps) => {
   const styles = useStyles();
+  const pathname = getPathname(isDelivery);
 
   return (
     <Link
       href={{
-        pathname: `/(tabs)/inventory-[inventory_id]/`,
-        params: { inventory: inventoryId },
+        pathname,
+        params: { id },
       }}
       asChild
     >
@@ -33,6 +39,23 @@ export const InventoryCardLink = ({
         >
           {title}
         </Typography>
+        <View
+          style={
+            isDelivery
+              ? {
+                  backgroundColor: "green",
+                  borderRadius: 100,
+                  width: 20,
+                  height: 20,
+                }
+              : {
+                  backgroundColor: "red",
+                  borderRadius: 100,
+                  width: 20,
+                  height: 20,
+                }
+          }
+        />
         <SmallerArrowRightIcon size={25} />
       </Card>
     </Link>
