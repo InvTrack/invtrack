@@ -1,10 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { DeliveryForm } from "./deliveryForm.types";
 
-type DeliveryForm = {
-  [record_id: number]: {
-    quantity: number;
-  };
-};
 export const DeliveryFormContextProvider = ({
   children,
   defaultValues,
