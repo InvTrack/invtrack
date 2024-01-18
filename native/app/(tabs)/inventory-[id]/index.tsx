@@ -4,8 +4,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/Button";
+import { IDListCard } from "../../../components/IDListCard";
 import { ScanBarcodeIcon } from "../../../components/Icon";
-import { InventoryListCard } from "../../../components/InventoryListCard";
 import { Skeleton } from "../../../components/Skeleton";
 import { Typography } from "../../../components/Typography";
 import { useListRecords } from "../../../db";
@@ -63,7 +63,7 @@ export default function InventoryIdIndex() {
             </Button>
           </Link>
           {recordList.map(({ name, quantity, unit, id }) => (
-            <InventoryListCard
+            <IDListCard
               key={id}
               recordId={id!}
               inventoryId={+inventoryId}
