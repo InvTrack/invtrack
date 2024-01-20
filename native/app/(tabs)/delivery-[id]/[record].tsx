@@ -17,6 +17,7 @@ import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../theme/useStyles";
 
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
+
 import { Skeleton } from "../../../components/Skeleton";
 import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
 import { useRecordPagination } from "../../../utils/useRecordPagination";
@@ -106,12 +107,13 @@ export default function Record() {
   const recordId = +localSearchParams.record;
   const inventoryId = +localSearchParams.inventory;
 
-  const recordPanel = useRecordPanel(recordId);
+  const { data: record, isSuccess, ...recordPanel } = useRecordPanel(recordId);
+
   const { data: recordIds } = useListRecordIds(inventoryId);
   const { data: inventoryName } = useGetInventoryName(inventoryId);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     inventoryId,
-    recordPanel.data?.product_id
+    record?.product_id
   );
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
@@ -121,12 +123,7 @@ export default function Record() {
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
-  if (
-    !recordPanel.isSuccess ||
-    !recordPanel.data?.steps ||
-    !recordPanel.data?.inventory_id ||
-    !recordPanel.data?.name
-  )
+  if (!isSuccess || !record?.steps || !record?.inventory_id || !record?.name)
     return (
       <View style={styles.container}>
         <View style={styles.topBar}>
@@ -152,8 +149,9 @@ export default function Record() {
       </View>
     );
 
-  const { data, setQuantity, steppers } = recordPanel;
-  const { name: recordName, quantity, unit } = data;
+  const { steppers, setQuantity, quantity } = recordPanel;
+
+  const { name: recordName, unit } = record;
 
   const openManualInput = (
     quantity: number,
@@ -196,7 +194,7 @@ export default function Record() {
                   onPress={onRecordButtonStepperPress(
                     click,
                     inventoryId,
-                    recordPanel.data?.product_id,
+                    record?.product_id,
                     queryClient
                   )}
                 />
@@ -208,7 +206,7 @@ export default function Record() {
                 containerStyle={isFirst && styles.firstRecord}
                 onPress={navigateToPreviousRecord(
                   router.replace,
-                  recordPanel.data.inventory_id,
+                  record.inventory_id,
                   prevRecordId,
                   isFirst
                 )}
@@ -242,7 +240,7 @@ export default function Record() {
                   onPress={onRecordButtonStepperPress(
                     click,
                     inventoryId,
-                    recordPanel.data?.product_id,
+                    record?.product_id,
                     queryClient
                   )}
                 />
@@ -254,7 +252,7 @@ export default function Record() {
                 containerStyle={isLast && styles.lastRecord}
                 onPress={navigateToNextRecord(
                   router.replace,
-                  recordPanel.data.inventory_id,
+                  record.inventory_id,
                   nextRecordId,
                   isLast
                 )}
