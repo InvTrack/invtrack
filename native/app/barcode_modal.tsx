@@ -14,7 +14,10 @@ import { createStyles } from "../theme/useStyles";
 export default function BarcodeModal() {
   const styles = useStyles();
 
-  const { inventoryId } = useLocalSearchParams<{ inventoryId: string }>();
+  const { inventoryId, route } = useLocalSearchParams<{
+    inventoryId: string;
+    route: "delivery" | "inventory";
+  }>();
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
   if (!permission) {
@@ -86,7 +89,7 @@ export default function BarcodeModal() {
 
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
-      <BarcodeScanner inventoryId={+inventoryId} />
+      <BarcodeScanner inventoryId={+inventoryId} route={route} />
     </SafeAreaView>
   );
 }

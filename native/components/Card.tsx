@@ -16,7 +16,10 @@ interface CardProps {
   padding?: CardPaddings;
   fullWidth?: boolean;
   children: React.ReactNode;
-  color?: Exclude<ThemeColors, "error" | "grey" | "transparent">;
+  color?: Exclude<
+    ThemeColors,
+    "error" | "grey" | "transparent" | "red" | "green"
+  >;
   style?: StyleProp<ViewStyle>;
   borderTop?: boolean;
   borderBottom?: boolean;

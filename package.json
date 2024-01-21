@@ -8,6 +8,7 @@
     "setup": "npm run setup:app ; npm run setup:landing ; npm run setup:admin",
     "gen-types": "supabase gen types typescript --local > database.types.ts && cd native && npm run gen-types && cd ../admin && npm run gen-types",
     "start": "supabase start",
+    "stop": "supabase stop",
     "reset-db": "supabase db reset",
     "status": "supabase status"
   },
