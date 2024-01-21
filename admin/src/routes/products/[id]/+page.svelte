@@ -18,6 +18,7 @@
   let unsavedChangesModal = false;
   let barcodeErrorModal = false;
   let product: Tables<"product"> | null = null;
+  let notificationThreshold: Tables<"product">["notification_threshold"];
   const id = $page.params.id;
 
   onMount(() => {
@@ -27,6 +28,7 @@
       unit = product.unit;
       steps = product.steps;
       barcodes = product.barcodes ?? [];
+      notificationThreshold = product.notification_threshold;
     });
   });
 
@@ -148,6 +150,12 @@
       <Label class="space-y-2 mt-2">
         <Span>Jednostka</Span>
         <Input type="text" name="unit" required bind:value={unit} />
+      </Label>
+      <Label class="space-y-2 mt-2">
+        <Span>Próg powiadomień</Span>
+        <div class="flex flex-row gap-4">
+          <Input type="text" name="steps" required bind:value={notificationThreshold} />
+        </div>
       </Label>
       <Label class="space-y-2 mt-2">
         <Span>Step</Span>

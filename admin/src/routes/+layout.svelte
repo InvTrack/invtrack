@@ -12,11 +12,30 @@
   import Gate from "./auth/Gate.svelte";
   import type { CurrentCompanyIdTable } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
+  import OneSignal from "react-onesignal";
+  import { browser } from "$app/environment";
   import Auth from "./auth/Auth.svelte";
 
   let session: AuthSession | null;
 
   onMount(() => {
+    if (browser) {
+      OneSignal.init({
+        appId: "3a765f12-92fc-4424-b6a3-7f81681b478f",
+        safari_web_id: "web.onesignal.auto.5b1b15a7-d107-41ff-b02e-c379c8847bd2",
+        notifyButton: {
+          enable: true,
+        },
+        allowLocalhostAsSecureOrigin: true,
+      }).then(() => {
+        OneSignal.Slidedown.promptPush({
+          // TODO: tłumaczenie
+          forceSlidedownOverNative: true,
+          slidedownPromptOptions: {},
+        });
+      });
+    }
+
     initializeDarkMode();
     const urlStringOriginal = $page.url.href;
     if (urlStringOriginal?.includes("#access_token")) {
@@ -57,6 +76,10 @@
       (x) => currentCompanyId.set(x?.id)
     );
   });
+
+  $: if (session) {
+    OneSignal.login(session.user.id);
+  }
 </script>
 
 <svelte:head>

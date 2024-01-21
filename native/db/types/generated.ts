@@ -58,6 +58,8 @@ export interface Database {
           created_at: string;
           date: string;
           id: number;
+          last_product_record_updated_at: string | null;
+          low_quantity_notification_sent: boolean | null;
           name: string;
         };
         Insert: {
@@ -65,6 +67,8 @@ export interface Database {
           created_at?: string;
           date?: string;
           id?: number;
+          last_product_record_updated_at?: string | null;
+          low_quantity_notification_sent?: boolean | null;
           name?: string;
         };
         Update: {
@@ -72,6 +76,8 @@ export interface Database {
           created_at?: string;
           date?: string;
           id?: number;
+          last_product_record_updated_at?: string | null;
+          low_quantity_notification_sent?: boolean | null;
           name?: string;
         };
         Relationships: [
@@ -90,6 +96,7 @@ export interface Database {
           created_at: string;
           id: number;
           name: string;
+          notification_threshold: number;
           steps: number[];
           unit: string;
         };
@@ -99,6 +106,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           name?: string;
+          notification_threshold?: number;
           steps?: number[];
           unit?: string;
         };
@@ -108,6 +116,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           name?: string;
+          notification_threshold?: number;
           steps?: number[];
           unit?: string;
         };
@@ -148,6 +157,12 @@ export interface Database {
             columns: ["inventory_id"];
             referencedRelation: "inventory";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            referencedRelation: "low_quantity_notifications_user_id_view";
+            referencedColumns: ["inventory_id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
@@ -218,6 +233,51 @@ export interface Database {
           }
         ];
       };
+      low_quantity_notifications_user_id_view: {
+        Row: {
+          inventory_id: number | null;
+          user_id: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "worker_id_fkey";
+            columns: ["user_id"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      low_quantity_product_records_view: {
+        Row: {
+          company_id: number | null;
+          inventory_id: number | null;
+          name: string | null;
+          notification_threshold: number | null;
+          product_record_id: number | null;
+          quantity: number | null;
+          unit: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "product_company_id_fkey";
+            columns: ["company_id"];
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            referencedRelation: "inventory";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            referencedRelation: "low_quantity_notifications_user_id_view";
+            referencedColumns: ["inventory_id"];
+          }
+        ];
+      };
       record_view: {
         Row: {
           id: number | null;
@@ -234,6 +294,12 @@ export interface Database {
             columns: ["inventory_id"];
             referencedRelation: "inventory";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            referencedRelation: "low_quantity_notifications_user_id_view";
+            referencedColumns: ["inventory_id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
@@ -308,6 +374,8 @@ export interface Database {
           created_at: string;
           date: string;
           id: number;
+          last_product_record_updated_at: string | null;
+          low_quantity_notification_sent: boolean | null;
           name: string;
         }[];
       };
@@ -328,6 +396,8 @@ export interface Database {
           created_at: string;
           date: string;
           id: number;
+          last_product_record_updated_at: string | null;
+          low_quantity_notification_sent: boolean | null;
           name: string;
         };
       };
@@ -371,7 +441,6 @@ export interface Database {
           id: string;
           name: string;
           owner: string | null;
-          owner_id: string | null;
           public: boolean | null;
           updated_at: string | null;
         };
@@ -383,7 +452,6 @@ export interface Database {
           id: string;
           name: string;
           owner?: string | null;
-          owner_id?: string | null;
           public?: boolean | null;
           updated_at?: string | null;
         };
@@ -395,11 +463,17 @@ export interface Database {
           id?: string;
           name?: string;
           owner?: string | null;
-          owner_id?: string | null;
           public?: boolean | null;
           updated_at?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "buckets_owner_fkey";
+            columns: ["owner"];
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       migrations: {
         Row: {
@@ -431,7 +505,6 @@ export interface Database {
           metadata: Json | null;
           name: string | null;
           owner: string | null;
-          owner_id: string | null;
           path_tokens: string[] | null;
           updated_at: string | null;
           version: string | null;
@@ -444,7 +517,6 @@ export interface Database {
           metadata?: Json | null;
           name?: string | null;
           owner?: string | null;
-          owner_id?: string | null;
           path_tokens?: string[] | null;
           updated_at?: string | null;
           version?: string | null;
@@ -457,7 +529,6 @@ export interface Database {
           metadata?: Json | null;
           name?: string | null;
           owner?: string | null;
-          owner_id?: string | null;
           path_tokens?: string[] | null;
           updated_at?: string | null;
           version?: string | null;
