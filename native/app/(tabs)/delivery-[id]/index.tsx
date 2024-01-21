@@ -31,7 +31,7 @@ export default function InventoryIdIndex() {
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
-        // console.log("error", errors);
+        console.log("error", _errors);
       }
     )();
   };

@@ -3,11 +3,9 @@ import { DeliveryForm } from "./deliveryForm.types";
 
 export const DeliveryFormContextProvider = ({
   children,
-  defaultValues,
 }: {
   children: React.ReactNode;
-  defaultValues: DeliveryForm;
 }) => {
-  const methods = useForm<DeliveryForm>({ defaultValues });
+  const methods = useForm<DeliveryForm>();
   return <FormProvider {...methods}>{children}</FormProvider>;
 };

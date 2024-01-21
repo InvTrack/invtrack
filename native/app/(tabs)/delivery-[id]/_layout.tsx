@@ -15,7 +15,7 @@ const InventoryLayout = () => {
   if (!id) return <Typography>Brak dostaw</Typography>;
 
   return (
-    <DeliveryFormContextProvider defaultValues={{}}>
+    <DeliveryFormContextProvider>
       <Stack>
         <Stack.Screen
           name="index"

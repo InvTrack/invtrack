@@ -17,7 +17,6 @@ import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
 import { createStyles } from "../../../theme/useStyles";
 
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
-
 import { Skeleton } from "../../../components/Skeleton";
 import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
 import { useRecordPagination } from "../../../utils/useRecordPagination";
