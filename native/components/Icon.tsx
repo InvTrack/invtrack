@@ -133,3 +133,7 @@ export const CameraSwitchIcon = (props: IconProps) =>
 export const ScanBarcodeIconSrc = require("../assets/images/scan-barcode.png");
 export const ScanBarcodeIcon = (props: IconProps) =>
   createIcon({ source: ScanBarcodeIconSrc, props });
+
+export const DeliveryIconSrc = require("../assets/images/delivery.png");
+export const DeliveryIcon = (props: IconProps) =>
+  createIcon({ source: DeliveryIconSrc, props });

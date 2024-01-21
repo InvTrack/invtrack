@@ -58,6 +58,7 @@ export interface Database {
           created_at: string
           date: string
           id: number
+          is_delivery: boolean
           last_product_record_updated_at: string | null
           low_quantity_notification_sent: boolean | null
           name: string
@@ -67,6 +68,7 @@ export interface Database {
           created_at?: string
           date?: string
           id?: number
+          is_delivery?: boolean
           last_product_record_updated_at?: string | null
           low_quantity_notification_sent?: boolean | null
           name?: string
@@ -76,6 +78,7 @@ export interface Database {
           created_at?: string
           date?: string
           id?: number
+          is_delivery?: boolean
           last_product_record_updated_at?: string | null
           low_quantity_notification_sent?: boolean | null
           name?: string
@@ -374,6 +377,7 @@ export interface Database {
           created_at: string
           date: string
           id: number
+          is_delivery: boolean
           last_product_record_updated_at: string | null
           low_quantity_notification_sent: boolean | null
           name: string
@@ -396,6 +400,7 @@ export interface Database {
           created_at: string
           date: string
           id: number
+          is_delivery: boolean
           last_product_record_updated_at: string | null
           low_quantity_notification_sent: boolean | null
           name: string
@@ -410,6 +415,10 @@ export interface Database {
           updated_product_id: number
           updated_barcodes: string[]
         }[]
+      }
+      send_low_quantity_notification: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       update_barcode: {
         Args: {

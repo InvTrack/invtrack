@@ -5,27 +5,31 @@ import { createStyles } from "../theme/useStyles";
 import { Card } from "./Card";
 import { Typography } from "./Typography";
 
-type InventoryListCardProps = {
+type IDListCardProps = {
   name: string;
   inventoryId: number;
   recordId: number;
   quantity: number;
   unit: string;
+  isDelivery?: boolean;
 };
 
-export const InventoryListCard = ({
+export const IDListCard = ({
   name,
   inventoryId,
   recordId,
   quantity,
   unit,
-}: InventoryListCardProps) => {
+  isDelivery = false,
+}: IDListCardProps) => {
   const styles = useStyles();
 
   return (
     <Link
       href={{
-        pathname: "/(tabs)/[inventory]/[record]",
+        pathname: `/(tabs)/${
+          isDelivery ? "delivery" : "inventory"
+        }-[id]/[record]`,
         params: { inventory: inventoryId, record: recordId },
       }}
       asChild

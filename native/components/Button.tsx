@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { createStyles } from "../theme/useStyles";
+import { LoadingSpinner } from "./LoadingSpinner";
 import { Typography, TypographyProps } from "./Typography";
 
 export const BUTTON_SIZE = {
@@ -30,6 +31,7 @@ type ButtonProps = {
   shadow?: boolean;
   fullWidth?: boolean;
   children?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 const BORDER_WIDTH = 4;
@@ -55,6 +57,7 @@ export const Button = forwardRef(
       shadow = false,
       fullWidth = false,
       children,
+      isLoading = false,
     }: ButtonProps,
     _ref
   ) => {
@@ -75,7 +78,9 @@ export const Button = forwardRef(
         disabled={disabled}
         activeOpacity={0.8}
       >
-        {isStringChildren ? (
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : isStringChildren ? (
           <Typography variant={size === "xs" ? "s" : "m"} style={styles.string}>
             {children}
           </Typography>
