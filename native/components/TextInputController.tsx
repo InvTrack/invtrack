@@ -5,13 +5,16 @@ import {
   UseControllerProps,
 } from "react-hook-form";
 
+import { View, ViewStyle } from "react-native";
 import { TextInput, TextInputProps } from "./TextInput";
 import { Typography } from "./Typography";
 
 // import { Typography } from "../Typography";
 
 type TextInputControllerProps<T extends FieldValues> = UseControllerProps<T> & {
-  textInputProps?: Omit<TextInputProps, "onChange">;
+  textInputProps?: Omit<TextInputProps, "onChange"> & {
+    containerStyle?: ViewStyle;
+  };
 };
 /**
  * be vary when setting the `value` prop explicitly here
@@ -25,26 +28,23 @@ export const TextInputController = <T extends FieldValues>({
     fieldState: { error },
   } = useController(props);
 
+  const { containerStyle, ...restTextInputProps } = textInputProps || {};
   // TODO Error handling
   return (
-    <>
+    <View style={containerStyle}>
       <TextInput
-        {...textInputProps}
+        {...restTextInputProps}
         onChange={onChange}
-        value={textInputProps?.value || value}
+        value={restTextInputProps?.value || value}
         onBlur={onBlur}
         ref={ref}
       />
       {error && (
-        <Typography
-          variant="xs"
-          color="error"
-          style={{ marginLeft: 8, marginTop: 4 }}
-        >
+        <Typography variant="xs" color="error" style={{ marginLeft: 8 }}>
           {error.message}
         </Typography>
       )}
-    </>
+    </View>
   );
 };
 

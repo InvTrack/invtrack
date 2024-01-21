@@ -22,6 +22,8 @@ const themeColors = {
   darkBlue: "#4A6D90",
   grey: "#96AFC8",
   error: "#EF5350",
+  green: "#0D9F6F",
+  red: "#F05250",
   transparent: "rgba(0,0,0,0)",
 } as const;
 
