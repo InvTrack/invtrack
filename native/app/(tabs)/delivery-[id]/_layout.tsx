@@ -10,7 +10,7 @@ const InventoryLayout = () => {
   const id = data?.find((item) => item.is_delivery)?.id;
   const noInventories = !data?.length;
 
-  if (noInventories) return <Typography>Brak inwentaryzacji</Typography>;
+  if (noInventories) return <Typography>Brak dostaw</Typography>;
   // TODO skeletons or ???
   if (!id) return <Typography>Brak dostaw</Typography>;
 
