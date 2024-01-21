@@ -2,8 +2,9 @@ import capitalize from "lodash/capitalize";
 import React, { useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InventoryCardAdd } from "../../components/InventoryCard/InventoryCardAdd";
-import { InventoryCardLink } from "../../components/InventoryCard/InventoryCardLink";
+import { InventoryCardAdd } from "../../components/ListCard/ListCardAdd";
+
+import { ListCardLink } from "../../components/ListCard/ListCardLink";
 import { Skeleton } from "../../components/Skeleton";
 import { Typography } from "../../components/Typography";
 import { useListInventories } from "../../db";
@@ -111,10 +112,11 @@ const ListIndex = () => {
               <React.Fragment key={day}>
                 <DayTitle title={day} />
                 {inventories.map((inventory) => (
-                  <InventoryCardLink
+                  <ListCardLink
                     key={inventory.id}
                     title={inventory.name}
-                    inventoryId={inventory.id}
+                    id={inventory.id}
+                    isDelivery={inventory.is_delivery}
                   />
                 ))}
                 <InventoryCardAdd />

@@ -139,7 +139,7 @@ export default function Root() {
     }
 
     if (loggedIn && inStartGroup) {
-      router.replace("/(tabs)/list/");
+      router.replace("/(tabs)/list");
     }
 
     if (!loggedIn && !inStartGroup) {

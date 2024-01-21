@@ -1,50 +1,84 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
+import isEmpty from "lodash/isEmpty";
+import { useFormContext } from "react-hook-form";
+import { DeliveryForm } from "../../components/DeliveryFormContext/deliveryForm.types";
 import { useGetRecord } from "./useGetRecord";
-import { useUpdateRecord } from "./useUpdateRecord";
 
 /**
- * Hook do obsługi "karty produktu".
+ * This hook simplifies the process of populating the form with the backend data.
+ * Registers the records as needed, returns values needed to manipulate the form in a safe way.
  *
- * Wystawia `quantity`, oraz `setQuantity` do ręcznego ustawiania ilości danego produktu.
- *
- * Wystawia `negativeSteppers` i `positiveSteppers` do "skakania" o 5, 10, itd.
- *
- * Wystawia też `data` informacje potrzebne do przedstawienia produktu w UI.
- *
+ * Submitting the form is done in a separate hook.
  */
 export const useRecordPanel = (recordId: number) => {
-  const { mutate } = useUpdateRecord(recordId);
   const recordResult = useGetRecord(recordId);
-  const { data, isSuccess } = recordResult;
+  const deliveryForm = useFormContext<DeliveryForm>();
+  if (!deliveryForm) throw new Error("Missing deliveryForm context");
 
+  const { data: record, isSuccess } = recordResult;
+
+  useEffect(() => {
+    if (!record?.id || !record?.product_id || !record.quantity) return;
+
+    const formValues = deliveryForm.getValues();
+    const shouldRegister = isEmpty(formValues[record.id?.toString()]);
+
+    if (!shouldRegister) return;
+
+    // set the new values
+    deliveryForm.register(record.id?.toString(), {
+      value: { quantity: record.quantity, product_id: record.product_id },
+    });
+  }, [record?.id, record?.product_id, record?.quantity]);
+
+  const quantity =
+    deliveryForm.watch(`${record?.id!.toString()}.quantity`) ?? 0;
+
+  const setQuantity = useCallback(
+    (quantity: number) => {
+      if (!record?.id) return;
+      // dot notation is more performant
+      deliveryForm.setValue(`${record?.id!.toString()}.quantity`, quantity, {
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    },
+    [deliveryForm, record?.id, quantity]
+  );
   const stepperFunction = useCallback(
     (step: number) =>
       ({
-        click: () => mutate({ quantity: (data?.quantity as number) + step }),
+        click: () =>
+          deliveryForm.setValue(
+            // dot notation is more performant
+            `${record?.id!.toString()}.quantity`,
+            (quantity as number) + step,
+            {
+              shouldDirty: true,
+              shouldTouch: true,
+            }
+          ),
         step,
       } as const),
-    [mutate, data?.quantity]
+    [quantity, record?.id, deliveryForm]
   );
 
-  const setQuantity = useCallback(
-    (quantity: number) => mutate({ quantity }),
-    [mutate]
-  );
-
-  if (!isSuccess || !data || !data.steps)
+  if (!isSuccess || !record || !record.steps)
     return {
       steppers: { negative: [], positive: [] },
       setQuantity,
+      quantity,
       ...recordResult,
     } as const;
 
   return {
     steppers: {
-      negative: data.steps.map((step) => stepperFunction(-step)),
-      positive: data.steps.map((step) => stepperFunction(step)),
+      negative: record.steps.map((step) => stepperFunction(-step)),
+      positive: record.steps.map((step) => stepperFunction(step)),
     },
     setQuantity,
+    quantity,
     ...recordResult,
   } as const;
 };
