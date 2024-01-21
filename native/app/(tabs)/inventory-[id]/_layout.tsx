@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import React from "react";
+import { InventoryFormContextProvider } from "../../../components/InventoryFormContext/InventoryFormContextProvider";
 import { Typography } from "../../../components/Typography";
 import { useListInventories } from "../../../db";
 
@@ -15,27 +16,29 @@ const InventoryLayout = () => {
   if (!id) return <Typography>Brak inwentaryzacji</Typography>;
 
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: false,
-        }}
-        initialParams={{ id }}
-      />
-      <Stack.Screen
-        name="[record]"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="new_barcode"
-        options={{
-          headerShown: false,
-        }}
-      />
-    </Stack>
+    <InventoryFormContextProvider>
+      <Stack>
+        <Stack.Screen
+          name="index"
+          options={{
+            headerShown: false,
+          }}
+          initialParams={{ id }}
+        />
+        <Stack.Screen
+          name="[record]"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="new_barcode"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack>
+    </InventoryFormContextProvider>
   );
 };
 

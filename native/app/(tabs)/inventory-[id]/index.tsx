@@ -2,14 +2,17 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { Link, useLocalSearchParams } from "expo-router";
+import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/Button";
 import { IDListCard } from "../../../components/IDListCard";
 import { ScanBarcodeIcon } from "../../../components/Icon";
+import { InventoryForm } from "../../../components/InventoryFormContext/inventoryForm.types";
 import { Skeleton } from "../../../components/Skeleton";
 import { Typography } from "../../../components/Typography";
 import { useListRecords } from "../../../db";
 import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
+import { useUpdateRecords } from "../../../db/hooks/useUpdateRecord";
 import { createStyles } from "../../../theme/useStyles";
 
 export default function InventoryIdIndex() {
@@ -18,6 +21,20 @@ export default function InventoryIdIndex() {
   const { id: inventoryId } = useLocalSearchParams();
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const inventoryForm = useFormContext<InventoryForm>();
+  const { mutate } = useUpdateRecords(+inventoryId);
+
+  const handlePress = () => {
+    inventoryForm.handleSubmit(
+      (data) => {
+        mutate(data);
+      },
+      (_errors) => {
+        // TODO show a snackbar? handle error better
+        console.log("error", _errors);
+      }
+    )();
+  };
 
   if (!isSuccess || (recordList && recordList.length === 0))
     return (
@@ -47,21 +64,32 @@ export default function InventoryIdIndex() {
         </View>
         <View style={styles.listContainer}>
           <View style={styles.date}></View>
-          <Link
-            href={{
-              pathname: "/barcode_modal",
-              params: { inventoryId, route: "inventory" },
-            }}
-            asChild
-          >
+          <View style={styles.topButtonsContainer}>
             <Button
-              containerStyle={styles.barcodeIconContainer}
+              containerStyle={styles.saveButtonContainer}
               size="l"
               type="primary"
+              fullWidth
+              onPress={handlePress}
             >
-              <ScanBarcodeIcon size={34} />
+              Zapisz zmiany
             </Button>
-          </Link>
+            <Link
+              href={{
+                pathname: "/barcode_modal",
+                params: { inventoryId, route: "inventory" },
+              }}
+              asChild
+            >
+              <Button
+                containerStyle={styles.barcodeIconContainer}
+                size="l"
+                type="primary"
+              >
+                <ScanBarcodeIcon size={34} />
+              </Button>
+            </Link>
+          </View>
           {recordList.map(({ name, quantity, unit, id }) => (
             <IDListCard
               key={id}
@@ -101,19 +129,29 @@ const useStyles = createStyles((theme) =>
       paddingTop: theme.spacing,
       paddingBottom: theme.spacing,
     },
+    saveButtonContainer: {
+      flexShrink: 1,
+    },
     barcodeIconContainer: {
-      alignSelf: "flex-end",
-      marginBottom: 16,
+      flexGrow: 1,
+    },
+    topButtonsContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: theme.spacing * 4,
+      marginTop: theme.spacing * 2,
+      gap: theme.spacing,
     },
     skeletonTopBarText: { height: 20, width: "50%" },
+    skeletonFullWidthButton: { width: "100%", height: 58 },
     skeletonButton: { width: 58, height: 58 },
     skeletonListItem: {
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      paddingLeft: 16 * 3,
-      paddingRight: 16 * 2,
-      marginBottom: 16 * 2,
+      paddingLeft: theme.spacing * 6,
+      paddingRight: theme.spacing * 4,
+      marginBottom: theme.spacing * 2,
       height: 45,
     },
   })
