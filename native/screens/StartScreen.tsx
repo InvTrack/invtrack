@@ -5,17 +5,18 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { Button } from "../../components/Button";
-import { Card } from "../../components/Card";
+// import { Button } from "../components/Button";
+import { Card } from "../components/Card";
 
-import { Link } from "expo-router";
-import { Typography } from "../../components/Typography";
-import { createStyles } from "../../theme/useStyles";
+import { useNavigation } from "@react-navigation/native";
+import { Button } from "../components/Button";
+import { Typography } from "../components/Typography";
+import { createStyles } from "../theme/useStyles";
 
-export default function Start() {
+export default function StartScreen() {
   const styles = useStyles();
   const { top: safeAreaTopInset } = useSafeAreaInsets();
-
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <Card
@@ -24,7 +25,7 @@ export default function Start() {
         style={[styles.card, { paddingTop: safeAreaTopInset }]}
       >
         <Image
-          source={require("../../assets/images/logo.png")}
+          source={require("../assets/images/logo.png")}
           resizeMode="contain"
           style={styles.logoImage}
         />
@@ -32,12 +33,16 @@ export default function Start() {
           InvTrack
         </Typography>
       </Card>
-      <Link href="/login" asChild>
-        <Button type="secondary" size="l" containerStyle={styles.button}>
-          Zaloguj się
-        </Button>
-      </Link>
-      <Link href="/">Regulamin</Link>
+      <Button
+        type="secondary"
+        size="l"
+        containerStyle={styles.button}
+        onPress={() => {
+          navigation.navigate("Login");
+        }}
+      >
+        Zaloguj się
+      </Button>
     </SafeAreaView>
   );
 }

@@ -1,15 +1,10 @@
-import { HeaderButtonProps } from "@react-navigation/elements";
-import { Href, Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { CogIcon } from "./Icon";
 
-interface HeaderRight<T> extends HeaderButtonProps {
-  href: Href<T>;
-}
-export const HeaderRight = <T,>(props: HeaderRight<T>) => {
+export const HeaderRight = (props: any) => {
+  const navigation = useNavigation();
   return (
-    <Link href={props.href}>
-      <CogIcon size={32} />
-    </Link>
+    <CogIcon size={32} onPress={() => navigation.navigate("SettingsScreen")} />
   );
 };

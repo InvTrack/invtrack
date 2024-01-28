@@ -22,7 +22,6 @@ export type TypographyProps = {
   underline?: boolean;
   opacity?: boolean;
 };
-// Consider adding variants to a StyleSheets, then using them as style[variant]
 
 export const Typography = ({
   children,

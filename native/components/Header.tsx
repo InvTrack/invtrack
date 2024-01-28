@@ -1,5 +1,6 @@
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
+
+import { StackHeaderProps } from "@react-navigation/stack";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HeaderRight } from "./HeaderRight";
@@ -25,20 +26,16 @@ const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
     </View>
   );
 };
-export const Header = ({}: NativeStackHeaderProps) => {
-  const router = useRouter();
-
+export const Header = ({}: StackHeaderProps) => {
+  const navigation = useNavigation();
   return (
     <HeaderWrapper>
-      {router.canGoBack() ? (
-        <ArrowRightIcon
-          size={32}
-          onPress={router.canGoBack() ? router.back : () => {}}
-        />
+      {navigation.canGoBack() ? (
+        <ArrowRightIcon size={32} onPress={navigation.goBack} />
       ) : (
         <View />
       )}
-      <HeaderRight href="/account" />
+      <HeaderRight />
     </HeaderWrapper>
   );
 };

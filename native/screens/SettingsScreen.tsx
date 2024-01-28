@@ -1,6 +1,5 @@
 import React from "react";
 
-import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
@@ -8,18 +7,19 @@ import TextInputController from "../components/TextInputController";
 
 import { ScrollView, StyleSheet } from "react-native";
 
+import { useNavigation } from "@react-navigation/native";
 import { Typography } from "../components/Typography";
 import { supabase } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
 import { createStyles } from "../theme/useStyles";
 
-export default function AccountDetails() {
+export default function SettingsScreen() {
   const styles = useStyles();
   const { session } = useSession();
+  const navigation = useNavigation();
   // const { data: user, isLoading } = useGetUser();
 
   // const updateUser = useUpdateUser();
-  const router = useRouter();
   const { control } = useForm();
 
   return (
@@ -82,7 +82,7 @@ export default function AccountDetails() {
         <Button
           onPress={async () => {
             await supabase.auth.signOut();
-            router.push("/(start)/start");
+            navigation.navigate("StartScreen");
           }}
           type="secondary"
           size="s"

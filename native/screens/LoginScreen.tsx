@@ -2,20 +2,20 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
 
-import { Link } from "expo-router";
+// import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../../components/Button";
-import { LoadingSpinner } from "../../components/LoadingSpinner";
-import TextInputController from "../../components/TextInputController";
-import { Typography } from "../../components/Typography";
-import { supabase } from "../../db";
-import { createStyles } from "../../theme/useStyles";
+import { Button } from "../components/Button";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import TextInputController from "../components/TextInputController";
+import { Typography } from "../components/Typography";
+import { supabase } from "../db";
+import { createStyles } from "../theme/useStyles";
 
 type LoginFormValues = {
   email: string;
   password: string;
 };
-export default function Login() {
+export default function LoginScreen() {
   const styles = useStyles();
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -45,7 +45,7 @@ export default function Login() {
   };
 
   return (
-    <SafeAreaView edges={["left", "bottom", "right"]} style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Typography
         variant="xlBold"
         color="darkBlue"
@@ -97,9 +97,9 @@ export default function Login() {
       >
         {isLoading ? <LoadingSpinner /> : "Zaloguj się"}
       </Button>
-      <Link href="/login" style={styles.link}>
+      {/* <Link href="/login" style={styles.link}>
         Resetowanie hasła
-      </Link>
+      </Link> */}
     </SafeAreaView>
   );
 }

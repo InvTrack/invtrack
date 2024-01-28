@@ -1,5 +1,6 @@
 import { BarCodeScanningResult, Camera, CameraType, Point } from "expo-camera";
-import { useRouter } from "expo-router";
+
+import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -33,10 +34,10 @@ const setCornerXY =
 
 export const BarcodeScanner = ({
   inventoryId,
-  route,
+  navigateTo,
 }: {
   inventoryId: number;
-  route: "delivery" | "inventory";
+  navigateTo: "DeliveryTab" | "InventoryTab";
 }) => {
   const styles = useStyles();
 
@@ -51,7 +52,7 @@ export const BarcodeScanner = ({
   const animatedTRCornerY = useRef(new Animated.Value(0));
   const [alertShown, setAlertShown] = useState(false);
 
-  const router = useRouter();
+  const navigation = useNavigation();
   const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
 
   const toggleCameraType = () => {
@@ -109,7 +110,7 @@ export const BarcodeScanner = ({
     );
   }
 
-  const handleBarCodeScan = (event: BarCodeScanningResult) => {
+  const handleBarcodeScan = (event: BarCodeScanningResult) => {
     const { cornerPoints, data } = event;
     setCorners(cornerPoints);
     const barcodeMappedToId = barcodeList?.[data];
@@ -119,17 +120,15 @@ export const BarcodeScanner = ({
           {
             text: "Cofnij",
             onPress: () => {
-              router.back();
+              navigation.goBack();
             },
           },
           {
             text: "Dodaj kod kreskowy",
             onPress: () => {
-              // FIXME - as any
-              router.push({
-                pathname: `/(tabs)/${route}-${inventoryId}/new_barcode` as any,
-                // TODO ?? Maybe fix - not clear how to pass params to router.push, that aren't in the route
-                params: { new_barcode: data } as any,
+              navigation.navigate("NewBarcode", {
+                new_barcode: data,
+                inventoryId,
               });
             },
           },
@@ -137,7 +136,10 @@ export const BarcodeScanner = ({
       setAlertShown(true);
       return;
     }
-    router.push(`/(tabs)/${route}-${inventoryId}/${barcodeMappedToId}`);
+    navigation.navigate(navigateTo, {
+      inventoryId,
+      recordId: barcodeMappedToId,
+    });
   };
 
   return (
@@ -145,7 +147,7 @@ export const BarcodeScanner = ({
       <Camera
         style={styles.camera}
         type={type}
-        onBarCodeScanned={handleBarCodeScan}
+        onBarCodeScanned={handleBarcodeScan}
       >
         <BarcodeOutline
           animatedTLCornerX={animatedTLCornerX}

@@ -2,13 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { formatISO } from "date-fns";
-import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { DateInputController } from "../components/DateInputController";
 import TextInputController from "../components/TextInputController";
 
+import { useNavigation } from "@react-navigation/native";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
@@ -20,9 +20,9 @@ export type CreateInventoryFormValues = {
   is_delivery: boolean;
 };
 
-export default function CreateInventory() {
+export function NewStockScreen() {
   const styles = useStyles();
-  const router = useRouter();
+  const navigation = useNavigation();
 
   const now = new Date(Date.now());
 
@@ -57,13 +57,11 @@ export default function CreateInventory() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      // FIXME - currently crashes the app, probably an expo-router issue
-      // const route = inventory.is_delivery ? "delivery" : "inventory";
-      // const routeToNewInventory = `/(tabs)/${route}-${inventory.id}` as const;
-      const routeToNewInventory = `/(tabs)/list` as const;
-      router.push(routeToNewInventory);
+      navigation.navigate(is_delivery ? "DeliveryTab" : "InventoryTab", {
+        inventoryId: inventory.id,
+      });
     }
-  }, [isSuccess, inventory, router.push]);
+  }, [isSuccess, inventory]);
 
   const handlePress = () => {
     handleSubmit(onSubmit)();

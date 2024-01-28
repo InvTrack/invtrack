@@ -1,4 +1,5 @@
-import { Link } from "expo-router";
+// import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createStyles } from "../../theme/useStyles";
@@ -7,17 +8,18 @@ import { PlusIcon } from "../Icon";
 
 export const InventoryCardAdd = () => {
   const styles = useStyles();
+  const navigation = useNavigation();
   return (
-    <Link
-      href={{
-        pathname: "/new",
+    <Card
+      color="mediumBlue"
+      style={styles.plusCard}
+      padding="none"
+      onPress={() => {
+        navigation.navigate("NewStockScreen");
       }}
-      asChild
     >
-      <Card color="mediumBlue" style={styles.plusCard} padding="none">
-        <PlusIcon size={25} />
-      </Card>
-    </Link>
+      <PlusIcon size={25} />
+    </Card>
   );
 };
 

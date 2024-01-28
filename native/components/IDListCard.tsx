@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createStyles } from "../theme/useStyles";
@@ -11,7 +11,6 @@ type IDListCardProps = {
   recordId: number;
   quantity: number;
   unit: string;
-  isDelivery?: boolean;
 };
 
 export const IDListCard = ({
@@ -20,36 +19,36 @@ export const IDListCard = ({
   recordId,
   quantity,
   unit,
-  isDelivery = false,
 }: IDListCardProps) => {
   const styles = useStyles();
+  const navigation = useNavigation();
 
   return (
-    <Link
-      href={{
-        pathname: `/(tabs)/${
-          isDelivery ? "delivery" : "inventory"
-        }-[id]/[record]`,
-        params: { inventory: inventoryId, record: recordId },
-      }}
-      asChild
+    <Card
+      color="mediumBlue"
+      style={styles.card}
+      padding="none"
+      onPress={() =>
+        navigation.navigate({
+          name: "Record",
+          params: { recordId, inventoryId },
+        })
+      }
     >
-      <Card color="mediumBlue" style={styles.card} padding="none">
-        <Typography
-          color="darkBlue"
-          variant={name.length > 15 ? "sBold" : "lBold"}
-          numberOfLines={2}
-        >
-          {name}
-        </Typography>
-        <Typography
-          color="darkBlue"
-          variant={name.length > 15 ? "sBold" : "lBold"}
-        >
-          {quantity + " " + unit}
-        </Typography>
-      </Card>
-    </Link>
+      <Typography
+        color="darkBlue"
+        variant={name.length > 15 ? "sBold" : "lBold"}
+        numberOfLines={2}
+      >
+        {name}
+      </Typography>
+      <Typography
+        color="darkBlue"
+        variant={name.length > 15 ? "sBold" : "lBold"}
+      >
+        {quantity + " " + unit}
+      </Typography>
+    </Card>
   );
 };
 const useStyles = createStyles((theme) =>
