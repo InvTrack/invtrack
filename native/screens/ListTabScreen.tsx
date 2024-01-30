@@ -8,6 +8,7 @@ import { ListCardLink } from "../components/ListCard/ListCardLink";
 import { Skeleton } from "../components/Skeleton";
 import { Typography } from "../components/Typography";
 import { useListInventories } from "../db";
+import { ListTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
 const MonthTitle = ({ title }: { title: string }) => {
@@ -65,7 +66,7 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
   return Object.entries(months);
 };
 
-export const ListTab = () => {
+export const ListTab = ({}: ListTabScreenProps) => {
   const styles = useStyles();
   const { data: inventoryList } = useListInventories();
   const months = useMemo(

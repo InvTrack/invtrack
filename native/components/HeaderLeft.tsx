@@ -1,13 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { HomeIcon } from "./Icon";
-// interface HeaderLeft<T> extends HeaderButtonProps {
-//   href: Href<T>;
-// }
-export const HeaderLeft = <T,>(
-  props: any //  HeaderLeft<T>
-) => {
-  const navigation = useNavigation();
+export const HeaderLeft = () => {
+  const navigation = useNavigation<any>();
 
   return (
     <HomeIcon

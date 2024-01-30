@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { View } from "react-native";
 import { DeliveryFormContextProvider } from "../components/DeliveryFormContext/DeliveryFormContextProvider";
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
@@ -12,25 +13,32 @@ import DeliveryTabScreen from "../screens/DeliveryTabScreen";
 import InventoryTabScreen from "../screens/InventoryTabScreen";
 import { ListTab } from "../screens/ListTabScreen";
 import { RecordScreen } from "../screens/RecordScreen";
+import {
+  BottomTabParamList,
+  BottomTabProps,
+  DeliveryStackParamList,
+  DeliveryTabProps,
+  InventoryStackParamList,
+  InventoryTabProps,
+} from "./types";
 
-const noBackButton = () => null;
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const Tab = createBottomTabNavigator();
-const DeliveryStack = createStackNavigator();
-const InventoryStack = createStackNavigator();
+const DeliveryStack = createNativeStackNavigator<DeliveryStackParamList>();
+const InventoryStack = createNativeStackNavigator<InventoryStackParamList>();
 
-const DeliveryStackNavigator = ({ route }) => {
+const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
   const theme = useTheme();
   const routeDeliveryId = route.params?.id;
 
   const { data } = useListInventories();
   const latestDeliveryId = data?.find((item) => item.is_delivery)?.id;
 
-  const deliveryId = routeDeliveryId ?? latestDeliveryId;
+  const deliveryId = (routeDeliveryId ?? latestDeliveryId) as number;
 
   const { data: deliveryName } = useGetInventoryName(deliveryId);
-  const noInventories = !data?.length;
 
+  const noInventories = !data?.length;
   if (noInventories) return <Typography>Brak dostaw</Typography>;
   // TODO skeletons or ???
   if (!(routeDeliveryId ?? deliveryId))
@@ -38,43 +46,56 @@ const DeliveryStackNavigator = ({ route }) => {
 
   return (
     <DeliveryFormContextProvider>
-      <DeliveryStack.Navigator
-        screenOptions={{
-          headerBackground: () => (
-            <View
-              style={{
-                backgroundColor: theme.colors.mediumBlue,
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          ),
-          headerTitle: deliveryName,
-          headerLeft: noBackButton,
-        }}
-      >
+      <DeliveryStack.Navigator screenOptions={{ headerShown: true }}>
         <DeliveryStack.Screen
           name="DeliveryTabScreen"
           component={DeliveryTabScreen}
           initialParams={{ id: deliveryId }}
           options={{
-            headerShown: false,
+            headerBackground: () => (
+              <View
+                style={{
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerBackVisible: false,
+            headerTitle: deliveryName,
           }}
         />
-        <DeliveryStack.Screen name="Record" component={RecordScreen} />
+        <DeliveryStack.Screen
+          name="RecordScreen"
+          component={RecordScreen}
+          options={{
+            headerBackground: () => (
+              <View
+                style={{
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerBackVisible: false,
+            headerTitle: deliveryName,
+            // headerShown: false,
+          }}
+        />
       </DeliveryStack.Navigator>
     </DeliveryFormContextProvider>
   );
 };
 
-const InventoryStackNavigator = ({ route }) => {
+const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
   const theme = useTheme();
   const { data } = useListInventories();
 
   const routeInventoryId = route.params?.id;
   const lastestInventoryId = data?.find((item) => !item.is_delivery)?.id;
 
-  const inventoryId = routeInventoryId ?? lastestInventoryId;
+  const inventoryId = (routeInventoryId ?? lastestInventoryId) as number;
 
   const { data: inventoryName } = useGetInventoryName(inventoryId);
   const noInventories = !data?.length;
@@ -87,36 +108,44 @@ const InventoryStackNavigator = ({ route }) => {
     <InventoryFormContextProvider>
       <InventoryStack.Navigator
         screenOptions={{
-          headerBackground: () => (
-            <View
-              style={{
-                backgroundColor: theme.colors.mediumBlue,
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          ),
-          headerTitle: inventoryName,
-          headerLeft: noBackButton,
+          headerShown: true,
         }}
       >
         <InventoryStack.Screen
           name="InventoryTabScreen"
           component={InventoryTabScreen}
           initialParams={{ id: inventoryId }}
+          options={{
+            headerBackground: () => (
+              <View
+                style={{
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerTitle: inventoryName,
+            headerBackVisible: false,
+          }}
         />
-        <InventoryStack.Screen name="Record" component={RecordScreen} />
+        <InventoryStack.Screen
+          name="RecordScreen"
+          component={RecordScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </InventoryStack.Navigator>
     </InventoryFormContextProvider>
   );
 };
 
-export const BottomTabNavigation = () => {
-  const theme = useTheme();
+export const BottomTabNavigation = ({}: BottomTabProps) => {
   return (
     <Tab.Navigator initialRouteName="ListTab">
       <Tab.Screen
-        name="List"
+        name="ListTab"
         component={ListTab}
         options={{
           tabBarShowLabel: false,

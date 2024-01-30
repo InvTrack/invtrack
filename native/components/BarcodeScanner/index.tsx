@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { useListBarcodes } from "../../db/hooks/useListBarcodes";
+
+import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
 import { CameraSwitchIcon } from "../Icon";
 import { Typography } from "../Typography";
@@ -34,12 +36,13 @@ const setCornerXY =
 
 export const BarcodeScanner = ({
   inventoryId,
-  navigateTo,
+  navigateTo: _navigateTo,
 }: {
   inventoryId: number;
   navigateTo: "DeliveryTab" | "InventoryTab";
 }) => {
   const styles = useStyles();
+  const navigation = useNavigation<BarcodeModalScreenProps["navigation"]>();
 
   const [type, setType] = useState(CameraType.back);
   const animatedTLCornerX = useRef(new Animated.Value(0));
@@ -52,7 +55,6 @@ export const BarcodeScanner = ({
   const animatedTRCornerY = useRef(new Animated.Value(0));
   const [alertShown, setAlertShown] = useState(false);
 
-  const navigation = useNavigation();
   const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
 
   const toggleCameraType = () => {
@@ -126,7 +128,7 @@ export const BarcodeScanner = ({
           {
             text: "Dodaj kod kreskowy",
             onPress: () => {
-              navigation.navigate("NewBarcode", {
+              navigation.navigate("NewBarcodeScreen", {
                 new_barcode: data,
                 inventoryId,
               });
@@ -136,10 +138,10 @@ export const BarcodeScanner = ({
       setAlertShown(true);
       return;
     }
-    navigation.navigate(navigateTo, {
-      inventoryId,
-      recordId: barcodeMappedToId,
-    });
+
+    // FIXME do it properly with navigation
+    // @ts-ignore
+    navigation.navigate("RecordScreen", { id, recordId: barcodeMappedToId });
   };
 
   return (

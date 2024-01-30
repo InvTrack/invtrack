@@ -8,9 +8,16 @@ import { Button } from "../components/Button";
 
 import { Typography } from "../components/Typography";
 
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-export function BarcodeModalScreen({ route }) {
+export type BarcodeModalScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "BarcodeModal"
+>;
+
+export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
   const styles = useStyles();
 
   const { inventoryId, navigateTo } = route.params;

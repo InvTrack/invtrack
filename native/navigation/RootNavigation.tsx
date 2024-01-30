@@ -3,11 +3,6 @@ import { useSession } from "../db";
 import { HomeStackNavigation } from "./HomeStackNavigation";
 import { LoginStackNavigation } from "./LoginStackNavigation";
 
-// import HomeStackNavigation from './HomeStackNavigation';
-// import LoginStackNavigation from './LoginStackNavigation';
-// import UpdateNeededNavigation from './UpdateNeededNavigation';
-// import UserNotAllowedNavigation from './UserNotAllowedNavigation';
-
 const RootNavigation = () => {
   const sessionState = useSession();
   const isLoggedIn = sessionState.loggedIn;

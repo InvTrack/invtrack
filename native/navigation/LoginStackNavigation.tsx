@@ -1,19 +1,20 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import StartScreen from "../screens/StartScreen";
+import { LoginStackParamList } from "./types";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator<LoginStackParamList>();
 
 export const LoginStackNavigation = () => {
   return (
-    <Stack.Navigator initialRouteName={"Start"}>
+    <Stack.Navigator initialRouteName={"StartScreen"}>
       <Stack.Screen
-        name={"Login"}
+        name={"LoginScreen"}
         component={LoginScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name={"Start"}
+        name={"StartScreen"}
         component={StartScreen}
         options={{ headerShown: false }}
       />

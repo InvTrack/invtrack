@@ -5,6 +5,6 @@ import "react-native-gesture-handler";
 global.Buffer = Buffer;
 
 import { registerRootComponent } from "expo";
-import App from "./app/App";
+import App from "./App";
 
 registerRootComponent(App);

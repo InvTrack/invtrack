@@ -3,15 +3,16 @@
 import "react-native-gesture-handler";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  NavigationContainer,
-  ThemeProvider,
-  useNavigationState,
-} from "@react-navigation/native";
+import { NavigationContainer, ThemeProvider } from "@react-navigation/native";
+import NetInfo from "@react-native-community/netinfo";
 import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
-import { QueryClient, focusManager } from "@tanstack/react-query";
+import {
+  QueryClient,
+  focusManager,
+  onlineManager,
+} from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   AppStateStatus,
   Platform,
@@ -19,17 +20,19 @@ import {
   useColorScheme,
 } from "react-native";
 
-import { SessionContext, useSession } from "../db";
-import { mainTheme } from "../theme";
+import { SessionContext, useSession } from "./db";
+import { mainTheme } from "./theme";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { BottomSheet, BottomSheetProvider } from "../components/BottomSheet";
-import RootNavigation from "../navigation/RootNavigation";
+import { BottomSheet, BottomSheetProvider } from "./components/BottomSheet";
+import RootNavigation from "./navigation/RootNavigation";
 import { useFonts } from "expo-font";
+import { useAppState } from "./utils/useAppState";
+import * as SplashScreen from "expo-splash-screen";
 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 const ONE_SECOND = 1000;
 const queryClient = new QueryClient({
@@ -65,36 +68,33 @@ const onAppStateChange = (status: AppStateStatus) => {
 };
 
 const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
+  useAppState(onAppStateChange);
+
+  onlineManager.setEventListener((setOnline) => {
+    return NetInfo.addEventListener((state) => {
+      setOnline(!!state.isConnected);
+    });
+  });
+
   const colorScheme = useColorScheme();
   const sessionState = useSession();
-  const [fontsLoaded, fontsError] = useFonts({
-    latoBold: require("../assets/fonts/Lato-Bold.ttf"),
-    latoRegular: require("../assets/fonts/Lato-Regular.ttf"),
+  const [fontsLoaded] = useFonts({
+    latoBold: require("./assets/fonts/Lato-Bold.ttf"),
+    latoRegular: require("./assets/fonts/Lato-Regular.ttf"),
   });
-  const navigationStateKey = useNavigationState((state) => state?.key);
-
-  React.useEffect(() => {
-    if (!navigationStateKey) {
-      // Temporary fix for router not being ready.
-      return;
-    }
-  }, [navigationStateKey]);
-
-  // useEffect(() => {
-  //   if (fontsError) throw fontsError;
-  // }, [fontsError]);
 
   React.useEffect(() => {
     StatusBar.setBarStyle("dark-content", true);
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {
-    // SplashScreen.preventAutoHideAsync();
+    SplashScreen.preventAutoHideAsync();
     return null;
+  } else {
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 200);
   }
-  // else {
-  // SplashScreen.hideAsync();
-  // }
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>

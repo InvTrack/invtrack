@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { StackHeaderProps } from "@react-navigation/stack";
+import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HeaderRight } from "./HeaderRight";
@@ -26,8 +26,8 @@ const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
     </View>
   );
 };
-export const Header = ({}: StackHeaderProps) => {
-  const navigation = useNavigation();
+export const Header = ({ route }: NativeStackHeaderProps) => {
+  const navigation = useNavigation<NativeStackHeaderProps["navigation"]>();
   return (
     <HeaderWrapper>
       {navigation.canGoBack() ? (
@@ -35,7 +35,7 @@ export const Header = ({}: StackHeaderProps) => {
       ) : (
         <View />
       )}
-      <HeaderRight />
+      {route.name === "SettingsScreen" ? <View /> : <HeaderRight />}
     </HeaderWrapper>
   );
 };

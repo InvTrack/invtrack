@@ -8,11 +8,17 @@ import { Button } from "../components/Button";
 import { DateInputController } from "../components/DateInputController";
 import TextInputController from "../components/TextInputController";
 
-import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
+import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
+
+type NewStockScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "NewStockScreen"
+>;
 
 export type CreateInventoryFormValues = {
   name: string;
@@ -20,9 +26,8 @@ export type CreateInventoryFormValues = {
   is_delivery: boolean;
 };
 
-export function NewStockScreen() {
+export function NewStockScreen({ navigation }: NewStockScreenProps) {
   const styles = useStyles();
-  const navigation = useNavigation();
 
   const now = new Date(Date.now());
 
@@ -57,8 +62,20 @@ export function NewStockScreen() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      navigation.navigate(is_delivery ? "DeliveryTab" : "InventoryTab", {
-        inventoryId: inventory.id,
+      if (is_delivery) {
+        navigation.navigate("Tabs", {
+          screen: "DeliveryTab",
+          params: {
+            id: inventory.id,
+          },
+        });
+        return;
+      }
+      navigation.navigate("Tabs", {
+        screen: "InventoryTab",
+        params: {
+          id: inventory.id,
+        },
       });
     }
   }, [isSuccess, inventory]);

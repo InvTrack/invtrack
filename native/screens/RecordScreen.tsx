@@ -10,10 +10,20 @@ import { useRecordPanel } from "../db";
 import { useListRecordIds } from "../db/hooks/useListRecordIds";
 import { createStyles } from "../theme/useStyles";
 
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "../components/Skeleton";
 import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
+import {
+  DeliveryStackParamList,
+  InventoryStackParamList,
+} from "../navigation/types";
 import { useRecordPagination } from "../utils/useRecordPagination";
+
+export type RecordScreenProps = NativeStackScreenProps<
+  InventoryStackParamList | DeliveryStackParamList,
+  "RecordScreen"
+>;
 
 const RecordButton = ({
   label,
@@ -46,64 +56,51 @@ const RecordButton = ({
 const navigateToPreviousRecord = (
   //   FIX
   navigate: any,
-  inventoryId: number,
+  id: number,
   prevRecordId: number | undefined,
   isFirst: boolean
 ) =>
   prevRecordId === undefined
     ? () => {}
     : () => {
-        !isFirst &&
-          navigate({
-            name: "Record",
-            params: { inventoryId, recordId: prevRecordId },
-          });
+        !isFirst && navigate("RecordScreen", { id, recordId: prevRecordId });
       };
 
 const navigateToNextRecord = (
   //   FIX
   navigate: any,
-  inventoryId: number,
+  id: number,
   prevRecordId: number | undefined,
   isLast: boolean
 ) =>
   prevRecordId === undefined
     ? () => {}
     : () => {
-        !isLast &&
-          navigate({
-            name: "Record",
-            params: { inventoryId, recordId: prevRecordId },
-          });
+        !isLast && navigate("RecordScreen", { id, recordId: prevRecordId });
       };
 
 const onRecordButtonStepperPress =
   (
     click: () => void,
-    inventoryId: number,
+    id: number,
     productId: number | null,
     queryClient: QueryClient
   ) =>
   () => {
     click();
-    queryClient.invalidateQueries(["recordsList", inventoryId]);
-    queryClient.invalidateQueries([
-      "previousRecordQuantity",
-      inventoryId,
-      productId,
-    ]);
+    queryClient.invalidateQueries(["recordsList", id]);
+    queryClient.invalidateQueries(["previousRecordQuantity", id, productId]);
   };
 
-export function RecordScreen({ route, navigation }) {
+export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const styles = useStyles();
-  const { inventoryId, recordId } = route.params;
+  const { id, recordId } = route.params;
   const queryClient = useQueryClient();
 
   const { data: record, isSuccess, ...recordPanel } = useRecordPanel(recordId);
-
-  const { data: recordIds } = useListRecordIds(inventoryId);
+  const { data: recordIds } = useListRecordIds(id);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
-    inventoryId,
+    id,
     record?.product_id
   );
 
@@ -178,7 +175,7 @@ export function RecordScreen({ route, navigation }) {
                   label={step.toString()}
                   onPress={onRecordButtonStepperPress(
                     click,
-                    inventoryId,
+                    id,
                     record?.product_id,
                     queryClient
                   )}
@@ -224,7 +221,7 @@ export function RecordScreen({ route, navigation }) {
                   label={`+${step}`}
                   onPress={onRecordButtonStepperPress(
                     click,
-                    inventoryId,
+                    id,
                     record?.product_id,
                     queryClient
                   )}

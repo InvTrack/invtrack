@@ -1,13 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
+
 import { createStyles } from "../theme/useStyles";
 import { Card } from "./Card";
 import { Typography } from "./Typography";
 
 type IDListCardProps = {
   name: string;
-  inventoryId: number;
+  id: number;
   recordId: number;
   quantity: number;
   unit: string;
@@ -15,23 +16,24 @@ type IDListCardProps = {
 
 export const IDListCard = ({
   name,
-  inventoryId,
+  id,
   recordId,
   quantity,
   unit,
 }: IDListCardProps) => {
   const styles = useStyles();
-  const navigation = useNavigation();
-
+  const navigation = useNavigation<any>();
   return (
     <Card
       color="mediumBlue"
       style={styles.card}
       padding="none"
       onPress={() =>
-        navigation.navigate({
-          name: "Record",
-          params: { recordId, inventoryId },
+        // bypass screen type check, handled by either (Inventory || Delivery)TabScreen navigator,
+        // no need to specify, as they both contain the Record route, with these params
+        navigation.navigate("RecordScreen", {
+          recordId,
+          id,
         })
       }
     >

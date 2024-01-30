@@ -7,16 +7,21 @@ import TextInputController from "../components/TextInputController";
 
 import { ScrollView, StyleSheet } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Typography } from "../components/Typography";
 import { supabase } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
+import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-export default function SettingsScreen() {
+type SettingsScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "SettingsScreen"
+>;
+
+export default function SettingsScreen({ navigation }: SettingsScreenProps) {
   const styles = useStyles();
   const { session } = useSession();
-  const navigation = useNavigation();
   // const { data: user, isLoading } = useGetUser();
 
   // const updateUser = useUpdateUser();
@@ -82,6 +87,7 @@ export default function SettingsScreen() {
         <Button
           onPress={async () => {
             await supabase.auth.signOut();
+            // @ts-ignore
             navigation.navigate("StartScreen");
           }}
           type="secondary"

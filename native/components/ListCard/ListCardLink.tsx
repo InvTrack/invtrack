@@ -1,6 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import {
+  DeliveryTabNavigationProp,
+  InventoryTabNavigationProp,
+} from "../../navigation/types";
 import { createStyles } from "../../theme/useStyles";
 import { Card } from "../Card";
 import { SmallerArrowRightIcon } from "../Icon";
@@ -11,6 +15,21 @@ type InventoryCardAddProps = {
   id: number;
   isDelivery: boolean;
 };
+
+// fuck this type assetion bullshit man
+const navigateToTabScreen =
+  (navigation: any, id: number, isDelivery: boolean) => () => {
+    if (isDelivery) {
+      (navigation as DeliveryTabNavigationProp).navigate("DeliveryTab", {
+        id,
+      });
+      return;
+    }
+    (navigation as InventoryTabNavigationProp).navigate("InventoryTab", {
+      id,
+    });
+    return;
+  };
 
 export const ListCardLink = ({
   title,
@@ -24,12 +43,7 @@ export const ListCardLink = ({
       color="mediumBlue"
       style={styles.card}
       padding="none"
-      onPress={() => {
-        navigation.navigate({
-          name: isDelivery ? "DeliveryTab" : "InventoryTab",
-          params: { id },
-        });
-      }}
+      onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
       <Typography
         color="darkBlue"

@@ -11,12 +11,16 @@ import { ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
+import { DeliveryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-export default function DeliveryTabScreen({ route, navigation }: any) {
-  const styles = useStyles();
-
+export default function DeliveryTabScreen({
+  route,
+  navigation,
+}: DeliveryTabScreenProps) {
   const { id: inventoryId } = route.params;
+
+  const styles = useStyles();
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const deliveryForm = useFormContext<DeliveryForm>();
   const { mutate } = useUpdateRecords(+inventoryId);
@@ -84,7 +88,8 @@ export default function DeliveryTabScreen({ route, navigation }: any) {
               size="l"
               type="primary"
               onPress={() => {
-                navigation.navigate("BarcodeModal", {
+                // necessary hack, handled by parent navigator - be cautious
+                navigation.navigate("BarcodeModal" as any, {
                   inventoryId,
                   navigateTo: "DeliveryTab",
                 });
@@ -97,7 +102,7 @@ export default function DeliveryTabScreen({ route, navigation }: any) {
             <IDListCard
               key={id}
               recordId={id!}
-              inventoryId={+inventoryId}
+              id={+inventoryId}
               quantity={quantity!}
               unit={unit!}
               name={name!}

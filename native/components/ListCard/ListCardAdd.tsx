@@ -8,7 +8,7 @@ import { PlusIcon } from "../Icon";
 
 export const InventoryCardAdd = () => {
   const styles = useStyles();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   return (
     <Card
       color="mediumBlue"

@@ -8,15 +8,20 @@ import {
 // import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 
-import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
+import { LoginStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-export default function StartScreen() {
+export type StartScreenProps = NativeStackScreenProps<
+  LoginStackParamList,
+  "StartScreen"
+>;
+
+export default function StartScreen({ navigation }: StartScreenProps) {
   const styles = useStyles();
   const { top: safeAreaTopInset } = useSafeAreaInsets();
-  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <Card
@@ -38,7 +43,7 @@ export default function StartScreen() {
         size="l"
         containerStyle={styles.button}
         onPress={() => {
-          navigation.navigate("Login");
+          navigation.navigate("LoginScreen");
         }}
       >
         Zaloguj się

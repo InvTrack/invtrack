@@ -8,15 +8,17 @@ import { Skeleton } from "../components/Skeleton";
 import { useListRecords } from "../db";
 
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
+import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-type NewBarcodeLocalSearchParams = {
-  inventory: string;
-  new_barcode: string;
-};
+type NewBarcodeScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "NewBarcodeScreen"
+>;
 
-export function NewBarcodeScreen({ route }) {
+export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
   const styles = useStyles();
   const [highlighted, setHighlighted] = useState<number | null>(null);
 

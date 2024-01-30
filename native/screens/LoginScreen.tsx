@@ -2,20 +2,26 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
 
-// import { Link } from "expo-router";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import TextInputController from "../components/TextInputController";
 import { Typography } from "../components/Typography";
 import { supabase } from "../db";
+import { LoginStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
 type LoginFormValues = {
   email: string;
   password: string;
 };
-export default function LoginScreen() {
+type LoginScreenProps = NativeStackScreenProps<
+  LoginStackParamList,
+  "LoginScreen"
+>;
+
+export default function LoginScreen({}: LoginScreenProps) {
   const styles = useStyles();
 
   const [isLoading, setIsLoading] = React.useState(false);

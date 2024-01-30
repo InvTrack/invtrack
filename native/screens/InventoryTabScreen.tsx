@@ -11,9 +11,13 @@ import { Skeleton } from "../components/Skeleton";
 
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
+import { InventoryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-export default function InventoryTabScreen({ route, navigation }: any) {
+export default function InventoryTabScreen({
+  route,
+  navigation,
+}: InventoryTabScreenProps) {
   const styles = useStyles();
 
   const { id: inventoryId } = route.params;
@@ -73,7 +77,8 @@ export default function InventoryTabScreen({ route, navigation }: any) {
               size="l"
               type="primary"
               onPress={() => {
-                navigation.navigate("BarcodeModal", {
+                // necessary hack, handled by parent navigator - be cautious
+                navigation.navigate("BarcodeModal" as any, {
                   inventoryId,
                   navigateTo: "InventoryTab",
                 });
@@ -86,7 +91,7 @@ export default function InventoryTabScreen({ route, navigation }: any) {
             <IDListCard
               key={id}
               recordId={id!}
-              inventoryId={+inventoryId}
+              id={+inventoryId}
               quantity={quantity!}
               unit={unit!}
               name={name!}
