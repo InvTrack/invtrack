@@ -2,13 +2,14 @@ import capitalize from "lodash/capitalize";
 import React, { useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InventoryCardAdd } from "../../components/ListCard/ListCardAdd";
+import { InventoryCardAdd } from "../components/ListCard/ListCardAdd";
 
-import { ListCardLink } from "../../components/ListCard/ListCardLink";
-import { Skeleton } from "../../components/Skeleton";
-import { Typography } from "../../components/Typography";
-import { useListInventories } from "../../db";
-import { createStyles } from "../../theme/useStyles";
+import { ListCardLink } from "../components/ListCard/ListCardLink";
+import { Skeleton } from "../components/Skeleton";
+import { Typography } from "../components/Typography";
+import { useListInventories } from "../db";
+import { ListTabScreenProps } from "../navigation/types";
+import { createStyles } from "../theme/useStyles";
 
 const MonthTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
@@ -65,7 +66,7 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
   return Object.entries(months);
 };
 
-const ListIndex = () => {
+export const ListTab = ({}: ListTabScreenProps) => {
   const styles = useStyles();
   const { data: inventoryList } = useListInventories();
   const months = useMemo(
@@ -172,4 +173,3 @@ const useStyles = createStyles((theme) =>
     },
   })
 );
-export default ListIndex;

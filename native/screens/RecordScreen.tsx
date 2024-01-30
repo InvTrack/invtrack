@@ -1,25 +1,29 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useBottomSheet } from "../../../components/BottomSheet";
-import { InputBottomSheetContent } from "../../../components/BottomSheet/contents";
-import { Button } from "../../../components/Button";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  PencilIcon,
-} from "../../../components/Icon";
-import { Typography } from "../../../components/Typography";
-import { useRecordPanel } from "../../../db";
-import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
-import { useListRecordIds } from "../../../db/hooks/useListRecordIds";
-import { createStyles } from "../../../theme/useStyles";
+import { useBottomSheet } from "../components/BottomSheet";
+import { InputBottomSheetContent } from "../components/BottomSheet/contents";
+import { Button } from "../components/Button";
+import { ArrowLeftIcon, ArrowRightIcon, PencilIcon } from "../components/Icon";
+import { Typography } from "../components/Typography";
+import { useRecordPanel } from "../db";
+import { useListRecordIds } from "../db/hooks/useListRecordIds";
+import { createStyles } from "../theme/useStyles";
 
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
-import { Skeleton } from "../../../components/Skeleton";
-import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
-import { useRecordPagination } from "../../../utils/useRecordPagination";
+import { Skeleton } from "../components/Skeleton";
+import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
+import {
+  DeliveryStackParamList,
+  InventoryStackParamList,
+} from "../navigation/types";
+import { useRecordPagination } from "../utils/useRecordPagination";
+
+export type RecordScreenProps = NativeStackScreenProps<
+  InventoryStackParamList | DeliveryStackParamList,
+  "RecordScreen"
+>;
 
 const RecordButton = ({
   label,
@@ -50,68 +54,53 @@ const RecordButton = ({
 };
 
 const navigateToPreviousRecord = (
-  replace: ReturnType<typeof useRouter>["replace"],
-  inventoryId: number,
+  //   FIX
+  navigate: any,
+  id: number,
   prevRecordId: number | undefined,
   isFirst: boolean
 ) =>
   prevRecordId === undefined
     ? () => {}
     : () => {
-        !isFirst &&
-          replace({
-            pathname: "/(tabs)/inventory-[id]/[record]",
-            params: { inventory: inventoryId, record: prevRecordId },
-          });
+        !isFirst && navigate("RecordScreen", { id, recordId: prevRecordId });
       };
 
 const navigateToNextRecord = (
-  replace: ReturnType<typeof useRouter>["replace"],
-  inventoryId: number,
+  //   FIX
+  navigate: any,
+  id: number,
   prevRecordId: number | undefined,
   isLast: boolean
 ) =>
   prevRecordId === undefined
     ? () => {}
     : () => {
-        !isLast &&
-          replace({
-            pathname: "/(tabs)/inventory-[id]/[record]",
-            params: { inventory: inventoryId, record: prevRecordId },
-          });
+        !isLast && navigate("RecordScreen", { id, recordId: prevRecordId });
       };
 
 const onRecordButtonStepperPress =
   (
     click: () => void,
-    inventoryId: number,
+    id: number,
     productId: number | null,
     queryClient: QueryClient
   ) =>
   () => {
     click();
-    queryClient.invalidateQueries(["recordsList", inventoryId]);
-    queryClient.invalidateQueries([
-      "previousRecordQuantity",
-      inventoryId,
-      productId,
-    ]);
+    queryClient.invalidateQueries(["recordsList", id]);
+    queryClient.invalidateQueries(["previousRecordQuantity", id, productId]);
   };
 
-export default function Record() {
+export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const styles = useStyles();
-  const localSearchParams = useLocalSearchParams();
-  const router = useRouter();
+  const { id, recordId } = route.params;
   const queryClient = useQueryClient();
-  const recordId = +localSearchParams.record;
-  const inventoryId = +localSearchParams.inventory;
 
   const { data: record, isSuccess, ...recordPanel } = useRecordPanel(recordId);
-
-  const { data: recordIds } = useListRecordIds(inventoryId);
-  const { data: inventoryName } = useGetInventoryName(inventoryId);
+  const { data: recordIds } = useListRecordIds(id);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
-    inventoryId,
+    id,
     record?.product_id
   );
 
@@ -125,9 +114,6 @@ export default function Record() {
   if (!isSuccess || !record?.steps || !record?.inventory_id || !record?.name)
     return (
       <View style={styles.container}>
-        <View style={styles.topBar}>
-          <Skeleton style={styles.skeletonTopbar} />
-        </View>
         <View style={styles.contentContainer}>
           <Skeleton style={styles.skeletonTitle} />
           <View style={styles.skeletonQuantity}>
@@ -166,9 +152,6 @@ export default function Record() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.topBar}>
-        <Typography variant="xsBold">{inventoryName ?? ""}</Typography>
-      </View>
       <View style={styles.contentContainer}>
         <Typography variant="xlBold" underline style={styles.title}>
           {/* nazwa produktu */}
@@ -192,7 +175,7 @@ export default function Record() {
                   label={step.toString()}
                   onPress={onRecordButtonStepperPress(
                     click,
-                    inventoryId,
+                    id,
                     record?.product_id,
                     queryClient
                   )}
@@ -204,7 +187,7 @@ export default function Record() {
                 disabled={isFirst}
                 containerStyle={isFirst && styles.firstRecord}
                 onPress={navigateToPreviousRecord(
-                  router.replace,
+                  navigation.navigate,
                   record.inventory_id,
                   prevRecordId,
                   isFirst
@@ -238,7 +221,7 @@ export default function Record() {
                   label={`+${step}`}
                   onPress={onRecordButtonStepperPress(
                     click,
-                    inventoryId,
+                    id,
                     record?.product_id,
                     queryClient
                   )}
@@ -250,7 +233,7 @@ export default function Record() {
                 disabled={isLast}
                 containerStyle={isLast && styles.lastRecord}
                 onPress={navigateToNextRecord(
-                  router.replace,
+                  navigation.navigate,
                   record.inventory_id,
                   nextRecordId,
                   isLast

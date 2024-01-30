@@ -1,6 +1,10 @@
-import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import {
+  DeliveryTabNavigationProp,
+  InventoryTabNavigationProp,
+} from "../../navigation/types";
 import { createStyles } from "../../theme/useStyles";
 import { Card } from "../Card";
 import { SmallerArrowRightIcon } from "../Icon";
@@ -12,8 +16,20 @@ type InventoryCardAddProps = {
   isDelivery: boolean;
 };
 
-const getPathname = (isDelivery: boolean) =>
-  isDelivery ? `/(tabs)/delivery-[id]/` : `/(tabs)/inventory-[id]/`;
+// fuck this type assetion bullshit man
+const navigateToTabScreen =
+  (navigation: any, id: number, isDelivery: boolean) => () => {
+    if (isDelivery) {
+      (navigation as DeliveryTabNavigationProp).navigate("DeliveryTab", {
+        id,
+      });
+      return;
+    }
+    (navigation as InventoryTabNavigationProp).navigate("InventoryTab", {
+      id,
+    });
+    return;
+  };
 
 export const ListCardLink = ({
   title,
@@ -21,44 +37,40 @@ export const ListCardLink = ({
   isDelivery,
 }: InventoryCardAddProps) => {
   const styles = useStyles();
-  const pathname = getPathname(isDelivery);
-
+  const navigation = useNavigation();
   return (
-    <Link
-      href={{
-        pathname,
-        params: { id },
-      }}
-      asChild
+    <Card
+      color="mediumBlue"
+      style={styles.card}
+      padding="none"
+      onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
-      <Card color="mediumBlue" style={styles.card} padding="none">
-        <Typography
-          color="darkBlue"
-          variant={title.length > 15 ? "sBold" : "lBold"}
-          numberOfLines={2}
-        >
-          {title}
-        </Typography>
-        <View
-          style={
-            isDelivery
-              ? {
-                  backgroundColor: "green",
-                  borderRadius: 100,
-                  width: 20,
-                  height: 20,
-                }
-              : {
-                  backgroundColor: "red",
-                  borderRadius: 100,
-                  width: 20,
-                  height: 20,
-                }
-          }
-        />
-        <SmallerArrowRightIcon size={25} />
-      </Card>
-    </Link>
+      <Typography
+        color="darkBlue"
+        variant={title.length > 15 ? "sBold" : "lBold"}
+        numberOfLines={2}
+      >
+        {title}
+      </Typography>
+      <View
+        style={
+          isDelivery
+            ? {
+                backgroundColor: "green",
+                borderRadius: 100,
+                width: 20,
+                height: 20,
+              }
+            : {
+                backgroundColor: "red",
+                borderRadius: 100,
+                width: 20,
+                height: 20,
+              }
+        }
+      />
+      <SmallerArrowRightIcon size={25} />
+    </Card>
   );
 };
 const useStyles = createStyles((theme) =>

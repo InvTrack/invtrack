@@ -1,31 +1,29 @@
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import { useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../../../components/Button";
-import { NewBarcodeListItem } from "../../../components/NewBarcodeListItem";
-import { Skeleton } from "../../../components/Skeleton";
-import { Typography } from "../../../components/Typography";
-import { useListRecords } from "../../../db";
+import { Button } from "../components/Button";
+import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
+import { Skeleton } from "../components/Skeleton";
+import { useListRecords } from "../db";
 
-import { useInsertBarcode } from "../../../db/hooks/useUpdateBarcode";
-import { createStyles } from "../../../theme/useStyles";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
+import { HomeStackParamList } from "../navigation/types";
+import { createStyles } from "../theme/useStyles";
 
-type NewBarcodeLocalSearchParams = {
-  inventory: string;
-  new_barcode: string;
-};
+type NewBarcodeScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "NewBarcodeScreen"
+>;
 
-export default function NewBarcode() {
+export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
   const styles = useStyles();
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
-  const router = useRouter();
-  const { inventory: inventoryId, new_barcode } =
-    useLocalSearchParams<NewBarcodeLocalSearchParams>();
-  const tabBarHeight = useBottomTabBarHeight();
+  const navigation = useNavigation();
+  const { inventoryId, new_barcode } = route.params;
 
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const { mutate } = useInsertBarcode(+inventoryId);
@@ -34,16 +32,16 @@ export default function NewBarcode() {
     if (!highlighted || !new_barcode) return;
 
     mutate({ new_barcode, product_id: highlighted });
-    router.back();
+    // go back to modal
+    navigation.goBack();
+    // close modal
+    navigation.goBack();
   };
 
   if (!isSuccess || (recordList && recordList.length === 0))
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
-          <View style={styles.topBar}>
-            <Skeleton style={styles.skeletonTopBarText} />
-          </View>
           <View style={styles.listContainer}>
             <View style={styles.date}></View>
             <Skeleton style={styles.skeletonListItem} />
@@ -57,9 +55,6 @@ export default function NewBarcode() {
   return (
     <SafeAreaView edges={["left", "right"]}>
       <ScrollView style={styles.scroll}>
-        <View style={styles.topBar}>
-          <Typography variant="xsBold">Dodaj kod kreskowy </Typography>
-        </View>
         <View style={styles.listContainer}>
           <View style={styles.date}></View>
           {Object.values(recordList ?? {}).map(({ name, product_id }) => (
@@ -88,8 +83,8 @@ export default function NewBarcode() {
           shadow
           disabled={!highlighted || !new_barcode}
           containerStyle={[
-            { bottom: tabBarHeight },
             {
+              bottom: 32,
               width: "80%",
               position: "absolute",
               alignSelf: "center",

@@ -1,55 +1,56 @@
-import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
+
 import { createStyles } from "../theme/useStyles";
 import { Card } from "./Card";
 import { Typography } from "./Typography";
 
 type IDListCardProps = {
   name: string;
-  inventoryId: number;
+  id: number;
   recordId: number;
   quantity: number;
   unit: string;
-  isDelivery?: boolean;
 };
 
 export const IDListCard = ({
   name,
-  inventoryId,
+  id,
   recordId,
   quantity,
   unit,
-  isDelivery = false,
 }: IDListCardProps) => {
   const styles = useStyles();
-
+  const navigation = useNavigation<any>();
   return (
-    <Link
-      href={{
-        pathname: `/(tabs)/${
-          isDelivery ? "delivery" : "inventory"
-        }-[id]/[record]`,
-        params: { inventory: inventoryId, record: recordId },
-      }}
-      asChild
+    <Card
+      color="mediumBlue"
+      style={styles.card}
+      padding="none"
+      onPress={() =>
+        // bypass screen type check, handled by either (Inventory || Delivery)TabScreen navigator,
+        // no need to specify, as they both contain the Record route, with these params
+        navigation.navigate("RecordScreen", {
+          recordId,
+          id,
+        })
+      }
     >
-      <Card color="mediumBlue" style={styles.card} padding="none">
-        <Typography
-          color="darkBlue"
-          variant={name.length > 15 ? "sBold" : "lBold"}
-          numberOfLines={2}
-        >
-          {name}
-        </Typography>
-        <Typography
-          color="darkBlue"
-          variant={name.length > 15 ? "sBold" : "lBold"}
-        >
-          {quantity + " " + unit}
-        </Typography>
-      </Card>
-    </Link>
+      <Typography
+        color="darkBlue"
+        variant={name.length > 15 ? "sBold" : "lBold"}
+        numberOfLines={2}
+      >
+        {name}
+      </Typography>
+      <Typography
+        color="darkBlue"
+        variant={name.length > 15 ? "sBold" : "lBold"}
+      >
+        {quantity + " " + unit}
+      </Typography>
+    </Card>
   );
 };
 const useStyles = createStyles((theme) =>

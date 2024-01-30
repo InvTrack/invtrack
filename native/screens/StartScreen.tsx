@@ -5,17 +5,23 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { Button } from "../../components/Button";
-import { Card } from "../../components/Card";
+// import { Button } from "../components/Button";
+import { Card } from "../components/Card";
 
-import { Link } from "expo-router";
-import { Typography } from "../../components/Typography";
-import { createStyles } from "../../theme/useStyles";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Button } from "../components/Button";
+import { Typography } from "../components/Typography";
+import { LoginStackParamList } from "../navigation/types";
+import { createStyles } from "../theme/useStyles";
 
-export default function Start() {
+export type StartScreenProps = NativeStackScreenProps<
+  LoginStackParamList,
+  "StartScreen"
+>;
+
+export default function StartScreen({ navigation }: StartScreenProps) {
   const styles = useStyles();
   const { top: safeAreaTopInset } = useSafeAreaInsets();
-
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <Card
@@ -24,7 +30,7 @@ export default function Start() {
         style={[styles.card, { paddingTop: safeAreaTopInset }]}
       >
         <Image
-          source={require("../../assets/images/logo.png")}
+          source={require("../assets/images/logo.png")}
           resizeMode="contain"
           style={styles.logoImage}
         />
@@ -32,12 +38,16 @@ export default function Start() {
           InvTrack
         </Typography>
       </Card>
-      <Link href="/login" asChild>
-        <Button type="secondary" size="l" containerStyle={styles.button}>
-          Zaloguj się
-        </Button>
-      </Link>
-      <Link href="/">Regulamin</Link>
+      <Button
+        type="secondary"
+        size="l"
+        containerStyle={styles.button}
+        onPress={() => {
+          navigation.navigate("LoginScreen");
+        }}
+      >
+        Zaloguj się
+      </Button>
     </SafeAreaView>
   );
 }
