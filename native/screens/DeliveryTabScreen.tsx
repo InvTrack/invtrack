@@ -1,26 +1,27 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-import { Link, useLocalSearchParams } from "expo-router";
+// import { Link, useLocalSearchParams } from "expo-router";
 import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../../../components/Button";
-import { DeliveryForm } from "../../../components/DeliveryFormContext/deliveryForm.types";
-import { IDListCard } from "../../../components/IDListCard";
-import { ScanBarcodeIcon } from "../../../components/Icon";
-import { Skeleton } from "../../../components/Skeleton";
-import { Typography } from "../../../components/Typography";
-import { useListRecords } from "../../../db";
-import { useGetInventoryName } from "../../../db/hooks/useGetInventoryName";
-import { useUpdateRecords } from "../../../db/hooks/useUpdateRecord";
-import { createStyles } from "../../../theme/useStyles";
+import { Button } from "../components/Button";
+import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.types";
+import { IDListCard } from "../components/IDListCard";
+import { ScanBarcodeIcon } from "../components/Icon";
+import { Skeleton } from "../components/Skeleton";
+import { useListRecords } from "../db";
+import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
+import { DeliveryTabScreenProps } from "../navigation/types";
+import { createStyles } from "../theme/useStyles";
 
-export default function InventoryIdIndex() {
+export default function DeliveryTabScreen({
+  route,
+  navigation,
+}: DeliveryTabScreenProps) {
+  const { id: inventoryId } = route.params;
+
   const styles = useStyles();
-
-  const { id: inventoryId } = useLocalSearchParams();
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
-  const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const deliveryForm = useFormContext<DeliveryForm>();
   const { mutate } = useUpdateRecords(+inventoryId);
 
@@ -70,9 +71,6 @@ export default function InventoryIdIndex() {
   return (
     <SafeAreaView edges={["left", "right"]}>
       <ScrollView style={styles.scroll}>
-        <View style={styles.topBar}>
-          <Typography variant="xsBold">{inventoryName ?? ""}</Typography>
-        </View>
         <View style={styles.listContainer}>
           <View style={styles.date}></View>
           <View style={styles.topButtonsContainer}>
@@ -85,31 +83,29 @@ export default function InventoryIdIndex() {
             >
               Zapisz zmiany
             </Button>
-            <Link
-              href={{
-                pathname: "/barcode_modal",
-                params: { inventoryId, route: "delivery" },
+            <Button
+              containerStyle={styles.barcodeIconContainer}
+              size="l"
+              type="primary"
+              onPress={() => {
+                // necessary hack, handled by parent navigator - be cautious
+                navigation.navigate("BarcodeModal" as any, {
+                  inventoryId,
+                  navigateTo: "DeliveryTab",
+                });
               }}
-              asChild
             >
-              <Button
-                containerStyle={styles.barcodeIconContainer}
-                size="l"
-                type="primary"
-              >
-                <ScanBarcodeIcon size={34} />
-              </Button>
-            </Link>
+              <ScanBarcodeIcon size={34} />
+            </Button>
           </View>
           {recordList.map(({ name, quantity, unit, id }) => (
             <IDListCard
               key={id}
               recordId={id!}
-              inventoryId={+inventoryId}
+              id={+inventoryId}
               quantity={quantity!}
               unit={unit!}
               name={name!}
-              isDelivery
             />
           ))}
         </View>

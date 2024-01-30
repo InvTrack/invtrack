@@ -8,16 +8,19 @@ import { Button } from "../components/Button";
 
 import { Typography } from "../components/Typography";
 
-import { useLocalSearchParams } from "expo-router";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-export default function BarcodeModal() {
+export type BarcodeModalScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "BarcodeModal"
+>;
+
+export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
   const styles = useStyles();
 
-  const { inventoryId, route } = useLocalSearchParams<{
-    inventoryId: string;
-    route: "delivery" | "inventory";
-  }>();
+  const { inventoryId, navigateTo } = route.params;
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
   if (!permission) {
@@ -31,7 +34,7 @@ export default function BarcodeModal() {
   if (!permission?.granted && !permission?.canAskAgain) {
     // Camera permissions are not granted and can not be asked again
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={[]}>
         <Typography
           variant="l"
           color="darkBlue"
@@ -89,7 +92,7 @@ export default function BarcodeModal() {
 
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
-      <BarcodeScanner inventoryId={+inventoryId} route={route} />
+      <BarcodeScanner inventoryId={+inventoryId} navigateTo={navigateTo} />
     </SafeAreaView>
   );
 }

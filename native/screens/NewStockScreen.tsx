@@ -2,17 +2,23 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { formatISO } from "date-fns";
-import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { DateInputController } from "../components/DateInputController";
 import TextInputController from "../components/TextInputController";
 
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
+import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
+
+type NewStockScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "NewStockScreen"
+>;
 
 export type CreateInventoryFormValues = {
   name: string;
@@ -20,9 +26,8 @@ export type CreateInventoryFormValues = {
   is_delivery: boolean;
 };
 
-export default function CreateInventory() {
+export function NewStockScreen({ navigation }: NewStockScreenProps) {
   const styles = useStyles();
-  const router = useRouter();
 
   const now = new Date(Date.now());
 
@@ -57,13 +62,23 @@ export default function CreateInventory() {
 
   React.useEffect(() => {
     if (isSuccess && inventory) {
-      // FIXME - currently crashes the app, probably an expo-router issue
-      // const route = inventory.is_delivery ? "delivery" : "inventory";
-      // const routeToNewInventory = `/(tabs)/${route}-${inventory.id}` as const;
-      const routeToNewInventory = `/(tabs)/list` as const;
-      router.push(routeToNewInventory);
+      if (is_delivery) {
+        navigation.navigate("Tabs", {
+          screen: "DeliveryTab",
+          params: {
+            id: inventory.id,
+          },
+        });
+        return;
+      }
+      navigation.navigate("Tabs", {
+        screen: "InventoryTab",
+        params: {
+          id: inventory.id,
+        },
+      });
     }
-  }, [isSuccess, inventory, router.push]);
+  }, [isSuccess, inventory]);
 
   const handlePress = () => {
     handleSubmit(onSubmit)();
