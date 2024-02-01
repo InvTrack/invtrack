@@ -87,3 +87,11 @@ export type DeliveryTabScreenProps = NativeStackScreenProps<
 >;
 export type DeliveryTabScreenNavigationProp =
   DeliveryTabScreenProps["navigation"];
+
+/**
+ * Record Screen
+ */
+export type RecordScreenNavigationProp = NativeStackScreenProps<
+  InventoryStackParamList | DeliveryStackParamList,
+  "RecordScreen"
+>["navigation"];

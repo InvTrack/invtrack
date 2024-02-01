@@ -10,6 +10,7 @@ import { InventoryForm } from "../components/InventoryFormContext/inventoryForm.
 import { Skeleton } from "../components/Skeleton";
 
 import { useNetInfo } from "@react-native-community/netinfo";
+import isEmpty from "lodash/isEmpty";
 import { useSnackbar } from "../components/Snackbar";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
@@ -42,6 +43,7 @@ export default function InventoryTabScreen({
           description: "Zmiany zostały zapisane",
         },
       });
+      return;
     }
     if (isUpdateError) {
       notify("error", {
@@ -50,12 +52,22 @@ export default function InventoryTabScreen({
           description: "Nie udało się zapisać zmian",
         },
       });
+      return;
     }
   }, [isUpdateSuccess, isUpdateError]);
 
   const handlePress = () => {
     inventoryForm.handleSubmit(
       (data) => {
+        if (isEmpty(data)) {
+          notify("info", {
+            params: {
+              title: "Brak zmian",
+              description: "Nie wprowadzono żadnych zmian",
+            },
+          });
+          return;
+        }
         mutate(data);
       },
       (_errors) => {

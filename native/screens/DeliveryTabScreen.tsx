@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 // import { Link, useLocalSearchParams } from "expo-router";
 import { useNetInfo } from "@react-native-community/netinfo";
+import isEmpty from "lodash/isEmpty";
 import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
@@ -42,6 +43,7 @@ export default function DeliveryTabScreen({
           description: "Zmiany zostały zapisane",
         },
       });
+      return;
     }
     if (isUpdateError) {
       notify("error", {
@@ -50,12 +52,22 @@ export default function DeliveryTabScreen({
           description: "Nie udało się zapisać zmian",
         },
       });
+      return;
     }
   }, [isUpdateSuccess, isUpdateError]);
 
   const handlePress = () => {
     deliveryForm.handleSubmit(
       (data) => {
+        if (isEmpty(data)) {
+          notify("info", {
+            params: {
+              title: "Brak zmian",
+              description: "Nie wprowadzono żadnych zmian",
+            },
+          });
+          return;
+        }
         mutate(data);
       },
       (_errors) => {
