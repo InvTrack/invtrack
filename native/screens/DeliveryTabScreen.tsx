@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 // import { Link, useLocalSearchParams } from "expo-router";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
@@ -9,6 +10,7 @@ import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.typ
 import { IDListCard } from "../components/IDListCard";
 import { ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
+import { useSnackbar } from "../components/Snackbar";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { DeliveryTabScreenProps } from "../navigation/types";
@@ -21,9 +23,35 @@ export default function DeliveryTabScreen({
   const { id: inventoryId } = route.params;
 
   const styles = useStyles();
+  const { isConnected } = useNetInfo();
+
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const deliveryForm = useFormContext<DeliveryForm>();
-  const { mutate } = useUpdateRecords(+inventoryId);
+  const {
+    mutate,
+    isSuccess: isUpdateSuccess,
+    isError: isUpdateError,
+  } = useUpdateRecords(+inventoryId);
+  const { notify } = useSnackbar();
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      notify("success", {
+        params: {
+          title: "Zapisano",
+          description: "Zmiany zostały zapisane",
+        },
+      });
+    }
+    if (isUpdateError) {
+      notify("error", {
+        params: {
+          title: "Błąd",
+          description: "Nie udało się zapisać zmian",
+        },
+      });
+    }
+  }, [isUpdateSuccess, isUpdateError]);
 
   const handlePress = () => {
     deliveryForm.handleSubmit(
@@ -80,6 +108,7 @@ export default function DeliveryTabScreen({
               type="primary"
               fullWidth
               onPress={handlePress}
+              disabled={!isConnected}
             >
               Zapisz zmiany
             </Button>
