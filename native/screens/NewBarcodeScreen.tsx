@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,8 +7,10 @@ import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { Skeleton } from "../components/Skeleton";
 import { useListRecords } from "../db";
 
+import { useNetInfo } from "@react-native-community/netinfo";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useSnackbar } from "../components/Snackbar";
 import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -20,13 +22,19 @@ type NewBarcodeScreenProps = NativeStackScreenProps<
 
 export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
   const styles = useStyles();
+  const { isConnected } = useNetInfo();
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
   const navigation = useNavigation();
   const { inventoryId, new_barcode } = route.params;
 
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
-  const { mutate } = useInsertBarcode(+inventoryId);
+  const {
+    mutate,
+    isError: isInsertError,
+    isSuccess: isInsertSuccess,
+  } = useInsertBarcode(+inventoryId);
+  const { notify } = useSnackbar();
 
   const handleSaveNewBarcode = () => {
     if (!highlighted || !new_barcode) return;
@@ -37,6 +45,25 @@ export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
     // close modal
     navigation.goBack();
   };
+
+  useEffect(() => {
+    if (isInsertSuccess) {
+      notify("success", {
+        params: {
+          title: "Zapisano",
+          description: "Zmiany zostały zapisane",
+        },
+      });
+    }
+    if (isInsertError) {
+      notify("error", {
+        params: {
+          title: "Błąd",
+          description: "Nie udało się zapisać zmian",
+        },
+      });
+    }
+  }, [isInsertSuccess, isInsertError]);
 
   if (!isSuccess || (recordList && recordList.length === 0))
     return (
@@ -81,7 +108,7 @@ export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
           size="l"
           type="primary"
           shadow
-          disabled={!highlighted || !new_barcode}
+          disabled={!isConnected || !highlighted || !new_barcode}
           containerStyle={[
             {
               bottom: 32,
