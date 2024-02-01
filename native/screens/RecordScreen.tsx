@@ -17,6 +17,7 @@ import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQu
 import {
   DeliveryStackParamList,
   InventoryStackParamList,
+  RecordScreenNavigationProp,
 } from "../navigation/types";
 import { useRecordPagination } from "../utils/useRecordPagination";
 
@@ -54,8 +55,7 @@ const RecordButton = ({
 };
 
 const navigateToPreviousRecord = (
-  //   FIX
-  navigate: any,
+  navigate: RecordScreenNavigationProp["navigate"],
   id: number,
   prevRecordId: number | undefined,
   isFirst: boolean
@@ -67,8 +67,7 @@ const navigateToPreviousRecord = (
       };
 
 const navigateToNextRecord = (
-  //   FIX
-  navigate: any,
+  navigate: RecordScreenNavigationProp["navigate"],
   id: number,
   prevRecordId: number | undefined,
   isLast: boolean
