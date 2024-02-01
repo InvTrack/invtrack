@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { formatISO } from "date-fns";
@@ -8,7 +8,9 @@ import { Button } from "../components/Button";
 import { DateInputController } from "../components/DateInputController";
 import TextInputController from "../components/TextInputController";
 
+import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useSnackbar } from "../components/Snackbar";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
@@ -28,6 +30,7 @@ export type CreateInventoryFormValues = {
 
 export function NewStockScreen({ navigation }: NewStockScreenProps) {
   const styles = useStyles();
+  const { isConnected } = useNetInfo();
 
   const now = new Date(Date.now());
 
@@ -43,24 +46,17 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
       },
       mode: "onSubmit",
     });
-  const is_delivery = watch("is_delivery");
-
   const {
     mutate,
     data: inventory,
     isSuccess,
     isLoading,
+    isError,
   } = useCreateInventory();
 
-  const onSubmit = (data: CreateInventoryFormValues) => {
-    mutate(data);
-  };
+  const { notify } = useSnackbar();
 
-  const setDateValue = (value: string) => {
-    reset({ ...getValues, date: value });
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSuccess && inventory) {
       if (is_delivery) {
         navigation.navigate("Tabs", {
@@ -79,6 +75,26 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
       });
     }
   }, [isSuccess, inventory]);
+
+  useEffect(() => {
+    if (isError) {
+      notify("error", {
+        params: {
+          title: "Błąd",
+          description: "Nie udało się zapisać zmian",
+        },
+      });
+    }
+  }, [isError]);
+
+  const onSubmit = (data: CreateInventoryFormValues) => {
+    mutate(data);
+  };
+
+  const setDateValue = (value: string) => {
+    reset({ ...getValues, date: value });
+  };
+  const is_delivery = watch("is_delivery");
 
   const handlePress = () => {
     handleSubmit(onSubmit)();
@@ -132,6 +148,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
         containerStyle={styles.buttonContainer}
         // looks werid but prevents a synthetic event warn
         onPress={handlePress}
+        disabled={!isConnected}
       >
         Dodaj
       </Button>
