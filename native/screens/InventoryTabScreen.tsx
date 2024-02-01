@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useFormContext } from "react-hook-form";
@@ -9,6 +9,8 @@ import { ScanBarcodeIcon } from "../components/Icon";
 import { InventoryForm } from "../components/InventoryFormContext/inventoryForm.types";
 import { Skeleton } from "../components/Skeleton";
 
+import { useNetInfo } from "@react-native-community/netinfo";
+import { useSnackbar } from "../components/Snackbar";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { InventoryTabScreenProps } from "../navigation/types";
@@ -21,9 +23,35 @@ export default function InventoryTabScreen({
   const styles = useStyles();
 
   const { id: inventoryId } = route.params;
+  const { isConnected } = useNetInfo();
+
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const inventoryForm = useFormContext<InventoryForm>();
-  const { mutate } = useUpdateRecords(+inventoryId);
+  const {
+    mutate,
+    isSuccess: isUpdateSuccess,
+    isError: isUpdateError,
+  } = useUpdateRecords(+inventoryId);
+  const { notify } = useSnackbar();
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      notify("success", {
+        params: {
+          title: "Zapisano",
+          description: "Zmiany zostały zapisane",
+        },
+      });
+    }
+    if (isUpdateError) {
+      notify("error", {
+        params: {
+          title: "Błąd",
+          description: "Nie udało się zapisać zmian",
+        },
+      });
+    }
+  }, [isUpdateSuccess, isUpdateError]);
 
   const handlePress = () => {
     inventoryForm.handleSubmit(
@@ -69,6 +97,7 @@ export default function InventoryTabScreen({
               type="primary"
               fullWidth
               onPress={handlePress}
+              disabled={!isConnected}
             >
               Zapisz zmiany
             </Button>
