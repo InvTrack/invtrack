@@ -4,6 +4,7 @@ import { DeliveryForm } from "../../components/DeliveryFormContext/deliveryForm.
 import { supabase } from "../supabase";
 
 const updateRecords = async (records: DeliveryForm, inventoryId: number) => {
+  if (!Object.keys(records).length) return;
   const rec = Object.entries(records).map(
     ([record_id, { quantity, product_id }]) => ({
       id: Number(record_id),
@@ -25,23 +26,34 @@ const updateRecords = async (records: DeliveryForm, inventoryId: number) => {
 export const useUpdateRecords = (inventoryId: number) => {
   const queryClient = useQueryClient();
 
-  return useMutation((records) => updateRecords(records, inventoryId), {
+  return useMutation({
+    mutationFn: async (records) => await updateRecords(records, inventoryId),
     onMutate: async (records: DeliveryForm) => {
       const recordsIterable = Object.entries(records);
       // concurrency
-      Promise.all(
+      await Promise.all(
         recordsIterable.map(([recordId, _record]) => {
+          queryClient.setQueryData(
+            ["product_record", recordId],
+            (old: any) => ({ ...old, ...records[recordId] })
+          );
           queryClient.cancelQueries(["product_record", recordId]);
+          return void this;
         })
       );
     },
     onSettled: async (data) => {
       if (!data) return;
-      Promise.all(
-        data?.map(({ id: recordId }) => {
-          queryClient.invalidateQueries(["product_record", recordId]);
-        })
-      );
+      queryClient.invalidateQueries(["recordsList", inventoryId], {
+        exact: true,
+        refetchType: "all",
+      });
+      data?.map(({ id: recordId }) => {
+        queryClient.invalidateQueries(["product_record", recordId], {
+          exact: true,
+          refetchType: "all",
+        });
+      });
     },
   });
 };

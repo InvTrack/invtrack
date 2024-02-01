@@ -24,13 +24,3 @@ export const SnackbarProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useSnackbar = useNotifications;
-// const { notify } = useSnackbar();
-// useEffect(() => {
-//   notify("success", {
-//     params: {
-//       title: "title",
-//       style: {},
-//       description: "description",
-//     },
-//   });
-// }, []);

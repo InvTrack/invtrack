@@ -16,13 +16,10 @@ const insertBarcode = async ({
     product_id,
   });
 
-  console.log("useUpdateBarcode", data, error);
-
   if (error) {
     Alert.alert("Błąd", "Kod kreskowy jest już przypisany do innego produktu.");
     return;
   }
-
   return data;
 };
 
@@ -30,7 +27,6 @@ export const useInsertBarcode = (inventory_id: number) => {
   const queryClient = useQueryClient();
 
   return useMutation(insertBarcode, {
-    cacheTime: 0,
     onSuccess: () => {
       queryClient.invalidateQueries(["barcodeList", inventory_id]);
     },

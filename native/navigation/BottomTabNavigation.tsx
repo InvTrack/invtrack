@@ -157,8 +157,8 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         }}
       />
       <Tab.Screen
-        name="DeliveryTab"
-        component={DeliveryStackNavigator}
+        name="InventoryTab"
+        component={InventoryStackNavigator}
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (
@@ -171,8 +171,8 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         }}
       />
       <Tab.Screen
-        name="InventoryTab"
-        component={InventoryStackNavigator}
+        name="DeliveryTab"
+        component={DeliveryStackNavigator}
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => (

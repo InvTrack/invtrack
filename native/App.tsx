@@ -41,7 +41,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     mutations: {
       cacheTime: ONE_SECOND * 60 * 5,
-      retry: 100,
+      retry: 10,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
     },
@@ -49,10 +49,10 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       refetchOnReconnect: true,
       refetchOnMount: true,
-      retry: 100,
+      retry: 10,
       retryDelay: (attemptIndex) =>
         Math.min(ONE_SECOND * 2 ** attemptIndex, 30 * ONE_SECOND),
-      cacheTime: ONE_SECOND * 60 * 5,
+      cacheTime: ONE_SECOND * 60 * 10,
       staleTime: ONE_SECOND * 60,
     },
   },
@@ -61,7 +61,7 @@ const queryClient = new QueryClient({
 const asyncPersist = createAsyncStoragePersister({
   storage: AsyncStorage,
   key: "query-cache",
-  throttleTime: 1000,
+  throttleTime: 500,
 });
 
 const onAppStateChange = (status: AppStateStatus) => {
@@ -108,11 +108,6 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
               persistOptions={{
                 persister: asyncPersist,
               }}
-              onSuccess={() =>
-                queryClient
-                  .resumePausedMutations()
-                  .then(() => queryClient.refetchQueries())
-              }
             >
               <ThemeProvider
                 value={colorScheme === "dark" ? mainTheme : mainTheme}
