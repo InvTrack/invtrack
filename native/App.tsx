@@ -31,6 +31,8 @@ import { useFonts } from "expo-font";
 import { useAppState } from "./utils/useAppState";
 import * as SplashScreen from "expo-splash-screen";
 
+import { SnackbarProvider } from "./components/Snackbar";
+
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
 
@@ -58,6 +60,7 @@ const queryClient = new QueryClient({
 
 const asyncPersist = createAsyncStoragePersister({
   storage: AsyncStorage,
+  key: "query-cache",
   throttleTime: 1000,
 });
 
@@ -128,8 +131,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <ProvideProviders>
-        <RootNavigation />
-        <BottomSheet />
+        <SnackbarProvider>
+          <RootNavigation />
+          <BottomSheet />
+        </SnackbarProvider>
       </ProvideProviders>
     </NavigationContainer>
   );
