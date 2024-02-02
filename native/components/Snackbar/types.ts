@@ -5,10 +5,7 @@ export type SnackbarItem = {
   type: SnackbarType;
   id: number;
 };
-export type SnackbarProps = {
-  item: SnackbarItem;
-  index: number;
-};
+
 export type SnackbarAction =
   | {
       type: "SHOW_SNACKBAR";
