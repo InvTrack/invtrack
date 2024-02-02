@@ -17,8 +17,10 @@ import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQu
 import {
   DeliveryStackParamList,
   InventoryStackParamList,
+  RecordScreenNavigationProp,
 } from "../navigation/types";
 import { useRecordPagination } from "../utils/useRecordPagination";
+import { useRunBlurEffect } from "../utils/useRunBlurEffect";
 
 export type RecordScreenProps = NativeStackScreenProps<
   InventoryStackParamList | DeliveryStackParamList,
@@ -54,8 +56,7 @@ const RecordButton = ({
 };
 
 const navigateToPreviousRecord = (
-  //   FIX
-  navigate: any,
+  navigate: RecordScreenNavigationProp["navigate"],
   id: number,
   prevRecordId: number | undefined,
   isFirst: boolean
@@ -67,8 +68,7 @@ const navigateToPreviousRecord = (
       };
 
 const navigateToNextRecord = (
-  //   FIX
-  navigate: any,
+  navigate: RecordScreenNavigationProp["navigate"],
   id: number,
   prevRecordId: number | undefined,
   isLast: boolean
@@ -88,7 +88,6 @@ const onRecordButtonStepperPress =
   ) =>
   () => {
     click();
-    queryClient.invalidateQueries(["recordsList", id]);
     queryClient.invalidateQueries(["previousRecordQuantity", id, productId]);
   };
 
@@ -97,7 +96,12 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const { id, recordId } = route.params;
   const queryClient = useQueryClient();
 
-  const { data: record, isSuccess, ...recordPanel } = useRecordPanel(recordId);
+  const {
+    data: record,
+    isSuccess,
+    isLoading,
+    ...recordPanel
+  } = useRecordPanel(recordId);
   const { data: recordIds } = useListRecordIds(id);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     id,
@@ -111,7 +115,19 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
-  if (!isSuccess || !record?.steps || !record?.inventory_id || !record?.name)
+  useRunBlurEffect(() => {
+    queryClient.invalidateQueries(["recordsList", id], {
+      type: "all",
+    });
+  });
+
+  if (
+    !isSuccess ||
+    isLoading ||
+    !record?.steps ||
+    !record?.inventory_id ||
+    !record?.name
+  )
     return (
       <View style={styles.container}>
         <View style={styles.contentContainer}>

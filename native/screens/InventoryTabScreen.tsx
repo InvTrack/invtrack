@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useFormContext } from "react-hook-form";
@@ -9,6 +9,9 @@ import { ScanBarcodeIcon } from "../components/Icon";
 import { InventoryForm } from "../components/InventoryFormContext/inventoryForm.types";
 import { Skeleton } from "../components/Skeleton";
 
+import { useNetInfo } from "@react-native-community/netinfo";
+import isEmpty from "lodash/isEmpty";
+import { useSnackbar } from "../components/Snackbar/context";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { InventoryTabScreenProps } from "../navigation/types";
@@ -21,13 +24,35 @@ export default function InventoryTabScreen({
   const styles = useStyles();
 
   const { id: inventoryId } = route.params;
+  const { isConnected } = useNetInfo();
+
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const inventoryForm = useFormContext<InventoryForm>();
-  const { mutate } = useUpdateRecords(+inventoryId);
+  const {
+    mutate,
+    isSuccess: isUpdateSuccess,
+    isError: isUpdateError,
+  } = useUpdateRecords(+inventoryId);
+  const { showError, showInfo, showSuccess } = useSnackbar();
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      showSuccess("Zmiany zostały zapisane");
+      return;
+    }
+    if (isUpdateError) {
+      showError("Nie udało się zapisać zmian");
+      return;
+    }
+  }, [isUpdateSuccess, isUpdateError]);
 
   const handlePress = () => {
     inventoryForm.handleSubmit(
       (data) => {
+        if (isEmpty(data)) {
+          showInfo("Brak zmian do zapisania");
+          return;
+        }
         mutate(data);
       },
       (_errors) => {
@@ -69,6 +94,7 @@ export default function InventoryTabScreen({
               type="primary"
               fullWidth
               onPress={handlePress}
+              disabled={!isConnected}
             >
               Zapisz zmiany
             </Button>

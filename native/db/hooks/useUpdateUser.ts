@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
-import { Alert } from "react-native";
 
+import { useSnackbar } from "../../components/Snackbar/context";
 import { supabase } from "../supabase";
 import { SessionContext } from "./sessionContext";
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
   const { session } = useContext(SessionContext);
+  const { showError } = useSnackbar();
   return useMutation(
     async ({
       username,
@@ -17,7 +18,9 @@ export const useUpdateUser = () => {
       companyName: string;
     }) => {
       try {
-        if (!session?.user) throw new Error("No user on the session!");
+        if (!session?.user) {
+          showError("Nie jesteś zalogowany");
+        }
 
         const updates = {
           id: session?.user.id,
@@ -29,12 +32,10 @@ export const useUpdateUser = () => {
         const { error } = await supabase.from("user").upsert(updates);
 
         if (error) {
-          throw error;
+          showError("Nieznany błąd, spróbuj ponownie");
         }
       } catch (error) {
-        if (error instanceof Error) {
-          Alert.alert(error.message);
-        }
+        showError("Nieznany błąd, spróbuj ponownie");
       }
     },
     { onSuccess: () => queryClient.invalidateQueries(["user"]) }
