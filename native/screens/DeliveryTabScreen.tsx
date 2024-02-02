@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 // import { Link, useLocalSearchParams } from "expo-router";
+import { useNetInfo } from "@react-native-community/netinfo";
+import isEmpty from "lodash/isEmpty";
 import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
@@ -9,6 +11,7 @@ import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.typ
 import { IDListCard } from "../components/IDListCard";
 import { ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
+import { useSnackbar } from "../components/Snackbar/context";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { DeliveryTabScreenProps } from "../navigation/types";
@@ -21,13 +24,35 @@ export default function DeliveryTabScreen({
   const { id: inventoryId } = route.params;
 
   const styles = useStyles();
+  const { isConnected } = useNetInfo();
+
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const deliveryForm = useFormContext<DeliveryForm>();
-  const { mutate } = useUpdateRecords(+inventoryId);
+  const {
+    mutate,
+    isSuccess: isUpdateSuccess,
+    isError: isUpdateError,
+  } = useUpdateRecords(+inventoryId);
+  const { showError, showInfo, showSuccess } = useSnackbar();
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      showSuccess("Zmiany zostały zapisane");
+      return;
+    }
+    if (isUpdateError) {
+      showError("Nie udało się zapisać zmian");
+      return;
+    }
+  }, [isUpdateSuccess, isUpdateError]);
 
   const handlePress = () => {
     deliveryForm.handleSubmit(
       (data) => {
+        if (isEmpty(data)) {
+          showInfo("Brak zmian do zapisania");
+          return;
+        }
         mutate(data);
       },
       (_errors) => {
@@ -80,6 +105,7 @@ export default function DeliveryTabScreen({
               type="primary"
               fullWidth
               onPress={handlePress}
+              disabled={!isConnected}
             >
               Zapisz zmiany
             </Button>
