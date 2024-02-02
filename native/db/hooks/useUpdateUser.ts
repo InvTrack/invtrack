@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 
-import { useSnackbar } from "../../components/Snackbar";
+import { useSnackbar } from "../../components/Snackbar/context";
 import { supabase } from "../supabase";
 import { SessionContext } from "./sessionContext";
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
   const { session } = useContext(SessionContext);
-  const { notify } = useSnackbar();
+  const { showError } = useSnackbar();
   return useMutation(
     async ({
       username,
@@ -19,12 +19,7 @@ export const useUpdateUser = () => {
     }) => {
       try {
         if (!session?.user) {
-          notify("error", {
-            params: {
-              title: "Błąd",
-              description: "Nie jesteś zalogowany",
-            },
-          });
+          showError("Nie jesteś zalogowany");
         }
 
         const updates = {
@@ -37,20 +32,10 @@ export const useUpdateUser = () => {
         const { error } = await supabase.from("user").upsert(updates);
 
         if (error) {
-          notify("error", {
-            params: {
-              title: "Błąd",
-              description: "Nieznany błąd, spróbuj ponownie",
-            },
-          });
+          showError("Nieznany błąd, spróbuj ponownie");
         }
       } catch (error) {
-        notify("error", {
-          params: {
-            title: "Błąd",
-            description: "Nieznany błąd, spróbuj ponownie",
-          },
-        });
+        showError("Nieznany błąd, spróbuj ponownie");
       }
     },
     { onSuccess: () => queryClient.invalidateQueries(["user"]) }

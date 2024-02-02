@@ -10,7 +10,7 @@ import TextInputController from "../components/TextInputController";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSnackbar } from "../components/Snackbar";
+import { useSnackbar } from "../components/Snackbar/context";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
 import { useCreateInventory } from "../db";
@@ -54,7 +54,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
     isError,
   } = useCreateInventory();
 
-  const { notify } = useSnackbar();
+  const { showError } = useSnackbar();
 
   useEffect(() => {
     if (isSuccess && inventory) {
@@ -78,12 +78,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 
   useEffect(() => {
     if (isError) {
-      notify("error", {
-        params: {
-          title: "Błąd",
-          description: "Nie udało się zapisać zmian",
-        },
-      });
+      showError("Nie udało się zapisać zmian");
     }
   }, [isError]);
 
