@@ -10,7 +10,7 @@ import { useListRecords } from "../db";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSnackbar } from "../components/Snackbar";
+import { useSnackbar } from "../components/Snackbar/context";
 import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -34,7 +34,7 @@ export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
     isError: isInsertError,
     isSuccess: isInsertSuccess,
   } = useInsertBarcode(+inventoryId);
-  const { notify } = useSnackbar();
+  const { showError, showSuccess } = useSnackbar();
 
   const handleSaveNewBarcode = () => {
     if (!highlighted || !new_barcode) return;
@@ -48,20 +48,10 @@ export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
 
   useEffect(() => {
     if (isInsertSuccess) {
-      notify("success", {
-        params: {
-          title: "Zapisano",
-          description: "Zmiany zostały zapisane",
-        },
-      });
+      showSuccess("Zmiany zostały zapisane");
     }
     if (isInsertError) {
-      notify("error", {
-        params: {
-          title: "Błąd",
-          description: "Nie udało się zapisać zmian",
-        },
-      });
+      showError("Nie udało się zapisać zmian");
     }
   }, [isInsertSuccess, isInsertError]);
 

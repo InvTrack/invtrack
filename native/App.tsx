@@ -30,8 +30,8 @@ import RootNavigation from "./navigation/RootNavigation";
 import { useFonts } from "expo-font";
 import { useAppState } from "./utils/useAppState";
 import * as SplashScreen from "expo-splash-screen";
-
-import { SnackbarProvider } from "./components/Snackbar";
+import { SnackbarRenderer } from "./components/Snackbar";
+import { SnackbarProvider } from "./components/Snackbar/context";
 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
@@ -127,6 +127,7 @@ export default function App() {
     <NavigationContainer>
       <ProvideProviders>
         <SnackbarProvider>
+          <SnackbarRenderer />
           <RootNavigation />
           <BottomSheet />
         </SnackbarProvider>

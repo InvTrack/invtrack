@@ -11,7 +11,7 @@ import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.typ
 import { IDListCard } from "../components/IDListCard";
 import { ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
-import { useSnackbar } from "../components/Snackbar";
+import { useSnackbar } from "../components/Snackbar/context";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { DeliveryTabScreenProps } from "../navigation/types";
@@ -33,25 +33,15 @@ export default function DeliveryTabScreen({
     isSuccess: isUpdateSuccess,
     isError: isUpdateError,
   } = useUpdateRecords(+inventoryId);
-  const { notify } = useSnackbar();
+  const { showError, showInfo, showSuccess } = useSnackbar();
 
   useEffect(() => {
     if (isUpdateSuccess) {
-      notify("success", {
-        params: {
-          title: "Zapisano",
-          description: "Zmiany zostały zapisane",
-        },
-      });
+      showSuccess("Zmiany zostały zapisane");
       return;
     }
     if (isUpdateError) {
-      notify("error", {
-        params: {
-          title: "Błąd",
-          description: "Nie udało się zapisać zmian",
-        },
-      });
+      showError("Nie udało się zapisać zmian");
       return;
     }
   }, [isUpdateSuccess, isUpdateError]);
@@ -60,12 +50,7 @@ export default function DeliveryTabScreen({
     deliveryForm.handleSubmit(
       (data) => {
         if (isEmpty(data)) {
-          notify("info", {
-            params: {
-              title: "Brak zmian",
-              description: "Nie wprowadzono żadnych zmian",
-            },
-          });
+          showInfo("Brak zmian do zapisania");
           return;
         }
         mutate(data);
