@@ -175,22 +175,12 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Typography
-          variant="xlBold"
-          underline
-          style={styles.title}
-          color="new_darkGrey"
-        >
+        <Typography variant="xlBold" style={styles.title} color="new_darkGrey">
           {/* nazwa produktu */}
           {recordName}
         </Typography>
         <View style={styles.content}>
-          <Typography
-            variant="l"
-            underline
-            style={styles.wasTitle}
-            color="new_darkGrey"
-          >
+          <Typography variant="l" style={styles.wasTitle} color="new_darkGrey">
             Ile było:
           </Typography>
           <Typography
@@ -231,9 +221,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
               </Button>
             </View>
             <View style={styles.middleColumn}>
-              <Typography underline color="new_darkGrey">
-                Ile jest:
-              </Typography>
+              <Typography color="new_darkGrey">Ile jest:</Typography>
               <Typography
                 variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
                 style={styles.title}
