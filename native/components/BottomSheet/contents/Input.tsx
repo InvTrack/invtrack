@@ -85,14 +85,16 @@ export const InputBottomSheetContent = ({
       ]}
     >
       <View style={styles.topRow}>
-        <Typography style={styles.inputLabel}>Wpisz ilość</Typography>
+        <Typography style={styles.inputLabel} color="new_darkGrey">
+          Wpisz ilość
+        </Typography>
         <Button
           type="primary"
           size="xs"
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
-          <Typography variant="m">Zapisz</Typography>
+          Zapisz
         </Button>
       </View>
       <TextInputController
@@ -129,7 +131,7 @@ export const InputBottomSheetContent = ({
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: "white",
+      backgroundColor: theme.colors.new_darkBlue,
       paddingTop: theme.spacing,
       paddingHorizontal: theme.spacing * 2,
     },

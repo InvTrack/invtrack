@@ -8,7 +8,6 @@ import { Skeleton } from "../components/Skeleton";
 import { useListRecords } from "../db";
 
 import { useNetInfo } from "@react-native-community/netinfo";
-import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
@@ -20,12 +19,12 @@ type NewBarcodeScreenProps = NativeStackScreenProps<
   "NewBarcodeScreen"
 >;
 
-export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
+export function NewBarcodeScreen({ route, navigation }: NewBarcodeScreenProps) {
   const styles = useStyles();
+
   const { isConnected } = useNetInfo();
   const [highlighted, setHighlighted] = useState<number | null>(null);
 
-  const navigation = useNavigation();
   const { inventoryId, new_barcode } = route.params;
 
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
@@ -40,9 +39,6 @@ export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
     if (!highlighted || !new_barcode) return;
 
     mutate({ new_barcode, product_id: highlighted });
-    // go back to modal
-    navigation.goBack();
-    // close modal
     navigation.goBack();
   };
 
@@ -118,21 +114,13 @@ export function NewBarcodeScreen({ route }: NewBarcodeScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
-    },
-    topBar: {
-      ...theme.baseShadow,
-      width: "100%",
-      backgroundColor: theme.colors.mediumBlue,
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
+      backgroundColor: theme.colors.new_darkBlue,
     },
     listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
       width: "100%",
       height: "100%",
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
     },
     date: {
       paddingTop: theme.spacing,

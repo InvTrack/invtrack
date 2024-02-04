@@ -11,14 +11,14 @@ export const InventoryCardAdd = () => {
   const navigation = useNavigation<any>();
   return (
     <Card
-      color="mediumBlue"
+      color="new_lightBlue"
       style={styles.plusCard}
       padding="none"
       onPress={() => {
         navigation.navigate("NewStockScreen");
       }}
     >
-      <PlusIcon size={25} />
+      <PlusIcon size={25} color="new_highlight" />
     </Card>
   );
 };

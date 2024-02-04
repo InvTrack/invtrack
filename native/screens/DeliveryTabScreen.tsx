@@ -143,7 +143,7 @@ export default function DeliveryTabScreen({
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
     },
     topBar: {
       ...theme.baseShadow,
@@ -157,7 +157,7 @@ const useStyles = createStyles((theme) =>
     scroll: {
       width: "100%",
       height: "100%",
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
     },
     date: {
       paddingTop: theme.spacing,

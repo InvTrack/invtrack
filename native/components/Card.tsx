@@ -7,6 +7,7 @@ import {
   ViewStyle,
 } from "react-native";
 
+import { useTheme } from "@react-navigation/native";
 import { ThemeColors } from "../theme";
 import { createStyles } from "../theme/useStyles";
 
@@ -16,10 +17,7 @@ interface CardProps {
   padding?: CardPaddings;
   fullWidth?: boolean;
   children: React.ReactNode;
-  color?: Exclude<
-    ThemeColors,
-    "error" | "grey" | "transparent" | "red" | "green"
-  >;
+  color?: ThemeColors;
   style?: StyleProp<ViewStyle>;
   borderTop?: boolean;
   borderBottom?: boolean;
@@ -40,6 +38,7 @@ export const Card = forwardRef(
     }: CardProps,
     _ref
   ) => {
+    const theme = useTheme();
     const styles = useStyles();
     if (onPress) {
       return (
@@ -49,7 +48,7 @@ export const Card = forwardRef(
             borderBottom && styles.borderBottom,
             borderTop && styles.borderTop,
             styles[padding],
-            styles[color],
+            { backgroundColor: theme.colors[color] },
             fullWidth && styles.fullWidth,
             style,
           ]}
@@ -65,7 +64,7 @@ export const Card = forwardRef(
           borderBottom && styles.borderBottom,
           borderTop && styles.borderTop,
           styles[padding],
-          styles[color],
+          { backgroundColor: theme.colors[color] },
           fullWidth && styles.fullWidth,
           style,
         ]}

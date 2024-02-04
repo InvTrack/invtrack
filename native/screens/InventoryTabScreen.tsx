@@ -66,9 +66,6 @@ export default function InventoryTabScreen({
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
-          <View style={styles.topBar}>
-            <Skeleton style={styles.skeletonTopBarText} />
-          </View>
           <View style={styles.listContainer}>
             <View style={styles.date}></View>
             <View style={styles.barcodeIconContainer}>
@@ -132,21 +129,14 @@ export default function InventoryTabScreen({
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
     },
-    topBar: {
-      ...theme.baseShadow,
-      width: "100%",
-      backgroundColor: theme.colors.mediumBlue,
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
-    },
+
     listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
       width: "100%",
       height: "100%",
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
     },
     date: {
       paddingTop: theme.spacing,
@@ -165,7 +155,7 @@ const useStyles = createStyles((theme) =>
       marginTop: theme.spacing * 2,
       gap: theme.spacing,
     },
-    skeletonTopBarText: { height: 20, width: "50%" },
+
     skeletonFullWidthButton: { width: "100%", height: 58 },
     skeletonButton: { width: 58, height: 58 },
     skeletonListItem: {

@@ -11,7 +11,7 @@ import { SmallerArrowRightIcon } from "../Icon";
 import { Typography } from "../Typography";
 
 type InventoryCardAddProps = {
-  title: string;
+  title: string | undefined;
   id: number;
   isDelivery: boolean;
 };
@@ -40,14 +40,14 @@ export const ListCardLink = ({
   const navigation = useNavigation();
   return (
     <Card
-      color="mediumBlue"
+      color="new_mediumBlue"
       style={styles.card}
       padding="none"
       onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
       <Typography
-        color="darkBlue"
-        variant={title.length > 15 ? "sBold" : "lBold"}
+        color="new_darkGrey"
+        variant={(title?.length ?? 0) > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
         {title}
@@ -69,7 +69,7 @@ export const ListCardLink = ({
               }
         }
       />
-      <SmallerArrowRightIcon size={25} />
+      <SmallerArrowRightIcon size={25} color="new_highlight" />
     </Card>
   );
 };

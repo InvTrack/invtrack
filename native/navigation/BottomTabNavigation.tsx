@@ -57,14 +57,19 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  backgroundColor: theme.colors.mediumBlue,
+                  borderColor: theme.colors.new_darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.new_mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
               />
             ),
-            headerBackVisible: false,
             headerTitle: deliveryName,
+            headerTitleStyle: {
+              color: theme.colors.new_highlight,
+            },
+            headerBackVisible: false,
           }}
         />
         <DeliveryStack.Screen
@@ -74,14 +79,19 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  backgroundColor: theme.colors.mediumBlue,
+                  borderColor: theme.colors.new_darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.new_mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
               />
             ),
-            headerBackVisible: false,
             headerTitle: deliveryName,
+            headerTitleStyle: {
+              color: theme.colors.new_highlight,
+            },
+            headerBackVisible: false,
             // headerShown: false,
           }}
         />
@@ -121,13 +131,18 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  backgroundColor: theme.colors.mediumBlue,
+                  borderColor: theme.colors.new_darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.new_mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
               />
             ),
             headerTitle: inventoryName,
+            headerTitleStyle: {
+              color: theme.colors.new_highlight,
+            },
             headerBackVisible: false,
           }}
         />
@@ -135,7 +150,22 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
           name="RecordScreen"
           component={RecordScreen}
           options={{
-            headerShown: false,
+            headerBackground: () => (
+              <View
+                style={{
+                  borderColor: theme.colors.new_darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.new_mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerTitle: inventoryName,
+            headerTitleStyle: {
+              color: theme.colors.new_highlight,
+            },
+            headerBackVisible: false,
           }}
         />
       </InventoryStack.Navigator>
@@ -156,8 +186,8 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         options={{
           title: "Lista",
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.black,
-          tabBarIcon: () => <ListIcon color={"darkBlue"} size={37} />,
+          tabBarActiveTintColor: theme.colors.new_highlight,
+          tabBarIcon: () => <ListIcon color={"new_darkGrey"} size={37} />,
           headerShown: false,
           lazy: false,
         }}
@@ -168,10 +198,10 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         options={{
           title: "Inwentaryzacja",
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.black,
-          tabBarIcon: () => <InventoryIcon color={"darkBlue"} size={37} />,
-
+          tabBarActiveTintColor: theme.colors.new_highlight,
+          tabBarIcon: () => <InventoryIcon color={"new_darkGrey"} size={37} />,
           headerShown: false,
+          lazy: false,
         }}
       />
       <Tab.Screen
@@ -180,9 +210,10 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         options={{
           title: "Dostawa",
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.black,
-          tabBarIcon: () => <DeliveryIcon color={"darkBlue"} size={37} />,
+          tabBarActiveTintColor: theme.colors.new_highlight,
+          tabBarIcon: () => <DeliveryIcon color={"new_darkGrey"} size={37} />,
           headerShown: false,
+          lazy: false,
         }}
       />
     </Tab.Navigator>

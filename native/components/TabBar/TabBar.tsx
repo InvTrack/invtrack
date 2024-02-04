@@ -16,7 +16,7 @@ import { CleanTabBarStyle } from "./TabStyle";
 
 export const CleanTabBar = (props: BottomTabBarProps) => {
   const theme = useTheme();
-  const BACKGROUND_COLOR = theme.colors.white;
+  const BACKGROUND_COLOR = theme.colors.new_mediumBlue;
 
   return (
     <SafeAreaView
@@ -40,8 +40,8 @@ export const CleanTabBarContent = ({
   navigation,
 }: BottomTabBarProps) => {
   const theme = useTheme();
-  const BACKGROUND_COLOR = theme.colors.white;
-  const FOREGROUND_COLOR = theme.colors.darkBlue;
+  const BACKGROUND_COLOR = theme.colors.new_mediumBlue;
+  const FOREGROUND_COLOR = theme.colors.new_mediumBlue;
 
   return state.routes.map((route, index) => {
     const focusAnimation = useRef(new Animated.Value(0)).current;
@@ -57,14 +57,12 @@ export const CleanTabBarContent = ({
         ? options.tabBarActiveTintColor
         : theme.colors.darkBlue;
 
-    const icon = options.tabBarIcon !== undefined ? options.tabBarIcon : null;
-
     const renderIcon = (focused: boolean) => {
-      if (!icon) {
+      if (!options.tabBarIcon) {
         return <Text>No icon</Text>;
       }
 
-      return icon({
+      return options.tabBarIcon({
         focused,
         color: focused ? FOREGROUND_COLOR : FOREGROUND_COLOR,
         size: 23,
@@ -101,7 +99,6 @@ export const CleanTabBarContent = ({
     }, [isFocused]);
 
     const onFocusedAnimation = () => {
-      console.log("focusedanim");
       Animated.timing(focusAnimation, {
         toValue: 1,
         duration: 700,
