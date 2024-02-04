@@ -34,7 +34,7 @@ type ButtonProps = {
   isLoading?: boolean;
 };
 
-const BORDER_WIDTH = 4;
+const BORDER_WIDTH = 2;
 
 // weird, but needed to supress errors, related to keeping the event around in an async context
 const debounceOnPress = (
@@ -100,14 +100,16 @@ const useStyles = createStyles((theme) =>
       margin: theme.spacing * 0.5,
       alignItems: "center",
       justifyContent: "center",
-      borderRadius: theme.borderRadiusFull,
+      borderRadius: theme.borderRadiusMedium,
     },
     primary: {
-      backgroundColor: theme.colors.mediumBlue,
-      padding: theme.spacing,
+      backgroundColor: theme.colors.new_darkBlue,
+      borderColor: theme.colors.new_highlight,
+      borderWidth: BORDER_WIDTH,
+      padding: theme.spacing - BORDER_WIDTH,
     },
     secondary: {
-      borderColor: theme.colors.mediumBlue,
+      borderColor: theme.colors.new_lightBlue,
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing - BORDER_WIDTH,
     },
@@ -116,7 +118,7 @@ const useStyles = createStyles((theme) =>
       width: "100%",
     },
     string: {
-      color: theme.colors.darkBlue,
+      color: theme.colors.new_darkGrey,
     },
     disabled: { opacity: 0.6 },
     // SIZES

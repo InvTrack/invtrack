@@ -100,7 +100,7 @@ const Snackbar = ({ item }: SnackbarProps) => {
 
 export const SnackbarRenderer = () => {
   const { state: items } = useSnackbar();
-  console.log(items.slice(0, 1));
+  //TODO: add a logger entry here
   return items
     .slice(0, 1)
     .map((item) => <Snackbar item={item} key={item.id} />);
@@ -119,21 +119,21 @@ const useStyles = createStyles((theme) =>
       paddingVertical: theme.spacing * 2,
       justifyContent: "center",
       paddingHorizontal: theme.spacing * 2,
-      borderBottomLeftRadius: theme.borderRadiusSmall,
-      borderBottomRightRadius: theme.borderRadiusSmall,
+      borderBottomLeftRadius: theme.borderRadiusMedium,
+      borderBottomRightRadius: theme.borderRadiusMedium,
     },
     contentContainer: {
       flexDirection: "row",
       alignItems: "center",
     },
     success: {
-      backgroundColor: theme.colors.green,
+      backgroundColor: theme.colors.new_green,
     },
     error: {
-      backgroundColor: theme.colors.red,
+      backgroundColor: theme.colors.new_red,
     },
     info: {
-      backgroundColor: theme.colors.grey,
+      backgroundColor: theme.colors.new_highlight,
     },
     text: {
       color: theme.colors.white,

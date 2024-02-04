@@ -37,14 +37,14 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
       <SafeAreaView style={styles.container} edges={[]}>
         <Typography
           variant="l"
-          color="darkBlue"
+          color="new_darkGrey"
           style={{ textAlign: "center" }}
         >
           Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.
         </Typography>
         <Typography
           variant="l"
-          color="darkBlue"
+          color="new_darkGrey"
           style={{
             textAlign: "center",
             marginTop: 32,
@@ -72,7 +72,7 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
       <SafeAreaView style={styles.container}>
         <Typography
           variant="l"
-          color="darkBlue"
+          color="new_darkGrey"
           style={{ textAlign: "center" }}
         >
           Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.
@@ -102,7 +102,7 @@ const useStyles = createStyles((theme) =>
     container: {
       flex: 1,
       justifyContent: "center",
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
       height: "100%",
     },
   })

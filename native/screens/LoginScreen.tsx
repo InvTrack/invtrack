@@ -54,7 +54,7 @@ export default function LoginScreen({}: LoginScreenProps) {
     <SafeAreaView style={styles.container}>
       <Typography
         variant="xlBold"
-        color="darkBlue"
+        color="new_darkGrey"
         underline
         style={styles.title}
       >
@@ -96,7 +96,7 @@ export default function LoginScreen({}: LoginScreenProps) {
       />
       <Button
         type="primary"
-        size="xs"
+        size="s"
         shadow
         containerStyle={styles.button}
         onPress={handleSubmit(onSubmit)}
@@ -112,7 +112,7 @@ export default function LoginScreen({}: LoginScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
       paddingTop: theme.spacing * 3,
@@ -125,11 +125,12 @@ const useStyles = createStyles((theme) =>
     button: {
       marginTop: theme.spacing * 5,
       width: "100%",
+      alignSelf: "center",
     },
     link: {
       alignSelf: "center",
       marginTop: theme.spacing * 2.5,
-      color: theme.colors.darkBlue,
+      color: theme.colors.new_darkBlue,
       textDecorationLine: "underline",
       opacity: theme.opacity,
       ...theme.text.xs,

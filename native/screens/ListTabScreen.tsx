@@ -17,7 +17,7 @@ const MonthTitle = ({ title }: { title: string }) => {
     <Typography
       underline
       variant="xlBold"
-      color="darkBlue"
+      color="new_highlight"
       style={styles.monthTitle}
     >
       {title}
@@ -27,7 +27,7 @@ const MonthTitle = ({ title }: { title: string }) => {
 const DayTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
-    <Typography variant="l" color="grey" style={styles.dayTitle}>
+    <Typography variant="lBold" color="new_darkGrey" style={styles.dayTitle}>
       {title}
     </Typography>
   );
@@ -114,7 +114,7 @@ export const ListTab = ({}: ListTabScreenProps) => {
                 <DayTitle title={day} />
                 {inventories.map((inventory) => (
                   <ListCardLink
-                    key={inventory.id}
+                    key={inventory.id || -1}
                     title={inventory.name}
                     id={inventory.id}
                     isDelivery={inventory.is_delivery}
@@ -133,7 +133,7 @@ export const ListTab = ({}: ListTabScreenProps) => {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     screen: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.new_darkBlue,
       height: "100%",
     },
     scroll: {

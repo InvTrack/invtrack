@@ -20,11 +20,12 @@ export const DatePickerBottomSheetContent = ({
 
   return (
     <View
-      style={{
-        paddingBottom: 16 + insets.bottom,
-        paddingTop: 16,
-        backgroundColor: "#fff",
-      }}
+      style={[
+        {
+          paddingBottom: 16 + insets.bottom,
+        },
+        styles.container,
+      ]}
     >
       <Typography style={styles.dateTitle}>Wybierz datę</Typography>
       <DateTimePicker
@@ -68,11 +69,15 @@ export const DatePickerBottomSheetContent = ({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    container: {
+      paddingTop: 16,
+      backgroundColor: theme.colors.new_darkBlue,
+    },
     dateTitle: {
       alignSelf: "center",
     },
     input: {
-      backgroundColor: theme.colors.white,
+      backgroundColor: theme.colors.new_darkBlue,
       alignSelf: "center",
     },
     button: {
