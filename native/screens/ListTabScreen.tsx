@@ -15,7 +15,6 @@ const MonthTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
     <Typography
-      underline
       variant="xlBold"
       color="new_highlight"
       style={styles.monthTitle}
