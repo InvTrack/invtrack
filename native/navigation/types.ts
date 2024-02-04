@@ -39,6 +39,7 @@ export type BottomTabProps = CompositeScreenProps<
   NativeStackScreenProps<HomeStackParamList, "Tabs">,
   NativeStackScreenProps<BottomTabParamList>
 >;
+export type BottomTabNavigatorScreen = keyof BottomTabParamList;
 
 /**
  * List Tab/Stack
