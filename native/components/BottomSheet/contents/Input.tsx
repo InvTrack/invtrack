@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Keyboard, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -30,47 +30,51 @@ export const InputBottomSheetContent = ({
       end: { height: keyboardHeight },
     },
   } = useKeyboard();
-  const { control, handleSubmit, setFocus, formState } =
-    useForm<InputBottomSheetForm>({
-      defaultValues: {
-        quantity: quantity.toString(),
-      },
-      mode: "onChange",
-    });
+  const {
+    control,
+    handleSubmit,
+    setFocus: _setFocus,
+    formState,
+  } = useForm<InputBottomSheetForm>({
+    defaultValues: {
+      quantity: quantity.toString(),
+    },
+    mode: "onChange",
+  });
 
   const isErrored = !!formState.errors.quantity?.message;
 
-  useEffect(() => {
-    // hack needed to make android focus the input
-    if (isAndroid) {
-      setTimeout(() => {
-        setFocus("quantity");
-      }, 1);
-      return;
-    }
-    setFocus("quantity");
-  }, []);
+  // useEffect(() => {
+  //   // hack needed to make android focus the input
+  //   if (isAndroid) {
+  //     setTimeout(() => {
+  //       setFocus("quantity");
+  //     }, 1);
+  //     return;
+  //   }
+  //   setFocus("quantity");
+  // }, []);
 
-  useEffect(() => {
-    const keyboardWillHide = Keyboard.addListener("keyboardWillHide", () =>
-      setFocus("quantity")
-    );
-    const keyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
-      setFocus("quantity")
-    );
-    const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () => {
-      setFocus("quantity");
-    });
-    return () => {
-      keyboardWillHide.remove();
-      keyboardDidHide.remove();
-      keyboardDidShow.remove();
-    };
-  }, [isErrored, setFocus, handleSubmit]);
+  // useEffect(() => {
+  //   const keyboardWillHide = Keyboard.addListener("keyboardWillHide", () =>
+  //     setFocus("quantity")
+  //   );
+  //   const keyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
+  //     setFocus("quantity")
+  //   );
+  //   const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () => {
+  //     setFocus("quantity");
+  //   });
+  //   return () => {
+  //     keyboardWillHide.remove();
+  //     keyboardDidHide.remove();
+  //     keyboardDidShow.remove();
+  //   };
+  // }, [isErrored, setFocus, handleSubmit]);
 
   const onSubmit = (data: InputBottomSheetForm) => {
     !isErrored && Keyboard.dismiss();
-    setQuantity(+data.quantity);
+    setQuantity(parseFloat(data.quantity.replace(/,/g, ".")));
     !isErrored && closeBottomSheet();
   };
 
@@ -116,12 +120,14 @@ export const InputBottomSheetContent = ({
           pattern: {
             message:
               "Niepoprawna wartość, tylko liczby, maksymalnie 2 miejsca po przecinku",
-            value: /^[0-9]+(\.[0-9]{1,2})?$/,
+            value: /^[0-9]+([.,][0-9]{1,2})?$/,
           },
         }}
         textInputProps={{
           onSubmitEditing: handleSubmit(onSubmit),
           keyboardType: "numeric",
+          keyboardAppearance: "dark",
+          autoFocus: true,
         }}
       />
     </View>
