@@ -82,6 +82,10 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
   }, [isError]);
 
   const onSubmit = (data: CreateInventoryFormValues) => {
+    if (!isConnected) {
+      showError("Brak połączenia z internetem");
+      return;
+    }
     mutate(data);
   };
 
