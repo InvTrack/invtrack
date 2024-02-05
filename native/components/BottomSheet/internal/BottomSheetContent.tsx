@@ -1,10 +1,11 @@
 import React, { forwardRef, RefObject, useEffect } from "react";
-import { BackHandler, Keyboard, View } from "react-native";
+import { BackHandler, Keyboard, StyleSheet, View } from "react-native";
 import {
   NativeViewGestureHandler,
   PanGestureHandler,
 } from "react-native-gesture-handler";
 import Animated, { useAnimatedScrollHandler } from "react-native-reanimated";
+import { createStyles } from "../../../theme/useStyles";
 
 interface Props {
   panRef: RefObject<PanGestureHandler>;
@@ -15,6 +16,8 @@ interface Props {
 
 const BottomSheetContent = forwardRef(
   ({ scrollOffset, Component, onClose }: Props, ref) => {
+    const styles = useStyles();
+
     const scrollHandler = useAnimatedScrollHandler((e) => {
       scrollOffset.value = e.contentOffset.y;
     });
@@ -45,24 +48,8 @@ const BottomSheetContent = forwardRef(
             keyboardShouldPersistTaps="handled"
           >
             {/* TODO THEMING!! */}
-            <View
-              style={{
-                backgroundColor: "white",
-                borderTopRightRadius: 25,
-                borderTopLeftRadius: 25,
-              }}
-            >
-              <View
-                style={{
-                  height: 6,
-                  width: 72,
-                  borderColor: "gray",
-                  borderWidth: 3,
-                  borderRadius: 99,
-                  alignSelf: "center",
-                  marginVertical: 8,
-                }}
-              />
+            <View style={styles.top}>
+              <View style={styles.thingy} />
             </View>
             <Component />
           </Animated.ScrollView>
@@ -74,3 +61,22 @@ const BottomSheetContent = forwardRef(
   }
 );
 export default BottomSheetContent;
+
+const useStyles = createStyles((theme) =>
+  StyleSheet.create({
+    top: {
+      backgroundColor: theme.colors.darkBlue,
+      borderTopRightRadius: 25,
+      borderTopLeftRadius: 25,
+    },
+    thingy: {
+      height: 6,
+      width: 72,
+      borderColor: "gray",
+      borderWidth: 3,
+      borderRadius: 99,
+      alignSelf: "center",
+      marginVertical: 8,
+    },
+  })
+);

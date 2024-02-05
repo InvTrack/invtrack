@@ -12,17 +12,16 @@ const fontSize = {
   xsBold: 17,
 } as const;
 
-// TODO add a grey color for skeletons
 export type ThemeColors = keyof typeof themeColors;
+
 const themeColors = {
   black: "#000000",
-  white: "#FFFFFF",
-  lightBlue: "#EDF6FF",
-  mediumBlue: "#C9E0F6",
-  darkBlue: "#4A6D90",
-  grey: "#96AFC8",
-  error: "#EF5350",
-  green: "#0D9F6F",
+  darkGrey: "#676D75",
+  lightBlue: "#384152",
+  mediumBlue: "#212939",
+  darkBlue: "#111828",
+  highlight: "#62A0E8",
+  green: "#099D56",
   red: "#F05250",
   transparent: "rgba(0,0,0,0)",
 } as const;
@@ -102,7 +101,7 @@ export const mainTheme = {
   spacing: 8,
   opacity: 0.6,
   borderRadius: 25,
-  borderRadiusSmall: 5,
+  borderRadiusSmall: 10,
   borderRadiusFull: 9999,
   breakpoints,
   colors: themeColors,

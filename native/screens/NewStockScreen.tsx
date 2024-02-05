@@ -55,7 +55,6 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
   } = useCreateInventory();
 
   const { showError } = useSnackbar();
-
   useEffect(() => {
     if (isSuccess && inventory) {
       if (is_delivery) {
@@ -97,17 +96,12 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
-      <Typography
-        underline
-        style={styles.title}
-        variant="xlBold"
-        color="darkBlue"
-      >
+      <Typography style={styles.title} variant="xlBold" color="darkGrey">
         {`Nowy wpis:`}
       </Typography>
       <View style={{ flexDirection: "row", gap: 8, alignItems: "flex-start" }}>
         <ToggleController control={control} name="is_delivery" />
-        <Typography variant="l" color="darkBlue">
+        <Typography variant="l" color="darkGrey">
           {is_delivery ? `Dostawa` : `Inwentaryzacja`}
         </Typography>
       </View>
@@ -137,9 +131,10 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
       />
       <Button
         type="primary"
-        size="xs"
+        size="s"
         shadow
         isLoading={isLoading}
+        fullWidth
         containerStyle={styles.buttonContainer}
         // looks werid but prevents a synthetic event warn
         onPress={handlePress}
@@ -154,7 +149,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
       paddingHorizontal: theme.spacing * 5,
     },
@@ -168,7 +163,7 @@ const useStyles = createStyles((theme) =>
       marginTop: "20%",
     },
     buttonContainer: {
-      width: "100%",
+      alignSelf: "center",
     },
   })
 );

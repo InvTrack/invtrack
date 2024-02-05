@@ -3,7 +3,6 @@ import { BarCodeScanningResult, Camera, CameraType, Point } from "expo-camera";
 import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Alert,
   Animated,
   StyleSheet,
@@ -16,6 +15,7 @@ import { useListBarcodes } from "../../db/hooks/useListBarcodes";
 import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
 import { CameraSwitchIcon } from "../Icon";
+import { LoadingSpinner } from "../LoadingSpinner";
 import { Typography } from "../Typography";
 import { BarcodeOutline } from "./BarcodeOutline";
 
@@ -88,10 +88,10 @@ export const BarcodeScanner = ({
     setTRCornerAnimation(corners[3]);
   };
 
-  if (isLoading && !barcodeList) {
+  if (!isLoading && !barcodeList) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#000" />
+        <LoadingSpinner size={"large"} />
       </View>
     );
   }
@@ -101,6 +101,7 @@ export const BarcodeScanner = ({
       <View style={[styles.container, styles.paddingH]}>
         <Typography
           align="center"
+          color="darkGrey"
           style={{
             alignItems: "center",
             justifyContent: "center",
@@ -141,7 +142,10 @@ export const BarcodeScanner = ({
 
     // FIXME do it properly with navigation
     // @ts-ignore
-    navigation.navigate("RecordScreen", { id, recordId: barcodeMappedToId });
+    navigation.navigate("RecordScreen", {
+      id: inventoryId,
+      recordId: barcodeMappedToId,
+    });
   };
 
   return (
@@ -163,7 +167,7 @@ export const BarcodeScanner = ({
         />
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <CameraSwitchIcon size={32} color="mediumBlue" />
+            <CameraSwitchIcon size={32} color="highlight" />
           </TouchableOpacity>
         </View>
       </Camera>
@@ -176,7 +180,7 @@ const useStyles = createStyles((theme) =>
     container: {
       flex: 1,
       justifyContent: "center",
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
     },
     camera: {

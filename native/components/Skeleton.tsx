@@ -51,7 +51,7 @@ const useStyles = createStyles((theme) =>
     defaultSkeletonStyle: {
       height: "100%",
       width: "100%",
-      backgroundColor: theme.colors.darkBlue,
+      backgroundColor: theme.colors.darkGrey,
     },
   })
 );

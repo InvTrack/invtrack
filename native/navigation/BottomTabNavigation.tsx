@@ -6,6 +6,8 @@ import { View } from "react-native";
 import { DeliveryFormContextProvider } from "../components/DeliveryFormContext/DeliveryFormContextProvider";
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
 import { InventoryFormContextProvider } from "../components/InventoryFormContext/InventoryFormContextProvider";
+
+import { CleanTabBar } from "../components/TabBar";
 import { Typography } from "../components/Typography";
 import { useListInventories } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
@@ -55,14 +57,19 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
                   backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
               />
             ),
-            headerBackVisible: false,
             headerTitle: deliveryName,
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+            },
+            headerBackVisible: false,
           }}
         />
         <DeliveryStack.Screen
@@ -72,14 +79,19 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
                   backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
               />
             ),
-            headerBackVisible: false,
             headerTitle: deliveryName,
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+            },
+            headerBackVisible: false,
             // headerShown: false,
           }}
         />
@@ -119,6 +131,8 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
                   backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
@@ -126,6 +140,9 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
               />
             ),
             headerTitle: inventoryName,
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+            },
             headerBackVisible: false,
           }}
         />
@@ -133,7 +150,22 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
           name="RecordScreen"
           component={RecordScreen}
           options={{
-            headerShown: false,
+            headerBackground: () => (
+              <View
+                style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerTitle: inventoryName,
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+            },
+            headerBackVisible: false,
           }}
         />
       </InventoryStack.Navigator>
@@ -142,16 +174,20 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
 };
 
 export const BottomTabNavigation = ({}: BottomTabProps) => {
+  const theme = useTheme();
   return (
-    <Tab.Navigator initialRouteName="ListTab">
+    <Tab.Navigator
+      initialRouteName="ListTab"
+      tabBar={(props) => <CleanTabBar {...props} />}
+    >
       <Tab.Screen
         name="ListTab"
         component={ListTab}
         options={{
+          title: "Lista",
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <ListIcon color={focused ? "mediumBlue" : "darkBlue"} size={37} />
-          ),
+          tabBarActiveTintColor: theme.colors.highlight,
+          tabBarIcon: () => <ListIcon color="darkGrey" size={37} />,
           headerShown: false,
           lazy: false,
         }}
@@ -160,28 +196,24 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         name="InventoryTab"
         component={InventoryStackNavigator}
         options={{
+          title: "Inwentaryzacja",
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <InventoryIcon
-              color={focused ? "mediumBlue" : "darkBlue"}
-              size={37}
-            />
-          ),
+          tabBarActiveTintColor: theme.colors.highlight,
+          tabBarIcon: () => <InventoryIcon color="darkGrey" size={37} />,
           headerShown: false,
+          lazy: false,
         }}
       />
       <Tab.Screen
         name="DeliveryTab"
         component={DeliveryStackNavigator}
         options={{
+          title: "Dostawa",
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused }) => (
-            <DeliveryIcon
-              color={focused ? "mediumBlue" : "darkBlue"}
-              size={37}
-            />
-          ),
+          tabBarActiveTintColor: theme.colors.highlight,
+          tabBarIcon: () => <DeliveryIcon color="darkGrey" size={37} />,
           headerShown: false,
+          lazy: false,
         }}
       />
     </Tab.Navigator>
