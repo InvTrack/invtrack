@@ -14,7 +14,6 @@ const fontSize = {
 
 export type ThemeColors = keyof typeof themeColors;
 
-// remove export
 const themeColors = {
   black: "#000000",
   darkGrey: "#676D75",
