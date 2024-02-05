@@ -96,12 +96,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
-      <Typography
-        underline
-        style={styles.title}
-        variant="xlBold"
-        color="new_darkGrey"
-      >
+      <Typography style={styles.title} variant="xlBold" color="new_darkGrey">
         {`Nowy wpis:`}
       </Typography>
       <View style={{ flexDirection: "row", gap: 8, alignItems: "flex-start" }}>

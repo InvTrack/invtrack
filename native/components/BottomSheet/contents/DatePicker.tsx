@@ -27,12 +27,14 @@ export const DatePickerBottomSheetContent = ({
         styles.container,
       ]}
     >
-      <Typography style={styles.dateTitle}>Wybierz datę</Typography>
+      <Typography style={styles.dateTitle} variant="l" color="new_darkGrey">
+        Wybierz datę
+      </Typography>
       <DateTimePicker
         value={dateValue}
         mode={"date"}
         display="spinner"
-        themeVariant="light"
+        themeVariant="dark"
         onChange={(e, d) => {
           if (e.type === "dismissed") {
             return;
@@ -45,7 +47,7 @@ export const DatePickerBottomSheetContent = ({
         value={dateValue}
         mode={"time"}
         display="spinner"
-        themeVariant="light"
+        themeVariant="dark"
         is24Hour={true}
         onChange={(e, d) => {
           if (e.type === "dismissed") {

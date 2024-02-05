@@ -119,8 +119,8 @@ const useStyles = createStyles((theme) =>
       paddingVertical: theme.spacing * 2,
       justifyContent: "center",
       paddingHorizontal: theme.spacing * 2,
-      borderBottomLeftRadius: theme.borderRadiusMedium,
-      borderBottomRightRadius: theme.borderRadiusMedium,
+      borderBottomLeftRadius: theme.borderRadiusSmall,
+      borderBottomRightRadius: theme.borderRadiusSmall,
     },
     contentContainer: {
       flexDirection: "row",
