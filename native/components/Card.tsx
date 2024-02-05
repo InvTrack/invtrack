@@ -22,6 +22,7 @@ interface CardProps {
   borderTop?: boolean;
   borderBottom?: boolean;
   onPress?: () => void;
+  badge?: "red" | "green";
 }
 
 export const Card = forwardRef(
@@ -35,6 +36,7 @@ export const Card = forwardRef(
       borderTop = false,
       borderBottom = false,
       onPress,
+      badge,
     }: CardProps,
     _ref
   ) => {
@@ -53,6 +55,11 @@ export const Card = forwardRef(
             style,
           ]}
         >
+          {badge && (
+            <View
+              style={[{ backgroundColor: theme.colors[badge] }, styles.badge]}
+            />
+          )}
           {children}
         </TouchableOpacity>
       );
@@ -69,6 +76,11 @@ export const Card = forwardRef(
           style,
         ]}
       >
+        {badge && (
+          <View
+            style={[{ backgroundColor: theme.colors[badge] }, styles.badge]}
+          />
+        )}
         {children}
       </View>
     );
@@ -84,6 +96,24 @@ const useStyles = createStyles((theme) =>
     borderBottom: {
       borderBottomLeftRadius: theme.borderRadius,
       borderBottomRightRadius: theme.borderRadius,
+    },
+    // badge: {
+    //   position: "absolute",
+    //   overflow: "hidden",
+    //   backgroundColor: theme.colors.red,
+    //   top: -2,
+    //   left: -2,
+    //   width: 12,
+    //   height: 12,
+    //   borderRadius: theme.borderRadius,
+    // },
+    badge: {
+      position: "absolute",
+      height: "100%",
+      width: 5,
+      left: 0,
+      borderTopStartRadius: theme.borderRadiusSmall,
+      borderBottomStartRadius: theme.borderRadiusSmall,
     },
     none: {
       padding: 0,
