@@ -3,23 +3,25 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createStyles } from "../../theme/useStyles";
-import { Card } from "../Card";
+import { Button } from "../Button";
 import { PlusIcon } from "../Icon";
 
 export const InventoryCardAdd = () => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
   return (
-    <Card
-      color="new_lightBlue"
-      style={styles.plusCard}
-      padding="none"
+    <Button
+      // overriden in styles
+      size="l"
+      fullWidth
+      type="primary"
+      containerStyle={styles.plusCard}
       onPress={() => {
         navigation.navigate("NewStockScreen");
       }}
     >
-      <PlusIcon size={25} color="new_highlight" />
-    </Card>
+      <PlusIcon size={25} color="new_darkGrey" />
+    </Button>
   );
 };
 
@@ -30,6 +32,7 @@ const useStyles = createStyles((theme) =>
       borderRadius: theme.borderRadiusSmall,
       alignItems: "center",
       justifyContent: "center",
+      alignSelf: "center",
       marginBottom: theme.spacing * 2,
     },
   })

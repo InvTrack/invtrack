@@ -52,12 +52,7 @@ export default function LoginScreen({}: LoginScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Typography
-        variant="xlBold"
-        color="new_darkGrey"
-        underline
-        style={styles.title}
-      >
+      <Typography variant="xlBold" color="new_darkGrey" style={styles.title}>
         Logowanie
       </Typography>
       <TextInputController

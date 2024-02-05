@@ -295,7 +295,7 @@ const useStyles = createStyles((theme) =>
     },
     editButton: {
       marginTop: theme.spacing * 3,
-      borderRadius: theme.borderRadiusMedium,
+      borderRadius: theme.borderRadiusSmall,
       width: 72,
       height: 72,
       marginBottom: 58 + 12,

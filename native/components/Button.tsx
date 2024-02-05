@@ -100,7 +100,7 @@ const useStyles = createStyles((theme) =>
       margin: theme.spacing * 0.5,
       alignItems: "center",
       justifyContent: "center",
-      borderRadius: theme.borderRadiusMedium,
+      borderRadius: theme.borderRadiusSmall,
     },
     primary: {
       backgroundColor: theme.colors.new_darkBlue,

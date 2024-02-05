@@ -109,7 +109,7 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
       ...theme.text.s,
-      borderRadius: theme.borderRadiusMedium,
+      borderRadius: theme.borderRadiusSmall,
       height: 48,
       justifyContent: isAndroid ? undefined : "center",
       borderColor: theme.colors.new_lightBlue,
