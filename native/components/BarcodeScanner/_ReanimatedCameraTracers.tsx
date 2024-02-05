@@ -176,7 +176,7 @@ const useStyles = createStyles((theme) =>
     container: {
       flex: 1,
       justifyContent: "center",
-      backgroundColor: theme.colors.lightBlue,
+      // backgroundColor: theme.colors.lightBlue,
       height: "100%",
     },
     camera: {

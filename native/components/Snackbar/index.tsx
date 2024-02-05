@@ -127,16 +127,16 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
     },
     success: {
-      backgroundColor: theme.colors.new_green,
+      backgroundColor: theme.colors.green,
     },
     error: {
-      backgroundColor: theme.colors.new_red,
+      backgroundColor: theme.colors.red,
     },
     info: {
-      backgroundColor: theme.colors.new_highlight,
+      backgroundColor: theme.colors.highlight,
     },
     text: {
-      color: theme.colors.white,
+      color: theme.colors.mediumBlue,
     },
   })
 );

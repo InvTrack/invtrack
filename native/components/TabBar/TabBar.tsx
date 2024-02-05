@@ -16,7 +16,7 @@ import { CleanTabBarStyle } from "./TabStyle";
 
 export const CleanTabBar = (props: BottomTabBarProps) => {
   const theme = useTheme();
-  const BACKGROUND_COLOR = theme.colors.new_mediumBlue;
+  const BACKGROUND_COLOR = theme.colors.mediumBlue;
 
   return (
     <SafeAreaView
@@ -40,8 +40,8 @@ export const CleanTabBarContent = ({
   navigation,
 }: BottomTabBarProps) => {
   const theme = useTheme();
-  const BACKGROUND_COLOR = theme.colors.new_mediumBlue;
-  const FOREGROUND_COLOR = theme.colors.new_mediumBlue;
+  const BACKGROUND_COLOR = theme.colors.mediumBlue;
+  const FOREGROUND_COLOR = theme.colors.mediumBlue;
 
   return state.routes.map((route, index) => {
     const focusAnimation = useRef(new Animated.Value(0)).current;

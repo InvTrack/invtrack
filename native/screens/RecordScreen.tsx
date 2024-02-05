@@ -51,10 +51,7 @@ const RecordButton = ({
       ]}
       onPress={onPress}
     >
-      <Typography
-        variant="l"
-        color={type === "positive" ? "new_green" : "new_red"}
-      >
+      <Typography variant="l" color={type === "positive" ? "green" : "red"}>
         {label}
       </Typography>
     </Button>
@@ -175,18 +172,18 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Typography variant="xlBold" style={styles.title} color="new_darkGrey">
+        <Typography variant="xlBold" style={styles.title} color="darkGrey">
           {/* nazwa produktu */}
           {recordName}
         </Typography>
         <View style={styles.content}>
-          <Typography variant="l" style={styles.wasTitle} color="new_darkGrey">
+          <Typography variant="l" style={styles.wasTitle} color="darkGrey">
             Ile było:
           </Typography>
           <Typography
             variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
             style={styles.wasAmount}
-            color="new_darkGrey"
+            color="darkGrey"
           >
             {unit ? previousQuantity + " " + unit : null}
           </Typography>
@@ -217,15 +214,15 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                   isFirst
                 )}
               >
-                <ArrowRightIcon size={32} color="new_highlight" />
+                <ArrowRightIcon size={32} color="highlight" />
               </Button>
             </View>
             <View style={styles.middleColumn}>
-              <Typography color="new_darkGrey">Ile jest:</Typography>
+              <Typography color="darkGrey">Ile jest:</Typography>
               <Typography
                 variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
                 style={styles.title}
-                color="new_darkGrey"
+                color="darkGrey"
               >
                 {/* liczba + jednostka current */}
                 {unit ? quantity + " " + unit : null}
@@ -236,7 +233,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 containerStyle={styles.editButton}
                 onPress={() => openManualInput(quantity!, setQuantity)}
               >
-                <PencilIcon size={32} color="new_darkGrey" />
+                <PencilIcon size={32} color="darkGrey" />
               </Button>
             </View>
             <View style={styles.rightColumn}>
@@ -265,7 +262,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                   isLast
                 )}
               >
-                <ArrowLeftIcon size={32} color="new_highlight" />
+                <ArrowLeftIcon size={32} color="highlight" />
               </Button>
             </View>
           </View>
@@ -277,7 +274,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    container: { backgroundColor: theme.colors.new_darkBlue, height: "100%" },
+    container: { backgroundColor: theme.colors.darkBlue, height: "100%" },
     contentContainer: { paddingHorizontal: theme.spacing * 3 },
     title: { paddingTop: theme.spacing * 3 },
     wasTitle: { marginTop: theme.spacing * 5.5 },

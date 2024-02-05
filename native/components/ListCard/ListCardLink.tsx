@@ -40,13 +40,13 @@ export const ListCardLink = ({
   const navigation = useNavigation();
   return (
     <Card
-      color="new_mediumBlue"
+      color="mediumBlue"
       style={styles.card}
       padding="none"
       onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
       <Typography
-        color="new_darkGrey"
+        color="darkGrey"
         variant={(title?.length ?? 0) > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
@@ -69,7 +69,7 @@ export const ListCardLink = ({
               }
         }
       />
-      <SmallerArrowRightIcon size={25} color="new_highlight" />
+      <SmallerArrowRightIcon size={25} color="highlight" />
     </Card>
   );
 };

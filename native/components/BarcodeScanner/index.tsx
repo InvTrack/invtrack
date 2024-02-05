@@ -101,7 +101,7 @@ export const BarcodeScanner = ({
       <View style={[styles.container, styles.paddingH]}>
         <Typography
           align="center"
-          color="new_darkGrey"
+          color="darkGrey"
           style={{
             alignItems: "center",
             justifyContent: "center",
@@ -167,7 +167,7 @@ export const BarcodeScanner = ({
         />
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <CameraSwitchIcon size={32} color="new_highlight" />
+            <CameraSwitchIcon size={32} color="highlight" />
           </TouchableOpacity>
         </View>
       </Camera>
@@ -180,7 +180,7 @@ const useStyles = createStyles((theme) =>
     container: {
       flex: 1,
       justifyContent: "center",
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
     },
     camera: {

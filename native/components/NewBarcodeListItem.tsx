@@ -18,12 +18,12 @@ export const NewBarcodeListItem = ({
 
   return (
     <Card
-      color="new_mediumBlue"
+      color="mediumBlue"
       style={[styles.card, highlighted && styles.highlighted]}
       padding="none"
     >
       <Typography
-        color="new_darkGrey"
+        color="darkGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
@@ -45,7 +45,7 @@ const useStyles = createStyles((theme) =>
       borderRadius: theme.borderRadiusSmall,
     },
     highlighted: {
-      borderColor: theme.colors.new_highlight,
+      borderColor: theme.colors.highlight,
       borderStyle: "solid",
       borderWidth: 2,
       marginLeft: -2,

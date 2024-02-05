@@ -96,12 +96,12 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
-      <Typography style={styles.title} variant="xlBold" color="new_darkGrey">
+      <Typography style={styles.title} variant="xlBold" color="darkGrey">
         {`Nowy wpis:`}
       </Typography>
       <View style={{ flexDirection: "row", gap: 8, alignItems: "flex-start" }}>
         <ToggleController control={control} name="is_delivery" />
-        <Typography variant="l" color="new_darkGrey">
+        <Typography variant="l" color="darkGrey">
           {is_delivery ? `Dostawa` : `Inwentaryzacja`}
         </Typography>
       </View>
@@ -149,7 +149,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
       paddingHorizontal: theme.spacing * 5,
     },

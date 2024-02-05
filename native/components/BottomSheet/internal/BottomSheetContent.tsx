@@ -65,7 +65,7 @@ export default BottomSheetContent;
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     top: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       borderTopRightRadius: 25,
       borderTopLeftRadius: 25,
     },

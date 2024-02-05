@@ -15,29 +15,16 @@ const fontSize = {
 export type ThemeColors = keyof typeof themeColors;
 
 // remove export
-export const NEWthemeColors = {
-  new_black: "#000000",
-  new_darkGrey: "#676D75",
-  new_lightBlue: "#384152",
-  new_mediumBlue: "#212939",
-  new_darkBlue: "#111828",
-  new_highlight: "#62A0E8",
-  new_green: "#099D56",
-  new_red: "#F05250",
-  new_transparent: "rgba(0,0,0,0)",
-} as const;
 const themeColors = {
   black: "#000000",
-  white: "#FFFFFF",
-  lightBlue: "#EDF6FF",
-  mediumBlue: "#C9E0F6",
-  darkBlue: "#4A6D90",
-  grey: "#96AFC8",
-  error: "#EF5350",
-  green: "#0D9F6F",
+  darkGrey: "#676D75",
+  lightBlue: "#384152",
+  mediumBlue: "#212939",
+  darkBlue: "#111828",
+  highlight: "#62A0E8",
+  green: "#099D56",
   red: "#F05250",
   transparent: "rgba(0,0,0,0)",
-  ...NEWthemeColors,
 } as const;
 
 export type Breakpoints = typeof breakpoints;
