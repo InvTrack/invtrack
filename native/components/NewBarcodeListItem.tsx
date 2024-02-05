@@ -23,7 +23,7 @@ export const NewBarcodeListItem = ({
       padding="none"
     >
       <Typography
-        color="darkBlue"
+        color="darkGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
@@ -45,7 +45,7 @@ const useStyles = createStyles((theme) =>
       borderRadius: theme.borderRadiusSmall,
     },
     highlighted: {
-      borderColor: theme.colors.darkBlue,
+      borderColor: theme.colors.highlight,
       borderStyle: "solid",
       borderWidth: 2,
       marginLeft: -2,

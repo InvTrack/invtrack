@@ -14,12 +14,7 @@ import { createStyles } from "../theme/useStyles";
 const MonthTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
-    <Typography
-      underline
-      variant="xlBold"
-      color="darkBlue"
-      style={styles.monthTitle}
-    >
+    <Typography variant="xlBold" color="highlight" style={styles.monthTitle}>
       {title}
     </Typography>
   );
@@ -27,7 +22,7 @@ const MonthTitle = ({ title }: { title: string }) => {
 const DayTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
-    <Typography variant="l" color="grey" style={styles.dayTitle}>
+    <Typography variant="lBold" color="darkGrey" style={styles.dayTitle}>
       {title}
     </Typography>
   );
@@ -114,7 +109,7 @@ export const ListTab = ({}: ListTabScreenProps) => {
                 <DayTitle title={day} />
                 {inventories.map((inventory) => (
                   <ListCardLink
-                    key={inventory.id}
+                    key={inventory.id || -1}
                     title={inventory.name}
                     id={inventory.id}
                     isDelivery={inventory.is_delivery}
@@ -133,7 +128,7 @@ export const ListTab = ({}: ListTabScreenProps) => {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     screen: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
     },
     scroll: {

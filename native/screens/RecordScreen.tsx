@@ -31,18 +31,19 @@ const RecordButton = ({
   label,
   style,
   onPress,
+  type,
 }: {
   label: string;
   style?: StyleProp<ViewStyle>;
   onPress: () => void;
+  type: "positive" | "negative";
 }) => {
   return (
     <Button
       size="l"
-      type="primary"
+      type="secondary"
       containerStyle={[
         {
-          borderRadius: 5,
           width: 72,
           height: 72,
         },
@@ -50,7 +51,9 @@ const RecordButton = ({
       ]}
       onPress={onPress}
     >
-      <Typography variant="l">{label}</Typography>
+      <Typography variant="l" color={type === "positive" ? "green" : "red"}>
+        {label}
+      </Typography>
     </Button>
   );
 };
@@ -169,17 +172,18 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Typography variant="xlBold" underline style={styles.title}>
+        <Typography variant="xlBold" style={styles.title} color="darkGrey">
           {/* nazwa produktu */}
           {recordName}
         </Typography>
         <View style={styles.content}>
-          <Typography variant="l" underline style={styles.wasTitle}>
+          <Typography variant="l" style={styles.wasTitle} color="darkGrey">
             Ile było:
           </Typography>
           <Typography
             variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
             style={styles.wasAmount}
+            color="darkGrey"
           >
             {unit ? previousQuantity + " " + unit : null}
           </Typography>
@@ -187,6 +191,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
             <View style={styles.leftColumn}>
               {steppers.negative.map(({ click, step }, i) => (
                 <RecordButton
+                  type="negative"
                   key={"negative" + step + i}
                   label={step.toString()}
                   onPress={onRecordButtonStepperPress(
@@ -209,14 +214,15 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                   isFirst
                 )}
               >
-                <ArrowRightIcon size={32} />
+                <ArrowRightIcon size={32} color="highlight" />
               </Button>
             </View>
             <View style={styles.middleColumn}>
-              <Typography underline>Ile jest:</Typography>
+              <Typography color="darkGrey">Ile jest:</Typography>
               <Typography
                 variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
                 style={styles.title}
+                color="darkGrey"
               >
                 {/* liczba + jednostka current */}
                 {unit ? quantity + " " + unit : null}
@@ -227,12 +233,13 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 containerStyle={styles.editButton}
                 onPress={() => openManualInput(quantity!, setQuantity)}
               >
-                <PencilIcon size={32} />
+                <PencilIcon size={32} color="darkGrey" />
               </Button>
             </View>
             <View style={styles.rightColumn}>
               {steppers.positive.map(({ click, step }, i) => (
                 <RecordButton
+                  type="positive"
                   key={"positive" + step + i}
                   label={`+${step}`}
                   onPress={onRecordButtonStepperPress(
@@ -255,7 +262,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                   isLast
                 )}
               >
-                <ArrowLeftIcon size={32} />
+                <ArrowLeftIcon size={32} color="highlight" />
               </Button>
             </View>
           </View>
@@ -267,19 +274,13 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    topBar: {
-      ...theme.baseShadow,
-      width: "100%",
-      backgroundColor: theme.colors.mediumBlue,
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    container: { backgroundColor: theme.colors.lightBlue, height: "100%" },
+    container: { backgroundColor: theme.colors.darkBlue, height: "100%" },
     contentContainer: { paddingHorizontal: theme.spacing * 3 },
     title: { paddingTop: theme.spacing * 3 },
     wasTitle: { marginTop: theme.spacing * 5.5 },
-    wasAmount: { paddingTop: theme.spacing * 2 },
+    wasAmount: {
+      paddingTop: theme.spacing * 2,
+    },
     content: { alignItems: "center" },
     gridRow: { flexDirection: "row" },
     leftColumn: { flexDirection: "column", alignItems: "flex-start" },

@@ -66,9 +66,6 @@ export default function DeliveryTabScreen({
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
-          <View style={styles.topBar}>
-            <Skeleton style={styles.skeletonTopBarText} />
-          </View>
           <View style={styles.listContainer}>
             <View style={styles.date}></View>
             <View style={styles.topButtonsContainer}>
@@ -143,21 +140,13 @@ export default function DeliveryTabScreen({
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
-    },
-    topBar: {
-      ...theme.baseShadow,
-      width: "100%",
-      backgroundColor: theme.colors.mediumBlue,
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
+      backgroundColor: theme.colors.darkBlue,
     },
     listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
       width: "100%",
       height: "100%",
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.darkBlue,
     },
     date: {
       paddingTop: theme.spacing,

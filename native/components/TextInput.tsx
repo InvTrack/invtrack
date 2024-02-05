@@ -15,7 +15,7 @@ import {
 import { isAndroid } from "../constants";
 import { createStyles } from "../theme/useStyles";
 
-const BORDER_WIDTH = 4;
+const BORDER_WIDTH = 2;
 export type TextInputProps = Omit<NativeTextInputProps, "onChange"> & {
   invalid?: boolean;
   disabled?: boolean;
@@ -81,9 +81,9 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             accessible
             accessibilityLabel={props.accessibilityLabel}
             editable={!disabled || editable}
-            placeholderTextColor={theme.colors.darkBlue}
-            selectionColor={theme.colors.darkBlue}
-            cursorColor={theme.colors.darkBlue}
+            placeholderTextColor={theme.colors.darkGrey}
+            selectionColor={theme.colors.highlight}
+            cursorColor={theme.colors.highlight}
             onFocus={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
               handleFocus(onFocus ? () => onFocus(e) : () => undefined)
             }
@@ -109,19 +109,19 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
       ...theme.text.s,
-      borderRadius: theme.borderRadiusFull,
-      height: 44,
+      borderRadius: theme.borderRadiusSmall,
+      height: 48,
       justifyContent: isAndroid ? undefined : "center",
-      borderColor: theme.colors.mediumBlue,
+      borderColor: theme.colors.lightBlue,
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing + (isAndroid ? 0 : -BORDER_WIDTH),
     },
     containerMultiline: {
       height: undefined,
-      minHeight: 44,
+      minHeight: 48,
     },
     content: {
-      height: 44,
+      height: 48,
       overflow: "hidden",
       flexDirection: "row",
       justifyContent: "flex-start",
@@ -129,18 +129,19 @@ const useStyles = createStyles((theme) =>
     },
     contentMultiline: {
       height: undefined,
-      minHeight: 44,
+      minHeight: 48,
       paddingVertical: 6,
     },
     focused: {
       ...theme.baseShadow,
     },
     input: {
-      height: 44,
+      height: 54,
       flexGrow: 1,
       flexShrink: 1,
       width: "100%",
       paddingHorizontal: theme.spacing * 2,
+      color: theme.colors.highlight,
     },
     inputMultiline: {
       height: undefined,

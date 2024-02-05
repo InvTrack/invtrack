@@ -5,6 +5,10 @@ import { CogIcon } from "./Icon";
 export const HeaderRight = () => {
   const navigation = useNavigation<any>();
   return (
-    <CogIcon size={32} onPress={() => navigation.navigate("SettingsScreen")} />
+    <CogIcon
+      size={32}
+      onPress={() => navigation.navigate("SettingsScreen")}
+      color="darkGrey"
+    />
   );
 };

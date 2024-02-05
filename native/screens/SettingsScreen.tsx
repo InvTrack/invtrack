@@ -30,10 +30,10 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
       <ScrollView>
-        <Typography variant="xlBold" color="darkBlue" style={styles.mb}>
+        <Typography variant="xlBold" color="darkGrey" style={styles.mb}>
           Ustawienia
         </Typography>
-        <Typography variant="lBold" color="darkBlue" style={styles.mb}>
+        <Typography variant="lBold" color="darkGrey" style={styles.mb}>
           Twój email:
         </Typography>
         <TextInputController
@@ -43,7 +43,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
             placeholder: session?.user?.email,
             disabled: true,
             editable: false,
-            containerStyle: styles.mb,
+            containerStyle: [styles.mb, styles.selfCenter],
           }}
         />
 
@@ -90,10 +90,10 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
             // @ts-ignore
             navigation.navigate("StartScreen");
           }}
-          type="secondary"
-          size="s"
+          type="primary"
+          size="xl"
           fullWidth
-          containerStyle={styles.mt2}
+          containerStyle={[styles.mt2, styles.selfCenter]}
         >
           Wyloguj się
         </Button>
@@ -104,7 +104,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.darkBlue,
       paddingHorizontal: theme.spacing * 2,
       paddingTop: theme.spacing * 2,
       alignItems: "center",
@@ -112,6 +112,9 @@ const useStyles = createStyles((theme) =>
     },
     mt2: {
       marginTop: theme.spacing * 9,
+    },
+    selfCenter: {
+      alignSelf: "center",
     },
     mb: { marginBottom: 16 },
   })

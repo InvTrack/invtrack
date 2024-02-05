@@ -20,18 +20,21 @@ export const DatePickerBottomSheetContent = ({
 
   return (
     <View
-      style={{
-        paddingBottom: 16 + insets.bottom,
-        paddingTop: 16,
-        backgroundColor: "#fff",
-      }}
+      style={[
+        {
+          paddingBottom: 16 + insets.bottom,
+        },
+        styles.container,
+      ]}
     >
-      <Typography style={styles.dateTitle}>Wybierz datę</Typography>
+      <Typography style={styles.dateTitle} variant="l" color="darkGrey">
+        Wybierz datę
+      </Typography>
       <DateTimePicker
         value={dateValue}
         mode={"date"}
         display="spinner"
-        themeVariant="light"
+        themeVariant="dark"
         onChange={(e, d) => {
           if (e.type === "dismissed") {
             return;
@@ -44,7 +47,7 @@ export const DatePickerBottomSheetContent = ({
         value={dateValue}
         mode={"time"}
         display="spinner"
-        themeVariant="light"
+        themeVariant="dark"
         is24Hour={true}
         onChange={(e, d) => {
           if (e.type === "dismissed") {
@@ -68,11 +71,15 @@ export const DatePickerBottomSheetContent = ({
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    container: {
+      paddingTop: 16,
+      backgroundColor: theme.colors.darkBlue,
+    },
     dateTitle: {
       alignSelf: "center",
     },
     input: {
-      backgroundColor: theme.colors.white,
+      backgroundColor: theme.colors.darkBlue,
       alignSelf: "center",
     },
     button: {

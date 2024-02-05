@@ -25,6 +25,7 @@ export default function StartScreen({ navigation }: StartScreenProps) {
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <Card
+        color="mediumBlue"
         borderBottom
         padding="normal"
         style={[styles.card, { paddingTop: safeAreaTopInset }]}
@@ -34,12 +35,12 @@ export default function StartScreen({ navigation }: StartScreenProps) {
           resizeMode="contain"
           style={styles.logoImage}
         />
-        <Typography color="darkBlue" style={styles.logoText}>
+        <Typography color="darkGrey" style={styles.logoText}>
           InvTrack
         </Typography>
       </Card>
       <Button
-        type="secondary"
+        type="primary"
         size="l"
         containerStyle={styles.button}
         onPress={() => {
@@ -55,7 +56,7 @@ export default function StartScreen({ navigation }: StartScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.lightBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
       alignItems: "center",
     },

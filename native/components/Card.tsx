@@ -7,6 +7,7 @@ import {
   ViewStyle,
 } from "react-native";
 
+import { useTheme } from "@react-navigation/native";
 import { ThemeColors } from "../theme";
 import { createStyles } from "../theme/useStyles";
 
@@ -16,14 +17,12 @@ interface CardProps {
   padding?: CardPaddings;
   fullWidth?: boolean;
   children: React.ReactNode;
-  color?: Exclude<
-    ThemeColors,
-    "error" | "grey" | "transparent" | "red" | "green"
-  >;
+  color?: ThemeColors;
   style?: StyleProp<ViewStyle>;
   borderTop?: boolean;
   borderBottom?: boolean;
   onPress?: () => void;
+  badge?: "red" | "green";
 }
 
 export const Card = forwardRef(
@@ -37,9 +36,11 @@ export const Card = forwardRef(
       borderTop = false,
       borderBottom = false,
       onPress,
+      badge,
     }: CardProps,
     _ref
   ) => {
+    const theme = useTheme();
     const styles = useStyles();
     if (onPress) {
       return (
@@ -49,11 +50,16 @@ export const Card = forwardRef(
             borderBottom && styles.borderBottom,
             borderTop && styles.borderTop,
             styles[padding],
-            styles[color],
+            { backgroundColor: theme.colors[color] },
             fullWidth && styles.fullWidth,
             style,
           ]}
         >
+          {badge && (
+            <View
+              style={[{ backgroundColor: theme.colors[badge] }, styles.badge]}
+            />
+          )}
           {children}
         </TouchableOpacity>
       );
@@ -65,11 +71,16 @@ export const Card = forwardRef(
           borderBottom && styles.borderBottom,
           borderTop && styles.borderTop,
           styles[padding],
-          styles[color],
+          { backgroundColor: theme.colors[color] },
           fullWidth && styles.fullWidth,
           style,
         ]}
       >
+        {badge && (
+          <View
+            style={[{ backgroundColor: theme.colors[badge] }, styles.badge]}
+          />
+        )}
         {children}
       </View>
     );
@@ -86,6 +97,24 @@ const useStyles = createStyles((theme) =>
       borderBottomLeftRadius: theme.borderRadius,
       borderBottomRightRadius: theme.borderRadius,
     },
+    // badge: {
+    //   position: "absolute",
+    //   overflow: "hidden",
+    //   backgroundColor: theme.colors.red,
+    //   top: -2,
+    //   left: -2,
+    //   width: 12,
+    //   height: 12,
+    //   borderRadius: theme.borderRadius,
+    // },
+    badge: {
+      position: "absolute",
+      height: "100%",
+      width: 5,
+      left: 0,
+      borderTopStartRadius: theme.borderRadiusSmall,
+      borderBottomStartRadius: theme.borderRadiusSmall,
+    },
     none: {
       padding: 0,
     },
@@ -98,10 +127,5 @@ const useStyles = createStyles((theme) =>
     fullWidth: {
       width: "100%",
     },
-    black: { backgroundColor: theme.colors.black },
-    white: { backgroundColor: theme.colors.white },
-    lightBlue: { backgroundColor: theme.colors.lightBlue },
-    mediumBlue: { backgroundColor: theme.colors.mediumBlue },
-    darkBlue: { backgroundColor: theme.colors.darkBlue },
   })
 );

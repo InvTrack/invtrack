@@ -27,21 +27,6 @@ import { useInternalBottomSheet } from "./internal/useInternalBottomSheet";
 
 export const BOTTOMSHEET_TIMING_CLOSE = 250;
 
-const useStyles = createStyles(() =>
-  StyleSheet.create({
-    absoluteFill: StyleSheet.absoluteFillObject,
-    overlay: {
-      backgroundColor: "black",
-    },
-    bottomSheet: {
-      position: "absolute",
-      left: 0,
-      bottom: 0,
-      right: 0,
-    },
-  })
-);
-
 const BottomSheet = () => {
   const theme = useTheme();
   const styles = useStyles();
@@ -196,3 +181,18 @@ const BottomSheet = () => {
 };
 
 export default BottomSheet;
+
+const useStyles = createStyles(() =>
+  StyleSheet.create({
+    absoluteFill: StyleSheet.absoluteFillObject,
+    overlay: {
+      backgroundColor: "black",
+    },
+    bottomSheet: {
+      position: "absolute",
+      left: 0,
+      bottom: 0,
+      right: 0,
+    },
+  })
+);

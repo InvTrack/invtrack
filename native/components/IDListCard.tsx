@@ -38,14 +38,14 @@ export const IDListCard = ({
       }
     >
       <Typography
-        color="darkBlue"
+        color="darkGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
         {name}
       </Typography>
       <Typography
-        color="darkBlue"
+        color="darkGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
       >
         {quantity + " " + unit}

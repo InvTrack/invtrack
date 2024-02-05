@@ -19,7 +19,6 @@ export type TypographyProps = {
   variant?: keyof MainTheme["text"];
   numberOfLines?: number;
   align?: "left" | "center" | "right" | "auto" | "justify";
-  underline?: boolean;
   opacity?: boolean;
 };
 
@@ -31,7 +30,6 @@ export const Typography = ({
   variant = "l",
   numberOfLines,
   align = "left",
-  underline = false,
   opacity = false,
 }: TypographyProps) => {
   const theme = useTheme();
@@ -43,7 +41,6 @@ export const Typography = ({
         color && { color: theme.colors[color] },
         styles[variant],
         align && styles[`align${align}`],
-        underline && styles.underline,
         opacity && styles.opacity,
         style,
       ]}
@@ -82,9 +79,6 @@ const useStyles = createStyles((theme) =>
     lBold: { ...theme.text.lBold },
     xl: { ...theme.text.xl },
     xlBold: { ...theme.text.xlBold },
-    underline: {
-      textDecorationLine: "underline",
-    },
     opacity: {
       opacity: theme.opacity,
     },

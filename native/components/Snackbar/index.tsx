@@ -100,7 +100,7 @@ const Snackbar = ({ item }: SnackbarProps) => {
 
 export const SnackbarRenderer = () => {
   const { state: items } = useSnackbar();
-  console.log(items.slice(0, 1));
+  //TODO: add a logger entry here
   return items
     .slice(0, 1)
     .map((item) => <Snackbar item={item} key={item.id} />);
@@ -133,10 +133,10 @@ const useStyles = createStyles((theme) =>
       backgroundColor: theme.colors.red,
     },
     info: {
-      backgroundColor: theme.colors.grey,
+      backgroundColor: theme.colors.highlight,
     },
     text: {
-      color: theme.colors.white,
+      color: theme.colors.mediumBlue,
     },
   })
 );

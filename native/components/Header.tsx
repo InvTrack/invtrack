@@ -1,6 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HeaderRight } from "./HeaderRight";
@@ -8,18 +9,17 @@ import { ArrowRightIcon } from "./Icon";
 
 const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
+  const theme = useTheme();
   return (
     <View
       style={{
-        backgroundColor: "#EDF6FF",
+        backgroundColor: theme.colors.mediumBlue,
         height: insets.top + 56,
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "space-between",
         paddingHorizontal: insets.left + 24,
-        paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: "#C9E0F6",
+        paddingBottom: theme.spacing * 2,
       }}
     >
       {children}
@@ -31,7 +31,11 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
   return (
     <HeaderWrapper>
       {navigation.canGoBack() ? (
-        <ArrowRightIcon size={32} onPress={navigation.goBack} />
+        <ArrowRightIcon
+          size={32}
+          onPress={navigation.goBack}
+          color="darkGrey"
+        />
       ) : (
         <View />
       )}
