@@ -53,6 +53,10 @@ export default function DeliveryTabScreen({
           showInfo("Brak zmian do zapisania");
           return;
         }
+        if (!isConnected) {
+          showError("Brak połączenia z internetem");
+          return;
+        }
         mutate(data);
       },
       (_errors) => {
@@ -118,7 +122,7 @@ export default function DeliveryTabScreen({
                 });
               }}
             >
-              <ScanBarcodeIcon size={34} />
+              <ScanBarcodeIcon size={34} color="darkGrey" />
             </Button>
           </View>
           {recordList.map(({ name, quantity, unit, id }) => (
