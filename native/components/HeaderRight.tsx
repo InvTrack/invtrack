@@ -8,7 +8,7 @@ export const HeaderRight = () => {
     <CogIcon
       size={32}
       onPress={() => navigation.navigate("SettingsScreen")}
-      color="new_darkGrey"
+      color="darkGrey"
     />
   );
 };

@@ -103,13 +103,13 @@ const useStyles = createStyles((theme) =>
       borderRadius: theme.borderRadiusSmall,
     },
     primary: {
-      backgroundColor: theme.colors.new_darkBlue,
-      borderColor: theme.colors.new_highlight,
+      backgroundColor: theme.colors.darkBlue,
+      borderColor: theme.colors.highlight,
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing - BORDER_WIDTH,
     },
     secondary: {
-      borderColor: theme.colors.new_lightBlue,
+      borderColor: theme.colors.lightBlue,
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing - BORDER_WIDTH,
     },
@@ -118,7 +118,7 @@ const useStyles = createStyles((theme) =>
       width: "100%",
     },
     string: {
-      color: theme.colors.new_darkGrey,
+      color: theme.colors.darkGrey,
     },
     disabled: { opacity: 0.6 },
     // SIZES

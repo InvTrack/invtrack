@@ -97,10 +97,5 @@ const useStyles = createStyles((theme) =>
     fullWidth: {
       width: "100%",
     },
-    black: { backgroundColor: theme.colors.black },
-    white: { backgroundColor: theme.colors.white },
-    lightBlue: { backgroundColor: theme.colors.lightBlue },
-    mediumBlue: { backgroundColor: theme.colors.mediumBlue },
-    darkBlue: { backgroundColor: theme.colors.darkBlue },
   })
 );

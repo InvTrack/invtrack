@@ -114,13 +114,13 @@ export function NewBarcodeScreen({ route, navigation }: NewBarcodeScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
     },
     listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
       width: "100%",
       height: "100%",
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
     },
     date: {
       paddingTop: theme.spacing,

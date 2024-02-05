@@ -6,5 +6,5 @@ export const LoadingSpinner = ({
   size?: number | "small" | "large";
 }) => {
   const theme = useTheme();
-  return <ActivityIndicator size={size} color={theme.colors.new_darkGrey} />;
+  return <ActivityIndicator size={size} color={theme.colors.darkGrey} />;
 };

@@ -52,7 +52,7 @@ export default function LoginScreen({}: LoginScreenProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Typography variant="xlBold" color="new_darkGrey" style={styles.title}>
+      <Typography variant="xlBold" color="darkGrey" style={styles.title}>
         Logowanie
       </Typography>
       <TextInputController
@@ -107,7 +107,7 @@ export default function LoginScreen({}: LoginScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
       paddingHorizontal: theme.spacing * 6,
       paddingTop: theme.spacing * 3,
@@ -125,7 +125,7 @@ const useStyles = createStyles((theme) =>
     link: {
       alignSelf: "center",
       marginTop: theme.spacing * 2.5,
-      color: theme.colors.new_darkBlue,
+      color: theme.colors.darkBlue,
       textDecorationLine: "underline",
       opacity: theme.opacity,
       ...theme.text.xs,

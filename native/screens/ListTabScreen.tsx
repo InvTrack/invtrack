@@ -14,11 +14,7 @@ import { createStyles } from "../theme/useStyles";
 const MonthTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
-    <Typography
-      variant="xlBold"
-      color="new_highlight"
-      style={styles.monthTitle}
-    >
+    <Typography variant="xlBold" color="highlight" style={styles.monthTitle}>
       {title}
     </Typography>
   );
@@ -26,7 +22,7 @@ const MonthTitle = ({ title }: { title: string }) => {
 const DayTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
-    <Typography variant="lBold" color="new_darkGrey" style={styles.dayTitle}>
+    <Typography variant="lBold" color="darkGrey" style={styles.dayTitle}>
       {title}
     </Typography>
   );
@@ -132,7 +128,7 @@ export const ListTab = ({}: ListTabScreenProps) => {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     screen: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       height: "100%",
     },
     scroll: {

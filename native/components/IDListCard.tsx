@@ -25,7 +25,7 @@ export const IDListCard = ({
   const navigation = useNavigation<any>();
   return (
     <Card
-      color="new_mediumBlue"
+      color="mediumBlue"
       style={styles.card}
       padding="none"
       onPress={() =>
@@ -38,14 +38,14 @@ export const IDListCard = ({
       }
     >
       <Typography
-        color="new_darkGrey"
+        color="darkGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
         {name}
       </Typography>
       <Typography
-        color="new_darkGrey"
+        color="darkGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
       >
         {quantity + " " + unit}

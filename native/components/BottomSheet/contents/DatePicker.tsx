@@ -27,7 +27,7 @@ export const DatePickerBottomSheetContent = ({
         styles.container,
       ]}
     >
-      <Typography style={styles.dateTitle} variant="l" color="new_darkGrey">
+      <Typography style={styles.dateTitle} variant="l" color="darkGrey">
         Wybierz datę
       </Typography>
       <DateTimePicker
@@ -73,13 +73,13 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
       paddingTop: 16,
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
     },
     dateTitle: {
       alignSelf: "center",
     },
     input: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       alignSelf: "center",
     },
     button: {

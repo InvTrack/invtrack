@@ -106,7 +106,7 @@ const useStyles = createStyles((theme) =>
       marginBottom: theme.spacing * 3,
     },
     input: {
-      color: theme.colors.darkBlue,
+      color: theme.colors.darkGrey,
     },
   })
 );

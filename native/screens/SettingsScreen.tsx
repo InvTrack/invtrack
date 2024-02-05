@@ -30,10 +30,10 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
       <ScrollView>
-        <Typography variant="xlBold" color="new_darkGrey" style={styles.mb}>
+        <Typography variant="xlBold" color="darkGrey" style={styles.mb}>
           Ustawienia
         </Typography>
-        <Typography variant="lBold" color="new_darkGrey" style={styles.mb}>
+        <Typography variant="lBold" color="darkGrey" style={styles.mb}>
           Twój email:
         </Typography>
         <TextInputController
@@ -104,7 +104,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      backgroundColor: theme.colors.new_darkBlue,
+      backgroundColor: theme.colors.darkBlue,
       paddingHorizontal: theme.spacing * 2,
       paddingTop: theme.spacing * 2,
       alignItems: "center",

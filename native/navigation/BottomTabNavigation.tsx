@@ -57,9 +57,9 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  borderColor: theme.colors.new_darkBlue,
+                  borderColor: theme.colors.darkBlue,
                   borderTopWidth: 2,
-                  backgroundColor: theme.colors.new_mediumBlue,
+                  backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
@@ -67,7 +67,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             ),
             headerTitle: deliveryName,
             headerTitleStyle: {
-              color: theme.colors.new_highlight,
+              color: theme.colors.highlight,
             },
             headerBackVisible: false,
           }}
@@ -79,9 +79,9 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  borderColor: theme.colors.new_darkBlue,
+                  borderColor: theme.colors.darkBlue,
                   borderTopWidth: 2,
-                  backgroundColor: theme.colors.new_mediumBlue,
+                  backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
@@ -89,7 +89,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             ),
             headerTitle: deliveryName,
             headerTitleStyle: {
-              color: theme.colors.new_highlight,
+              color: theme.colors.highlight,
             },
             headerBackVisible: false,
             // headerShown: false,
@@ -131,9 +131,9 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  borderColor: theme.colors.new_darkBlue,
+                  borderColor: theme.colors.darkBlue,
                   borderTopWidth: 2,
-                  backgroundColor: theme.colors.new_mediumBlue,
+                  backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
@@ -141,7 +141,7 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
             ),
             headerTitle: inventoryName,
             headerTitleStyle: {
-              color: theme.colors.new_highlight,
+              color: theme.colors.highlight,
             },
             headerBackVisible: false,
           }}
@@ -153,9 +153,9 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
             headerBackground: () => (
               <View
                 style={{
-                  borderColor: theme.colors.new_darkBlue,
+                  borderColor: theme.colors.darkBlue,
                   borderTopWidth: 2,
-                  backgroundColor: theme.colors.new_mediumBlue,
+                  backgroundColor: theme.colors.mediumBlue,
                   width: "100%",
                   height: "100%",
                 }}
@@ -163,7 +163,7 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
             ),
             headerTitle: inventoryName,
             headerTitleStyle: {
-              color: theme.colors.new_highlight,
+              color: theme.colors.highlight,
             },
             headerBackVisible: false,
           }}
@@ -186,8 +186,8 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         options={{
           title: "Lista",
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.new_highlight,
-          tabBarIcon: () => <ListIcon color={"new_darkGrey"} size={37} />,
+          tabBarActiveTintColor: theme.colors.highlight,
+          tabBarIcon: () => <ListIcon color="darkGrey" size={37} />,
           headerShown: false,
           lazy: false,
         }}
@@ -198,8 +198,8 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         options={{
           title: "Inwentaryzacja",
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.new_highlight,
-          tabBarIcon: () => <InventoryIcon color={"new_darkGrey"} size={37} />,
+          tabBarActiveTintColor: theme.colors.highlight,
+          tabBarIcon: () => <InventoryIcon color="darkGrey" size={37} />,
           headerShown: false,
           lazy: false,
         }}
@@ -210,8 +210,8 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         options={{
           title: "Dostawa",
           tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.new_highlight,
-          tabBarIcon: () => <DeliveryIcon color={"new_darkGrey"} size={37} />,
+          tabBarActiveTintColor: theme.colors.highlight,
+          tabBarIcon: () => <DeliveryIcon color="darkGrey" size={37} />,
           headerShown: false,
           lazy: false,
         }}

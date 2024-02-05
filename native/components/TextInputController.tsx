@@ -40,7 +40,7 @@ export const TextInputController = <T extends FieldValues>({
         ref={ref}
       />
       {error && (
-        <Typography variant="xs" color="error" style={{ marginLeft: 8 }}>
+        <Typography variant="xs" color="red" style={{ marginLeft: 8 }}>
           {error.message}
         </Typography>
       )}

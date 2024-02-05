@@ -13,7 +13,7 @@ const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <View
       style={{
-        backgroundColor: theme.colors.new_mediumBlue,
+        backgroundColor: theme.colors.mediumBlue,
         height: insets.top + 56,
         flexDirection: "row",
         alignItems: "flex-end",
@@ -34,7 +34,7 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
         <ArrowRightIcon
           size={32}
           onPress={navigation.goBack}
-          color="new_darkGrey"
+          color="darkGrey"
         />
       ) : (
         <View />

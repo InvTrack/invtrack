@@ -81,9 +81,9 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             accessible
             accessibilityLabel={props.accessibilityLabel}
             editable={!disabled || editable}
-            placeholderTextColor={theme.colors.grey}
-            selectionColor={theme.colors.grey}
-            cursorColor={theme.colors.grey}
+            placeholderTextColor={theme.colors.darkGrey}
+            selectionColor={theme.colors.highlight}
+            cursorColor={theme.colors.highlight}
             onFocus={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
               handleFocus(onFocus ? () => onFocus(e) : () => undefined)
             }
@@ -112,7 +112,7 @@ const useStyles = createStyles((theme) =>
       borderRadius: theme.borderRadiusSmall,
       height: 48,
       justifyContent: isAndroid ? undefined : "center",
-      borderColor: theme.colors.new_lightBlue,
+      borderColor: theme.colors.lightBlue,
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing + (isAndroid ? 0 : -BORDER_WIDTH),
     },
@@ -141,7 +141,7 @@ const useStyles = createStyles((theme) =>
       flexShrink: 1,
       width: "100%",
       paddingHorizontal: theme.spacing * 2,
-      color: theme.colors.new_highlight,
+      color: theme.colors.highlight,
     },
     inputMultiline: {
       height: undefined,
