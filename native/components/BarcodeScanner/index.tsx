@@ -142,7 +142,10 @@ export const BarcodeScanner = ({
 
     // FIXME do it properly with navigation
     // @ts-ignore
-    navigation.navigate("RecordScreen", { id, recordId: barcodeMappedToId });
+    navigation.navigate("RecordScreen", {
+      id: inventoryId,
+      recordId: barcodeMappedToId,
+    });
   };
 
   return (
