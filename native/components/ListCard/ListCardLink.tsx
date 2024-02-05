@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   DeliveryTabNavigationProp,
   InventoryTabNavigationProp,
@@ -43,6 +43,7 @@ export const ListCardLink = ({
       color="mediumBlue"
       style={styles.card}
       padding="none"
+      badge={isDelivery ? "green" : "red"}
       onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
       <Typography
@@ -52,23 +53,6 @@ export const ListCardLink = ({
       >
         {title}
       </Typography>
-      <View
-        style={
-          isDelivery
-            ? {
-                backgroundColor: "green",
-                borderRadius: 100,
-                width: 20,
-                height: 20,
-              }
-            : {
-                backgroundColor: "red",
-                borderRadius: 100,
-                width: 20,
-                height: 20,
-              }
-        }
-      />
       <SmallerArrowRightIcon size={25} color="highlight" />
     </Card>
   );
