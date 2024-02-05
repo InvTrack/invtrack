@@ -16,7 +16,6 @@ type InventoryCardAddProps = {
   isDelivery: boolean;
 };
 
-// fuck this type assetion bullshit man
 const navigateToTabScreen =
   (navigation: any, id: number, isDelivery: boolean) => () => {
     if (isDelivery) {
