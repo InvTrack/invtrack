@@ -10,7 +10,8 @@
     "start": "supabase start",
     "stop": "supabase stop",
     "reset-db": "supabase db reset",
-    "status": "supabase status"
+    "status": "supabase status",
+    "sb": "supabase"
   },
   "devDependencies": {
     "husky": "^8.0.3"
