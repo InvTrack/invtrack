@@ -53,4 +53,5 @@
       </TableBody>
     </Table>
   {/if}
+  <Button class="hover:underline" href={`/products/add`}>Dodaj</Button>
 </ScreenCard>
