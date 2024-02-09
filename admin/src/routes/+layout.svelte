@@ -15,14 +15,15 @@
   import OneSignal from "react-onesignal";
   import { browser } from "$app/environment";
   import Auth from "./auth/Auth.svelte";
+  import { PUBLIC_ONESIGNAL_APP_ID, PUBLIC_ONESIGNAL_SAFARI_WEB_ID } from "$env/static/public";
 
   let session: AuthSession | null;
 
   onMount(() => {
     if (browser) {
       OneSignal.init({
-        appId: "3a765f12-92fc-4424-b6a3-7f81681b478f",
-        safari_web_id: "web.onesignal.auto.5b1b15a7-d107-41ff-b02e-c379c8847bd2",
+        appId: PUBLIC_ONESIGNAL_APP_ID,
+        safari_web_id: PUBLIC_ONESIGNAL_SAFARI_WEB_ID,
         notifyButton: {
           enable: true,
         },
@@ -83,8 +84,20 @@
 </script>
 
 <svelte:head>
-  <title>Invtrack</title>
-  <meta name="description" content="Invtrack" />
+  <title>InvTrack - panel administratora</title>
+  <meta name="description" content="InvTrack" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicons/favicon-16x16.png" />
+  <link rel="manifest" href="../favicons/site.webmanifest" />
+  <link rel="mask-icon" href="../favicons/safari-pinned-tab.svg" color="#3986e5" />
+  <link rel="shortcut icon" href="../favicons/favicon.ico" />
+  <meta name="apple-mobile-web-app-title" content="InvTrack" />
+  <meta name="application-name" content="InvTrack" />
+  <meta name="msapplication-TileColor" content="#2b5797" />
+  <meta name="msapplication-config" content="../favicons/browserconfig.xml" />
+  <meta name="theme-color" content="#111827" />
 </svelte:head>
 {#if !session}
   <Auth />
