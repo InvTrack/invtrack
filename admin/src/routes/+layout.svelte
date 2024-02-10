@@ -27,12 +27,22 @@
         notifyButton: {
           enable: true,
         },
-        allowLocalhostAsSecureOrigin: true,
+        allowLocalhostAsSecureOrigin: import.meta.env.DEV,
       }).then(() => {
         OneSignal.Slidedown.promptPush({
           // TODO: tłumaczenie
           forceSlidedownOverNative: true,
-          slidedownPromptOptions: {},
+          slidedownPromptOptions: {
+            force: true,
+            categoryOptions: {
+              errorButtonText: "Zamknij",
+              negativeUpdateButton: "Nie, dziękuję",
+              positiveUpdateButton: "Tak, chcę",
+              savingButtonText: "Zapisywanie...",
+              updateMessage: "Czy chcesz otrzymywać powiadomienia o nowych produktach?",
+              tags: [{ label: "Powiadomienia", checked: true, tag: "powiadomienia" }],
+            },
+          },
         });
       });
     }
