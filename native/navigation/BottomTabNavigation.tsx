@@ -7,8 +7,8 @@ import { DeliveryFormContextProvider } from "../components/DeliveryFormContext/D
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
 import { InventoryFormContextProvider } from "../components/InventoryFormContext/InventoryFormContextProvider";
 
+import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { CleanTabBar } from "../components/TabBar";
-import { Typography } from "../components/Typography";
 import { useListInventories } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import DeliveryTabScreen from "../screens/DeliveryTabScreen";
@@ -41,10 +41,20 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
   const { data: deliveryName } = useGetInventoryName(deliveryId);
 
   const noInventories = !data?.length;
-  if (noInventories) return <Typography>Brak dostaw</Typography>;
+  if (noInventories)
+    return (
+      <EmptyScreenTemplate>
+        Błąd - brak identyfikatora dostawy. Zrestartuj aplikację i spróbuj
+        ponownie.
+      </EmptyScreenTemplate>
+    );
   // TODO skeletons or ???
   if (!(routeDeliveryId ?? deliveryId))
-    return <Typography>Brak dostaw</Typography>;
+    return (
+      <EmptyScreenTemplate>
+        Brak dostaw. Dodaj nową dostawę z ekranu listy!
+      </EmptyScreenTemplate>
+    );
 
   return (
     <DeliveryFormContextProvider>
@@ -65,10 +75,13 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
                 }}
               />
             ),
-            headerTitle: deliveryName,
+            headerTitle: deliveryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
             },
+            headerTitleAlign: "center",
             headerBackVisible: false,
           }}
         />
@@ -87,12 +100,14 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
                 }}
               />
             ),
-            headerTitle: deliveryName,
+            headerTitle: deliveryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
             },
+            headerTitleAlign: "center",
             headerBackVisible: false,
-            // headerShown: false,
           }}
         />
       </DeliveryStack.Navigator>
@@ -112,9 +127,19 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
   const { data: inventoryName } = useGetInventoryName(inventoryId);
   const noInventories = !data?.length;
 
-  if (noInventories) return <Typography>Brak inwentaryzacji</Typography>;
-  // TODO skeletons or ???
-  if (!inventoryId) return <Typography>Brak inwentaryzacji</Typography>;
+  if (noInventories)
+    return (
+      <EmptyScreenTemplate>
+        Błąd - brak identyfikatora inwentaryzacji. Zrestartuj aplikację i
+        spróbuj ponownie.
+      </EmptyScreenTemplate>
+    );
+  if (!inventoryId)
+    return (
+      <EmptyScreenTemplate>
+        Brak inwentaryzacji. Dodaj nową inwentaryzację z ekranu listy!
+      </EmptyScreenTemplate>
+    );
 
   return (
     <InventoryFormContextProvider>
@@ -139,10 +164,13 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
                 }}
               />
             ),
-            headerTitle: inventoryName,
+            headerTitle: inventoryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
             },
+            headerTitleAlign: "center",
             headerBackVisible: false,
           }}
         />
@@ -161,10 +189,13 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
                 }}
               />
             ),
-            headerTitle: inventoryName,
+            headerTitle: inventoryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
             },
+            headerTitleAlign: "center",
             headerBackVisible: false,
           }}
         />
