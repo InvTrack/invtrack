@@ -19,8 +19,11 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase.js";
   import { currentCompanyId } from "$lib/store";
+  import el from "date-fns/locale/el";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
+  let productsWithRecords: { name: string; records: (Views<"record_view"> | undefined)[] }[] = [];
+  let products: Tables<"product">[] = [];
   let maxTableLength = 0;
   let currentPage = 0;
   let company_id: number | undefined | null;
@@ -56,9 +59,15 @@
           return;
         }
         records = x;
+
+        productsWithRecords = products.map((p) => ({
+          name: p.name,
+          records: x.map((r) => r.record_view.find((rr) => rr.product_id == p.id)),
+        }));
       }
     );
   };
+
   const downloadCsv = async () => {
     loadingCsv = true;
     const { data: csv } = await supabase.functions.invoke("csv-export", {
@@ -77,7 +86,10 @@
     loadingCsv = false;
   };
   onMount(() => {
-    getRecords(currentPage, "first");
+    genericGet(supabase.from("product").select(), (x) => {
+      products = x;
+      getRecords(currentPage, "first");
+    });
   });
 
   const handleNext = async () => {
@@ -116,11 +128,17 @@
         </TableHead>
         {#if records[0]}
           <TableBody>
-            {#each records[0].record_view as product, i}
+            {#each productsWithRecords as product, i}
               <TableBodyRow>
                 <TableBodyCell>{product.name}</TableBodyCell>
-                {#each records as record}
-                  <TableBodyCell>{record.record_view[i].quantity}</TableBodyCell>
+                {#each product.records as record}
+                  <TableBodyCell>
+                    {#if record}
+                      {record.quantity} {record.quantity}
+                    {:else}
+                      n/a
+                    {/if}
+                  </TableBodyCell>
                 {/each}
               </TableBodyRow>
             {/each}

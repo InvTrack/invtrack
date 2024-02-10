@@ -44,7 +44,10 @@
         steps,
         company_id,
       }),
-      { setLoading: (x) => (loading = x) }
+      {
+        setLoading: (x) => (loading = x),
+        onSuccess: "/products",
+      }
     );
   };
 </script>
