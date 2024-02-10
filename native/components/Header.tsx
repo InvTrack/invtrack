@@ -10,16 +10,17 @@ import { ArrowRightIcon } from "./Icon";
 const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
+  const HEADER_HEIGHT = insets.top + 56;
   return (
     <View
       style={{
         backgroundColor: theme.colors.mediumBlue,
-        height: insets.top + 56,
+        height: HEADER_HEIGHT,
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "space-between",
         paddingHorizontal: insets.left + 24,
-        paddingBottom: theme.spacing * 2,
+        paddingBottom: HEADER_HEIGHT / 6,
       }}
     >
       {children}
