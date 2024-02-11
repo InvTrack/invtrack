@@ -12,11 +12,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "expo"],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "env.config.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", "env.config.js"]
 }

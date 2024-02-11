@@ -1,5 +1,6 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { EnvConfig } from "../env.config";
+import { EnvConfig } from "../config/env";
+
 import { Typography } from "./Typography";
 
 export const DevInfo = () => {
