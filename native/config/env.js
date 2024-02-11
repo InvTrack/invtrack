@@ -1,11 +1,10 @@
-import * as Updates from "expo-updates";
-
+import { channel } from "expo-updates";
+import { appVersion } from "./appVersion";
 // has to be a .js file
 // eas.json provides process.env variables, the config here makes sure that during an expo-update,
 // the end user receives the correct key/url
-
 // https://docs.expo.dev/build-reference/variables/
-const appVersion = "1.0.0";
+
 const devInfoEnv =
   (process.env?.EXPO_ENV || process.env.NODE_ENV) === "production"
     ? ""
@@ -27,13 +26,13 @@ export let EnvConfig = {
   devInfoString,
 };
 
-if (Updates.channel === "production") {
+if (channel === "production") {
   EnvConfig.supabaseUrl =
     process.env?.SUPABASE_URL || "https://krureybgsibclbmlcyff.supabase.co";
   EnvConfig.supabaseAnonKey =
     process.env?.SUPABASE_ANON_KEY ||
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtydXJleWJnc2liY2xibWxjeWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyNzE1NzIsImV4cCI6MjAwMDg0NzU3Mn0.PZ5et3XYm7_9bzUqhdxyMklrh1AFcNm3kT_3Vy-qz6w";
-} else if (Updates.channel === "staging") {
+} else if (channel === "staging") {
   EnvConfig.supabaseUrl =
     process.env?.SUPABASE_URL || "https://vskfnihejgggjibolhzv.supabase.co";
   EnvConfig.supabaseAnonKey =
