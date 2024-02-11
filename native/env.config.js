@@ -1,9 +1,9 @@
 import * as Updates from "expo-updates";
 
 // has to be a .js file
+// eas.json provides process.env variables, the config here makes sure that during an expo-update,
+// the end user receives the correct key/url
 
-// by default expo-updates takes the local .env file and uses it in update
-// so let's prevent that
 // https://docs.expo.dev/build-reference/variables/
 
 export let EnvConfig = {
