@@ -5,13 +5,26 @@ import * as Updates from "expo-updates";
 // the end user receives the correct key/url
 
 // https://docs.expo.dev/build-reference/variables/
+const appVersion = "1.0.0";
+const devInfoEnv =
+  (process.env?.EXPO_ENV || process.env.NODE_ENV) === "production"
+    ? ""
+    : `-${process.env?.EXPO_ENV || process.env.NODE_ENV}`;
+
+const devInfoString =
+  (process.env?.SUPABASE_URL?.split(".")[0]?.slice(8) || "localhost") +
+  "@" +
+  appVersion +
+  devInfoEnv;
 
 export let EnvConfig = {
   env: process.env?.EXPO_ENV || process.env.NODE_ENV,
-  supabaseUrl: process.env?.SUPABASE_URL || "http://172.20.10.14:54321",
+  supabaseUrl: process.env?.SUPABASE_URL || "http://192.168.0.103:54321",
   supabaseAnonKey:
     process.env?.SUPABASE_ANON_KEY ||
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
+  appVersion,
+  devInfoString,
 };
 
 if (Updates.channel === "production") {
