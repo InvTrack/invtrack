@@ -14,9 +14,9 @@ import { useListBarcodes } from "../../db/hooks/useListBarcodes";
 
 import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
+import { EmptyScreenTemplate } from "../EmptyScreenTemplate";
 import { CameraSwitchIcon } from "../Icon";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { Typography } from "../Typography";
 import { BarcodeOutline } from "./BarcodeOutline";
 
 const setCornerXY =
@@ -88,7 +88,7 @@ export const BarcodeScanner = ({
     setTRCornerAnimation(corners[3]);
   };
 
-  if (!isLoading && !barcodeList) {
+  if (isLoading && !barcodeList) {
     return (
       <View style={styles.container}>
         <LoadingSpinner size={"large"} />
@@ -98,18 +98,12 @@ export const BarcodeScanner = ({
 
   if (!isLoading && !barcodeList) {
     return (
-      <View style={[styles.container, styles.paddingH]}>
-        <Typography
-          align="center"
-          color="darkGrey"
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          Nie znaleziono kodów kreskowych dla tej inwentaryzacji
-        </Typography>
-      </View>
+      <EmptyScreenTemplate
+        centerText
+        style={[styles.container, styles.paddingH]}
+      >
+        Nie znaleziono kodów kreskowych dla tej inwentaryzacji
+      </EmptyScreenTemplate>
     );
   }
 
