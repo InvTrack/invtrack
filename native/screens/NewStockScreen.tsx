@@ -101,7 +101,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
-      <Typography style={styles.title} variant="xlBold" color="darkGrey">
+      <Typography style={styles.title} variant="xlBold" color="lightGrey">
         Nowy wpis:
       </Typography>
       <View
@@ -115,7 +115,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
         <ToggleController control={control} name="is_delivery" />
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{
             alignSelf: "center",
           }}

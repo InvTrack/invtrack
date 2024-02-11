@@ -118,7 +118,7 @@ const useStyles = createStyles((theme) =>
       width: "100%",
     },
     string: {
-      color: theme.colors.darkGrey,
+      color: theme.colors.lightGrey,
     },
     disabled: { opacity: 0.6 },
     // SIZES

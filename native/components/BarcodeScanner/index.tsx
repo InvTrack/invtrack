@@ -102,7 +102,7 @@ export const BarcodeScanner = ({
         centerText
         style={[styles.container, styles.paddingH]}
       >
-        Nie znaleziono kodów kreskowych dla tej inwentaryzacji
+        Nie znaleziono kodów kreskowych
       </EmptyScreenTemplate>
     );
   }

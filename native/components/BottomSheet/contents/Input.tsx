@@ -89,7 +89,7 @@ export const InputBottomSheetContent = ({
       ]}
     >
       <View style={styles.topRow}>
-        <Typography style={styles.inputLabel} color="darkGrey">
+        <Typography style={styles.inputLabel} color="lightGrey">
           Wpisz ilość
         </Typography>
         <Button
