@@ -1,6 +1,9 @@
 import { ReactNode } from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { createStyles } from "../theme/useStyles";
 import { Typography } from "./Typography";
 
@@ -14,9 +17,16 @@ export const EmptyScreenTemplate = ({
   centerText?: boolean;
 }) => {
   const styles = useStyles();
+  const topInset = useSafeAreaInsets().top;
   if (typeof children === "string") {
     return (
-      <SafeAreaView style={[styles.container, style]}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { paddingTop: topInset > 16 ? topInset : 16 },
+          style,
+        ]}
+      >
         <Typography
           variant="l"
           color="darkGrey"
@@ -28,7 +38,15 @@ export const EmptyScreenTemplate = ({
     );
   }
   return (
-    <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { paddingTop: topInset > 16 ? topInset : 16 },
+        style,
+      ]}
+    >
+      {children}
+    </SafeAreaView>
   );
 };
 
