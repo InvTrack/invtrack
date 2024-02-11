@@ -21,7 +21,8 @@ export type StartScreenProps = NativeStackScreenProps<
 
 export default function StartScreen({ navigation }: StartScreenProps) {
   const styles = useStyles();
-  const { top: safeAreaTopInset } = useSafeAreaInsets();
+  const { top: safeAreaTopInset, bottom: safeAreaBottomInset } =
+    useSafeAreaInsets();
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <Card
@@ -49,6 +50,18 @@ export default function StartScreen({ navigation }: StartScreenProps) {
       >
         Zaloguj się
       </Button>
+      <Typography
+        color="darkGrey"
+        style={{
+          position: "absolute",
+          alignSelf: "flex-end",
+          fontSize: 12,
+          bottom: safeAreaBottomInset,
+        }}
+      >
+        {("https://vskfnihejgggjibolhzv.supabase.co".split(".")[0].slice(8) ||
+          "localhost") + "@1.0.0"}
+      </Typography>
     </SafeAreaView>
   );
 }
