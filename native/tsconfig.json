@@ -8,8 +8,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "incremental": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "expo"],
-  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
+    "env.config.js"
+  ]
 }
