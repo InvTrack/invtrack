@@ -19,11 +19,11 @@ if (Updates.channel === "production") {
     process.env?.SUPABASE_URL || "https://krureybgsibclbmlcyff.supabase.co";
   EnvConfig.supabaseAnonKey =
     process.env?.SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZza2ZuaWhlamdnZ2ppYm9saHp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyMjM4ODksImV4cCI6MjAwMDc5OTg4OX0.MucBZoohSbpCJVIBFXE_qUbUu3fIuvqoljY0oXNwR68";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtydXJleWJnc2liY2xibWxjeWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyNzE1NzIsImV4cCI6MjAwMDg0NzU3Mn0.PZ5et3XYm7_9bzUqhdxyMklrh1AFcNm3kT_3Vy-qz6w";
 } else if (Updates.channel === "staging") {
   EnvConfig.supabaseUrl =
     process.env?.SUPABASE_URL || "https://vskfnihejgggjibolhzv.supabase.co";
   EnvConfig.supabaseAnonKey =
     process.env?.SUPABASE_ANON_KEY ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtydXJleWJnc2liY2xibWxjeWZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyNzE1NzIsImV4cCI6MjAwMDg0NzU3Mn0.PZ5et3XYm7_9bzUqhdxyMklrh1AFcNm3kT_3Vy-qz6w";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZza2ZuaWhlamdnZ2ppYm9saHp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUyMjM4ODksImV4cCI6MjAwMDc5OTg4OX0.MucBZoohSbpCJVIBFXE_qUbUu3fIuvqoljY0oXNwR68";
 }
