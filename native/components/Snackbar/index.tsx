@@ -85,7 +85,11 @@ const Snackbar = ({ item }: SnackbarProps) => {
       <Animated.View
         style={[
           styles.container,
-          { paddingTop: insets.top, height: insets.top + SNACKBAR_HEIGHT },
+          {
+            paddingTop: insets.top,
+            paddingBottom: (insets.top + SNACKBAR_HEIGHT) / 4,
+            height: insets.top + SNACKBAR_HEIGHT,
+          },
           styles[type],
           animatedStyle,
         ]}
@@ -109,22 +113,22 @@ export const SnackbarRenderer = () => {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
+      ...theme.text.l,
+      color: theme.colors.darkGrey,
       zIndex: 1000,
       position: "absolute",
-      height: SNACKBAR_HEIGHT,
       left: 0,
       right: 0,
       flexDirection: "row",
-      alignItems: "center",
-      paddingVertical: theme.spacing * 2,
       justifyContent: "center",
+      alignItems: "flex-end",
       paddingHorizontal: theme.spacing * 2,
       borderBottomLeftRadius: theme.borderRadiusSmall,
       borderBottomRightRadius: theme.borderRadiusSmall,
     },
     contentContainer: {
       flexDirection: "row",
-      alignItems: "center",
+      alignItems: "flex-end",
     },
     success: {
       backgroundColor: theme.colors.green,
