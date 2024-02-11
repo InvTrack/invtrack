@@ -10,6 +10,7 @@ import { Card } from "../components/Card";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button } from "../components/Button";
+import { DevInfo } from "../components/DevInfo";
 import { Typography } from "../components/Typography";
 import { LoginStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -21,8 +22,7 @@ export type StartScreenProps = NativeStackScreenProps<
 
 export default function StartScreen({ navigation }: StartScreenProps) {
   const styles = useStyles();
-  const { top: safeAreaTopInset, bottom: safeAreaBottomInset } =
-    useSafeAreaInsets();
+  const { top: safeAreaTopInset } = useSafeAreaInsets();
   return (
     <SafeAreaView style={styles.container} edges={["bottom", "left", "right"]}>
       <Card
@@ -50,18 +50,7 @@ export default function StartScreen({ navigation }: StartScreenProps) {
       >
         Zaloguj się
       </Button>
-      <Typography
-        color="darkGrey"
-        style={{
-          position: "absolute",
-          alignSelf: "flex-end",
-          fontSize: 12,
-          bottom: safeAreaBottomInset,
-        }}
-      >
-        {("https://vskfnihejgggjibolhzv.supabase.co".split(".")[0].slice(8) ||
-          "localhost") + "@1.0.0"}
-      </Typography>
+      <DevInfo />
     </SafeAreaView>
   );
 }
