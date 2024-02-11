@@ -1,4 +1,3 @@
-import { appVersion } from "./config/appVersion";
 /**
  * don't import directly, use expo-constants
  */
@@ -6,7 +5,7 @@ const config = () => ({
   expo: {
     name: "InvTrack",
     slug: "invtrack",
-    version: appVersion,
+    version: "1.0.0",
     orientation: "portrait",
     owner: "invtrack",
     icon: "./assets/images/icon.png",

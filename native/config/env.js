@@ -1,14 +1,19 @@
+import * as Application from "expo-application";
 import { channel } from "expo-updates";
-import { appVersion } from "./appVersion";
+
 // has to be a .js file
 // eas.json provides process.env variables, the config here makes sure that during an expo-update,
 // the end user receives the correct key/url
 // https://docs.expo.dev/build-reference/variables/
 
-const devInfoEnv =
-  (process.env?.EXPO_ENV || process.env.NODE_ENV) === "production"
-    ? ""
-    : `-${process.env?.EXPO_ENV || process.env.NODE_ENV}`;
+const isDevEnv =
+  (process.env?.EXPO_ENV || process.env.NODE_ENV) === "development";
+
+const appVersion = isDevEnv ? "expo-go" : Application?.nativeApplicationVersion;
+
+const devInfoEnv = isDevEnv
+  ? `-${process.env?.EXPO_ENV || process.env.NODE_ENV}`
+  : "";
 
 const devInfoString =
   (process.env?.SUPABASE_URL?.split(".")[0]?.slice(8) || "localhost") +
