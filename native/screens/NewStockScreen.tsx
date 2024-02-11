@@ -13,6 +13,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSnackbar } from "../components/Snackbar/context";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
+import { isAndroid } from "../constants";
 import { useCreateInventory } from "../db";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -31,6 +32,7 @@ export type CreateInventoryFormValues = {
 export function NewStockScreen({ navigation }: NewStockScreenProps) {
   const styles = useStyles();
   const { isConnected } = useNetInfo();
+  const { showError } = useSnackbar();
 
   const now = new Date(Date.now());
 
@@ -54,7 +56,6 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
     isError,
   } = useCreateInventory();
 
-  const { showError } = useSnackbar();
   useEffect(() => {
     if (isSuccess && inventory) {
       if (is_delivery) {
@@ -101,11 +102,24 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
       <Typography style={styles.title} variant="xlBold" color="darkGrey">
-        {`Nowy wpis:`}
+        Nowy wpis:
       </Typography>
-      <View style={{ flexDirection: "row", gap: 8, alignItems: "flex-start" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 8,
+          marginLeft: isAndroid ? -8 : 0,
+          marginBottom: isAndroid ? 0 : 16,
+        }}
+      >
         <ToggleController control={control} name="is_delivery" />
-        <Typography variant="l" color="darkGrey">
+        <Typography
+          variant="l"
+          color="darkGrey"
+          style={{
+            alignSelf: "center",
+          }}
+        >
           {is_delivery ? `Dostawa` : `Inwentaryzacja`}
         </Typography>
       </View>
@@ -118,7 +132,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
           required: { value: true, message: "Wymagane" },
         }}
         textInputProps={{
-          placeholder: "nazwa",
+          placeholder: "Nazwa",
           containerStyle: styles.mb,
         }}
       />
@@ -163,7 +177,7 @@ const useStyles = createStyles((theme) =>
     title: {
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: theme.spacing * 10,
+      marginBottom: theme.spacing * 8,
       marginTop: "20%",
     },
     buttonContainer: {
