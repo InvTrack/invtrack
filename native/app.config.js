@@ -14,7 +14,7 @@ const config = {
     splash: {
       image: "./assets/images/splash.png",
       resizeMode: "contain",
-      backgroundColor: "#C9E0F6",
+      backgroundColor: "#212939",
     },
     assetBundlePatterns: ["**/*"],
     ios: {
@@ -25,7 +25,7 @@ const config = {
     android: {
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
-        backgroundColor: "#C9E0F6",
+        backgroundColor: "#212939",
       },
       package: "app.invtrack.invtrack",
       versionCode: 1000,
