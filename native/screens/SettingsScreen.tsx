@@ -31,10 +31,10 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
       <ScrollView>
-        <Typography variant="xlBold" color="darkGrey" style={styles.mb}>
+        <Typography variant="xlBold" color="lightGrey" style={styles.mb}>
           Ustawienia
         </Typography>
-        <Typography variant="lBold" color="darkGrey" style={styles.mb}>
+        <Typography variant="lBold" color="lightGrey" style={styles.mb}>
           Twój email:
         </Typography>
         <TextInputController

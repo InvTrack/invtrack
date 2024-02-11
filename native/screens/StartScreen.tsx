@@ -36,7 +36,7 @@ export default function StartScreen({ navigation }: StartScreenProps) {
           resizeMode="contain"
           style={styles.logoImage}
         />
-        <Typography color="darkGrey" style={styles.logoText}>
+        <Typography color="lightGrey" style={styles.logoText}>
           InvTrack
         </Typography>
       </Card>

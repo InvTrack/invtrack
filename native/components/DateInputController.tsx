@@ -90,7 +90,6 @@ export const DateInputController = <T extends FieldValues>({
             hour12: false,
           }),
           containerStyle: styles.mb,
-          inputStyle: styles.input,
         }}
       />
     </TouchableOpacity>
@@ -104,9 +103,6 @@ const useStyles = createStyles((theme) =>
     },
     mb: {
       marginBottom: theme.spacing * 3,
-    },
-    input: {
-      color: theme.colors.darkGrey,
     },
   })
 );

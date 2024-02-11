@@ -25,7 +25,7 @@ const MonthTitle = ({ title }: { title: string }) => {
 const DayTitle = ({ title }: { title: string }) => {
   const styles = useStyles();
   return (
-    <Typography variant="lBold" color="darkGrey" style={styles.dayTitle}>
+    <Typography variant="lBold" color="lightGrey" style={styles.dayTitle}>
       {title}
     </Typography>
   );
@@ -102,7 +102,7 @@ export const ListTab = ({ navigation }: ListTabScreenProps) => {
   if (!isInventoryListLoading && isEmpty(inventoryList)) {
     return (
       <EmptyScreenTemplate style={{ alignItems: "center", gap: 16 }}>
-        <Typography variant="l" color="darkGrey">
+        <Typography variant="l" color="lightGrey">
           Brak danych do wyświetlenia.
         </Typography>
         <Button
