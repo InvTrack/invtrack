@@ -87,7 +87,7 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   React.useEffect(() => {
-    StatusBar.setBarStyle("dark-content", true);
+    StatusBar.setBarStyle("light-content", true);
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {

@@ -21,6 +21,8 @@ const themeColors = {
   mediumBlue: "#212939",
   darkBlue: "#111828",
   highlight: "#62A0E8",
+  // same as highlight but with 0.5 opacity
+  _android_textHighlight: "rgba(98, 160, 232, 0.5)",
   green: "#099D56",
   red: "#F05250",
   transparent: "rgba(0,0,0,0)",
