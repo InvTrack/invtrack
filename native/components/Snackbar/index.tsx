@@ -114,7 +114,7 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
       ...theme.text.l,
-      color: theme.colors.darkGrey,
+      color: theme.colors.lightGrey,
       zIndex: 1000,
       position: "absolute",
       left: 0,

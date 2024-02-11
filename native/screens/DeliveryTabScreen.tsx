@@ -122,7 +122,7 @@ export default function DeliveryTabScreen({
                 });
               }}
             >
-              <ScanBarcodeIcon size={34} color="darkGrey" />
+              <ScanBarcodeIcon size={34} color="lightGrey" />
             </Button>
           </View>
           {recordList.map(({ name, quantity, unit, id }) => (

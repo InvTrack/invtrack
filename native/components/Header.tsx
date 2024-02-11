@@ -5,12 +5,18 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HeaderRight } from "./HeaderRight";
-import { ArrowRightIcon } from "./Icon";
+import { ArrowRightIcon, PlusIcon } from "./Icon";
 
-const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
+const HeaderWrapper = ({
+  children,
+  omitInsets,
+}: {
+  children: React.ReactNode;
+  omitInsets?: boolean;
+}) => {
   const insets = useSafeAreaInsets();
   const theme = useTheme();
-  const HEADER_HEIGHT = insets.top + 56;
+  const HEADER_HEIGHT = omitInsets ? 56 : insets.top + 56;
   return (
     <View
       style={{
@@ -29,6 +35,22 @@ const HeaderWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 export const Header = ({ route }: NativeStackHeaderProps) => {
   const navigation = useNavigation<NativeStackHeaderProps["navigation"]>();
+
+  if (route.name === "BarcodeModal") {
+    return (
+      <HeaderWrapper omitInsets>
+        <View />
+        <PlusIcon
+          onPress={navigation.goBack}
+          color="darkGrey"
+          size={36}
+          style={{
+            transform: [{ rotate: "45deg" }],
+          }}
+        />
+      </HeaderWrapper>
+    );
+  }
   return (
     <HeaderWrapper>
       {navigation.canGoBack() ? (

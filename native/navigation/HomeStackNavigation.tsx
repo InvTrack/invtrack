@@ -28,7 +28,7 @@ export const HomeStackNavigation = () => {
           // Docs, truth they avoid.
           // https://github.com/software-mansion/react-native-screens/issues/1650
           presentation: isAndroid ? "card" : "modal",
-          headerShown: isAndroid,
+          headerShown: true,
         }}
       />
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />

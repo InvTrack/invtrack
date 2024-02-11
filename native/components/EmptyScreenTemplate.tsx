@@ -29,7 +29,7 @@ export const EmptyScreenTemplate = ({
       >
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           align={centerText ? "center" : undefined}
         >
           {children}

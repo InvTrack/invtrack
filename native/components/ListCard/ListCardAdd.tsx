@@ -20,7 +20,7 @@ export const InventoryCardAdd = () => {
         navigation.navigate("NewStockScreen");
       }}
     >
-      <PlusIcon size={25} color="darkGrey" />
+      <PlusIcon size={25} color="lightGrey" />
     </Button>
   );
 };
