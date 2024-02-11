@@ -46,7 +46,7 @@ export const ListCardLink = ({
       onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
       <Typography
-        color="darkGrey"
+        color="lightGrey"
         variant={(title?.length ?? 0) > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >

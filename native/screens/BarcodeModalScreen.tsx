@@ -45,14 +45,14 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
       <EmptyScreenTemplate style={styles.container}>
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{ textAlign: "center" }}
         >
           Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.
         </Typography>
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{
             textAlign: "center",
             marginTop: 32,
@@ -80,7 +80,7 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
       <EmptyScreenTemplate style={styles.container}>
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{ textAlign: "center" }}
         >
           Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.

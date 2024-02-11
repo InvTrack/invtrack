@@ -23,7 +23,7 @@ export const NewBarcodeListItem = ({
       padding="none"
     >
       <Typography
-        color="darkGrey"
+        color="lightGrey"
         variant={name.length > 15 ? "sBold" : "lBold"}
         numberOfLines={2}
       >
