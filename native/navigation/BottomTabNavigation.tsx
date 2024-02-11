@@ -44,15 +44,15 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
   if (noInventories)
     return (
       <EmptyScreenTemplate>
-        Błąd - brak identyfikatora dostawy. Zrestartuj aplikację i spróbuj
-        ponownie.
+        Brak dostaw. Dodaj nową dostawę z ekranu listy!
       </EmptyScreenTemplate>
     );
   // TODO skeletons or ???
   if (!(routeDeliveryId ?? deliveryId))
     return (
       <EmptyScreenTemplate>
-        Brak dostaw. Dodaj nową dostawę z ekranu listy!
+        Błąd - brak identyfikatora dostawy. Zrestartuj aplikację i spróbuj
+        ponownie.
       </EmptyScreenTemplate>
     );
 
@@ -130,14 +130,14 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
   if (noInventories)
     return (
       <EmptyScreenTemplate>
-        Błąd - brak identyfikatora inwentaryzacji. Zrestartuj aplikację i
-        spróbuj ponownie.
+        Brak inwentaryzacji. Dodaj nową inwentaryzację z ekranu listy!
       </EmptyScreenTemplate>
     );
   if (!inventoryId)
     return (
       <EmptyScreenTemplate>
-        Brak inwentaryzacji. Dodaj nową inwentaryzację z ekranu listy!
+        Błąd - brak identyfikatora inwentaryzacji. Zrestartuj aplikację i
+        spróbuj ponownie.
       </EmptyScreenTemplate>
     );
 

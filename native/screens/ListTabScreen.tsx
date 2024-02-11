@@ -4,6 +4,9 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { InventoryCardAdd } from "../components/ListCard/ListCardAdd";
 
+import isEmpty from "lodash/isEmpty";
+import { Button } from "../components/Button";
+import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { ListCardLink } from "../components/ListCard/ListCardLink";
 import { Skeleton } from "../components/Skeleton";
 import { Typography } from "../components/Typography";
@@ -61,15 +64,16 @@ const groupDaysByMonth = (groupedByDay: ReturnType<typeof groupByDay>) => {
   return Object.entries(months);
 };
 
-export const ListTab = ({}: ListTabScreenProps) => {
+export const ListTab = ({ navigation }: ListTabScreenProps) => {
   const styles = useStyles();
-  const { data: inventoryList } = useListInventories();
+  const { data: inventoryList, isLoading: isInventoryListLoading } =
+    useListInventories();
   const months = useMemo(
     () => groupDaysByMonth(groupByDay(inventoryList)),
     [inventoryList]
   );
 
-  if (!inventoryList || !months) {
+  if (isInventoryListLoading || !months) {
     return (
       <SafeAreaView edges={["left", "right"]} style={styles.screen}>
         <View style={styles.scroll}>
@@ -92,6 +96,27 @@ export const ListTab = ({}: ListTabScreenProps) => {
           </View>
         </View>
       </SafeAreaView>
+    );
+  }
+
+  if (!isInventoryListLoading && isEmpty(inventoryList)) {
+    return (
+      <EmptyScreenTemplate style={{ alignItems: "center", gap: 16 }}>
+        <Typography variant="l" color="darkGrey">
+          Brak danych do wyświetlenia.
+        </Typography>
+        <Button
+          // overriden in styles
+          size="m"
+          fullWidth
+          type="primary"
+          onPress={() => {
+            navigation.navigate("NewStockScreen" as any);
+          }}
+        >
+          Dodaj pierwszy wpis!
+        </Button>
+      </EmptyScreenTemplate>
     );
   }
 
@@ -149,12 +174,6 @@ const useStyles = createStyles((theme) =>
       marginBottom: theme.spacing * 2,
       height: 45,
       borderRadius: theme.borderRadiusSmall,
-    },
-    plusCard: {
-      height: 45,
-      borderRadius: theme.borderRadiusSmall,
-      alignItems: "center",
-      justifyContent: "center",
     },
     skeletonListItem: {
       flexDirection: "row",
