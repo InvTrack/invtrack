@@ -172,7 +172,17 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Typography variant="xlBold" style={styles.title} color="lightGrey">
+        <Typography
+          variant={
+            recordName.length > 12
+              ? recordName.length > 28
+                ? "sBold"
+                : "lBold"
+              : "xlBold"
+          }
+          style={styles.title}
+          color="lightGrey"
+        >
           {/* nazwa produktu */}
           {recordName}
         </Typography>
@@ -185,7 +195,9 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
             style={styles.wasAmount}
             color="lightGrey"
           >
-            {unit ? previousQuantity + " " + unit : null}
+            {unit && previousQuantity
+              ? previousQuantity + " " + unit
+              : "Brak danych"}
           </Typography>
           <View style={styles.gridRow}>
             <View style={styles.leftColumn}>
@@ -225,7 +237,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 color="lightGrey"
               >
                 {/* liczba + jednostka current */}
-                {unit ? quantity + " " + unit : null}
+                {unit ? quantity + " " + unit : "Brak"}
               </Typography>
               <Button
                 type="primary"
@@ -277,12 +289,12 @@ const useStyles = createStyles((theme) =>
     container: { backgroundColor: theme.colors.darkBlue, height: "100%" },
     contentContainer: { paddingHorizontal: theme.spacing * 3 },
     title: { paddingTop: theme.spacing * 3 },
-    wasTitle: { marginTop: theme.spacing * 5.5 },
+    wasTitle: { marginTop: theme.spacing * 2 },
     wasAmount: {
       paddingTop: theme.spacing * 2,
     },
     content: { alignItems: "center" },
-    gridRow: { flexDirection: "row" },
+    gridRow: { flexDirection: "row", paddingTop: theme.spacing },
     leftColumn: { flexDirection: "column", alignItems: "flex-start" },
     middleColumn: {
       flexDirection: "column",

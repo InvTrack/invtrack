@@ -32,6 +32,7 @@ import { useAppState } from "./utils/useAppState";
 import * as SplashScreen from "expo-splash-screen";
 import { SnackbarRenderer } from "./components/Snackbar";
 import { SnackbarProvider } from "./components/Snackbar/context";
+import { isAndroid } from "./constants";
 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
@@ -87,6 +88,9 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   React.useEffect(() => {
+    if (isAndroid) {
+      StatusBar.setBarStyle("dark-content", true);
+    }
     StatusBar.setBarStyle("light-content", true);
   }, []);
 
