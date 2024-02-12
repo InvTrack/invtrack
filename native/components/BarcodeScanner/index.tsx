@@ -14,7 +14,6 @@ import { useListBarcodes } from "../../db/hooks/useListBarcodes";
 
 import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
-import { EmptyScreenTemplate } from "../EmptyScreenTemplate";
 import { CameraSwitchIcon } from "../Icon";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { BarcodeOutline } from "./BarcodeOutline";
@@ -54,7 +53,6 @@ export const BarcodeScanner = ({
   const animatedTRCornerX = useRef(new Animated.Value(0));
   const animatedTRCornerY = useRef(new Animated.Value(0));
   const [alertShown, setAlertShown] = useState(false);
-
   const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
 
   const toggleCameraType = () => {
@@ -93,17 +91,6 @@ export const BarcodeScanner = ({
       <View style={styles.container}>
         <LoadingSpinner size={"large"} />
       </View>
-    );
-  }
-
-  if (!isLoading && !barcodeList) {
-    return (
-      <EmptyScreenTemplate
-        centerText
-        style={[styles.container, styles.paddingH]}
-      >
-        Nie znaleziono kodów kreskowych
-      </EmptyScreenTemplate>
     );
   }
 

@@ -4,6 +4,7 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { isIos } from "../constants";
 import { HeaderRight } from "./HeaderRight";
 import { ArrowRightIcon, PlusIcon } from "./Icon";
 
@@ -38,7 +39,7 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
 
   if (route.name === "BarcodeModal") {
     return (
-      <HeaderWrapper omitInsets>
+      <HeaderWrapper omitInsets={isIos}>
         <View />
         <PlusIcon
           onPress={navigation.goBack}
