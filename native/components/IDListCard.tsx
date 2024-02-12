@@ -39,15 +39,16 @@ export const IDListCard = ({
     >
       <Typography
         color="lightGrey"
-        variant={name.length > 15 ? "sBold" : "lBold"}
+        variant={
+          name.length > 11 ? (name.length > 22 ? "xsBold" : "sBold") : "lBold"
+        }
         numberOfLines={2}
+        textProps={{ lineBreakMode: "tail", ellipsizeMode: "tail" }}
+        style={styles.textLeft}
       >
         {name}
       </Typography>
-      <Typography
-        color="lightGrey"
-        variant={name.length > 15 ? "sBold" : "lBold"}
-      >
+      <Typography color="lightGrey" variant={"lBold"} style={styles.textRight}>
         {quantity + " " + unit}
       </Typography>
     </Card>
@@ -64,6 +65,10 @@ const useStyles = createStyles((theme) =>
       marginBottom: theme.spacing * 2,
       height: 45,
       borderRadius: theme.borderRadiusSmall,
+    },
+    textLeft: { flex: 1 },
+    textRight: {
+      marginLeft: theme.spacing,
     },
   })
 );
