@@ -1,12 +1,8 @@
 <script lang="ts">
-  import Sidebar from "$lib/sidebar/Sidebar.svelte";
   import "./styles.css";
 
   import { onMount } from "svelte";
-  import { googleAccessToken, currentCompanyId } from "$lib/store";
   import { initializeDarkMode } from "$lib/scripts/darkMode";
-  import type { CurrentCompanyIdTable } from "$lib/helpers";
-  import { genericGet } from "$lib/genericGet";
   import OneSignal from "react-onesignal";
   import { browser } from "$app/environment";
   import { PUBLIC_ONESIGNAL_APP_ID, PUBLIC_ONESIGNAL_SAFARI_WEB_ID } from "$env/static/public";
@@ -57,14 +53,6 @@
       });
     }
 
-    genericGet(
-      supabase
-        .from<"current_company_id", CurrentCompanyIdTable>("current_company_id")
-        .select()
-        .single(),
-      (x) => currentCompanyId.set(x?.id)
-    );
-
     return () => supabaseSubscription.unsubscribe();
   });
 </script>
@@ -86,9 +74,4 @@
   <meta name="theme-color" content="#111827" />
 </svelte:head>
 
-<div class="flex flex-row">
-  <Sidebar {supabase} />
-  <main class="flex-1 bg-white dark:bg-primary-900">
-    <slot />
-  </main>
-</div>
+<slot />
