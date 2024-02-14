@@ -33,22 +33,18 @@ const supabase: Handle = async ({ event, resolve }) => {
 const authorization: Handle = async ({ event, resolve }) => {
   const session = await event.locals.getSession();
 
-  if (event.url.pathname.startsWith("/auth") && session) {
-    throw redirect(303, "/");
+  if (session && event.url.pathname.startsWith("/auth")) {
+    throw redirect(303, "/(authenticated)");
   }
 
-  // protect requests to all routes that start with /protected-routes
-  if (!event.url.pathname.startsWith("/auth") && event.request.method === "GET") {
-    if (!session) {
-      // the user is not signed in
+  // the user is not signed in
+  if (!session) {
+    // protect requests to all routes that start with /protected-routes
+    if (event.url.pathname.startsWith("/(authenticated)") && event.request.method === "GET") {
       throw redirect(303, "/auth");
     }
-  }
 
-  // protect POST requests to all routes that start with /protected-posts
-  if (event.url.pathname.startsWith("/protected-posts") && event.request.method === "POST") {
-    const session = await event.locals.getSession();
-    if (!session) {
+    if (event.url.pathname.startsWith("/(authenticated)")) {
       // the user is not signed in
       throw error(303, "/");
     }
