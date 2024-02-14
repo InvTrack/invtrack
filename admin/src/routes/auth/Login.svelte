@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { supabase } from "$lib/supabase";
   import { Button, Label, Input, Span, Heading, Hr } from "flowbite-svelte";
   import GoogleLogin from "./GoogleLogin.svelte";
   import { mapApiErrors } from "$lib/mapApiErrors";
+
+  // TODO SUPABASE
+  export let supabase: any;
 
   let loading = false;
   let email = "";
@@ -56,5 +58,5 @@
     >
   </p>
   <Hr />
-  <GoogleLogin />
+  <GoogleLogin {supabase} />
 </form>

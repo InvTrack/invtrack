@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
 
   import { genericGet } from "$lib/genericGet";
@@ -14,6 +13,10 @@
     TableHeadCell,
   } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
+
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let inventories: Tables<"inventory">[] | null = null;
   onMount(() =>

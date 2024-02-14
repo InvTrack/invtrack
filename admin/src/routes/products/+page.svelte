@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
 
   import { genericGet } from "$lib/genericGet";
@@ -15,6 +14,10 @@
   } from "flowbite-svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
+
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let products: Tables<"product">[] | null = null;
   onMount(() => genericGet(supabase.from("product").select("*"), (x) => (products = x)));

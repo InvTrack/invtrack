@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { supabase } from "$lib/supabase";
   import { onMount } from "svelte";
   import type { Views } from "$lib/helpers";
   import CenterCard from "./CenterCard.svelte";
+
+  // TODO SUPABASE
+  export let supabase: any;
 
   let current_worker: Views<"worker_for_current_user"> | null = null;
   let loading = true;

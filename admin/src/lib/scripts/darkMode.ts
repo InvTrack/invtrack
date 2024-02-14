@@ -1,3 +1,5 @@
+import { browser } from "$app/environment";
+
 export const toggleDarkMode = () => {
   const root = document.documentElement; // Get the :root element
   if (localStorage.getItem("color-theme")) {
@@ -29,6 +31,7 @@ export const toggleDarkMode = () => {
 };
 
 export const initializeDarkMode = () => {
+  if (!browser) return;
   const root = document.documentElement; // Get the :root element
   if (
     localStorage.getItem("color-theme") === "dark" ||
