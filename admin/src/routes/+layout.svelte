@@ -11,18 +11,26 @@
   import { browser } from "$app/environment";
   import { PUBLIC_ONESIGNAL_APP_ID, PUBLIC_ONESIGNAL_SAFARI_WEB_ID } from "$env/static/public";
   import { invalidate } from "$app/navigation";
-  import Auth from "./auth/Auth.svelte";
-  import Gate from "./auth/Gate.svelte";
 
   export let data;
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
-  console.log(session);
-  $: if (session) {
+
+  $: if (session && browser) {
     OneSignal.login(session.user.id);
   }
   onMount(() => {
+    const {
+      data: { subscription: supabaseSubscription },
+    } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate("supabase:auth");
+      }
+    });
+
     if (browser) {
+      initializeDarkMode();
+      //
       OneSignal.init({
         appId: PUBLIC_ONESIGNAL_APP_ID,
         safari_web_id: PUBLIC_ONESIGNAL_SAFARI_WEB_ID,
@@ -48,15 +56,6 @@
         });
       });
     }
-    initializeDarkMode();
-
-    const {
-      data: { subscription: supabaseSubscription },
-    } = supabase.auth.onAuthStateChange((event, _session) => {
-      if (_session?.expires_at !== session?.expires_at) {
-        invalidate("supabase:auth");
-      }
-    });
 
     genericGet(
       supabase
@@ -87,15 +86,9 @@
   <meta name="theme-color" content="#111827" />
 </svelte:head>
 
-{#if !session}
-  <Auth {supabase} />
-{:else}
-  <Gate {supabase}>
-    <div class="flex flex-row">
-      <Sidebar {supabase} />
-      <main class="flex-1 bg-white dark:bg-primary-900">
-        <slot />
-      </main>
-    </div>
-  </Gate>
-{/if}
+<div class="flex flex-row">
+  <Sidebar {supabase} />
+  <main class="flex-1 bg-white dark:bg-primary-900">
+    <slot />
+  </main>
+</div>

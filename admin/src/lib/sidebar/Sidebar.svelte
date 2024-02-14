@@ -27,9 +27,13 @@
   import type { LowQuantityProductRecords } from "$lib/helpers";
   import type { Notification } from "$lib/modals/notificationCenter.types";
   import OneSignal from "react-onesignal";
+  import { goto } from "$app/navigation";
 
   export let supabase: any;
-  const handleLogout = () => {
+  const handleLogout = (event: MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    goto("/auth");
     supabase.auth.signOut();
     OneSignal.logout();
   };
