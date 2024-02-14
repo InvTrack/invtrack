@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { getIsThemeDark, toggleDarkMode } from "$lib/scripts/darkMode";
-  import { supabase } from "$lib/supabase";
   import {
     Sidebar,
     SidebarDropdownItem,
@@ -29,20 +28,22 @@
   import type { Notification } from "$lib/modals/notificationCenter.types";
   import OneSignal from "react-onesignal";
 
+  export let supabase: any;
   const handleLogout = () => {
     supabase.auth.signOut();
     OneSignal.logout();
   };
-  $: isThemeDark = getIsThemeDark();
+  // $: isThemeDark = getIsThemeDark();
+  $: isThemeDark = true;
   $: activeUrl = $page.url.pathname;
   let isNotificationCenterModalOpen = false;
-  let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
+  export let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
   let lowQuantityNotifications: Notification[] | null = null;
-  onMount(() => {
-    genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
-      lowQuantityProductRecords = x;
-    });
-  });
+  // onMount(() => {
+  //   genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
+  //     lowQuantityProductRecords = x;
+  //   });
+  // });
 
   $: lowQuantityNotifications =
     lowQuantityProductRecords &&

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
@@ -9,6 +8,10 @@
   import { Label, Span, Input, Button, Checkbox } from "flowbite-svelte";
   import { beforeNavigate, goto } from "$app/navigation";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
+
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let loading = false;
   let unsavedChanges = false;

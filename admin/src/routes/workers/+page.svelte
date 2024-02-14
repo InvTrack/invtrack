@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
   import type { Tables, Views } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import ScreenCard from "$lib/ScreenCard.svelte";
@@ -14,6 +13,10 @@
     TableHeadCell,
   } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
+
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let loading = false;
   let workers: Tables<"worker">[] | null = null;

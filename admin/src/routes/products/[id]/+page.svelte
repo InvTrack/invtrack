@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
   import { beforeNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
   import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
@@ -11,6 +10,10 @@
   import { CloseCircleSolid } from "flowbite-svelte-icons";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
+
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let navigateTo: URL | undefined = undefined;
   let loading = false;

@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { supabase } from "$lib/supabase";
   import { Button } from "flowbite-svelte";
   import { GoogleSolid } from "flowbite-svelte-icons";
+
+  // TODO SUPABASE
+  export let supabase: any;
 
   let loading = false;
 
