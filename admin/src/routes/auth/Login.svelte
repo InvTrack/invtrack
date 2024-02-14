@@ -2,6 +2,7 @@
   import { Button, Label, Input, Span, Heading, Hr } from "flowbite-svelte";
   import GoogleLogin from "./GoogleLogin.svelte";
   import { mapApiErrors } from "$lib/mapApiErrors";
+  import { goto } from "$app/navigation";
 
   // TODO SUPABASE
   export let supabase: any;
@@ -29,6 +30,7 @@
       }
     } finally {
       loading = false;
+      goto("/");
     }
   };
 </script>
