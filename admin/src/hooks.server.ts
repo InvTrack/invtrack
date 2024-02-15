@@ -3,19 +3,22 @@ import { type Handle, redirect, error } from "@sveltejs/kit";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/public";
 import { createSupabaseServerClient } from "@supabase/auth-helpers-sveltekit";
 import { sequence } from "@sveltejs/kit/hooks";
+import { building } from "$app/environment";
 
 const supabase: Handle = async ({ event, resolve }) => {
+  // https://github.com/sveltejs/kit/issues/9386
+  if (building) {
+    const response = await resolve(event);
+    return response; // bailing here allows the 404 page to build
+  }
+  //
+  //
   event.locals.supabase = createSupabaseServerClient({
     supabaseUrl: PUBLIC_SUPABASE_URL,
     supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
     event,
   });
 
-  /**
-   * a little helper that is written for convenience so that instead
-   * of calling `const { data: { session } } = await supabase.auth.getSession()`
-   * you just call this `await getSession()`
-   */
   event.locals.getSession = async () => {
     const {
       data: { session },
@@ -31,6 +34,13 @@ const supabase: Handle = async ({ event, resolve }) => {
 };
 
 const authorization: Handle = async ({ event, resolve }) => {
+  // https://github.com/sveltejs/kit/issues/9386
+  if (building) {
+    const response = await resolve(event);
+    return response; // bailing here allows the 404 page to build
+  }
+  //
+  //
   const session = await event.locals.getSession();
 
   if (session && event.url.pathname.startsWith("/auth")) {
