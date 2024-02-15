@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
   import type { Tables } from "$lib/helpers";
 
   import { genericGet } from "$lib/genericGet";
@@ -15,13 +14,8 @@
   } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
-  let inventories: Tables<"inventory">[] | null = null;
-  onMount(() =>
-    genericGet(
-      supabase.from("inventory").select().order("date", { ascending: false }),
-      (x) => (inventories = x)
-    )
-  );
+  export let data;
+  let { inventories } = data;
 </script>
 
 <ScreenCard header="Inwentaryzacje">
