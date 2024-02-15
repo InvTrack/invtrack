@@ -34,7 +34,7 @@ const authorization: Handle = async ({ event, resolve }) => {
   const session = await event.locals.getSession();
 
   if (session && event.url.pathname.startsWith("/auth")) {
-    throw redirect(303, "/(authenticated)");
+    throw redirect(303, "/");
   }
 
   // the user is not signed in
@@ -44,9 +44,9 @@ const authorization: Handle = async ({ event, resolve }) => {
       throw redirect(303, "/auth");
     }
 
-    if (event.url.pathname.startsWith("/(authenticated)")) {
+    if (!event.url.pathname.startsWith("/auth")) {
       // the user is not signed in
-      throw error(303, "/");
+      throw redirect(303, "/auth");
     }
   }
 

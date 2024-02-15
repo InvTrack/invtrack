@@ -1,8 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import type { Tables } from "$lib/helpers";
-
-  import { genericGet } from "$lib/genericGet";
   import {
     Button,
     Table,
@@ -16,11 +12,7 @@
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   export let data;
-  let { supabase } = data;
-  $: ({ supabase } = data);
-
-  let products: Tables<"product">[] | null = null;
-  onMount(() => genericGet(supabase.from("product").select("*"), (x) => (products = x)));
+  let { products } = data;
 </script>
 
 <ScreenCard header="Produkty">

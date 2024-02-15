@@ -11,24 +11,19 @@
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   export let data;
-  let { supabase } = data;
+  let { supabase, inventory } = data;
   $: ({ supabase } = data);
+  $: name = inventory?.name;
+  $: date = inventory?.date;
 
   let loading = false;
   let unsavedChanges = false;
   let unsavedChangesModal = false;
   let confirmationModal = false;
-  let navigateTo: URL | undefined = undefined;
-  let inventory: Tables<"inventory"> | null = null;
-  const id = $page.params.id;
 
-  onMount(() =>
-    genericGet(supabase.from("inventory").select().eq("id", id).single(), (x) => {
-      inventory = x;
-      name = inventory.name;
-      date = inventory.date;
-    })
-  );
+  let navigateTo: URL | undefined = undefined;
+
+  const id = $page.params.id;
 
   beforeNavigate(({ cancel, to }) => {
     if (!unsavedChanges) {
@@ -40,10 +35,7 @@
     return;
   });
 
-  let name: string | undefined = undefined;
-  let date: string = "";
-
-  const update = () =>
+  const update = () => {
     genericUpdate(
       supabase
         .from("inventory")
@@ -54,6 +46,8 @@
         .eq("id", id),
       { setLoading: (x) => (loading = x), onSuccess: "/inventories" }
     );
+    unsavedChanges = false;
+  };
 
   const deleteInventory = () => {
     genericUpdate(supabase.from("inventory").delete().eq("id", id), { onSuccess: "/inventories" });
@@ -76,7 +70,7 @@
 </script>
 
 {#if inventory}
-  <ScreenCard header={"Inventory - " + inventory.name} class="flex flex-col">
+  <ScreenCard header={"Inwentaryzacja - " + inventory.name} class="flex flex-col">
     <UnsavedWarningModal
       bind:open={unsavedChangesModal}
       onContinue={onUnsavedWarningContinue}
@@ -98,7 +92,7 @@
         <Input type="text" name="date" placeholder="Date" bind:value={date} />
       </Label>
       <Button type="submit" class="mt-4" color="primary"
-        >{loading ? "Saving ..." : "Update inventory"}</Button
+        >{loading ? "Zapisywanie ..." : "Aktualizuj inwentaryzację"}</Button
       >
     </form>
     <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventoryConfirmation}
