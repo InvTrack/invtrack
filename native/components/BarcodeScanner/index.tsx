@@ -110,10 +110,14 @@ export const BarcodeScanner = ({
           {
             text: "Dodaj kod kreskowy",
             onPress: () => {
+              // close the scanner
+              navigation.goBack();
+
               navigation.navigate("NewBarcodeScreen", {
                 new_barcode: data,
                 inventoryId,
               });
+              return;
             },
           },
         ]);
