@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import type { Tables, Views } from "$lib/helpers";
-  import { genericGet } from "$lib/genericGet";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import {
     Button,
@@ -15,36 +12,7 @@
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   export let data;
-  let { supabase } = data;
-  $: ({ supabase } = data);
-
-  let loading = false;
-  let workers: Tables<"worker">[] | null = null;
-  let company_id: Views<"current_company_id">["id"];
-
-  onMount(() => {
-    genericGet(supabase.from("current_company_id").select().single(), (x) => {
-      company_id = x.id;
-      genericGet(supabase.from("worker").select().eq("company_id", x.id), (y) => (workers = y));
-    });
-  });
-
-  let name: Tables<"worker">["name"] = null;
-  let is_admin: Tables<"worker">["is_admin"] = false;
-  supabase.auth.getUser().then((x) => console.log(x));
-  const update = () => {
-    // genericUpdate(
-    //     supabase
-    //       .from("worker")
-    //       .insert({
-    //           is_admin,
-    //           name,
-    //           company_id
-    //         })
-    //       "/workers",
-    //       (x) => (loading = x)
-    //     );
-  };
+  let { workers } = data;
 </script>
 
 <ScreenCard header="Pracownicy">

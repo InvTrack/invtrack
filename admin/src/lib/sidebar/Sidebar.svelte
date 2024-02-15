@@ -21,37 +21,21 @@
   } from "flowbite-svelte-icons";
   import logo_dark from "$lib/assets/logo-dark.png";
   import logo_light from "$lib/assets/logo-light.png";
-  import { onMount } from "svelte";
-  import { genericGet } from "$lib/genericGet";
   import NotificationCenterModal from "$lib/modals/NotificationCenterModal.svelte";
   import type { LowQuantityProductRecords } from "$lib/helpers";
   import type { Notification } from "$lib/modals/notificationCenter.types";
   import OneSignal from "react-onesignal";
   import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import { genericGet } from "$lib/genericGet";
+  import { browser } from "$app/environment";
 
   export let supabase: any;
-  const handleLogout = (event: MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
-    goto("/auth");
-    supabase.auth.signOut();
-    OneSignal.logout();
-  };
-  // $: isThemeDark = getIsThemeDark();
-  $: isThemeDark = true;
+  let isThemeDark: boolean = true;
   $: activeUrl = $page.url.pathname;
-  let isNotificationCenterModalOpen = false;
-  export let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
-  let lowQuantityNotifications: Notification[] | null = null;
-  // onMount(() => {
-  //   genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
-  //     lowQuantityProductRecords = x;
-  //   });
-  // });
-
   $: lowQuantityNotifications =
     lowQuantityProductRecords &&
-    lowQuantityProductRecords.map((x) => {
+    (lowQuantityProductRecords.map((x) => {
       return {
         data: {
           quantity: x.quantity!,
@@ -61,7 +45,27 @@
         name: x.name!,
         type: "low_quantity",
       };
+    }) as Notification[]);
+
+  let isNotificationCenterModalOpen = false;
+  export let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
+
+  onMount(() => {
+    if (browser) {
+      isThemeDark = getIsThemeDark();
+    }
+    genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
+      lowQuantityProductRecords = x as LowQuantityProductRecords[];
     });
+  });
+
+  const handleLogout = (event: MouseEvent) => {
+    event.stopPropagation();
+    event.preventDefault();
+    goto("/auth", { replaceState: true });
+    supabase.auth.signOut();
+    OneSignal.logout();
+  };
 </script>
 
 <Sidebar

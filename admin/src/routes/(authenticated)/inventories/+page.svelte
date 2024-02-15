@@ -15,16 +15,7 @@
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   export let data;
-  let { supabase } = data;
-  $: ({ supabase } = data);
-
-  let inventories: Tables<"inventory">[] | null = null;
-  onMount(() =>
-    genericGet(
-      supabase.from("inventory").select().order("date", { ascending: false }),
-      (x) => (inventories = x)
-    )
-  );
+  let { inventories } = data;
 </script>
 
 <ScreenCard header="Inwentaryzacje">
