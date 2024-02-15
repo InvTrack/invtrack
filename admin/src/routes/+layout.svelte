@@ -1,26 +1,32 @@
 <script lang="ts">
-  import Sidebar from "$lib/sidebar/Sidebar.svelte";
   import "./styles.css";
 
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
-  import type { AuthSession } from "@supabase/supabase-js";
-  import { page } from "$app/stores";
-  import { googleAccessToken, currentCompanyId } from "$lib/store";
-  import Login from "./auth/Login.svelte";
   import { initializeDarkMode } from "$lib/scripts/darkMode";
-  import Gate from "./auth/Gate.svelte";
-  import type { CurrentCompanyIdTable } from "$lib/helpers";
-  import { genericGet } from "$lib/genericGet";
   import OneSignal from "react-onesignal";
   import { browser } from "$app/environment";
-  import Auth from "./auth/Auth.svelte";
   import { PUBLIC_ONESIGNAL_APP_ID, PUBLIC_ONESIGNAL_SAFARI_WEB_ID } from "$env/static/public";
+  import { invalidate } from "$app/navigation";
 
-  let session: AuthSession | null;
+  export let data;
+  let { supabase, session } = data;
+  $: ({ supabase, session } = data);
 
+  $: if (session && browser) {
+    OneSignal.login(session.user.id);
+  }
   onMount(() => {
+    const {
+      data: { subscription: supabaseSubscription },
+    } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate("supabase:auth");
+      }
+    });
+
     if (browser) {
+      initializeDarkMode();
+      //
       OneSignal.init({
         appId: PUBLIC_ONESIGNAL_APP_ID,
         safari_web_id: PUBLIC_ONESIGNAL_SAFARI_WEB_ID,
@@ -47,50 +53,8 @@
       });
     }
 
-    initializeDarkMode();
-    const urlStringOriginal = $page.url.href;
-    if (urlStringOriginal?.includes("#access_token")) {
-      const urlString = urlStringOriginal.replace("#access_token", "?access_token");
-      const url = new URL(urlString);
-      const refreshToken = url.searchParams.get("refresh_token");
-      const accessToken = url.searchParams.get("access_token");
-      const providerToken = url.searchParams.get("provider_token");
-      if (accessToken && refreshToken) {
-        supabase.auth
-          .setSession({
-            refresh_token: refreshToken,
-            access_token: accessToken,
-          })
-          .then((res) => {
-            res.data.session;
-          })
-          .catch((err) => console.log({ err }));
-      }
-      if (providerToken) {
-        googleAccessToken.set(providerToken);
-      }
-    }
-
-    supabase.auth.getSession().then(({ data }) => {
-      session = data.session;
-    });
-
-    supabase.auth.onAuthStateChange((_event, _session) => {
-      session = _session;
-    });
-
-    genericGet(
-      supabase
-        .from<"current_company_id", CurrentCompanyIdTable>("current_company_id")
-        .select()
-        .single(),
-      (x) => currentCompanyId.set(x?.id)
-    );
+    return () => supabaseSubscription.unsubscribe();
   });
-
-  $: if (session) {
-    OneSignal.login(session.user.id);
-  }
 </script>
 
 <svelte:head>
@@ -109,15 +73,5 @@
   <meta name="msapplication-config" content="../favicons/browserconfig.xml" />
   <meta name="theme-color" content="#111827" />
 </svelte:head>
-{#if !session}
-  <Auth />
-{:else}
-  <Gate>
-    <div class="flex flex-row">
-      <Sidebar />
-      <main class="flex-1 bg-white dark:bg-primary-900">
-        <slot />
-      </main>
-    </div>
-  </Gate>
-{/if}
+
+<slot />
