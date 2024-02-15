@@ -15,11 +15,11 @@ type ListBarcodePostgrestRes =
     }[]
   | null;
 
-export type ListBarcodeReturn = {
+export type BarcodeList = {
   [barcode: Product["barcodes"][number]]: RecordView["id"];
 };
 
-const listBarcodes = async (inventory_id: number) => {
+const barcodeList = async (inventory_id: number) => {
   const res = await supabase
     .from("product")
     .select("barcodes, record_view(id, name, product_id)")
@@ -36,20 +36,15 @@ const listBarcodes = async (inventory_id: number) => {
       result[barcode] = recordId;
     });
     return result;
-  }, {} as ListBarcodeReturn);
+  }, {} as BarcodeList);
 
   if (isEmpty(reducedData)) return null;
 
-  return {
-    ...res,
-    data: reducedData,
-  };
+  return reducedData;
 };
 
-export const useListBarcodes = (inventoryId: number) => {
-  const query = useQuery(
-    ["listBarcodes", inventoryId],
-    async () => await listBarcodes(inventoryId)
+export const useListBarcodes = (inventoryId: number) =>
+  useQuery(
+    ["barcodeList", inventoryId],
+    async () => await barcodeList(inventoryId)
   );
-  return { ...query, data: query.data?.data as ListBarcodeReturn | null };
-};
