@@ -17,10 +17,13 @@ export type ThemeColors = keyof typeof themeColors;
 const themeColors = {
   black: "#000000",
   darkGrey: "#676D75",
+  lightGrey: "#9DA3AF",
   lightBlue: "#384152",
   mediumBlue: "#212939",
   darkBlue: "#111828",
   highlight: "#62A0E8",
+  // same as highlight but with 0.5 opacity
+  _android_textHighlight: "rgba(98, 160, 232, 0.5)",
   green: "#099D56",
   red: "#F05250",
   transparent: "rgba(0,0,0,0)",

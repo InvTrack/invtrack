@@ -17,8 +17,12 @@
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { ArrowLeftSolid, ArrowRightSolid } from "flowbite-svelte-icons";
   import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase.js";
   import { currentCompanyId } from "$lib/store";
+
+  // supabase client-side client access
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
   let productsWithRecords: { name: string; records: (Views<"record_view"> | undefined)[] }[] = [];

@@ -46,13 +46,21 @@ export const ListCardLink = ({
       onPress={navigateToTabScreen(navigation, id, isDelivery)}
     >
       <Typography
-        color="darkGrey"
-        variant={(title?.length ?? 0) > 15 ? "sBold" : "lBold"}
+        color="lightGrey"
+        variant={
+          (title?.length ?? 0) > 22
+            ? title?.length ?? 0 > 44
+              ? "xsBold"
+              : "sBold"
+            : "lBold"
+        }
         numberOfLines={2}
+        textProps={{ lineBreakMode: "tail", ellipsizeMode: "tail" }}
+        style={styles.text}
       >
         {title}
       </Typography>
-      <SmallerArrowRightIcon size={25} color="highlight" />
+      <SmallerArrowRightIcon size={25} color="highlight" style={styles.arrow} />
     </Card>
   );
 };
@@ -62,11 +70,15 @@ const useStyles = createStyles((theme) =>
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      paddingLeft: theme.spacing * 3,
+      paddingLeft: theme.spacing * 2,
       paddingRight: theme.spacing * 2,
       marginBottom: theme.spacing * 2,
       height: 45,
       borderRadius: theme.borderRadiusSmall,
     },
+    text: {
+      flex: 1,
+    },
+    arrow: { marginLeft: theme.spacing },
   })
 );

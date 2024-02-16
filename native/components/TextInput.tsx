@@ -77,12 +77,16 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             onChangeText={onChange}
             value={value}
             selectTextOnFocus={!disabled && editable}
-            textAlignVertical="top"
+            textAlignVertical={props.multiline ? "top" : "center"}
             accessible
             accessibilityLabel={props.accessibilityLabel}
             editable={!disabled || editable}
             placeholderTextColor={theme.colors.darkGrey}
-            selectionColor={theme.colors.highlight}
+            selectionColor={
+              isAndroid
+                ? theme.colors._android_textHighlight
+                : theme.colors.highlight
+            }
             cursorColor={theme.colors.highlight}
             onFocus={(e: NativeSyntheticEvent<TextInputFocusEventData>) =>
               handleFocus(onFocus ? () => onFocus(e) : () => undefined)
@@ -111,7 +115,7 @@ const useStyles = createStyles((theme) =>
       ...theme.text.s,
       borderRadius: theme.borderRadiusSmall,
       height: 48,
-      justifyContent: isAndroid ? undefined : "center",
+      justifyContent: "center",
       borderColor: theme.colors.lightBlue,
       borderWidth: BORDER_WIDTH,
       padding: theme.spacing + (isAndroid ? 0 : -BORDER_WIDTH),

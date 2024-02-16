@@ -16,7 +16,6 @@ import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
 import { CameraSwitchIcon } from "../Icon";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { Typography } from "../Typography";
 import { BarcodeOutline } from "./BarcodeOutline";
 
 const setCornerXY =
@@ -54,7 +53,6 @@ export const BarcodeScanner = ({
   const animatedTRCornerX = useRef(new Animated.Value(0));
   const animatedTRCornerY = useRef(new Animated.Value(0));
   const [alertShown, setAlertShown] = useState(false);
-
   const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
 
   const toggleCameraType = () => {
@@ -88,27 +86,10 @@ export const BarcodeScanner = ({
     setTRCornerAnimation(corners[3]);
   };
 
-  if (!isLoading && !barcodeList) {
+  if (isLoading && !barcodeList) {
     return (
       <View style={styles.container}>
         <LoadingSpinner size={"large"} />
-      </View>
-    );
-  }
-
-  if (!isLoading && !barcodeList) {
-    return (
-      <View style={[styles.container, styles.paddingH]}>
-        <Typography
-          align="center"
-          color="darkGrey"
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          Nie znaleziono kodów kreskowych dla tej inwentaryzacji
-        </Typography>
       </View>
     );
   }
@@ -129,10 +110,14 @@ export const BarcodeScanner = ({
           {
             text: "Dodaj kod kreskowy",
             onPress: () => {
+              // close the scanner
+              navigation.goBack();
+
               navigation.navigate("NewBarcodeScreen", {
                 new_barcode: data,
                 inventoryId,
               });
+              return;
             },
           },
         ]);
