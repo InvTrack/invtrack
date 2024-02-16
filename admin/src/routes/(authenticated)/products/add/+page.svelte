@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import { beforeNavigate, goto } from "$app/navigation";
-  import { supabase } from "$lib/supabase";
+  import { beforeNavigate } from "$app/navigation";
   import type { Tables } from "$lib/helpers";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
   import { currentCompanyId } from "$lib/store";
+
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
 
   let navigateTo: URL | undefined = undefined;
   let loading = false;
