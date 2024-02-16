@@ -37,19 +37,33 @@ export const useRecordPanel = (recordId: number) => {
 
   const setQuantity = useCallback(
     (quantity: number) => {
+      if (quantity < 0) return;
       if (!record?.id) return;
       // dot notation is more performant
       deliveryForm.setValue(`${record?.id!.toString()}.quantity`, quantity, {
         shouldDirty: true,
         shouldTouch: true,
       });
+      return;
     },
     [deliveryForm, record?.id, quantity]
   );
   const stepperFunction = useCallback(
     (step: number) =>
       ({
-        click: () =>
+        click: () => {
+          if (quantity + step < 0) {
+            deliveryForm.setValue(
+              // dot notation is more performant
+              `${record?.id!.toString()}.quantity`,
+              0,
+              {
+                shouldDirty: true,
+                shouldTouch: true,
+              }
+            );
+            return;
+          }
           deliveryForm.setValue(
             // dot notation is more performant
             `${record?.id!.toString()}.quantity`,
@@ -58,7 +72,9 @@ export const useRecordPanel = (recordId: number) => {
               shouldDirty: true,
               shouldTouch: true,
             }
-          ),
+          );
+          return;
+        },
         step,
       } as const),
     [quantity, record?.id, deliveryForm]

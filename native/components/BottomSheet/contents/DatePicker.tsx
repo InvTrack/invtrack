@@ -27,7 +27,7 @@ export const DatePickerBottomSheetContent = ({
         styles.container,
       ]}
     >
-      <Typography style={styles.dateTitle} variant="l" color="darkGrey">
+      <Typography style={styles.dateTitle} variant="l" color="lightGrey">
         Wybierz datę
       </Typography>
       <DateTimePicker
@@ -63,7 +63,7 @@ export const DatePickerBottomSheetContent = ({
         containerStyle={styles.button}
         onPress={closeBottomSheet}
       >
-        <Typography color="darkBlue">Zapisz</Typography>
+        Zapisz
       </Button>
     </View>
   );

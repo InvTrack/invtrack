@@ -1,6 +1,6 @@
 import { Camera } from "expo-camera";
 import React from "react";
-import { ActivityIndicator, Linking, StyleSheet, View } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BarcodeScanner } from "../components/BarcodeScanner";
@@ -9,6 +9,8 @@ import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
@@ -23,28 +25,34 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
   const { inventoryId, navigateTo } = route.params;
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
-  if (!permission) {
+  const awaitingPermission = !permission;
+  const permissionDeniedCanAskAgain =
+    !permission?.granted && permission?.canAskAgain;
+  const permissionDeniedCannotAskAgain =
+    !permission?.granted && !permission?.canAskAgain;
+
+  if (awaitingPermission) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#000" />
-      </View>
+      <EmptyScreenTemplate style={styles.container}>
+        <LoadingSpinner size="large" />
+      </EmptyScreenTemplate>
     );
   }
 
-  if (!permission?.granted && !permission?.canAskAgain) {
+  if (permissionDeniedCannotAskAgain) {
     // Camera permissions are not granted and can not be asked again
     return (
-      <SafeAreaView style={styles.container} edges={[]}>
+      <EmptyScreenTemplate style={styles.container}>
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{ textAlign: "center" }}
         >
           Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.
         </Typography>
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{
             textAlign: "center",
             marginTop: 32,
@@ -62,17 +70,17 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
         >
           Ustawienia
         </Button>
-      </SafeAreaView>
+      </EmptyScreenTemplate>
     );
   }
 
-  if (!permission?.granted && permission?.canAskAgain) {
+  if (permissionDeniedCanAskAgain) {
     // Camera permissions are not granted yet
     return (
-      <SafeAreaView style={styles.container}>
+      <EmptyScreenTemplate style={styles.container}>
         <Typography
           variant="l"
-          color="darkGrey"
+          color="lightGrey"
           style={{ textAlign: "center" }}
         >
           Aby skorzystać ze skanera kodów, pozwól aplikacji na dostęp do kamery.
@@ -86,7 +94,7 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
         >
           Zapytaj o dostęp
         </Button>
-      </SafeAreaView>
+      </EmptyScreenTemplate>
     );
   }
 

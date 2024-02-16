@@ -89,7 +89,7 @@ export const InputBottomSheetContent = ({
       ]}
     >
       <View style={styles.topRow}>
-        <Typography style={styles.inputLabel} color="darkGrey">
+        <Typography style={styles.inputLabel} color="lightGrey">
           Wpisz ilość
         </Typography>
         <Button
@@ -110,8 +110,8 @@ export const InputBottomSheetContent = ({
             message: "Pole wymagane",
           },
           min: {
-            value: 0.01,
-            message: "Minimalna ilość to 0.01",
+            value: 0,
+            message: "Minimalna ilość to 0",
           },
           max: {
             value: 999999999,

@@ -1,10 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { beforeNavigate, goto } from "$app/navigation";
-  import { onMount } from "svelte";
-  import { supabase } from "$lib/supabase";
-  import type { Tables } from "$lib/helpers";
-  import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
@@ -12,25 +8,21 @@
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
 
+  export let data;
+  let { supabase, product } = data;
+  $: ({ supabase } = data);
+  $: name = product.name;
+  $: unit = product.unit;
+  $: steps = product.steps;
+  $: barcodes = product.barcodes;
+  $: notificationThreshold = product.notification_threshold;
+
   let navigateTo: URL | undefined = undefined;
   let loading = false;
   let unsavedChanges = false;
   let unsavedChangesModal = false;
   let barcodeErrorModal = false;
-  let product: Tables<"product"> | null = null;
-  let notificationThreshold: Tables<"product">["notification_threshold"];
   const id = $page.params.id;
-
-  onMount(() => {
-    genericGet(supabase.from("product").select().eq("id", id).single(), (x) => {
-      product = x;
-      name = product.name;
-      unit = product.unit;
-      steps = product.steps;
-      barcodes = product.barcodes ?? [];
-      notificationThreshold = product.notification_threshold;
-    });
-  });
 
   beforeNavigate(({ cancel, to }) => {
     if (!unsavedChanges) {
@@ -42,10 +34,6 @@
     return;
   });
 
-  let name: string | undefined = undefined;
-  let unit: string | undefined = undefined;
-  let steps: number[] = [];
-  let barcodes: string[] = [];
   let newBarcode: string | null = null;
   let newBarcodes: string[] = [];
   let deleteBarcodes: string[] = [];
@@ -77,6 +65,7 @@
           name,
           unit,
           steps,
+          notification_threshold: notificationThreshold,
         })
         .eq("id", id),
       { setLoading: (x) => (loading = x) }

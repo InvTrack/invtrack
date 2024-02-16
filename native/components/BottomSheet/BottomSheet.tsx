@@ -7,14 +7,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 import {
+  ComposedGesture,
+  Gesture,
+  GestureDetector,
+  GestureType,
   NativeViewGestureHandler,
   PanGestureHandler,
-  PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import Animated, {
   interpolate,
   runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
@@ -115,29 +117,20 @@ const BottomSheet = () => {
     );
   };
 
-  // RNGH handlers
-  const panGestureHandler = useAnimatedGestureHandler<
-    PanGestureHandlerGestureEvent,
-    { offsetY: number }
-  >({
-    onStart: (_, ctx) => {
-      ctx.offsetY = 0;
-    },
-    onActive: (event, ctx) => {
+  const panGestureHandler: ComposedGesture | GestureType = Gesture.Pan()
+    .onChange((event) => {
       if (scrollOffset.value > 0) {
-        ctx.offsetY = event.translationY;
         return;
       }
-      BottomSheetOffsetY.value = Math.max(0, event.translationY - ctx.offsetY);
-    },
-    onEnd: () => {
-      if (BottomSheetOffsetY.value > BottomSheetHeight.value / 2) {
+      BottomSheetOffsetY.value = Math.max(0, event.translationY);
+    })
+    .onEnd(() => {
+      if (BottomSheetOffsetY.value > BottomSheetHeight.value / 5) {
         onClose();
       } else {
         BottomSheetOffsetY.value = withTiming(0, { duration: 150 });
       }
-    },
-  });
+    });
 
   useEffect(() => {
     if (!isOpen) {
@@ -161,13 +154,14 @@ const BottomSheet = () => {
           onPress={() => onClose()}
         />
       </Animated.View>
-      <PanGestureHandler
-        onGestureEvent={panGestureHandler}
-        ref={panRef}
-        simultaneousHandlers={scrollRef}
+      <GestureDetector
+        gesture={panGestureHandler}
+        // simultaneousHandlers={scrollRef}
       >
         <Animated.View style={bottomSheetStyle} onLayout={onLayout}>
           <BottomSheetContent
+            // TODO: make the scroll handler defined here, then combine them to a race?
+            // not sure yet
             ref={scrollRef}
             panRef={panRef}
             scrollOffset={scrollOffset}
@@ -175,7 +169,7 @@ const BottomSheet = () => {
             onClose={onClose}
           />
         </Animated.View>
-      </PanGestureHandler>
+      </GestureDetector>
     </>
   ) : null;
 };

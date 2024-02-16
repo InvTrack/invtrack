@@ -8,6 +8,7 @@ import TextInputController from "../components/TextInputController";
 import { ScrollView, StyleSheet } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { DevInfo } from "../components/DevInfo";
 import { Typography } from "../components/Typography";
 import { supabase } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
@@ -30,10 +31,10 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
   return (
     <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
       <ScrollView>
-        <Typography variant="xlBold" color="darkGrey" style={styles.mb}>
+        <Typography variant="xlBold" color="lightGrey" style={styles.mb}>
           Ustawienia
         </Typography>
-        <Typography variant="lBold" color="darkGrey" style={styles.mb}>
+        <Typography variant="lBold" color="lightGrey" style={styles.mb}>
           Twój email:
         </Typography>
         <TextInputController
@@ -98,6 +99,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
           Wyloguj się
         </Button>
       </ScrollView>
+      <DevInfo />
     </SafeAreaView>
   );
 }
