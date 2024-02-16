@@ -19,7 +19,6 @@
   import { onMount } from "svelte";
   import { supabase } from "$lib/supabase.js";
   import { currentCompanyId } from "$lib/store";
-  import el from "date-fns/locale/el";
 
   let records: { date: Tables<"inventory">["date"]; record_view: Views<"record_view">[] }[] = [];
   let productsWithRecords: { name: string; records: (Views<"record_view"> | undefined)[] }[] = [];
@@ -134,7 +133,7 @@
                 {#each product.records as record}
                   <TableBodyCell>
                     {#if record}
-                      {record.quantity} {record.quantity}
+                      {record.quantity} {record.unit}
                     {:else}
                       n/a
                     {/if}
