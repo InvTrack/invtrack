@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.types";
 import { IDListCard } from "../components/IDListCard";
+import { IDListCardAdd } from "../components/IDListCardAdd";
 import { ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/context";
@@ -125,7 +126,7 @@ export default function DeliveryTabScreen({
               <ScanBarcodeIcon size={34} color="lightGrey" />
             </Button>
           </View>
-          {recordList.map(({ name, quantity, unit, id }) => (
+          {recordList?.map(({ name, quantity, unit, id }) => (
             <IDListCard
               key={id}
               recordId={id!}
@@ -135,6 +136,10 @@ export default function DeliveryTabScreen({
               name={name!}
             />
           ))}
+          <IDListCardAdd
+            productIDs={recordList.map((r) => r.product_id)}
+            inventoryId={inventoryId}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

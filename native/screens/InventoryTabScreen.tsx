@@ -11,6 +11,7 @@ import { Skeleton } from "../components/Skeleton";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
+import { IDListCardAdd } from "../components/IDListCardAdd";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useListRecords } from "../db";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
@@ -124,6 +125,10 @@ export default function InventoryTabScreen({
               name={name!}
             />
           ))}
+          <IDListCardAdd
+            productIDs={recordList.map((r) => r.product_id)}
+            inventoryId={inventoryId}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
