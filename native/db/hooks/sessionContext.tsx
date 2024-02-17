@@ -74,7 +74,7 @@ export const useSession = () => {
       loggedIn: true,
       loading,
       companyId,
-    } as SessionContextLoggedInType & { loading: boolean };
+    } as SessionContextLoggedInType & { loading: false };
   }
 
   return {
@@ -82,5 +82,5 @@ export const useSession = () => {
     loggedIn: false,
     loading,
     companyId,
-  } as SessionContextNotLoggedInType & { loading: boolean };
+  } as SessionContextNotLoggedInType & { loading: true };
 };
