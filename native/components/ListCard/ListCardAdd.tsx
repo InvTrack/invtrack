@@ -6,7 +6,7 @@ import { createStyles } from "../../theme/useStyles";
 import { Button } from "../Button";
 import { PlusIcon } from "../Icon";
 
-export const InventoryCardAdd = () => {
+export const ListCardAdd = () => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
   return (

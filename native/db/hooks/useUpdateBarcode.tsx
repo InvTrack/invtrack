@@ -41,7 +41,6 @@ export const useInsertBarcode = (inventory_id: number) => {
       queryClient.setQueryData<BarcodeList>(
         ["barcodeList", inventory_id],
         (old) => {
-          console.log(old);
           if (!old) return;
           return { ...old, [new_barcode]: product_id };
         }
