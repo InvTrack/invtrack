@@ -11,6 +11,7 @@ import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { CleanTabBar } from "../components/TabBar";
 import { useListInventories } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
+import { AddRecordScreen } from "../screens/AddRecordScreen";
 import DeliveryTabScreen from "../screens/DeliveryTabScreen";
 import InventoryTabScreen from "../screens/InventoryTabScreen";
 import { ListTab } from "../screens/ListTabScreen";
@@ -177,6 +178,31 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
         <InventoryStack.Screen
           name="RecordScreen"
           component={RecordScreen}
+          options={{
+            headerBackground: () => (
+              <View
+                style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerTitle: inventoryName ?? "",
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
+            },
+            headerTitleAlign: "center",
+            headerBackVisible: false,
+          }}
+        />
+        <InventoryStack.Screen
+          name="AddRecordScreen"
+          component={AddRecordScreen}
           options={{
             headerBackground: () => (
               <View

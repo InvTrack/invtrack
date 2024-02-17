@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "../supabase";
-import { RecordViewTable } from "../types";
 
 const listRecords = async (inventoryId: number) => {
   const { data, error } = await supabase
-    .from<"record_view", RecordViewTable>("record_view")
+    .from("record_view")
     .select()
     .eq("inventory_id", inventoryId)
     .order("id", { ascending: true });

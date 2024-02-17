@@ -23,7 +23,7 @@ export const EmptyScreenTemplate = ({
       <SafeAreaView
         style={[
           styles.container,
-          { paddingTop: topInset > 16 ? topInset : 16 },
+          { paddingTop: topInset > 16 ? 16 : topInset },
           style,
         ]}
       >
