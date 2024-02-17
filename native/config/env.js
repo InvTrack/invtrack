@@ -11,19 +11,16 @@ const isDevEnv =
 
 const appVersion = isDevEnv ? "expo-go" : Application?.nativeApplicationVersion;
 
-const devInfoEnv = isDevEnv
-  ? `-${process.env?.EXPO_ENV || process.env.NODE_ENV}`
-  : "";
-
 const devInfoString =
-  (process.env?.SUPABASE_URL?.split(".")[0]?.slice(8) || "localhost") +
+  (process.env?.SUPABASE_URL?.split(".")[0]?.slice(8) ?? "") +
+  "-" +
+  (process.env.EXPO_ENV || process.env.NODE_ENV) +
   "@" +
-  appVersion +
-  devInfoEnv;
+  appVersion;
 
 export let EnvConfig = {
   env: process.env?.EXPO_ENV || process.env.NODE_ENV,
-  supabaseUrl: process.env?.SUPABASE_URL || "http://192.168.0.103:54321",
+  supabaseUrl: "http://172.20.10.14:54321",
   supabaseAnonKey:
     process.env?.SUPABASE_ANON_KEY ||
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
