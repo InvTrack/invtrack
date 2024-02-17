@@ -98,3 +98,8 @@ export type RecordScreenNavigationProp = NativeStackScreenProps<
   InventoryStackParamList | DeliveryStackParamList,
   "RecordScreen"
 >["navigation"];
+
+// export type ProductPickerScreenNavigationProp = NativeStackScreenProps<
+//   null,
+//   "ProductPickerScreen"
+// >["navigation"];
