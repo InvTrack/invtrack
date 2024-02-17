@@ -14,6 +14,7 @@ import { ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useListRecords } from "../db";
+import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { DeliveryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -22,12 +23,13 @@ export default function DeliveryTabScreen({
   route,
   navigation,
 }: DeliveryTabScreenProps) {
-  const { id: inventoryId } = route.params;
-
   const styles = useStyles();
+
+  const inventoryId = route.params?.id;
   const { isConnected } = useNetInfo();
 
   const { data: recordList, isSuccess } = useListRecords(+inventoryId);
+  const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const deliveryForm = useFormContext<DeliveryForm>();
   const {
     mutate,
@@ -35,6 +37,10 @@ export default function DeliveryTabScreen({
     isError: isUpdateError,
   } = useUpdateRecords(+inventoryId);
   const { showError, showInfo, showSuccess } = useSnackbar();
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: inventoryName });
+  }, [inventoryId, inventoryName, navigation]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -126,7 +132,7 @@ export default function DeliveryTabScreen({
               <ScanBarcodeIcon size={34} color="lightGrey" />
             </Button>
           </View>
-          {recordList?.map(({ name, quantity, unit, id }) => (
+          {recordList.map(({ name, quantity, unit, id }) => (
             <IDListCard
               key={id}
               recordId={id!}
@@ -136,10 +142,7 @@ export default function DeliveryTabScreen({
               name={name!}
             />
           ))}
-          <IDListCardAdd
-            productIDs={recordList.map((r) => r.product_id)}
-            inventoryId={inventoryId}
-          />
+          <IDListCardAdd inventoryId={inventoryId} />
         </View>
       </ScrollView>
     </SafeAreaView>
