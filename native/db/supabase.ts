@@ -3,8 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
 import { Platform } from "react-native";
 import { Database } from "./types/generated";
-import { EnvConfig } from "../env.config";
-
+import { EnvConfig } from "../config/env";
 if (Platform.OS !== "web") {
   require("react-native-url-polyfill/auto");
 }

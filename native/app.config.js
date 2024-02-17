@@ -1,7 +1,7 @@
 /**
  * don't import directly, use expo-constants
  */
-const config = {
+const config = () => ({
   expo: {
     name: "InvTrack",
     slug: "invtrack",
@@ -10,7 +10,7 @@ const config = {
     owner: "invtrack",
     icon: "./assets/images/icon.png",
     scheme: "invtrack",
-    userInterfaceStyle: "automatic",
+    userInterfaceStyle: "dark",
     splash: {
       image: "./assets/images/splash.png",
       resizeMode: "contain",
@@ -38,9 +38,6 @@ const config = {
         },
       ],
     ],
-    experiments: {
-      typedRoutes: true,
-    },
     extra: {
       eas: {
         projectId: "07cea1ba-c2e4-420b-ac38-664a39522dcb",
@@ -53,6 +50,6 @@ const config = {
       url: "https://u.expo.dev/07cea1ba-c2e4-420b-ac38-664a39522dcb",
     },
   },
-};
+});
 
 export default config;
