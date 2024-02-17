@@ -1,44 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
-import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { Skeleton } from "../components/Skeleton";
-import { useListRecords } from "../db";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { isEmpty } from "lodash";
+import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
+import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { useSnackbar } from "../components/Snackbar/context";
-import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
-import { HomeStackParamList } from "../navigation/types";
+import { useCreateProductRecords } from "../db/hooks/useCreateProductRecords";
+import { useListMissingProducts } from "../db/hooks/useListMissingProducts";
+import { InventoryStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-type NewBarcodeScreenProps = NativeStackScreenProps<
-  HomeStackParamList,
-  "NewBarcodeScreen"
+type AddRecordScreenProps = NativeStackScreenProps<
+  InventoryStackParamList,
+  "AddRecordScreen"
 >;
 
-export function NewBarcodeScreen({ route, navigation }: NewBarcodeScreenProps) {
+export function AddRecordScreen({ route, navigation }: AddRecordScreenProps) {
   const styles = useStyles();
 
   const { isConnected } = useNetInfo();
-  const [highlighted, setHighlighted] = useState<number | null>(null);
+  const [highlighted, setHighlighted] = useState<
+    NonNullable<ReturnType<typeof useListMissingProducts>["data"]>
+  >([]);
 
-  const { inventoryId, new_barcode } = route.params;
+  const { inventoryId } = route.params;
 
-  const { data: recordList, isSuccess } = useListRecords(+inventoryId);
+  const { data: productList, isSuccess } = useListMissingProducts(+inventoryId);
   const {
     mutate,
-    isError: isInsertError,
     isSuccess: isInsertSuccess,
-  } = useInsertBarcode(+inventoryId);
+    isError: isInsertError,
+  } = useCreateProductRecords(+inventoryId);
   const { showError, showSuccess } = useSnackbar();
 
-  const handleSaveNewBarcode = () => {
-    if (!highlighted || !new_barcode) return;
+  const handleSave = () => {
+    if (isEmpty(highlighted) || !highlighted) return;
 
-    mutate({ new_barcode, product_id: highlighted });
+    mutate(
+      highlighted.map((product) => ({
+        product_id: product.id,
+        ...product,
+      }))
+    );
+
     navigation.goBack();
   };
 
@@ -51,7 +61,16 @@ export function NewBarcodeScreen({ route, navigation }: NewBarcodeScreenProps) {
     }
   }, [isInsertSuccess, isInsertError]);
 
-  if (!isSuccess || (recordList && recordList.length === 0))
+  if (isEmpty(productList)) {
+    return (
+      <EmptyScreenTemplate>
+        Wszystkie obecnie dostępne produkty zostały dodane do tej
+        inwentaryzacji.
+      </EmptyScreenTemplate>
+    );
+  }
+
+  if (!isSuccess)
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
@@ -70,30 +89,37 @@ export function NewBarcodeScreen({ route, navigation }: NewBarcodeScreenProps) {
       <ScrollView style={styles.scroll}>
         <View style={styles.listContainer}>
           <View style={styles.date}></View>
-          {Object.values(recordList ?? {}).map(({ name, product_id }) => (
-            <Pressable
-              key={product_id}
-              onPress={() =>
-                highlighted == product_id
-                  ? setHighlighted(null)
-                  : setHighlighted(product_id)
+          {productList?.map((product) => (
+            <NewBarcodeListItem
+              key={product.id}
+              highlighted={highlighted?.some(
+                (highlightedProduct) => highlightedProduct.id === product.id
+              )}
+              name={product.name}
+              onPress={
+                highlighted?.some(
+                  (highlightedProduct) => highlightedProduct.id === product.id
+                )
+                  ? () =>
+                      setHighlighted(
+                        highlighted.filter(
+                          (highlightedProduct) =>
+                            highlightedProduct.id !== product.id
+                        )
+                      )
+                  : () => setHighlighted([...highlighted, product])
               }
-            >
-              <NewBarcodeListItem
-                highlighted={highlighted == product_id}
-                name={name!}
-              />
-            </Pressable>
+            />
           ))}
         </View>
       </ScrollView>
       <View>
         <Button
-          onPress={handleSaveNewBarcode}
+          onPress={handleSave}
           size="l"
           type="primary"
           shadow
-          disabled={!isConnected || !highlighted || !new_barcode}
+          disabled={!isConnected || !highlighted}
           containerStyle={[
             {
               bottom: 32,

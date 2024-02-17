@@ -6,13 +6,14 @@ import { Typography } from "./Typography";
 
 type NewBarcodeListItemProps = {
   name: string;
-  inventoryId: number;
   highlighted: boolean;
+  onPress?: () => void;
 };
 
 export const NewBarcodeListItem = ({
   name,
   highlighted = false,
+  onPress,
 }: NewBarcodeListItemProps) => {
   const styles = useStyles();
 
@@ -21,6 +22,7 @@ export const NewBarcodeListItem = ({
       color="mediumBlue"
       style={[styles.card, highlighted && styles.highlighted]}
       padding="none"
+      onPress={onPress}
     >
       <Typography
         color="lightGrey"

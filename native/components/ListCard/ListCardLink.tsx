@@ -10,7 +10,7 @@ import { Card } from "../Card";
 import { SmallerArrowRightIcon } from "../Icon";
 import { Typography } from "../Typography";
 
-type InventoryCardAddProps = {
+type ListCardAddProps = {
   title: string | undefined;
   id: number;
   isDelivery: boolean;
@@ -19,22 +19,18 @@ type InventoryCardAddProps = {
 const navigateToTabScreen =
   (navigation: any, id: number, isDelivery: boolean) => () => {
     if (isDelivery) {
-      (navigation as DeliveryTabNavigationProp).navigate("DeliveryTab", {
+      (navigation as DeliveryTabNavigationProp).navigate("DeliveryTabScreen", {
         id,
       });
       return;
     }
-    (navigation as InventoryTabNavigationProp).navigate("InventoryTab", {
+    (navigation as InventoryTabNavigationProp).navigate("InventoryTabScreen", {
       id,
     });
     return;
   };
 
-export const ListCardLink = ({
-  title,
-  id,
-  isDelivery,
-}: InventoryCardAddProps) => {
+export const ListCardLink = ({ title, id, isDelivery }: ListCardAddProps) => {
   const styles = useStyles();
   const navigation = useNavigation();
   return (

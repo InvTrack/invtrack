@@ -7,10 +7,12 @@ import { DeliveryFormContextProvider } from "../components/DeliveryFormContext/D
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
 import { InventoryFormContextProvider } from "../components/InventoryFormContext/InventoryFormContextProvider";
 
+import { isEmpty } from "lodash";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { CleanTabBar } from "../components/TabBar";
 import { useListInventories } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
+import { AddRecordScreen } from "../screens/AddRecordScreen";
 import DeliveryTabScreen from "../screens/DeliveryTabScreen";
 import InventoryTabScreen from "../screens/InventoryTabScreen";
 import { ListTab } from "../screens/ListTabScreen";
@@ -39,16 +41,16 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
   const deliveryId = (routeDeliveryId ?? latestDeliveryId) as number;
 
   const { data: deliveryName } = useGetInventoryName(deliveryId);
+  const noDeliveries = !latestDeliveryId && !isEmpty(data);
 
-  const noInventories = !data?.length;
-  if (noInventories)
+  if (noDeliveries)
     return (
       <EmptyScreenTemplate>
         Brak dostaw. Dodaj nową dostawę z ekranu listy!
       </EmptyScreenTemplate>
     );
-  // TODO skeletons or ???
-  if (!(routeDeliveryId ?? deliveryId))
+
+  if (!deliveryId)
     return (
       <EmptyScreenTemplate>
         Błąd - brak identyfikatora dostawy. Zrestartuj aplikację i spróbuj
@@ -110,6 +112,31 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackVisible: false,
           }}
         />
+        <InventoryStack.Screen
+          name="AddRecordScreen"
+          component={AddRecordScreen}
+          options={{
+            headerBackground: () => (
+              <View
+                style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerTitle: deliveryName ?? "",
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
+            },
+            headerTitleAlign: "center",
+            headerBackVisible: false,
+          }}
+        />
       </DeliveryStack.Navigator>
     </DeliveryFormContextProvider>
   );
@@ -125,8 +152,7 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
   const inventoryId = (routeInventoryId ?? lastestInventoryId) as number;
 
   const { data: inventoryName } = useGetInventoryName(inventoryId);
-  const noInventories = !data?.length;
-
+  const noInventories = !lastestInventoryId && !isEmpty(data);
   if (noInventories)
     return (
       <EmptyScreenTemplate>
@@ -177,6 +203,31 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
         <InventoryStack.Screen
           name="RecordScreen"
           component={RecordScreen}
+          options={{
+            headerBackground: () => (
+              <View
+                style={{
+                  borderColor: theme.colors.darkBlue,
+                  borderTopWidth: 2,
+                  backgroundColor: theme.colors.mediumBlue,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            ),
+            headerTitle: inventoryName ?? "",
+            headerTitleStyle: {
+              color: theme.colors.highlight,
+              fontSize: theme.text.xs.fontSize,
+              fontFamily: theme.text.xs.fontFamily,
+            },
+            headerTitleAlign: "center",
+            headerBackVisible: false,
+          }}
+        />
+        <InventoryStack.Screen
+          name="AddRecordScreen"
+          component={AddRecordScreen}
           options={{
             headerBackground: () => (
               <View
