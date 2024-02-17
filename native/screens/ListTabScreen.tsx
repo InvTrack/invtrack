@@ -2,7 +2,7 @@ import capitalize from "lodash/capitalize";
 import React, { useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { InventoryCardAdd } from "../components/ListCard/ListCardAdd";
+import { ListCardAdd } from "../components/ListCard/ListCardAdd";
 
 import isEmpty from "lodash/isEmpty";
 import { Button } from "../components/Button";
@@ -134,13 +134,13 @@ export const ListTab = ({ navigation }: ListTabScreenProps) => {
                 <DayTitle title={day} />
                 {inventories.map((inventory) => (
                   <ListCardLink
-                    key={inventory.id || -1}
+                    key={inventory.id}
                     title={inventory.name}
                     id={inventory.id}
                     isDelivery={inventory.is_delivery}
                   />
                 ))}
-                <InventoryCardAdd />
+                <ListCardAdd />
               </React.Fragment>
             ))}
           </React.Fragment>
