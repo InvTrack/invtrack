@@ -11,6 +11,7 @@ export type InventoryTable = Database["public"]["Tables"]["inventory"];
  * Jeden "wpis" danego produktu w inwentaryzacji. Jedna informacja o tym "ile" i "jakiego" produktu. Np. "produkt #462 - 5kg"
  */
 export type Record = RecordTable["Row"];
+export type RecordInsert = RecordTable["Insert"];
 export type RecordTable = Database["public"]["Tables"]["product_record"];
 
 /**
