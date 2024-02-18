@@ -13,6 +13,6 @@ const getInventoryName = async (inventoryId: number) => {
 
 export const useGetInventoryName = (inventoryId: number) =>
   useQuery({
-    queryKey: ["inventoryName", { inventoryId }],
+    queryKey: ["inventoryName", inventoryId],
     queryFn: async () => await getInventoryName(inventoryId),
   });
