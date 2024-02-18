@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { useBottomSheet } from "../components/BottomSheet";
@@ -13,6 +13,7 @@ import { createStyles } from "../theme/useStyles";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "../components/Skeleton";
+import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
 import {
   DeliveryStackParamList,
@@ -103,6 +104,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const isSuccess = recordPanel?.isSuccess;
   const record = recordPanel?.data;
 
+  const { data: inventoryName } = useGetInventoryName(+id);
   const { data: recordIds } = useListRecordIds(id);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     id,
@@ -115,6 +117,10 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   );
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: inventoryName });
+  }, [inventoryName, navigation]);
 
   if (
     !isSuccess ||
