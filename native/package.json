@@ -11,7 +11,11 @@
     "lint": "eslint --fix --cache",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "gen-types": "cp ../database.types.ts db/types/generated.ts"
+    "gen-types": "cp ../database.types.ts db/types/generated.ts",
+    "eas:update:staging": "eas update --branch staging --message --",
+    "eas:update:production": "eas update --branch production --message --",
+    "eas:build:staging": "eas build -p all --profile staging",
+    "eas:build:production": "eas build -p all --profile production"
   },
   "jest": {
     "preset": "jest-expo"
