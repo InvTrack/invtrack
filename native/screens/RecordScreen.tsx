@@ -20,7 +20,6 @@ import {
   RecordScreenNavigationProp,
 } from "../navigation/types";
 import { useRecordPagination } from "../utils/useRecordPagination";
-import { useRunBlurEffect } from "../utils/useRunBlurEffect";
 
 export type RecordScreenProps = NativeStackScreenProps<
   InventoryStackParamList | DeliveryStackParamList,
@@ -99,12 +98,11 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const { id, recordId } = route.params;
   const queryClient = useQueryClient();
 
-  const {
-    data: record,
-    isSuccess,
-    isLoading,
-    ...recordPanel
-  } = useRecordPanel(recordId);
+  const recordPanel = useRecordPanel(recordId);
+  const isLoading = recordPanel?.isLoading;
+  const isSuccess = recordPanel?.isSuccess;
+  const record = recordPanel?.data;
+
   const { data: recordIds } = useListRecordIds(id);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     id,
@@ -117,12 +115,6 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   );
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
-
-  useRunBlurEffect(() => {
-    queryClient.invalidateQueries(["recordsList", id], {
-      type: "all",
-    });
-  });
 
   if (
     !isSuccess ||
