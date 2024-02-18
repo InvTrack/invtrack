@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 import isEmpty from "lodash/isEmpty";
 import { useFormContext } from "react-hook-form";
 import { DeliveryForm } from "../../components/DeliveryFormContext/deliveryForm.types";
+import { InventoryForm } from "../../components/InventoryFormContext/inventoryForm.types";
 import { useGetRecord } from "./useGetRecord";
 
 /**
@@ -13,49 +14,66 @@ import { useGetRecord } from "./useGetRecord";
  */
 export const useRecordPanel = (recordId: number) => {
   const recordResult = useGetRecord(recordId);
-  const deliveryForm = useFormContext<DeliveryForm>();
-  if (!deliveryForm) throw new Error("Missing deliveryForm context");
+  const form = useFormContext<DeliveryForm | InventoryForm>();
+  if (!form) throw new Error("Missing form context");
 
   const { data: record, isSuccess } = recordResult;
 
   useEffect(() => {
-    if (!record?.id || !record?.product_id || !record.quantity) return;
+    // guard would be cleaner but for some reason it doesn't work here
+    // no idea why
+    if (record?.product_id && record?.quantity) {
+      const shouldRegister = isEmpty(form.getValues()[recordId.toString()]);
+      if (shouldRegister) {
+        // set the new values
+        form.register(recordId.toString(), {
+          value: {
+            quantity: record.quantity,
+            product_id: record.product_id,
+          },
+        });
+      }
 
-    const formValues = deliveryForm.getValues();
-    const shouldRegister = isEmpty(formValues[record.id?.toString()]);
+      const shouldAddMissingValues =
+        // is nullish
+        form.getValues()[recordId.toString()]?.product_id == null;
 
-    if (!shouldRegister) return;
+      if (shouldAddMissingValues) {
+        form.setValue(`${recordId.toString()}.product_id`, record.product_id);
+      }
 
-    // set the new values
-    deliveryForm.register(record.id?.toString(), {
-      value: { quantity: record.quantity, product_id: record.product_id },
-    });
-  }, [record?.id, record?.product_id, record?.quantity]);
+      const shouldUpdateQuantity =
+        record.quantity !== form.getValues()[recordId.toString()]?.quantity &&
+        !form.getFieldState(`${recordId.toString()}.quantity`).isDirty;
 
-  const quantity =
-    deliveryForm.watch(`${record?.id!.toString()}.quantity`) ?? 0;
+      if (shouldUpdateQuantity) {
+        form.setValue(`${recordId.toString()}.quantity`, record.quantity);
+      }
+    }
+  }, [recordId, record?.product_id, record?.quantity, isSuccess]);
+
+  const quantity = form.watch(`${recordId.toString()}.quantity`) ?? 0;
 
   const setQuantity = useCallback(
     (quantity: number) => {
       if (quantity < 0) return;
-      if (!record?.id) return;
       // dot notation is more performant
-      deliveryForm.setValue(`${record?.id!.toString()}.quantity`, quantity, {
+      form.setValue(`${recordId.toString()}.quantity`, quantity, {
         shouldDirty: true,
         shouldTouch: true,
       });
       return;
     },
-    [deliveryForm, record?.id, quantity]
+    [form, recordId, quantity]
   );
   const stepperFunction = useCallback(
     (step: number) =>
       ({
         click: () => {
           if (quantity + step < 0) {
-            deliveryForm.setValue(
+            form.setValue(
               // dot notation is more performant
-              `${record?.id!.toString()}.quantity`,
+              `${recordId.toString()}.quantity`,
               0,
               {
                 shouldDirty: true,
@@ -64,9 +82,9 @@ export const useRecordPanel = (recordId: number) => {
             );
             return;
           }
-          deliveryForm.setValue(
+          form.setValue(
             // dot notation is more performant
-            `${record?.id!.toString()}.quantity`,
+            `${recordId.toString()}.quantity`,
             (quantity as number) + step,
             {
               shouldDirty: true,
@@ -77,7 +95,7 @@ export const useRecordPanel = (recordId: number) => {
         },
         step,
       } as const),
-    [quantity, record?.id, deliveryForm]
+    [quantity, recordId, form]
   );
 
   if (!isSuccess || !record || !record.steps)
