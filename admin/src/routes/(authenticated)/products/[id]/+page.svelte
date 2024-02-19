@@ -7,6 +7,7 @@
   import { CloseCircleSolid } from "flowbite-svelte-icons";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
+  import { currentCompanyId } from "$lib/store";
 
   export let data;
   let { supabase, product } = data;
@@ -14,8 +15,12 @@
   $: name = product.name;
   $: unit = product.unit;
   $: steps = product.steps;
-  $: barcodes = product.barcodes;
   $: notificationThreshold = product.notification_threshold;
+
+  let barcodes: string[] = product.barcode.map((b) => b.code);
+  let company_id: number;
+
+  currentCompanyId.subscribe((id) => id && (company_id = id));
 
   let navigateTo: URL | undefined = undefined;
   let loading = false;
@@ -73,7 +78,7 @@
     if (newBarcodes) {
       newBarcodes.forEach((newBarcode) => {
         genericUpdate(
-          supabase.rpc("insert_barcode", { new_barcode: newBarcode, product_id: +id }),
+          supabase.from("barcode").insert({ code: newBarcode, company_id, product_id: product.id }),
           {
             setLoading: (x) => (loading = x),
             onError: () => {
@@ -88,7 +93,7 @@
     if (deleteBarcodes) {
       deleteBarcodes.forEach((barcodeToDelete) => {
         genericUpdate(
-          supabase.rpc("delete_barcode", { barcode_to_delete: barcodeToDelete, product_id: +id }),
+          supabase.from("barcode").delete().match({ company_id, code: barcodeToDelete }),
           {
             setLoading: (x) => (loading = x),
           }

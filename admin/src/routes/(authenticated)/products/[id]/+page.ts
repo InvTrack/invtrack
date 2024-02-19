@@ -4,7 +4,10 @@ export const load = async ({ parent, params }) => {
   const { supabase } = await parent();
   const { data: product, error: supabaseError } = await supabase
     .from("product")
-    .select()
+    .select(`
+      *,
+      barcode(*)
+    `)
     .eq("id", id)
     .single();
 
