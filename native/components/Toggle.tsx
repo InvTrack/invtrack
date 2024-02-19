@@ -30,7 +30,9 @@ export const Toggle = forwardRef<NativeToggle, ToggleProps>(
           false: theme.colors.red,
         }}
         // magic string, make the thumb color darker green on android
-        thumbColor={isAndroid ? "rgb(20, 137, 56)" : undefined}
+        thumbColor={
+          isAndroid ? (value ? "rgb(20, 137, 56)" : "#bc0000") : undefined
+        }
         ios_backgroundColor={value ? theme.colors.green : theme.colors.red}
         onValueChange={onChange}
         value={value}
