@@ -20,78 +20,18 @@ alter table "public"."barcode" add constraint "barcode_product_id_fkey" FOREIGN 
 
 alter table "public"."barcode" validate constraint "barcode_product_id_fkey";
 
--- ALTER TABLE "public"."product"
--- ADD COLUMN "barcodes" text[] DEFAULT '{}'::text[] NOT NULL;
-
--- CREATE
--- OR REPLACE FUNCTION insert_barcode (product_id INT, new_barcode TEXT) RETURNS TABLE (updated_product_id INT, updated_barcodes TEXT[]) AS $$
--- DECLARE
---   company_id_val INT;
--- BEGIN
---   SELECT company_id INTO company_id_val FROM "public"."product" WHERE id = product_id;
-
---   IF EXISTS (
---     SELECT 1
---     FROM "public"."product"
---     WHERE company_id = company_id_val
---     AND new_barcode = ANY (barcodes)
---   ) THEN
---     RAISE EXCEPTION 'Duplicate barcode found: %', new_barcode;
---   END IF;
-
---   UPDATE product
---   SET barcodes = barcodes || new_barcode
---   WHERE id = product_id
---   AND company_id = company_id_val
---   RETURNING id, barcodes INTO updated_product_id, updated_barcodes;
-
---   RETURN NEXT;
--- END;
--- $$ LANGUAGE plpgsql;
-
--- CREATE
--- OR REPLACE FUNCTION delete_barcode (product_id INT, barcode_to_delete TEXT) RETURNS TABLE (updated_product_id INT, updated_barcodes TEXT[]) AS $$
--- DECLARE
---   company_id_val INT;
--- BEGIN
---   SELECT company_id INTO company_id_val FROM "public"."product" WHERE id = product_id;
-
---   UPDATE product
---   SET barcodes = array_remove(barcodes, barcode_to_delete)
---   WHERE id = product_id
---   AND company_id = company_id_val
---   RETURNING id, barcodes INTO updated_product_id, updated_barcodes;
-
---   RETURN NEXT;
--- END;
--- $$ LANGUAGE plpgsql;
-
--- CREATE
--- OR REPLACE FUNCTION update_barcode (
---   product_id INT,
---   old_barcode TEXT,
---   new_barcode TEXT
--- ) RETURNS TABLE (updated_product_id INT, updated_barcodes TEXT[]) AS $$
--- DECLARE
---   company_id_val INT;
--- BEGIN
---   SELECT company_id INTO company_id_val FROM "public"."product" WHERE id = product_id;
-
---   IF EXISTS (
---     SELECT 1
---     FROM "public"."product"
---     WHERE company_id = company_id_val
---     AND new_barcode = ANY (barcodes)
---   ) THEN
---     RAISE EXCEPTION 'Duplicate barcode found: %', new_barcode;
---   END IF;
-
---   UPDATE product
---   SET barcodes = array_replace(barcodes, old_barcode, new_barcode)
---   WHERE id = product_id
---   AND company_id = company_id_val
---   RETURNING id, barcodes INTO updated_product_id, updated_barcodes;
-
---   RETURN NEXT;
--- END;
--- $$ LANGUAGE plpgsql;
+create or replace view
+  public.record_view as
+select
+  product.name,
+  product.unit,
+  product.steps,
+  product_record.quantity,
+  product_record.inventory_id,
+  product_record.id,
+  product_record.product_id,
+  barcode.code as barcode
+from
+  product_record
+  left join product on product_record.product_id = product.id
+  left join barcode on product_record.product_id = barcode.product_id;
