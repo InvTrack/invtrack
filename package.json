@@ -5,7 +5,7 @@
     "setup:app": "cd native && npm install",
     "setup:landing": "cd landing && npm install",
     "setup:admin": "cd admin && npm install",
-    "setup": "npm run setup:app ; npm run setup:landing ; npm run setup:admin",
+    "setup": "npm i ; npm run setup:app ; npm run setup:landing ; npm run setup:admin",
     "gen-types": "supabase gen types typescript --local > database.types.ts && cd native && npm run gen-types && cd ../admin && npm run gen-types",
     "start": "supabase start",
     "stop": "supabase stop",
