@@ -5,7 +5,7 @@ const config = () => ({
   expo: {
     name: "InvTrack",
     slug: "invtrack",
-    version: "1.0.0",
+    version: "1.0.1",
     orientation: "portrait",
     owner: "invtrack",
     icon: "./assets/images/icon.png",
@@ -18,7 +18,7 @@ const config = () => ({
     },
     assetBundlePatterns: ["**/*"],
     ios: {
-      buildNumber: "1.0.0",
+      buildNumber: "1.0.1",
       supportsTablet: false,
       bundleIdentifier: "app.invtrack.invtrack",
     },
@@ -28,7 +28,7 @@ const config = () => ({
         backgroundColor: "#212939",
       },
       package: "app.invtrack.invtrack",
-      versionCode: 1000,
+      versionCode: 1010,
     },
     plugins: [
       [
