@@ -2,45 +2,34 @@ import { useQuery } from "@tanstack/react-query";
 
 import isEmpty from "lodash/isEmpty";
 import { supabase } from "../supabase";
-import { Product, RecordView } from "../types";
-
-type ListBarcodePostgrestRes =
-  | {
-      barcodes: Product["barcodes"];
-      record_view: [
-        {
-          id: RecordView["id"];
-        } | null
-      ];
-    }[]
-  | null;
+import { RecordView } from "../types";
 
 export type BarcodeList = {
-  [barcode: Product["barcodes"][number]]: RecordView["id"];
+  [barcode: string]: RecordView["id"];
 };
 
 const barcodeList = async (inventory_id: number) => {
   const res = await supabase
-    .from("product")
-    .select("barcodes, record_view(id, name, product_id)")
-    .eq("record_view.inventory_id", inventory_id);
+    .from("record_view")
+    .select("id, barcode")
+    .eq("inventory_id", inventory_id);
 
-  const data = res.data as ListBarcodePostgrestRes;
+  const data = res.data;
   if (!data) return null;
 
-  const reducedData = data.reduce((result, item) => {
-    const barcodes = item.barcodes;
-    const recordId = item.record_view?.[0]?.id;
-    if (!recordId) return result;
-    barcodes.forEach((barcode) => {
-      result[barcode] = recordId;
-    });
+  const transformedData = data.reduce((result, item) => {
+    if (!item.id || !item.barcode) return result;
+
+    const barcode: string = item.barcode as string;
+    if (barcode) {
+      result[barcode] = item.id;
+    }
     return result;
   }, {} as BarcodeList);
 
-  if (isEmpty(reducedData)) return null;
+  if (isEmpty(transformedData)) return null;
 
-  return reducedData;
+  return transformedData;
 };
 
 export const useListBarcodes = (inventoryId: number) =>
