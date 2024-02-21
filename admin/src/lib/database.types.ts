@@ -314,6 +314,7 @@ export interface Database {
       }
       record_view: {
         Row: {
+          barcode: string | null
           id: number | null
           inventory_id: number | null
           name: string | null
