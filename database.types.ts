@@ -34,6 +34,40 @@ export interface Database {
   }
   public: {
     Tables: {
+      barcode: {
+        Row: {
+          code: string
+          company_id: number
+          created_at: string
+          product_id: number | null
+        }
+        Insert: {
+          code: string
+          company_id: number
+          created_at?: string
+          product_id?: number | null
+        }
+        Update: {
+          code?: string
+          company_id?: number
+          created_at?: string
+          product_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "barcode_company_id_fkey"
+            columns: ["company_id"]
+            referencedRelation: "company"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "barcode_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "product"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       company: {
         Row: {
           created_at: string | null
@@ -94,7 +128,6 @@ export interface Database {
       }
       product: {
         Row: {
-          barcodes: string[]
           company_id: number | null
           created_at: string
           id: number
@@ -104,7 +137,6 @@ export interface Database {
           unit: string
         }
         Insert: {
-          barcodes?: string[]
           company_id?: number | null
           created_at?: string
           id?: number
@@ -114,7 +146,6 @@ export interface Database {
           unit?: string
         }
         Update: {
-          barcodes?: string[]
           company_id?: number | null
           created_at?: string
           id?: number
@@ -283,6 +314,7 @@ export interface Database {
       }
       record_view: {
         Row: {
+          barcode: string | null
           id: number | null
           inventory_id: number | null
           name: string | null
@@ -358,16 +390,6 @@ export interface Database {
         }
         Returns: string
       }
-      delete_barcode: {
-        Args: {
-          product_id: number
-          barcode_to_delete: string
-        }
-        Returns: {
-          updated_product_id: number
-          updated_barcodes: string[]
-        }[]
-      }
       get_previous_inventory: {
         Args: {
           inventory_id: number
@@ -406,30 +428,9 @@ export interface Database {
           name: string
         }
       }
-      insert_barcode: {
-        Args: {
-          product_id: number
-          new_barcode: string
-        }
-        Returns: {
-          updated_product_id: number
-          updated_barcodes: string[]
-        }[]
-      }
       send_low_quantity_notification: {
         Args: Record<PropertyKey, never>
         Returns: undefined
-      }
-      update_barcode: {
-        Args: {
-          product_id: number
-          old_barcode: string
-          new_barcode: string
-        }
-        Returns: {
-          updated_product_id: number
-          updated_barcodes: string[]
-        }[]
       }
     }
     Enums: {

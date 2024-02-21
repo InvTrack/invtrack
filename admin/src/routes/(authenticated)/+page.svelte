@@ -32,11 +32,7 @@
   let company_id: number | undefined | null;
   let loadingCsv = false;
 
-  currentCompanyId.subscribe((id) => {
-    if (id) {
-      company_id = id;
-    }
-  });
+  currentCompanyId.subscribe((id) => id && (company_id = id));
 
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     let range = getPaginationRange(currentPage, 10);
