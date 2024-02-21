@@ -31,6 +31,7 @@ const insertBarcode = async ({
     .single();
 
   if (error) {
+    console.error(error);
     Alert.alert(
       "Błąd",
       "Nie udało się dodać kodu kreskowego. Może jest już przypisany do innego produktu?"

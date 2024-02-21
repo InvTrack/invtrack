@@ -8,6 +8,11 @@ create table "public"."barcode" (
 
 alter table "public"."barcode" enable row level security;
 
+CREATE POLICY "Allow authenticated to access their companies' barcodes" ON "public"."barcode" USING ((EXISTS ( SELECT 1
+   FROM "public"."worker" "w"
+  WHERE (("w"."id" = "auth"."uid"()) AND ("w"."company_id" = "barcode"."company_id")))));
+
+
 CREATE UNIQUE INDEX barcode_pkey ON public.barcode USING btree (code, company_id);
 
 alter table "public"."barcode" add constraint "barcode_pkey" PRIMARY KEY using index "barcode_pkey";
