@@ -1,1 +1,0 @@
-ALTER TABLE inventory ADD COLUMN is_delivery boolean NOT NULL DEFAULT false;
