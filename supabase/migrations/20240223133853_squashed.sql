@@ -512,55 +512,42 @@ SET SESSION AUTHORIZATION "postgres";
 RESET SESSION AUTHORIZATION;
 
 REVOKE USAGE ON SCHEMA "public" FROM PUBLIC;
-GRANT USAGE ON SCHEMA "public" TO "anon";
 GRANT USAGE ON SCHEMA "public" TO "authenticated";
 GRANT USAGE ON SCHEMA "public" TO "service_role";
 
-GRANT ALL ON TABLE "public"."product_record" TO "anon";
 GRANT ALL ON TABLE "public"."product_record" TO "authenticated";
 GRANT ALL ON TABLE "public"."product_record" TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."add_next_product_record"("product_record_id" bigint, "new_inventory_id" bigint) TO "anon";
 GRANT ALL ON FUNCTION "public"."add_next_product_record"("product_record_id" bigint, "new_inventory_id" bigint) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."add_next_product_record"("product_record_id" bigint, "new_inventory_id" bigint) TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."assign_new_worker_to_company"("new_company_id" bigint, "worker_email" "text") TO "anon";
 GRANT ALL ON FUNCTION "public"."assign_new_worker_to_company"("new_company_id" bigint, "worker_email" "text") TO "authenticated";
 GRANT ALL ON FUNCTION "public"."assign_new_worker_to_company"("new_company_id" bigint, "worker_email" "text") TO "service_role";
 
-GRANT ALL ON TABLE "public"."inventory" TO "anon";
 GRANT ALL ON TABLE "public"."inventory" TO "authenticated";
 GRANT ALL ON TABLE "public"."inventory" TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."get_previous_inventory"("inventory_id" bigint) TO "anon";
 GRANT ALL ON FUNCTION "public"."get_previous_inventory"("inventory_id" bigint) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."get_previous_inventory"("inventory_id" bigint) TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."get_previous_product_record_quantity"("current_inventory_id" bigint, "current_product_id" bigint) TO "anon";
 GRANT ALL ON FUNCTION "public"."get_previous_product_record_quantity"("current_inventory_id" bigint, "current_product_id" bigint) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."get_previous_product_record_quantity"("current_inventory_id" bigint, "current_product_id" bigint) TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."handle_delete_inventory"() TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_delete_inventory"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."handle_delete_inventory"() TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."handle_new_inventory"() TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_new_inventory"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."handle_new_inventory"() TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."handle_new_inventory_func"("new_date" timestamp without time zone, "inventory_id" bigint) TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_new_inventory_func"("new_date" timestamp without time zone, "inventory_id" bigint) TO "authenticated";
 GRANT ALL ON FUNCTION "public"."handle_new_inventory_func"("new_date" timestamp without time zone, "inventory_id" bigint) TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."notification_debounce_product_record_update"() TO "anon";
 GRANT ALL ON FUNCTION "public"."notification_debounce_product_record_update"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."notification_debounce_product_record_update"() TO "service_role";
 
-GRANT ALL ON FUNCTION "public"."send_low_quantity_notification"() TO "anon";
 GRANT ALL ON FUNCTION "public"."send_low_quantity_notification"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."send_low_quantity_notification"() TO "service_role";
 
@@ -570,70 +557,54 @@ RESET SESSION AUTHORIZATION;
 SET SESSION AUTHORIZATION "postgres";
 RESET SESSION AUTHORIZATION;
 
-GRANT ALL ON TABLE "public"."barcode" TO "anon";
 GRANT ALL ON TABLE "public"."barcode" TO "authenticated";
 GRANT ALL ON TABLE "public"."barcode" TO "service_role";
 
-GRANT ALL ON TABLE "public"."company" TO "anon";
 GRANT ALL ON TABLE "public"."company" TO "authenticated";
 GRANT ALL ON TABLE "public"."company" TO "service_role";
 
-GRANT ALL ON SEQUENCE "public"."company_id_seq" TO "anon";
 GRANT ALL ON SEQUENCE "public"."company_id_seq" TO "authenticated";
 GRANT ALL ON SEQUENCE "public"."company_id_seq" TO "service_role";
 
-GRANT ALL ON TABLE "public"."worker" TO "anon";
 GRANT ALL ON TABLE "public"."worker" TO "authenticated";
 GRANT ALL ON TABLE "public"."worker" TO "service_role";
 
-GRANT ALL ON TABLE "public"."current_company_id" TO "anon";
 GRANT ALL ON TABLE "public"."current_company_id" TO "authenticated";
 GRANT ALL ON TABLE "public"."current_company_id" TO "service_role";
 
-GRANT ALL ON SEQUENCE "public"."inventories_id_seq" TO "anon";
 GRANT ALL ON SEQUENCE "public"."inventories_id_seq" TO "authenticated";
 GRANT ALL ON SEQUENCE "public"."inventories_id_seq" TO "service_role";
 
-GRANT ALL ON TABLE "public"."product" TO "anon";
 GRANT ALL ON TABLE "public"."product" TO "authenticated";
 GRANT ALL ON TABLE "public"."product" TO "service_role";
 
-GRANT ALL ON TABLE "public"."low_quantity_product_records_view" TO "anon";
 GRANT ALL ON TABLE "public"."low_quantity_product_records_view" TO "authenticated";
 GRANT ALL ON TABLE "public"."low_quantity_product_records_view" TO "service_role";
 
-GRANT ALL ON TABLE "public"."low_quantity_notifications_user_id_view" TO "anon";
 GRANT ALL ON TABLE "public"."low_quantity_notifications_user_id_view" TO "authenticated";
 GRANT ALL ON TABLE "public"."low_quantity_notifications_user_id_view" TO "service_role";
 
-GRANT ALL ON SEQUENCE "public"."product_quantity_id_seq" TO "anon";
 GRANT ALL ON SEQUENCE "public"."product_quantity_id_seq" TO "authenticated";
 GRANT ALL ON SEQUENCE "public"."product_quantity_id_seq" TO "service_role";
 
-GRANT ALL ON SEQUENCE "public"."products_id_seq" TO "anon";
 GRANT ALL ON SEQUENCE "public"."products_id_seq" TO "authenticated";
 GRANT ALL ON SEQUENCE "public"."products_id_seq" TO "service_role";
 
-GRANT ALL ON TABLE "public"."record_view" TO "anon";
 GRANT ALL ON TABLE "public"."record_view" TO "authenticated";
 GRANT ALL ON TABLE "public"."record_view" TO "service_role";
 
-GRANT ALL ON TABLE "public"."worker_for_current_user" TO "anon";
 GRANT ALL ON TABLE "public"."worker_for_current_user" TO "authenticated";
 GRANT ALL ON TABLE "public"."worker_for_current_user" TO "service_role";
 
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "postgres";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "anon";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "authenticated";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON SEQUENCES  TO "service_role";
 
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "postgres";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "anon";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "authenticated";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON FUNCTIONS  TO "service_role";
 
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "postgres";
-ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "anon";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "authenticated";
 ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TABLES  TO "service_role";
 
