@@ -21,16 +21,15 @@
         email,
         password,
       });
-      console.log(data, error);
-      if (error) throw error;
+      if (error) {
+        throw error;
+      }
+      goto("/");
     } catch (error) {
       if (error instanceof Error) {
         errorMessage = mapApiErrors(error);
         if (!errorMessage) alert(error.message);
       }
-    } finally {
-      loading = false;
-      goto("/");
     }
   };
 </script>
