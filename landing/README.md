@@ -12,3 +12,9 @@ To preview and run the project on your device:
 - edit robots.txt to contain the built sitemap name
 - copy robots.txt to build root
 - deploy
+
+## Tips
+
+- use ImageOptim on every image, then
+- use https://www.responsivebreakpoints.com/ to optimize images for different screen sizes.
+  Resolution from 330 to 2160, 20kb size step, 5 maximum images, do not include double res images.
