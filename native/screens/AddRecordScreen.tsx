@@ -12,6 +12,7 @@ import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useCreateProductRecords } from "../db/hooks/useCreateProductRecords";
+import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListMissingProducts } from "../db/hooks/useListMissingProducts";
 import { InventoryStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -31,6 +32,7 @@ export function AddRecordScreen({ route, navigation }: AddRecordScreenProps) {
 
   const { inventoryId } = route.params;
 
+  const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const { data: productList, isSuccess } = useListMissingProducts(+inventoryId);
   const {
     mutate,
@@ -38,6 +40,19 @@ export function AddRecordScreen({ route, navigation }: AddRecordScreenProps) {
     isError: isInsertError,
   } = useCreateProductRecords(+inventoryId);
   const { showError, showSuccess } = useSnackbar();
+
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: inventoryName });
+  }, [inventoryId, inventoryName, navigation]);
+
+  useEffect(() => {
+    if (isInsertSuccess) {
+      showSuccess("Zmiany zostały zapisane");
+    }
+    if (isInsertError) {
+      showError("Nie udało się zapisać zmian");
+    }
+  }, [isInsertSuccess, isInsertError]);
 
   const handleSave = () => {
     if (isEmpty(highlighted) || !highlighted) return;
@@ -51,15 +66,6 @@ export function AddRecordScreen({ route, navigation }: AddRecordScreenProps) {
 
     navigation.goBack();
   };
-
-  useEffect(() => {
-    if (isInsertSuccess) {
-      showSuccess("Zmiany zostały zapisane");
-    }
-    if (isInsertError) {
-      showError("Nie udało się zapisać zmian");
-    }
-  }, [isInsertSuccess, isInsertError]);
 
   if (isEmpty(productList)) {
     return (
