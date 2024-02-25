@@ -73,7 +73,7 @@ export default function InventoryTabScreen({
     )();
   };
 
-  if (!isSuccess || (recordList && recordList.length === 0))
+  if (!isSuccess)
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>

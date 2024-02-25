@@ -11,7 +11,7 @@ import { isEmpty } from "lodash";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { CleanTabBar } from "../components/TabBar";
 import { useListInventories } from "../db";
-import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
+
 import { AddRecordScreen } from "../screens/AddRecordScreen";
 import DeliveryTabScreen from "../screens/DeliveryTabScreen";
 import InventoryTabScreen from "../screens/InventoryTabScreen";
@@ -38,9 +38,8 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
   const { data } = useListInventories();
   const latestDeliveryId = data?.find((item) => item.is_delivery)?.id;
 
-  const deliveryId = (routeDeliveryId ?? latestDeliveryId) as number;
+  const deliveryId = routeDeliveryId ?? latestDeliveryId;
 
-  const { data: deliveryName } = useGetInventoryName(deliveryId);
   const noDeliveries = !latestDeliveryId && !isEmpty(data);
 
   if (noDeliveries)
@@ -77,7 +76,6 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
                 }}
               />
             ),
-            headerTitle: deliveryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
               fontSize: theme.text.xs.fontSize,
@@ -102,7 +100,6 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
                 }}
               />
             ),
-            headerTitle: deliveryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
               fontSize: theme.text.xs.fontSize,
@@ -127,7 +124,6 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
                 }}
               />
             ),
-            headerTitle: deliveryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
               fontSize: theme.text.xs.fontSize,
@@ -151,7 +147,6 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
 
   const inventoryId = (routeInventoryId ?? lastestInventoryId) as number;
 
-  const { data: inventoryName } = useGetInventoryName(inventoryId);
   const noInventories = !lastestInventoryId && !isEmpty(data);
   if (noInventories)
     return (
@@ -190,7 +185,6 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
                 }}
               />
             ),
-            headerTitle: inventoryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
               fontSize: theme.text.xs.fontSize,
@@ -215,7 +209,6 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
                 }}
               />
             ),
-            headerTitle: inventoryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
               fontSize: theme.text.xs.fontSize,
@@ -240,7 +233,6 @@ const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
                 }}
               />
             ),
-            headerTitle: inventoryName ?? "",
             headerTitleStyle: {
               color: theme.colors.highlight,
               fontSize: theme.text.xs.fontSize,
