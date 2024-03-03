@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    <style media="all" type="text/css">
+      @media all {
+        .btn-primary table td:hover {
+          background-color: #4a6d90 !important;
+        }
+
+        .btn-primary a:hover {
+          /* background-color: #4A6D90 !important; */
+          border-color: #4a6d90 !important;
+        }
+      }
+      @media only screen and (max-width: 450px) {
+        .logo-img {
+          width: 6.3rem !important;
+          height: 6rem !important;
+        }
+        .logo-text {
+          font-size: 48px !important;
+        }
+      }
+
+      @media only screen and (max-width: 640px) {
+        .main p,
+        .main td,
+        .main span {
+          font-size: 16px !important;
+        }
+
+        .wrapper {
+          padding: 8px !important;
+        }
+
+        .content {
+          padding: 0 !important;
+        }
+
+        .container {
+          padding: 0 !important;
+          padding-top: 8px !important;
+          width: 100% !important;
+        }
+
+        .main {
+          border-left-width: 0 !important;
+          border-radius: 0 !important;
+          border-right-width: 0 !important;
+        }
+
+        .btn table {
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+
+        .btn a {
+          font-size: 16px !important;
+          max-width: 100% !important;
+          width: 100% !important;
+        }
+      }
+      @media all {
+        .ExternalClass {
+          width: 100%;
+        }
+
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+          line-height: 100%;
+        }
+
+        .apple-link a {
+          color: inherit !important;
+          font-family: inherit !important;
+          font-size: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+          text-decoration: none !important;
+        }
+
+        #MessageViewBody a {
+          color: inherit;
+          text-decoration: none;
+          font-size: inherit;
+          font-family: inherit;
+          font-weight: inherit;
+          line-height: inherit;
+        }
+      }
+    </style>
+  </head>
+  <body
+    style="
+      font-family: Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      line-height: 1.3;
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+      background-color: #f4f5f6;
+      margin: 0;
+      padding: 0;
+    "
+  >
+    <table
+      role="presentation"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      class="body"
+      style="
+        border-collapse: separate;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+        background-color: #f4f5f6;
+        width: 100%;
+      "
+      width="100%"
+      bgcolor="#f4f5f6"
+    >
+      <tr>
+        <td
+          style="
+            font-family: Helvetica, sans-serif;
+            font-size: 16px;
+            vertical-align: top;
+          "
+          valign="top"
+        >
+          &nbsp;
+        </td>
+        <td
+          class="container"
+          style="
+            font-family: Helvetica, sans-serif;
+            font-size: 16px;
+            vertical-align: top;
+            max-width: 600px;
+            padding: 0;
+            padding-top: 24px;
+            width: 600px;
+            margin: 0 auto;
+          "
+          width="600"
+          valign="top"
+        >
+          <div
+            class="content"
+            style="
+              box-sizing: border-box;
+              display: block;
+              margin: 0 auto;
+              max-width: 600px;
+              padding: 0;
+            "
+          >
+            <a
+              href="https://invtrack.app/"
+              style="text-decoration: none; width: fit-content"
+              ><img
+                style="
+                  vertical-align: bottom;
+                  enable-background: new 0 0 721.55 661;
+                  width: 8.41rem;
+                  height: 8rem;
+                  margin: 0 auto;
+                "
+                class="logo-img"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPUAAADpCAYAAAD8pXGFAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA
+                AXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAABYiSURBVHgB7d1fbFxVfgfw37ljOwnZhyCakFS7
+                3TEVwYFdcFZUIgEFz0qtKrXS2gu7KlAR+2mV3YckKkYtIfJEiIAAyfFDF/bJbqs4qCJ1+tgnD2HJ
+                9s2GbETaFw9PbQIPXu2aOLHvOXt+dzzOeDIz986d++fcM9+PtIudeJxA8ptz7vme8ztEAAAAAAAA
+                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                AAAAAAAAAABgh7fm/y9/9vL/n6CM6SEAaEg5zrxSpAv7q+/ecf9wpljoX6YMcAggI556/4v80PTS
+                LkrA2cs3JxVRnj9WSp7ode5b4JGbMgBFDZmRo/XpO6srC0O6uClGb1y+MayUqp9256XjLLx5+eYo
+                GQ5FDZlw+FfXJvTIOaTHzfwdWl869MvPYnnW5dE4p2iyyU/v0sP29FuffDVBBhMEYDiedju6kOt/
+                XChx7tOff+8kRUiPxNO6cEcDfOmiI+XIPxX2lckwKGow3uH3f7vEI3TjnxXlPsoVSscOlKlDb39y
+                87gr1bk2XlKW0hk7XdhdIoNg+g1Ge/qDzyebFzTT03HlzlGHeNrtSipSe/KOI+dNm46jqMFYh9//
+                fFQp4f/sLOQUdYjjK/3/oVbWpZTFs5dvzJmyOo6iBiM95a1wO0FGwKkrxx6fqX7y8tyXE6Nz7cVe
+                b31yY6IaX4Wl8+xhvTo+b0Jho6jBSA65E62n3UyUrxz7/uZI/vLFLyeEVEUlxYIubJ/XVuip85Bs
+                f9rdDMdeS2lPx7FQBsY59MHV40KR74JVH633l44dLPPHXMS6mGtXyJcFqTMzz/U3/T48qnq7xjoc
+                pRsSYmbNXTmZxi40jNRgFJ52Bylo/SB7pqagd+mCnq/7il2KxOTRi19ONv0WudxELAXNdCyW1i40
+                FDUYRU+75/2+RggqXfnFE8Xq56ry7J1v/NXqxNGL5aX66TjHVwHz6E54u9CSPhSCogZj8K6xIM/R
+                vWp9rPrZ6MWlUZLKr2jyJHk3WkXI+CqsXXoFf/Ls5a8mKSF4pgYjPPP+1SFJ5DtK66Ifq652bzxH
+                82vyrV4hlJqaeb5/s/DPfnxjKbZpd2tlR8pC3LvQMFJD6vg5WpKYDvClW+IrXdA8+uV9XlOuLego
+                4qsO8HR8/o35G8MUIxQ1pC5ofNW3fb1Y/YzjK/0P3+IQjipUP35z/uagTG7a3UzecWguztgL029I
+                VUTxVUMbkVaRP441vgovlkMhGKkhNV58FWTkrImvWIP46h56tLpULWjvW8QZX4U3yNNxnkFQhFDU
+                kBovvhLUcktnfXy1Me3OU2tlctTmkUyvsUH88VVYef17XYhyOo6ihlSEiq8+WhrWU+oi+fCm3SP9
+                Zf6Yp9169dvopgYsykMhKGpI3OF/vjao/xYX/b9yy66xvBLCN+v14qvn+mc2v4PjzBk47W4oqkMh
+                KGpIlHf6ylG+55+FEDNb4ysn2LQ7d/cZneMr/Y9In1cT4B0K6WQXGooaEhU0vurdtrb5TPzy3JfH
+                9WtGyQfHV3ra7R2g4NHOgPgqtOoutOJ8+91TUdSQGG56EKQ4+2itUBo76BUnT7v5OKXfa2qfo7kQ
+                Kk0Pso1bE/fldrbd1QVFDYnwpt3K/5m4SXzlu0JeG1/pQjAxvgpFuO5Yu69BUUMicsKd84+vxGKo
+                +Eqozb/4HF816NmdSfrx4UyYjSkoaoid17NbKZ8FK46v1kaqn+lp95Ct8VVA5dOFB4sUAooaYuVN
+                u8PEV9L/gEd9fKVyuWk7pt1imU9zUUgoaogN33sVrOlBNPGVng0MkQ2ke7KT/eAoaojN2u3fB9w1
+                tnam+pnX9KDL4qst9BvcqcK+GeoAihpiEbhnt1wb2TLtpgC7xmqeo5kN8dWGsuO6Z6hDKGqIXOCe
+                3Tq+uvKLg4vVT8PEV7VXzmaeFJEcw8Sl8xA5odaKen7MH5Wbfo2g5U/via/8pup2x1enC3sWKQJo
+                kgCpa6PpwVh1tdvQpgdhlU89+2A/RQTTb0hVk57d9xAkZracvjKz6UEIncVXjaCoIVU6vgrUPJAc
+                uXnAI6Ge3YlQel0h6nZGmH5Daji+UgG6iOr4qr921xgfTSQbcHx1ZE/be7v9YKSGVGzEV74r5Iiv
+                2oeihlToDJtH6HzrL6LF2vgq5Z7dkZJSjsXV1B+RFiROj9KDXtwl5ZQeipvfCpmjmeqHlStng+wh
+                N18lvtpXopjgmRqMZ3N8xav//M/qltcoYPoNxrM1vtqI8xb4f/W3cnYCRQ1Gszm+qrmCN+8VtneY
+                pXOYfoOxKvFVbkH/9W+7+Z5x6uKrZnGeckTxX0e+29GqOEZqMFYlvrKgoOviq1ZxHjdZPHqxvNTJ
+                dBxFDUayOb4KcAVvfiPyCwVFDcapxFd2ND2oj68CX8FbcxqtXShqMIoXX0kZepQyzJbmgV4P8zab
+                KTJuC0VtQFGDUeyJr3Rx1Z2+CnQara4JBLuzurJw+IOrc0Ne84kAvy4BGMLwK2fboqTa0jwwTA9z
+                tnk7qKLhO+TOBylsRFpgBKvjq4+WhpUQ/pcC1jSBYM+8f3VIEt0zuislT/7m50+ca/Z9MFKDEayO
+                r0Jcwct93mSTY6lCOJNP//K3k82etVHUkDqb4iuq3zUWooc587sdVAl1Ym31Dw1Hf2NOaeWLc7t2
+                3lnLu9KtXM8iZV5Isew6+p3PEcur27cvlosjkW16BzPY1LNbSjV1uqZnt3cFr2yvhzkLejuokusn
+                G34/StHAP14Y0iuCP9LPEsP6QSHv9/X63XxR/xco9fQ4/3Lt7E8j6bwI6eErZ/uc+xYsPX3l7ecm
+                v5bHHF/VrHbztNtR6wt+lwlW2ivf7cZaK5WRemD8/KieYBwlV/ElaIFfp9+BBvXb06C7Jk88Mj67
+                qF87df3dl2YIMqk3t3NSBXgzz4Im8ZV/D/Mfb42vvGuK/AqaRLlZQbNEi9obmV3FiwaD1EYxN+IV
+                uF5IGBifnaCcKFx/+4UyQWbYFF/xrrFT98RX7fUwZ158pR87W75K0XKfWGvZfTSx6feBV2f1uzLF
+                13hdiOL1d16IpecTRMumpgd6JfrSa0d2b7mCN1jL463xlTftpnXfhopKCR1nfe9cq6+JfaTWo3Ne
+                j85zuqAHKU5KFQ+8+uHgrfu2jWFBzWzelbN2TLvLwr27WNXWFbzP3y1ojqburK4EvB20dUGzWCMt
+                Lmj93DxfmSrHT4fyw9tWbs3zSjqBkey6cjaa+EoX9GS7t4O2/EqKCRfW9pVbvPqXp4TxKvntnTsK
+                GLHNYlPP7kp8tXfzcTJMD3NWia/8X6dH38Kvj32/RAHENlLvWLnl3wI2Jjwz2L6y6ruLB5LD8ZVN
+                PbtdulWsfhL2Ct52bgcNWtAslqIeePUC7xDyPTMaLzWqF+esuBHRBn25nVadvioW7m4WCRJf1fcw
+                Zzlanw4y7W4VXzX8/VHEvOdo5X9mNBGKJrzfD6TKtitnw5y+Ejk1UvsDHF/pN7mhlq/i+Ipax1eN
+                RF7UopJDG0Hxu6dL/tMbiA0/R+vVXiv+DPTqcymKpgfetDvAxQR6Sn+mdOxgmdoUaVF7m0tSn3bX
+                U6MYrdOjcj2TtmwDFa579zhlyCt4Ob7ydo35vU7HV355dDORFrXOo4+TgfTvC8/WKajEV9KwN/mQ
+                7o2v2r6Cl63d/v1ElPFVw1dTRDYyaSPjCv0vuXxr545+RFzJQXzlxVcH9bR78+BRHPFVk9dHxJVD
+                ZCh+tt6+8o0dI0ZGWB5fBb2Cd7Og44qvGolw+u0cJaM5zxIkwqamB/fEV0Gu4NVvBPXxlaPWJ+OI
+                rxqJrKgFyUS2goZnydZEw71x+cawTT2774mvlE8MpR/1uOlB7Q94p6+E/wJymPiqkUieqR8ePz+Y
+                I+9AuNFWd+64H8/V8bHr9JUovXZkT+0NlXxYw3eNIM7TV0FFckqrRwr9h0nG43ZJxN1TIBbcs5us
+                OX3lbr0hwxXTQujV7EYE8UCxrBeKP575yd2CZkHjqyCnr4KKpKiVw10gze827K6t8SMCijoGfOWs
+                K+1oelAfX7GZ5/NtT40DNT3oML5qJJrz1ILyHTYygQzjabdryXO017O7pnlgWId+9flwoF1jOscu
+                /az9XWOtoEUwdMymnt1r7spJ6hA/R4vK5pTW9IzgNz97/BJFLJKi5la+BF3J5vgq9Pfx6dldEU18
+                1fjXj4ASKhtFrZwyQWRsu3K2/jk6jEMfXD0epGd3VPFVI101Uuf6cphRRMSyK2cXa09fhVWZdgd4
+                k9PT7jCnr4KKpKi3ubdLlAG4ACA69lw5K5b1tHuEIhCoZ7egS3FNu+/+EhEZGJ/lgD1PxhKl6+++
+                ENuUp5ts9Oy2Y5SWciyK1W6TRLhNVP0nGUyR+oygYzzt1v8x7ej/FlF8ZZrIilopJ/Kl+Sj19PbM
+                EHTM1itnbRJZUV9/74WSHq3NXIgSVMbzdOfsunJWjESx2m2iaDufCJoiEynR1jsyt2Ui2OLN+ZuD
+                NsVXpwp7rH2Tj3TD9uCJ6V23e/uWFAlzpmd6lL7+zov9Qb7Uu4Dg1uok3yksBY387zsvGv1IkRSb
+                r5y1UaQj9eK5sWXjRuuAozS3Y/JuFNk4lJBTNI2GhRXelbP2xFfWJyCR7/3efufOOWp2RC1pPEq/
+                +8KM35cNvDp7VLhyyxVBG+2FbdlcEZpNV86qBqevbBR5UfNonVNqJPVFM35jcYTvuzJfsasreKbx
+                I4Ma6uZbPmzq2c3x1euFvZGdWTZZLKe0rr370qJsc3EqapLoZKuL6Hlq/cj47ILvndldfMuHd+Ws
+                Jc/RtsZXjcR29PJ/3nvxnJ62pfMfUv+6rRa5eHWbp9tBrtjlaTjfr01dxqYrZ6WUY90w7a7KUYy+
+                vvIfpT85/GOhpz5DlBCh9Aj93ktvN/t5vrxPL4bN6K/cTkG/J9He3c/8ZNfXn370X9QFvJ7dJKxY
+                +ef46nRh7wx1kUR6ED3yyuwJR6iJOKMufoZXyhnhTTCNfr5y2QAvfHUw+ihRaPb9bYH4KvsS6XzC
+                U3GVcw7GtyouSvz9WxT0ELlqvuM2wUJNc5ZNFrPnytnuiK8aSbxb4MD4hVFdHNw/OU+d4jcJvSDX
+                KrY6MP7hcUUyslVPIZxLX7zzd5Ec1TONTaevlFQnu2W1u15qLUC5uPWUWRec/2LVvURJCjXVajGM
+                R9QdK7em47iFUwg6+cU7L1r1F8amnt3e6asje8aoS6Xe13fjWXdIF/iP+Jmbb/rY8uwtRFlnpcv6
+                x3iv7serO7df8mvI/9j4+UGXBK9Y5ykGfOGeyomDrSKzrDl7+ea8JavdZZ52d9Nqdz3zm3W3iafb
+                RG4x/v3n9jRd4PjKnsMasnC6sK9EXcyaovam29/cmvDdTBIhG6bhdl05y/FV573Gss6KouYpPG8Q
+                EaGezzuU8Zjr7Mc3lhBf2SXzzfyrhzFSKWiW4ZhLP0dbcvqq0rObwJPpom59GCMx+R3f3M7coQeO
+                r/TCmBWHVTi+6uaFsXqZnH5HsjssYllqqoD4ym6ZG6mrhzFMu0Q+S00V7OnZ3V2nr4LKVFF7hzFc
+                NW9Uu6QNWWmqwFfO2tL0QEoX0+4GMjH99nqHrazOmTY6N2JyzIX4qjsYP1Lz7jCvd1gGCtqjaOKx
+                8X9PZyXeR6VntxXKKOjmjC5q3h3mktjSO8x0PA1fp3XjYi7brpwlaKqHDFRt1aukHKUM4sx8I+bq
+                +ALzKFSunJVFskClZzeeo1sx7pmae4ev9m7L1OjclAG7zWyKr/jY62tHdlt57DVKxk2/uRup/uMr
+                kw0M2G1mU3wl3HUjZj6mM/OZOkdjxt7L1R7ebZZazGVTfEVd0rM7CrE2Hgzr619fXH7g8PO3dTz0
+                15R5amD3M8/97utPL/43JajSPND5UH8YuMGiqaRUU68X9r1NEIixq9/c10w/8Ntxl1UKvcNtunLW
+                pVtFgsCMjrS2rd0eM+YKnw4kvdvMtviqWOi34VEsMUYXtbdoJoUlm/X5Cp8PJylmtl05i+fo9mVi
+                m+iBfzh/TjniONkgxpjLrvhKlF47sgebTELIxIGObe6dog3TcE+MMZdd8ZWL45QhZaKoqzdpkh1i
+                aapg05WziK86k5mjl3yTplJmbLvslFLyxP5XZyPrR27TlbMcX50q7JshCC1T56m9mzRJlMgCUTZV
+                kI4zZ8u0G/FV57LXo8yS3WZRxVwcX1FaTRcjhvgqGpkrar4VI+0L7aPDMdds6OZ/3q4xxFdQJ7N9
+                vw+Mz87FcU9WGnLUc/Dauz9dbOc1Nl05i/gqWpltEWzLbjPm0vpcuzGXPVfOIr6KWmaL2q7dZu3F
+                XDb17EZ8Fb3MX7vTbbvN0LMb/GT+2p1u222mcrlpW6bda+4Kmh7EIPNFbdtus0or5Ma801d23CGN
+                +CpGmS9qZtNus2YxF+IrCMqqS+cHxi/MZ6Y/eAv6D2VZ5cRBzuT5c5viK23x1LMPHiSIjRUj9SaL
+                dpvxfdvVz22Kr/S0G91AY2bVSM0eeWX2hBAUezOCJAjhnPv7v/3hZ6SU8Xd0BSLlGA5rxM+6oma2
+                7Db71n076G+O/MVyX09v9nuNIb5KjF3T7w227DZ78tGHyYqCxpWzibKyqG3YbfbE/ofoO3t3kxWk
+                GMFqd3KsLGrGO7OEVFOUQTztfnx/P9mgcvfVnrYOq0BnrC1qltXdZn/51A/IErhyNgVWF3UWd5vx
+                tPtb92X+Ug1NLOPK2XRYXdQsS7vN+Bnalmk3SfcknqPTYX1Rsyz0NuPn6Ccf3U9W4PgKeXRquqKo
+                PYbvNuMR2o5pN+KrtHVNUZvc2+zAQ9+hP//2PrKBlHIM0+50dc9ITWbepOnFVw8/RDbg+Op0YV+J
+                IFVdVdTMtN1mHF/19faQBRBfGaLritqk3WaIryAOXVfUzITdZnsfuN+a+EqheaBRurKoWZq7zfg5
+                +tATj5IVdHz1emHvOQJjdG1Rp7nbDPEVxKlri5qlsduMoyvEVxCnri5qluRuM2/X2GN27BpDfGWu
+                ri9qT0K7zRBfQRJQ1JTMbjN74qtKz24CY6GoN8S528ympgdKKpy+MhyKukYcu836envtaXqA+CoT
+                UNQ14tht9uRjDyO+gkShqOtEudvMrvgKTQ+yAkXdQBS7zSrP0TadvvpTo063QXNWNvOPwmPj5wdd
+                EgsU0l8d+gE9+MD9ZIHyqWcftKTHUnfASN1EJ7vNOL6ypKARX2UQirqFMLvNbOvZjefo7EFR+2lj
+                t5lN8ZUQziXsGssmFLWPdnabPbE/b018Jdz1TLRVhnuhqAMIMg3n6Gqg/8/ICmh6kGko6oC2r62O
+                NJuG2xVfqSn07M42FHVAvNtMKadhUwW+ctaWaffpwt4TBJmGom5Do91mNl05i/jKDijqNtXuNkN8
+                BSbCjrIQBl65MERCzY/88Gkrpt1CiNJrR/ZglLYEijqk0X9bGN7/7X15RU7ojinSW3iToV/fQ53t
+                T8fIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANDYHwFClYbt
+                xXGtVQAAAABJRU5ErkJggg=="
+              />
+              <b
+                class="logo-text"
+                style="
+                  font-size: 64px;
+                  margin-left: 8px;
+                  color: rgb(4 56 115);
+                  text-decoration: none;
+                "
+              >
+                InvTrack
+              </b>
+            </a>
+            <!-- START CENTERED WHITE CONTAINER -->
+            <span
+              class="preheader"
+              style="
+                color: transparent;
+                display: none;
+                height: 0;
+                max-height: 0;
+                max-width: 0;
+                opacity: 0;
+                overflow: hidden;
+                mso-hide: all;
+                visibility: hidden;
+                width: 0;
+              "
+              >Potrzebujemy Twojej zgody by zarejestrować ten email w naszym
+              systemie. <br
+            /></span>
+            <table
+              role="presentation"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              class="main"
+              style="
+                border-collapse: separate;
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+                background: #ffffff;
+                border: 1px solid #eaebed;
+                border-radius: 16px;
+                width: 100%;
+              "
+              width="100%"
+            >
+              <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td
+                  class="wrapper"
+                  style="
+                    font-family: Helvetica, sans-serif;
+                    font-size: 16px;
+                    vertical-align: top;
+                    box-sizing: border-box;
+                    padding: 24px;
+                  "
+                  valign="top"
+                >
+                  <p
+                    style="
+                      font-family: Helvetica, sans-serif;
+                      font-size: 16px;
+                      font-weight: normal;
+                      margin: 0;
+                      margin-bottom: 16px;
+                    "
+                  >
+                    Witamy w InvTrack!
+                  </p>
+                  <p
+                    style="
+                      font-family: Helvetica, sans-serif;
+                      font-size: 16px;
+                      font-weight: normal;
+                      margin: 0;
+                      margin-bottom: 16px;
+                    "
+                  >
+                    Twój administrator chce zarejstrować Twój adres email w
+                    naszym systemie. Kliknij w poniższy przycisk, aby
+                    potwierdzić rejestrację.
+                  </p>
+                  <table
+                    role="presentation"
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    class="btn btn-primary"
+                    style="
+                      border-collapse: separate;
+                      mso-table-lspace: 0pt;
+                      mso-table-rspace: 0pt;
+                      box-sizing: border-box;
+                      width: 100%;
+                      min-width: 100%;
+                    "
+                    width="100%"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="left"
+                          style="
+                            font-family: Helvetica, sans-serif;
+                            font-size: 16px;
+                            vertical-align: top;
+                            padding-bottom: 16px;
+                          "
+                          valign="top"
+                        >
+                          <table
+                            role="presentation"
+                            border="0"
+                            cellpadding="0"
+                            cellspacing="0"
+                            style="
+                              border-collapse: separate;
+                              mso-table-lspace: 0pt;
+                              mso-table-rspace: 0pt;
+                              width: auto;
+                            "
+                          >
+                            <tbody>
+                              <tr>
+                                <td
+                                  style="
+                                    font-family: Helvetica, sans-serif;
+                                    font-size: 16px;
+                                    vertical-align: top;
+                                    border-radius: 4px;
+                                    text-align: center;
+                                    background-color: #62a0e8;
+                                  "
+                                  valign="top"
+                                  align="center"
+                                  bgcolor="#62A0E8"
+                                >
+                                  <a
+                                    href="{{ .ConfirmationURL }}"
+                                    target="_blank"
+                                    style="
+                                      border: solid 2px #62a0e8;
+                                      border-radius: 4px;
+                                      box-sizing: border-box;
+                                      cursor: pointer;
+                                      display: inline-block;
+                                      font-size: 16px;
+                                      font-weight: bold;
+                                      margin: 0;
+                                      padding: 12px 24px;
+                                      text-decoration: none;
+                                      background-color: #62a0e8;
+                                      border-color: #62a0e8;
+                                      color: #ffffff;
+                                    "
+                                    >Potwierdź swój email</a
+                                  >
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p
+                    style="
+                      font-family: Helvetica, sans-serif;
+                      font-size: 16px;
+                      font-weight: normal;
+                      margin: 0;
+                      margin-bottom: 16px;
+                    "
+                  >
+                    Zapytaj swojego administratora o dane logowania.
+                  </p>
+                  <p
+                    style="
+                      font-family: Helvetica, sans-serif;
+                      font-size: 16px;
+                      font-weight: normal;
+                      margin: 0;
+                      margin-bottom: 16px;
+                    "
+                  >
+                    Dziękujemy!
+                  </p>
+                </td>
+              </tr>
+
+              <!-- END MAIN CONTENT AREA -->
+            </table>
+
+            <!-- START FOOTER -->
+            <div
+              class="footer"
+              style="
+                clear: both;
+                padding-top: 24px;
+                text-align: center;
+                width: 100%;
+              "
+            >
+              <table
+                role="presentation"
+                border="0"
+                cellpadding="0"
+                cellspacing="0"
+                style="
+                  border-collapse: separate;
+                  mso-table-lspace: 0pt;
+                  mso-table-rspace: 0pt;
+                  width: 100%;
+                "
+                width="100%"
+              >
+                <tr>
+                  <td
+                    class="content-block"
+                    style="
+                      font-family: Helvetica, sans-serif;
+                      vertical-align: top;
+                      color: #9a9ea6;
+                      font-size: 16px;
+                      text-align: center;
+                    "
+                    valign="top"
+                    align="center"
+                  >
+                    Nie możesz kliknąć w przycisk? Skopiuj i wklej poniższy
+                    adres URL do przeglądarki:<br />
+                    <a
+                      href="{{ .ConfirmationURL }}"
+                      style="
+                        text-decoration: underline;
+                        color: #9a9ea6;
+                        font-size: 16px;
+                        text-align: center;
+                      "
+                      >{{ .ConfirmationURL }}</a
+                    >
+                    <span
+                      class="apple-link"
+                      style="
+                        color: #9a9ea6;
+                        font-size: 16px;
+                        text-align: center;
+                      "
+                    ></span>
+                    <br />
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- END FOOTER -->
+
+            <!-- END CENTERED WHITE CONTAINER -->
+          </div>
+        </td>
+        <td
+          style="
+            font-family: Helvetica, sans-serif;
+            font-size: 16px;
+            vertical-align: top;
+          "
+          valign="top"
+        >
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
