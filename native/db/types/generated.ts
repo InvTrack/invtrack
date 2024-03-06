@@ -128,8 +128,10 @@ export interface Database {
       };
       product: {
         Row: {
+          category: number | null;
           company_id: number | null;
           created_at: string;
+          display_order: number;
           id: number;
           name: string;
           notification_threshold: number;
@@ -137,8 +139,10 @@ export interface Database {
           unit: string;
         };
         Insert: {
+          category?: number | null;
           company_id?: number | null;
           created_at?: string;
+          display_order?: number;
           id?: number;
           name?: string;
           notification_threshold?: number;
@@ -146,8 +150,10 @@ export interface Database {
           unit?: string;
         };
         Update: {
+          category?: number | null;
           company_id?: number | null;
           created_at?: string;
+          display_order?: number;
           id?: number;
           name?: string;
           notification_threshold?: number;
@@ -156,7 +162,44 @@ export interface Database {
         };
         Relationships: [
           {
+            foreignKeyName: "product_category_fkey";
+            columns: ["category"];
+            referencedRelation: "product_category";
+            referencedColumns: ["id"];
+          },
+          {
             foreignKeyName: "product_company_id_fkey";
+            columns: ["company_id"];
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      product_category: {
+        Row: {
+          company_id: number | null;
+          created_at: string;
+          display_order: number;
+          id: number;
+          name: string | null;
+        };
+        Insert: {
+          company_id?: number | null;
+          created_at?: string;
+          display_order?: number;
+          id?: number;
+          name?: string | null;
+        };
+        Update: {
+          company_id?: number | null;
+          created_at?: string;
+          display_order?: number;
+          id?: number;
+          name?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "product_category_company_id_fkey";
             columns: ["company_id"];
             referencedRelation: "company";
             referencedColumns: ["id"];
