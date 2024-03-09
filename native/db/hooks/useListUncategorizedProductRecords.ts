@@ -19,7 +19,8 @@ const listUncategorizedProductRecords = async (
       "id, inventory_id, product_id, name, quantity, unit, steps, category_name, display_order, category_display_order"
     )
     .eq("inventory_id", inventoryId)
-    .is("category_name", null);
+    .is("category_name", null)
+    .order("display_order", { ascending: true });
 
   if (response.error) {
     console.log(response.error.message);
@@ -32,19 +33,3 @@ export const useListUncategorizedProductRecords = (inventoryId: number) =>
   useQuery(["listUncategorizedProductRecords", inventoryId], () =>
     listUncategorizedProductRecords(inventoryId)
   );
-
-// // emulates useQuery
-// export const useListUncategorizedProductRecords = (
-//   inventoryId: number
-// ): UseListUncategorizedProductRecords => {
-//   const { data, ...rest } = useListProductRecords(inventoryId);
-//   if (rest.isSuccess) {
-//     return {
-//       data: data?.filter(
-//         (record) => record.category_name == null
-//       ) as RecordViewNullCategoryName[],
-//       ...rest,
-//     } as UseListUncategorizedProductRecords;
-//   }
-//   return { data: undefined, ...rest } as UseListUncategorizedProductRecords;
-// };

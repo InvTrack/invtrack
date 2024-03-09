@@ -12,7 +12,7 @@ type RecordViewNonNullCategoryName =
 
 type ListCategorizedProductRecords = {
   title: string;
-  data: RecordViewNonNullCategoryName[] | undefined;
+  data: RecordViewNonNullCategoryName[];
 }[];
 
 const listCategorizedProductRecords = async (
@@ -27,28 +27,42 @@ const listCategorizedProductRecords = async (
       `
     )
     .eq("inventory_id", inventoryId)
-    .neq("category_name", null);
+    .neq("category_name", null)
+    .order("display_order", { ascending: true });
 
   if (response.error) {
     console.log(response.error.message);
     return undefined;
   }
+  // maybe a use case for worklets? :D
   const mapped = response.data.reduce((acc, record) => {
     const title = record.category_name;
     if (!title) return acc;
-    const index = acc.findIndex((category) => category.title === title);
-    if (index === -1) {
-      acc.push({ title, data: [record as RecordViewNonNullCategoryName] });
+
+    const indexMap = acc.reduce((map, category, index) => {
+      if (category.title != null) {
+        map[category.title] = index;
+      }
+      return map;
+    }, {} as { [key: string]: number });
+
+    if (title in indexMap) {
+      acc[indexMap[title]].data!.push(record as RecordViewNonNullCategoryName);
     } else {
-      acc[index].data!.push(record as RecordViewNonNullCategoryName);
+      acc.push({ title, data: [record as RecordViewNonNullCategoryName] });
     }
     return acc;
   }, [] as ListCategorizedProductRecords);
-  // console.log(JSON.stringify(mapped, null, 2));
+
   return mapped as ListCategorizedProductRecords;
 };
 
 export const useListCategorizedProductRecords = (inventoryId: number) =>
-  useQuery(["listCategorizedProductRecords", inventoryId], () =>
-    listCategorizedProductRecords(inventoryId)
+  useQuery(
+    ["listCategorizedProductRecords", inventoryId],
+    async () => await listCategorizedProductRecords(inventoryId),
+    {
+      cacheTime: 100,
+      staleTime: 100,
+    }
   );
