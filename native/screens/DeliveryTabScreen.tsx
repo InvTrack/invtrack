@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
-// import { Link, useLocalSearchParams } from "expo-router";
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
 import { useFormContext } from "react-hook-form";
