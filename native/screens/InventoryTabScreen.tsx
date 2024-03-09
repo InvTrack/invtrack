@@ -14,19 +14,13 @@ import isEmpty from "lodash/isEmpty";
 import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { useSnackbar } from "../components/Snackbar/context";
-import { useListRecords } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
+import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
+import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { InventoryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
-const getLongRecordList = (records: any[]) => {
-  const longRecords = [];
-  for (let i = 0; i < 1; i++) {
-    longRecords.push(...records);
-  }
-  return longRecords;
-};
 export default function InventoryTabScreen({
   route,
   navigation,
@@ -36,8 +30,12 @@ export default function InventoryTabScreen({
   const inventoryId = route.params?.id;
   const { isConnected } = useNetInfo();
 
-  const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
+    useListUncategorizedProductRecords(+inventoryId);
+  const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
+    useListCategorizedProductRecords(+inventoryId);
+
   const inventoryForm = useFormContext<InventoryForm>();
   const {
     mutate,
@@ -81,7 +79,7 @@ export default function InventoryTabScreen({
     )();
   };
 
-  if (!isSuccess)
+  if (!uncategorizedIsSuccess || !categorizedIsSuccess)
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
@@ -128,76 +126,35 @@ export default function InventoryTabScreen({
               </Button>
             </View>
             <IDListCardAdd inventoryId={inventoryId} />
-            {recordList.map(({ name, quantity, unit, id }) => (
+            {uncategorizedRecordList.map((record) => (
               <IDListCard
-                key={id}
-                recordId={id!}
+                key={record!.id}
+                recordId={record!.id!}
                 id={+inventoryId}
-                quantity={quantity!}
-                unit={unit!}
-                name={name!}
+                quantity={record!.quantity!}
+                unit={record!.unit!}
+                name={record!.name!}
               />
             ))}
           </ScrollView>
         }
-        sections={[
-          {
-            title: "kategoria1",
-            data: getLongRecordList(
-              recordList.map(({ name, quantity, unit, id }, i) => (
-                <>
-                  <IDListCard
-                    key={id}
-                    recordId={id!}
-                    id={+inventoryId}
-                    quantity={quantity!}
-                    unit={unit!}
-                    name={name!}
-                    borderLeft
-                    borderRight
-                  />
-                  <IDListCard
-                    key={"d" + id}
-                    recordId={id!}
-                    id={+inventoryId}
-                    quantity={quantity!}
-                    unit={unit!}
-                    name={name!}
-                    borderLeft
-                    borderRight
-                  />
-                  <IDListCard
-                    key={"c" + id}
-                    recordId={id!}
-                    id={+inventoryId}
-                    quantity={quantity!}
-                    unit={unit!}
-                    name={name!}
-                    borderBottom={i === recordList.length - 1}
-                    borderLeft
-                    borderRight
-                  />
-                </>
-              ))
-            ),
-          },
-          {
-            title: "kategoria 22 --2 -2",
-            data: recordList.map(({ name, quantity, unit, id }, i) => (
+        sections={categorizedRecordList!.map(({ title, data }) => ({
+          title: title,
+          data:
+            data?.map((record) => (
               <IDListCard
-                key={"se" + id}
-                recordId={id!}
+                key={record!.id}
+                recordId={record!.id!}
                 id={+inventoryId}
-                quantity={quantity!}
-                unit={unit!}
-                name={name!}
-                borderBottom={i === recordList.length - 1}
+                quantity={record!.quantity!}
+                unit={record!.unit!}
+                name={record!.name!}
+                borderBottom={data![data!.length - 1]!.id === record!.id}
                 borderLeft
                 borderRight
               />
-            )),
-          },
-        ]}
+            )) || [],
+        }))}
       />
     </SafeAreaView>
   );

@@ -11,7 +11,7 @@ const listRecords = async (inventoryId: number) => {
   if (error) throw new Error(error.message);
   return data;
 };
-export const useListRecords = (inventoryId: number) => {
+export const useListProductRecords = (inventoryId: number) => {
   const query = useQuery(["recordsList", inventoryId], () =>
     listRecords(inventoryId)
   );
