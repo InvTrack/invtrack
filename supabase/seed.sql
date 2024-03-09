@@ -17,7 +17,7 @@ insert into public.product_category (name, company_id, display_order) values
     ('Mięsa', 1, 0), 
     ('Owoce', 1, 1);
 
-insert into public.product (name, unit, category, company_id, display_order) values
+insert into public.product (name, unit, category_id, company_id, display_order) values
     ('Szynka',   'kg',   1,    1, 0), 
     ('Kurczak',  'kg',   1,    1, 1), 
     ('Jabłka',   'kg',   2,    1, 0), 
