@@ -128,7 +128,7 @@ export interface Database {
       }
       product: {
         Row: {
-          category: number | null
+          category_id: number | null
           company_id: number | null
           created_at: string
           display_order: number
@@ -139,7 +139,7 @@ export interface Database {
           unit: string
         }
         Insert: {
-          category?: number | null
+          category_id?: number | null
           company_id?: number | null
           created_at?: string
           display_order?: number
@@ -150,7 +150,7 @@ export interface Database {
           unit?: string
         }
         Update: {
-          category?: number | null
+          category_id?: number | null
           company_id?: number | null
           created_at?: string
           display_order?: number
@@ -162,8 +162,8 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "product_category_fkey"
-            columns: ["category"]
+            foreignKeyName: "product_category_id_fkey"
+            columns: ["category_id"]
             referencedRelation: "product_category"
             referencedColumns: ["id"]
           },
@@ -181,21 +181,21 @@ export interface Database {
           created_at: string
           display_order: number
           id: number
-          name: string | null
+          name: string
         }
         Insert: {
           company_id?: number | null
           created_at?: string
           display_order?: number
           id?: number
-          name?: string | null
+          name: string
         }
         Update: {
           company_id?: number | null
           created_at?: string
           display_order?: number
           id?: number
-          name?: string | null
+          name?: string
         }
         Relationships: [
           {
