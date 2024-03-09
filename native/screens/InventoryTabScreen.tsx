@@ -11,6 +11,7 @@ import { Skeleton } from "../components/Skeleton";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
+import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useListRecords } from "../db";
@@ -19,6 +20,13 @@ import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { InventoryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
+const getLongRecordList = (records: any[]) => {
+  const longRecords = [];
+  for (let i = 0; i < 1; i++) {
+    longRecords.push(...records);
+  }
+  return longRecords;
+};
 export default function InventoryTabScreen({
   route,
   navigation,
@@ -77,63 +85,120 @@ export default function InventoryTabScreen({
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
-          <View style={styles.listContainer}>
-            <View style={styles.date}></View>
-            <View style={styles.barcodeIconContainer}>
-              <Skeleton borderRadius={999} style={styles.skeletonButton} />
-            </View>
-            <Skeleton style={styles.skeletonListItem} />
-            <Skeleton style={styles.skeletonListItem} />
-            <Skeleton style={styles.skeletonListItem} />
+          <View style={styles.skeletonDate}></View>
+          <View style={styles.barcodeIconContainer}>
+            <Skeleton borderRadius={999} style={styles.skeletonButton} />
           </View>
+          <Skeleton style={styles.skeletonListItem} />
+          <Skeleton style={styles.skeletonListItem} />
+          <Skeleton style={styles.skeletonListItem} />
         </View>
       </SafeAreaView>
     );
 
   return (
     <SafeAreaView edges={["left", "right"]}>
-      <ScrollView style={styles.scroll}>
-        <View style={styles.listContainer}>
-          <View style={styles.date}></View>
-          <View style={styles.topButtonsContainer}>
-            <Button
-              containerStyle={styles.saveButtonContainer}
-              size="l"
-              type="primary"
-              fullWidth
-              onPress={handlePress}
-              disabled={!isConnected}
-            >
-              Zapisz zmiany
-            </Button>
-            <Button
-              containerStyle={styles.barcodeIconContainer}
-              size="l"
-              type="primary"
-              onPress={() => {
-                // necessary hack, handled by parent navigator - be cautious
-                navigation.navigate("BarcodeModal" as any, {
-                  inventoryId,
-                  navigateTo: "InventoryTab",
-                });
-              }}
-            >
-              <ScanBarcodeIcon size={34} color="lightGrey" />
-            </Button>
-          </View>
-          {recordList.map(({ name, quantity, unit, id }) => (
-            <IDListCard
-              key={id}
-              recordId={id!}
-              id={+inventoryId}
-              quantity={quantity!}
-              unit={unit!}
-              name={name!}
-            />
-          ))}
-          <IDListCardAdd inventoryId={inventoryId} />
-        </View>
-      </ScrollView>
+      <Collapsible
+        ListHeaderComponent={
+          <ScrollView style={styles.scroll}>
+            <View style={styles.doubleButtonContainer}>
+              <Button
+                containerStyle={styles.saveButtonContainer}
+                size="l"
+                type="primary"
+                fullWidth
+                onPress={handlePress}
+                disabled={!isConnected}
+              >
+                Zapisz zmiany
+              </Button>
+              <Button
+                containerStyle={styles.barcodeIconContainer}
+                size="l"
+                type="primary"
+                onPress={() => {
+                  // necessary hack, handled by parent navigator - be cautious
+                  navigation.navigate("BarcodeModal" as any, {
+                    inventoryId,
+                    navigateTo: "InventoryTab",
+                  });
+                }}
+              >
+                <ScanBarcodeIcon size={34} color="lightGrey" />
+              </Button>
+            </View>
+            <IDListCardAdd inventoryId={inventoryId} />
+            {recordList.map(({ name, quantity, unit, id }) => (
+              <IDListCard
+                key={id}
+                recordId={id!}
+                id={+inventoryId}
+                quantity={quantity!}
+                unit={unit!}
+                name={name!}
+              />
+            ))}
+          </ScrollView>
+        }
+        sections={[
+          {
+            title: "kategoria1",
+            data: getLongRecordList(
+              recordList.map(({ name, quantity, unit, id }, i) => (
+                <>
+                  <IDListCard
+                    key={id}
+                    recordId={id!}
+                    id={+inventoryId}
+                    quantity={quantity!}
+                    unit={unit!}
+                    name={name!}
+                    borderLeft
+                    borderRight
+                  />
+                  <IDListCard
+                    key={"d" + id}
+                    recordId={id!}
+                    id={+inventoryId}
+                    quantity={quantity!}
+                    unit={unit!}
+                    name={name!}
+                    borderLeft
+                    borderRight
+                  />
+                  <IDListCard
+                    key={"c" + id}
+                    recordId={id!}
+                    id={+inventoryId}
+                    quantity={quantity!}
+                    unit={unit!}
+                    name={name!}
+                    borderBottom={i === recordList.length - 1}
+                    borderLeft
+                    borderRight
+                  />
+                </>
+              ))
+            ),
+          },
+          {
+            title: "kategoria 22 --2 -2",
+            data: recordList.map(({ name, quantity, unit, id }, i) => (
+              <IDListCard
+                key={"se" + id}
+                recordId={id!}
+                id={+inventoryId}
+                quantity={quantity!}
+                unit={unit!}
+                name={name!}
+                borderBottom={i === recordList.length - 1}
+                borderLeft
+                borderRight
+              />
+            )),
+          },
+        ]}
+      />
     </SafeAreaView>
   );
 }
@@ -143,16 +208,8 @@ const useStyles = createStyles((theme) =>
     container: {
       backgroundColor: theme.colors.darkBlue,
     },
-
-    listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
-      width: "100%",
-      height: "100%",
       backgroundColor: theme.colors.darkBlue,
-    },
-    date: {
-      paddingTop: theme.spacing,
-      paddingBottom: theme.spacing,
     },
     saveButtonContainer: {
       flexShrink: 1,
@@ -160,14 +217,17 @@ const useStyles = createStyles((theme) =>
     barcodeIconContainer: {
       flexGrow: 1,
     },
-    topButtonsContainer: {
+    doubleButtonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: theme.spacing * 4,
+      marginBottom: theme.spacing,
       marginTop: theme.spacing * 2,
       gap: theme.spacing,
     },
-
+    skeletonDate: {
+      paddingTop: theme.spacing,
+      paddingBottom: theme.spacing,
+    },
     skeletonFullWidthButton: { width: "100%", height: 58 },
     skeletonButton: { width: 58, height: 58 },
     skeletonListItem: {

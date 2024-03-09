@@ -77,17 +77,17 @@ const useStyles = createStyles((theme) =>
     borderLeft: {
       paddingLeft: theme.spacing,
       borderLeftWidth: 3,
-      borderLeftColor: theme.colors.lightBlue,
+      borderLeftColor: theme.colors.highlight,
     },
     borderRight: {
       paddingRight: theme.spacing,
       borderRightWidth: 3,
-      borderRightColor: theme.colors.lightBlue,
+      borderRightColor: theme.colors.highlight,
     },
     borderBottom: {
       paddingRight: 8,
       borderBottomWidth: 3,
-      borderBottomColor: theme.colors.lightBlue,
+      borderBottomColor: theme.colors.highlight,
       borderBottomLeftRadius: theme.borderRadiusSmall,
       borderBottomRightRadius: theme.borderRadiusSmall,
     },

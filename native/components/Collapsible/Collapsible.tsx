@@ -3,6 +3,7 @@ import React, { ReactElement, useState } from "react";
 import { SectionList, StyleSheet } from "react-native";
 import { createStyles } from "../../theme/useStyles";
 import { Card } from "../Card";
+import { ExpandMoreIcon } from "../Icon";
 import { Typography } from "../Typography";
 
 type CollapsibleSection = {
@@ -36,8 +37,15 @@ export const Collapsible = ({
       padding="dense"
       onPress={() => toggleExpand(section)}
     >
+      <ExpandMoreIcon
+        color="lightGrey"
+        style={[
+          styles.iconMargin,
+          section === expandedSection && { transform: [{ rotate: "-90deg" }] },
+        ]}
+      />
       <Typography variant="lBold" color="lightGrey">
-        {expandedSection === section ? "⌄" : ">"} {section.title}
+        {section.title}
       </Typography>
     </Card>
   );
@@ -69,26 +77,26 @@ const useStyles = createStyles((theme) =>
     bottomPadding: {
       paddingBottom: theme.spacing * 8,
     },
+    iconMargin: { marginRight: 8 },
     sectionCard: {
-      alignItems: "flex-start",
-      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "row",
       paddingLeft: theme.spacing * 2,
       paddingRight: theme.spacing * 2,
       marginTop: theme.spacing * 3,
       borderRadius: theme.borderRadiusSmall,
       borderWidth: 3,
-      borderColor: theme.colors.lightBlue,
+      borderColor: theme.colors.highlight,
     },
     expandedSectionCard: {
-      alignItems: "flex-start",
-      justifyContent: "center",
+      alignItems: "center",
+      flexDirection: "row",
       paddingLeft: theme.spacing * 2,
       paddingRight: theme.spacing * 2,
-      marginBottom: -theme.spacing * 0.5,
-      marginTop: theme.spacing * 2,
+      marginTop: theme.spacing * 3,
       borderRadius: theme.borderRadiusSmall,
       borderWidth: 3,
-      borderColor: theme.colors.lightBlue,
+      borderColor: theme.colors.highlight,
       borderBottomWidth: 0,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
