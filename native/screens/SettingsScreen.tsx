@@ -9,6 +9,7 @@ import { ScrollView, StyleSheet } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { DevInfo } from "../components/DevInfo";
+import { PrivacyPolicy } from "../components/PrivacyPolicy";
 import { Typography } from "../components/Typography";
 import { supabase } from "../db";
 import { useSession } from "../db/hooks/sessionContext";
@@ -98,6 +99,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
         >
           Wyloguj się
         </Button>
+        <PrivacyPolicy />
       </ScrollView>
       <DevInfo />
     </SafeAreaView>

@@ -98,9 +98,6 @@ export default function LoginScreen({}: LoginScreenProps) {
       >
         {isLoading ? <LoadingSpinner /> : "Zaloguj się"}
       </Button>
-      {/* <Link href="/login" style={styles.link}>
-        Resetowanie hasła
-      </Link> */}
     </SafeAreaView>
   );
 }
