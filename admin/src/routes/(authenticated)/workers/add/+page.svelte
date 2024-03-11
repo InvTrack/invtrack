@@ -11,11 +11,7 @@
   let loading = false;
   let company_id: number | null = null;
 
-  currentCompanyId.subscribe((id) => {
-    if (id) {
-      company_id = id;
-    }
-  });
+  currentCompanyId.subscribe((id) => id && (company_id = id));
 
   const update = async () => {
     try {

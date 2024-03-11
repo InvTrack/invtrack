@@ -21,11 +21,7 @@
   let steps: [number, number, number] = [1, 5, 10];
   let unit: Tables<"product">["unit"] = "kg";
 
-  currentCompanyId.subscribe((id) => {
-    if (id) {
-      company_id = id;
-    }
-  });
+  currentCompanyId.subscribe((id) => id && (company_id = id));
 
   beforeNavigate(({ cancel, to }) => {
     if (!unsavedChanges) {
