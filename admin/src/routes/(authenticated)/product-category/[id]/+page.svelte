@@ -35,7 +35,7 @@
           name,
         })
         .eq("id", id),
-      { onSuccess: "/product_categories", setLoading: (x) => (loading = x) }
+      { onSuccess: "/product-category", setLoading: (x) => (loading = x) }
     );
 
   const onUnsavedWarningContinue = () => {

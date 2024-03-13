@@ -14,14 +14,11 @@
   let { productCategories } = data;
 </script>
 
-<ScreenCard header="Produkty">
+<ScreenCard header="Kategorie">
   {#if productCategories}
     <Table>
       <TableHead>
         <TableHeadCell>Nazwa</TableHeadCell>
-        <!-- <TableHeadCell>Jednostka</TableHeadCell>
-        <TableHeadCell>Data utworzenia</TableHeadCell>
-        <TableHeadCell>Step</TableHeadCell> -->
         <TableHeadCell />
       </TableHead>
       <TableBody>
@@ -30,17 +27,8 @@
             <TableBodyCell>
               {category.name}
             </TableBodyCell>
-            <!-- <TableBodyCell>
-              {product.unit}
-            </TableBodyCell>
             <TableBodyCell>
-              {parseISODatestring(product.created_at)}
-            </TableBodyCell>
-            <TableBodyCell>
-              {product.steps.map((step) => " " + step)}
-            </TableBodyCell> -->
-            <TableBodyCell>
-              <Button class="hover:underline" href={`/product_categories/${category.id}`}
+              <Button class="hover:underline" href={`/product-category/${category.id}`}
                 >Edytuj</Button
               >
             </TableBodyCell>
@@ -49,5 +37,5 @@
       </TableBody>
     </Table>
   {/if}
-  <Button class="hover:underline" href={`/product_categories/add`}>Dodaj</Button>
+  <Button class="hover:underline" href={`/product-category/add`}>Dodaj</Button>
 </ScreenCard>
