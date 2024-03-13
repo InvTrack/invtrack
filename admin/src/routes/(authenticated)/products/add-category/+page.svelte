@@ -52,7 +52,7 @@
       <Input type="text" name="name" required bind:value={name} />
     </Label>
     <Button type="submit" class="mt-4" color="primary"
-      >{loading ? "Zapisywanie..." : "Dodaj produkt"}</Button
+      >{loading ? "Zapisywanie..." : "Dodaj kategorię"}</Button
     >
   </form>
 </ScreenCard>

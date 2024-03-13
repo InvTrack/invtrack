@@ -49,5 +49,6 @@
     </Table>
   {/if}
   <Button class="hover:underline" href={`/products/add`}>Dodaj</Button>
+  <Button class="hover:underline" href={`/products/add-category`}>Dodaj kategorię</Button>
   <Button class="hover:underline" href={`/products/reorder`}>Zmień kolejność</Button>
 </ScreenCard>

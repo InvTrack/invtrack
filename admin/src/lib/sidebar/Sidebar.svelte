@@ -135,14 +135,6 @@
           /></svelte:fragment
         >
       </SidebarItem>
-      <SidebarItem label="Kategorie" href="/product-category">
-        <svelte:fragment slot="icon">
-          <BriefcaseSolid
-            active={activeUrl === "/product-category"}
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          /></svelte:fragment
-        >
-      </SidebarItem>
     </SidebarGroup>
     <SidebarGroup border>
       <SidebarDropdownWrapper label="Twoje konto">
