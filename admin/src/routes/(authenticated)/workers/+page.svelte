@@ -18,7 +18,7 @@
 <ScreenCard header="Pracownicy">
   {#if workers}
     <Table>
-      <TableHead>
+      <TableHead class="bg-gray-200" theadClass="bg-gray-200">
         <TableHeadCell>Imię</TableHeadCell>
         <TableHeadCell>E-mail</TableHeadCell>
         <TableHeadCell>Admin</TableHeadCell>

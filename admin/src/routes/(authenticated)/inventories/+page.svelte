@@ -21,7 +21,7 @@
 <ScreenCard header="Inwentaryzacje">
   {#if inventories}
     <Table>
-      <TableHead>
+      <TableHead class="bg-gray-200" theadClass="bg-gray-200">
         <TableHeadCell>Nazwa</TableHeadCell>
         <TableHeadCell>Data</TableHeadCell>
         <TableHeadCell>Data utworzenia</TableHeadCell>

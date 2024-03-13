@@ -18,7 +18,7 @@
 <ScreenCard header="Produkty">
   {#if products}
     <Table>
-      <TableHead>
+      <TableHead class="bg-gray-200" theadClass="bg-gray-200">
         <TableHeadCell>Nazwa</TableHeadCell>
         <TableHeadCell>Jednostka</TableHeadCell>
         <TableHeadCell>Data utworzenia</TableHeadCell>
@@ -48,7 +48,9 @@
       </TableBody>
     </Table>
   {/if}
-  <Button class="hover:underline" href={`/products/add`}>Dodaj</Button>
-  <Button class="hover:underline" href={`/products/add-category`}>Dodaj kategorię</Button>
-  <Button class="hover:underline" href={`/products/reorder`}>Zmień kolejność</Button>
+  <div class="flex mt-2 gap-4">
+    <Button class="hover:underline" href={`/products/add`}>Dodaj</Button>
+    <Button class="hover:underline" href={`/products/add-category`}>Dodaj kategorię</Button>
+    <Button class="hover:underline" href={`/products/reorder`}>Zmień kolejność</Button>
+  </div>
 </ScreenCard>

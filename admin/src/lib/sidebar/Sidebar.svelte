@@ -70,7 +70,7 @@
 
 <Sidebar
   {activeUrl}
-  class="h-screen sticky top-0 bg-gray-50 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10"
+  class="h-screen sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10"
 >
   <NotificationCenterModal
     bind:open={isNotificationCenterModalOpen}
@@ -81,7 +81,7 @@
   {:else}
     <img src={logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
   {/if}
-  <SidebarWrapper>
+  <SidebarWrapper class="bg-gray-200 dark:bg-gray-800">
     <SidebarGroup>
       <SidebarItem
         label="Powiadomienia"
@@ -158,3 +158,8 @@
     </SidebarGroup>
   </SidebarWrapper>
 </Sidebar>
+<!-- 
+"mr-3 shrink-0 bg-gray-200 rounded-full peer-focus:ring-4 peer-checked:after:translate-x-full peer-checked:after:border-white
+after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full
+after:transition-all dark:bg-gray-700 dark:border-gray-600 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800
+peer-checked:bg-primary-600 w-11 h-6 after:top-0.5 after:left-[2px] after:h-5 after:w-5 relative" -->
