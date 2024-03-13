@@ -1,12 +1,17 @@
 <script lang="ts">
   import { flip } from "svelte/animate";
-  import { dndzone } from "svelte-dnd-action";
+  import { dndzone, type DndEvent } from "svelte-dnd-action";
   import ScreenCard from "$lib/ScreenCard.svelte";
-  import { Button } from "flowbite-svelte";
+  import { Badge, Button, Card } from "flowbite-svelte";
   import { genericUpdate } from "$lib/genericUpdate";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import { beforeNavigate, goto } from "$app/navigation";
   import { currentCompanyId } from "$lib/store.js";
+
+  type DndE = CustomEvent<DndEvent<NonNullable<typeof productCategories>[number]>>;
+  type Dnd2E = CustomEvent<
+    DndEvent<NonNullable<typeof productCategories>[number]["products"][number]>
+  >;
 
   let loading = false;
   let unsavedChanges = false;
@@ -29,42 +34,41 @@
   let { supabase, uncategorisedProducts, productCategories } = data;
 
   let columnItems = productCategories || [];
-  if (company_id) {
+  if (company_id && uncategorisedProducts) {
     let uncategorisedColumn = {
       id: -1,
       name: "Brak kategorii",
-      product: uncategorisedProducts,
-      company_id: company_id,
+      products: uncategorisedProducts,
+      company_id,
       created_at: "",
-      display_order: 2,
+      display_order: 0,
     };
-    columnItems.push(uncategorisedColumn);
+    columnItems.unshift(uncategorisedColumn);
   }
 
   const flipDurationMs = 200;
-  function handleDndConsiderColumns(e) {
+  function handleDndConsiderCategories(e: DndE) {
     unsavedChanges = true;
     columnItems = e.detail.items;
   }
-  function handleDndFinalizeColumns(e) {
+  function handleDndFinalizeCategories(e: DndE) {
     unsavedChanges = true;
     columnItems = e.detail.items;
   }
-  function handleDndConsiderCards(cid, e) {
+  function handleDndConsiderProducts(cid: number, e: Dnd2E) {
     unsavedChanges = true;
     const colIdx = columnItems.findIndex((c) => c.id === cid);
-    columnItems[colIdx].product = e.detail.items;
+    columnItems[colIdx].products = e.detail.items;
     columnItems = [...columnItems];
   }
-  function handleDndFinalizeCards(cid, e) {
+  function handleDndFinalizeProducts(cid: number, e: Dnd2E) {
     unsavedChanges = true;
     const colIdx = columnItems.findIndex((c) => c.id === cid);
-    columnItems[colIdx].product = e.detail.items;
+    columnItems[colIdx].products = e.detail.items;
     columnItems = [...columnItems];
   }
   const update = () => {
     loading = true;
-    console.log(columnItems);
     columnItems
       .filter((col) => col.id >= 0)
       .forEach((col, i) => {
@@ -79,7 +83,7 @@
         );
       });
     columnItems.forEach((col) => {
-      col.product.forEach((prod, i) => {
+      col.products.forEach((product, i) => {
         genericUpdate(
           supabase
             .from("product")
@@ -87,7 +91,7 @@
               display_order: i,
               category_id: col.id >= 0 ? col.id : null,
             })
-            .eq("id", prod.id),
+            .eq("id", product.id),
           { setLoading: (x) => (loading = x) }
         );
       });
@@ -112,29 +116,38 @@
     onStay={() => (unsavedChangesModal = false)}
   />
   <section
-    class="board"
-    use:dndzone={{ items: columnItems, flipDurationMs, type: "columns" }}
-    on:consider={handleDndConsiderColumns}
-    on:finalize={handleDndFinalizeColumns}
+    class="flex flex-col flex-wrap w-full"
+    use:dndzone={{ items: columnItems, flipDurationMs, type: "categories" }}
+    on:consider={handleDndConsiderCategories}
+    on:finalize={handleDndFinalizeCategories}
   >
     {#each columnItems as column (column.id)}
-      <div class="column" animate:flip={{ duration: flipDurationMs }}>
-        <div class="column-title">{column.name}</div>
-        <div
-          class="column-content"
-          use:dndzone={{ items: column.product, flipDurationMs }}
-          on:consider={(e) => handleDndConsiderCards(column.id, e)}
-          on:finalize={(e) => handleDndFinalizeCards(column.id, e)}
-        >
-          {#each column.product as item (item.id)}
-            <div class="card" animate:flip={{ duration: flipDurationMs }}>
-              {item.name}
-            </div>
-          {/each}
-          {#if column.product.length < 1}
-            <div>...</div>
-          {/if}
-        </div>
+      <div
+        class="min-w-[4rem] hover:border-0"
+        animate:flip={{
+          duration: flipDurationMs,
+        }}
+      >
+        <Card class="m-1 border-2 flex-col ">
+          <div class="text-lg text-white">{column.name}</div>
+          <div
+            class="flex flex-row flex-wrap"
+            use:dndzone={{ items: column.products, flipDurationMs, type: "products" }}
+            on:consider={(e) => handleDndConsiderProducts(column.id, e)}
+            on:finalize={(e) => handleDndFinalizeProducts(column.id, e)}
+          >
+            {#each column.products as item (item.id)}
+              <div animate:flip={{ duration: flipDurationMs }}>
+                <Badge class="p-2 m-2">
+                  {item.name}
+                </Badge>
+              </div>
+            {/each}
+            {#if column.products.length < 1}
+              <div>...</div>
+            {/if}
+          </div>
+        </Card>
       </div>
     {/each}
   </section>
@@ -142,23 +155,3 @@
     >{loading ? "Zapisywanie..." : "Aktualizuj kolejność"}</Button
   >
 </ScreenCard>
-
-<style>
-  .board {
-  }
-  .column {
-    padding: 0.5em;
-    margin: 0.5em;
-    border: 1px solid grey;
-    border-radius: 4px;
-  }
-  .column-content {
-  }
-  .column-title {
-  }
-  .card {
-    margin: 0.5em;
-    border: 1px solid grey;
-    border-radius: 4px;
-  }
-</style>

@@ -2,19 +2,18 @@ export const load = async ({ parent }) => {
   const { supabase } = await parent();
   const { data: products } = await supabase.from("product").select("*");
 
-  const uncategorisedProducts = products.filter(p => !p.category)
+  const uncategorisedProducts = products?.filter((p) => !p.category_id);
 
-  const { data: productCategories } = await supabase
-    .from("product_category")
-    .select(`
+  const { data: productCategories } = await supabase.from("product_category").select(`
       *,
       product(*)
     `);
 
-  console.log(productCategories, uncategorisedProducts)
+  console.log({ productCategories, uncategorisedProducts });
 
   return {
     productCategories,
-    products, uncategorisedProducts
+    products,
+    uncategorisedProducts,
   };
 };
