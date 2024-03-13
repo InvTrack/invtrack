@@ -12,6 +12,7 @@
   type Dnd2E = CustomEvent<
     DndEvent<NonNullable<typeof productCategories>[number]["products"][number]>
   >;
+  const flipDurationMs = 200;
 
   let loading = false;
   let unsavedChanges = false;
@@ -46,7 +47,6 @@
     categories.unshift(uncategorisedColumn);
   }
 
-  const flipDurationMs = 200;
   function handleDndConsiderCategories(e: DndE) {
     unsavedChanges = true;
     categories = e.detail.items;
@@ -70,26 +70,26 @@
   const update = () => {
     loading = true;
     categories
-      .filter((col) => col.id >= 0)
-      .forEach((col, i) => {
-        genericUpdate(
+      .filter((category) => category.id >= 0)
+      .forEach(async (category, i) => {
+        await genericUpdate(
           supabase
             .from("product_category")
             .update({
               display_order: i,
             })
-            .eq("id", col.id),
+            .eq("id", category.id),
           { setLoading: (x) => (loading = x) }
         );
       });
-    categories.forEach((col) => {
-      col.products.forEach((product, i) => {
-        genericUpdate(
+    categories.forEach((category) => {
+      category.products.forEach(async (product, i) => {
+        await genericUpdate(
           supabase
             .from("product")
             .update({
               display_order: i,
-              category_id: col.id >= 0 ? col.id : null,
+              category_id: category.id >= 0 ? category.id : null,
             })
             .eq("id", product.id),
           { setLoading: (x) => (loading = x) }
@@ -122,12 +122,7 @@
     on:finalize={handleDndFinalizeCategories}
   >
     {#each categories as column (column.id)}
-      <div
-        class="min-w-[4rem] hover:border-0"
-        animate:flip={{
-          duration: flipDurationMs,
-        }}
-      >
+      <div class="min-w-[4rem] hover:border-0" animate:flip={{ duration: flipDurationMs }}>
         <Card class="m-1 border-2 flex-col ">
           <div class="text-lg text-white">{column.name}</div>
           <div
