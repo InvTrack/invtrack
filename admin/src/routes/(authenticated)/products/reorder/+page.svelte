@@ -33,7 +33,7 @@
   export let data;
   let { supabase, uncategorisedProducts, productCategories } = data;
 
-  let columnItems = productCategories || [];
+  let categories = productCategories || [];
   if (company_id && uncategorisedProducts) {
     let uncategorisedColumn = {
       id: -1,
@@ -43,33 +43,33 @@
       created_at: "",
       display_order: 0,
     };
-    columnItems.unshift(uncategorisedColumn);
+    categories.unshift(uncategorisedColumn);
   }
 
   const flipDurationMs = 200;
   function handleDndConsiderCategories(e: DndE) {
     unsavedChanges = true;
-    columnItems = e.detail.items;
+    categories = e.detail.items;
   }
   function handleDndFinalizeCategories(e: DndE) {
     unsavedChanges = true;
-    columnItems = e.detail.items;
+    categories = e.detail.items;
   }
   function handleDndConsiderProducts(cid: number, e: Dnd2E) {
     unsavedChanges = true;
-    const colIdx = columnItems.findIndex((c) => c.id === cid);
-    columnItems[colIdx].products = e.detail.items;
-    columnItems = [...columnItems];
+    const categoryIdx = categories.findIndex((c) => c.id === cid);
+    categories[categoryIdx].products = e.detail.items;
+    categories = [...categories];
   }
   function handleDndFinalizeProducts(cid: number, e: Dnd2E) {
     unsavedChanges = true;
-    const colIdx = columnItems.findIndex((c) => c.id === cid);
-    columnItems[colIdx].products = e.detail.items;
-    columnItems = [...columnItems];
+    const categoryIdx = categories.findIndex((c) => c.id === cid);
+    categories[categoryIdx].products = e.detail.items;
+    categories = [...categories];
   }
   const update = () => {
     loading = true;
-    columnItems
+    categories
       .filter((col) => col.id >= 0)
       .forEach((col, i) => {
         genericUpdate(
@@ -82,7 +82,7 @@
           { setLoading: (x) => (loading = x) }
         );
       });
-    columnItems.forEach((col) => {
+    categories.forEach((col) => {
       col.products.forEach((product, i) => {
         genericUpdate(
           supabase
@@ -117,11 +117,11 @@
   />
   <section
     class="flex flex-col flex-wrap w-full"
-    use:dndzone={{ items: columnItems, flipDurationMs, type: "categories" }}
+    use:dndzone={{ items: categories, flipDurationMs, type: "categories" }}
     on:consider={handleDndConsiderCategories}
     on:finalize={handleDndFinalizeCategories}
   >
-    {#each columnItems as column (column.id)}
+    {#each categories as column (column.id)}
       <div
         class="min-w-[4rem] hover:border-0"
         animate:flip={{
