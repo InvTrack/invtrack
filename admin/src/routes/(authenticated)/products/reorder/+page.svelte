@@ -12,13 +12,18 @@
   type Dnd2E = CustomEvent<
     DndEvent<NonNullable<typeof productCategories>[number]["products"][number]>
   >;
-  const flipDurationMs = 200;
+  const flipDurationMs = 100;
+
+  export let data;
 
   let loading = false;
   let unsavedChanges = false;
   let unsavedChangesModal = false;
   let navigateTo: URL | undefined = undefined;
   let company_id: number | null = null;
+
+  let { supabase, uncategorisedProducts, productCategories } = data;
+  let categories = productCategories || [];
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
 
@@ -31,10 +36,7 @@
     navigateTo = to?.url;
     return;
   });
-  export let data;
-  let { supabase, uncategorisedProducts, productCategories } = data;
 
-  let categories = productCategories || [];
   if (company_id && uncategorisedProducts) {
     let uncategorisedColumn = {
       id: -1,
@@ -117,32 +119,44 @@
   />
   <section
     class="flex flex-col flex-wrap w-full"
-    use:dndzone={{ items: categories, flipDurationMs, type: "categories" }}
+    use:dndzone={{
+      items: categories,
+      flipDurationMs,
+      type: "categories",
+    }}
     on:consider={handleDndConsiderCategories}
     on:finalize={handleDndFinalizeCategories}
   >
-    {#each categories as column (column.id)}
-      <div class="min-w-[4rem] hover:border-0" animate:flip={{ duration: flipDurationMs }}>
-        <Card class="m-1 border-2 flex-col ">
-          <div class="text-lg text-white">{column.name}</div>
-          <div
-            class="flex flex-row flex-wrap"
-            use:dndzone={{ items: column.products, flipDurationMs, type: "products" }}
-            on:consider={(e) => handleDndConsiderProducts(column.id, e)}
-            on:finalize={(e) => handleDndFinalizeProducts(column.id, e)}
-          >
-            {#each column.products as item (item.id)}
-              <div animate:flip={{ duration: flipDurationMs }}>
-                <Badge class="p-2 m-2">
-                  {item.name}
-                </Badge>
-              </div>
-            {/each}
-            {#if column.products.length < 1}
-              <div>...</div>
-            {/if}
-          </div>
-        </Card>
+    {#each categories as category (category.id)}
+      <!-- nesting divs (flowbite styling) breaks the dnd functionality -->
+      <div
+        class="flex flex-col min-w-[4rem] m-1 p-4 sm:p-6 border-2
+         max-w-sm rounded-lg shadow-md bg-white dark:bg-gray-800 text-gray-500
+         dark:text-gray-400 border-gray-200 dark:border-gray-700 divide-gray-200 dark:divide-gray-700"
+        animate:flip={{ duration: flipDurationMs }}
+      >
+        <div class="text-lg text-white">{category.name}</div>
+        <div
+          class="flex flex-row flex-wrap"
+          use:dndzone={{
+            items: category.products,
+            flipDurationMs,
+            type: "products",
+          }}
+          on:consider={(e) => handleDndConsiderProducts(category.id, e)}
+          on:finalize={(e) => handleDndFinalizeProducts(category.id, e)}
+        >
+          {#each category.products as item (item.id)}
+            <div animate:flip={{ duration: flipDurationMs }}>
+              <Badge class="p-2 m-2">
+                {item.name}
+              </Badge>
+            </div>
+          {/each}
+          {#if category.products.length < 1}
+            <div>...</div>
+          {/if}
+        </div>
       </div>
     {/each}
   </section>
