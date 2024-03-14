@@ -11,6 +11,7 @@ import { Card } from "../components/Card";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button } from "../components/Button";
 import { DevInfo } from "../components/DevInfo";
+import { PrivacyPolicy } from "../components/PrivacyPolicy";
 import { Typography } from "../components/Typography";
 import { LoginStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -50,6 +51,8 @@ export default function StartScreen({ navigation }: StartScreenProps) {
       >
         Zaloguj się
       </Button>
+      <PrivacyPolicy />
+
       <DevInfo />
     </SafeAreaView>
   );
