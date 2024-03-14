@@ -1,7 +1,7 @@
-import { useListRecords } from "./useListRecords";
+import { useListProductRecords } from "./useListProductRecords";
 
 export const useListRecordIds = (inventoryId: number) => {
-  const { data: recordList, ...rest } = useListRecords(inventoryId);
+  const { data: recordList, ...rest } = useListProductRecords(inventoryId);
   return {
     data: recordList?.map((record) => record.id),
     ...rest,

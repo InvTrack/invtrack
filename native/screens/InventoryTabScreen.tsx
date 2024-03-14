@@ -11,10 +11,12 @@ import { Skeleton } from "../components/Skeleton";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
+import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { useSnackbar } from "../components/Snackbar/context";
-import { useListRecords } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
+import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
+import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { InventoryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
@@ -28,8 +30,12 @@ export default function InventoryTabScreen({
   const inventoryId = route.params?.id;
   const { isConnected } = useNetInfo();
 
-  const { data: recordList, isSuccess } = useListRecords(+inventoryId);
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
+    useListUncategorizedProductRecords(+inventoryId);
+  const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
+    useListCategorizedProductRecords(+inventoryId);
+
   const inventoryForm = useFormContext<InventoryForm>();
   const {
     mutate,
@@ -73,67 +79,82 @@ export default function InventoryTabScreen({
     )();
   };
 
-  if (!isSuccess)
+  if (!uncategorizedIsSuccess || !categorizedIsSuccess)
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
-          <View style={styles.listContainer}>
-            <View style={styles.date}></View>
-            <View style={styles.barcodeIconContainer}>
-              <Skeleton borderRadius={999} style={styles.skeletonButton} />
-            </View>
-            <Skeleton style={styles.skeletonListItem} />
-            <Skeleton style={styles.skeletonListItem} />
-            <Skeleton style={styles.skeletonListItem} />
+          <View style={styles.skeletonDate}></View>
+          <View style={styles.barcodeIconContainer}>
+            <Skeleton borderRadius={999} style={styles.skeletonButton} />
           </View>
+          <Skeleton style={styles.skeletonListItem} />
+          <Skeleton style={styles.skeletonListItem} />
+          <Skeleton style={styles.skeletonListItem} />
         </View>
       </SafeAreaView>
     );
 
   return (
     <SafeAreaView edges={["left", "right"]}>
-      <ScrollView style={styles.scroll}>
-        <View style={styles.listContainer}>
-          <View style={styles.date}></View>
-          <View style={styles.topButtonsContainer}>
-            <Button
-              containerStyle={styles.saveButtonContainer}
-              size="l"
-              type="primary"
-              fullWidth
-              onPress={handlePress}
-              disabled={!isConnected}
-            >
-              Zapisz zmiany
-            </Button>
-            <Button
-              containerStyle={styles.barcodeIconContainer}
-              size="l"
-              type="primary"
-              onPress={() => {
-                // necessary hack, handled by parent navigator - be cautious
-                navigation.navigate("BarcodeModal" as any, {
-                  inventoryId,
-                  navigateTo: "InventoryTab",
-                });
-              }}
-            >
-              <ScanBarcodeIcon size={34} color="lightGrey" />
-            </Button>
-          </View>
-          {recordList.map(({ name, quantity, unit, id }) => (
+      <Collapsible
+        ListHeaderComponent={
+          <ScrollView style={styles.scroll}>
+            <View style={styles.doubleButtonContainer}>
+              <Button
+                containerStyle={styles.saveButtonContainer}
+                size="l"
+                type="primary"
+                fullWidth
+                onPress={handlePress}
+                disabled={!isConnected}
+              >
+                Zapisz zmiany
+              </Button>
+              <Button
+                containerStyle={styles.barcodeIconContainer}
+                size="l"
+                type="primary"
+                onPress={() => {
+                  // necessary hack, handled by parent navigator - be cautious
+                  navigation.navigate("BarcodeModal" as any, {
+                    inventoryId,
+                    navigateTo: "InventoryTab",
+                  });
+                }}
+              >
+                <ScanBarcodeIcon size={34} color="lightGrey" />
+              </Button>
+            </View>
+            <IDListCardAdd inventoryId={inventoryId} />
+            {uncategorizedRecordList.map((record) => (
+              <IDListCard
+                key={record!.id}
+                recordId={record!.id!}
+                id={+inventoryId}
+                quantity={record!.quantity!}
+                unit={record!.unit!}
+                name={record!.name!}
+              />
+            ))}
+          </ScrollView>
+        }
+        sections={categorizedRecordList!.map(({ title, data }) => ({
+          title: title,
+          data: data.map((record) => (
             <IDListCard
-              key={id}
-              recordId={id!}
+              key={record!.id}
+              recordId={record!.id!}
               id={+inventoryId}
-              quantity={quantity!}
-              unit={unit!}
-              name={name!}
+              quantity={record!.quantity!}
+              unit={record!.unit!}
+              name={record!.name!}
+              borderBottom={data![data!.length - 1]!.id === record!.id}
+              borderLeft
+              borderRight
             />
-          ))}
-          <IDListCardAdd inventoryId={inventoryId} />
-        </View>
-      </ScrollView>
+          )),
+        }))}
+      />
     </SafeAreaView>
   );
 }
@@ -143,16 +164,8 @@ const useStyles = createStyles((theme) =>
     container: {
       backgroundColor: theme.colors.darkBlue,
     },
-
-    listContainer: { paddingHorizontal: theme.spacing * 4 },
     scroll: {
-      width: "100%",
-      height: "100%",
       backgroundColor: theme.colors.darkBlue,
-    },
-    date: {
-      paddingTop: theme.spacing,
-      paddingBottom: theme.spacing,
     },
     saveButtonContainer: {
       flexShrink: 1,
@@ -160,14 +173,17 @@ const useStyles = createStyles((theme) =>
     barcodeIconContainer: {
       flexGrow: 1,
     },
-    topButtonsContainer: {
+    doubleButtonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: theme.spacing * 4,
+      marginBottom: theme.spacing,
       marginTop: theme.spacing * 2,
       gap: theme.spacing,
     },
-
+    skeletonDate: {
+      paddingTop: theme.spacing,
+      paddingBottom: theme.spacing,
+    },
     skeletonFullWidthButton: { width: "100%", height: 58 },
     skeletonButton: { width: 58, height: 58 },
     skeletonListItem: {

@@ -137,3 +137,7 @@ export const ScanBarcodeIcon = (props: IconProps) =>
 export const DeliveryIconSrc = require("../assets/images/delivery.png");
 export const DeliveryIcon = (props: IconProps) =>
   createIcon({ source: DeliveryIconSrc, props });
+
+export const ExpandMoreIconSrc = require("../assets/images/expand-more.png");
+export const ExpandMoreIcon = (props: IconProps) =>
+  createIcon({ source: ExpandMoreIconSrc, props });
