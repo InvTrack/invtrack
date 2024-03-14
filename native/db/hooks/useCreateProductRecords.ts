@@ -37,7 +37,7 @@ export const useCreateProductRecords = (inventoryId: number) => {
       },
       onSuccess: (_newRecords) => {
         // console.log("newRecords", newRecords);
-        // queryClient.setQueryData<ReturnType<typeof useListRecords>["data"]>(
+        // queryClient.setQueryData<ReturnType<typeof useListProductRecords>["data"]>(
         //   ["recordsList", inventoryId],
         //   (old) => {
         //     if (!old) return;

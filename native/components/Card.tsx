@@ -33,8 +33,6 @@ export const Card = forwardRef(
       children,
       style,
       color = "mediumBlue",
-      borderTop = false,
-      borderBottom = false,
       onPress,
       badge,
     }: CardProps,
@@ -47,8 +45,6 @@ export const Card = forwardRef(
         <TouchableOpacity
           onPress={onPress}
           style={[
-            borderBottom && styles.borderBottom,
-            borderTop && styles.borderTop,
             styles[padding],
             { backgroundColor: theme.colors[color] },
             fullWidth && styles.fullWidth,
@@ -68,8 +64,6 @@ export const Card = forwardRef(
     return (
       <View
         style={[
-          borderBottom && styles.borderBottom,
-          borderTop && styles.borderTop,
           styles[padding],
           { backgroundColor: theme.colors[color] },
           fullWidth && styles.fullWidth,
@@ -89,14 +83,6 @@ export const Card = forwardRef(
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    borderTop: {
-      borderTopLeftRadius: theme.borderRadius,
-      borderTopRightRadius: theme.borderRadius,
-    },
-    borderBottom: {
-      borderBottomLeftRadius: theme.borderRadius,
-      borderBottomRightRadius: theme.borderRadius,
-    },
     // badge: {
     //   position: "absolute",
     //   overflow: "hidden",

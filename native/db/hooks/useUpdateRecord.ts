@@ -48,6 +48,14 @@ export const useUpdateRecords = (inventoryId: number) => {
           exact: true,
           refetchType: "all",
         });
+        await queryClient.invalidateQueries([
+          "listCategorizedProductRecords",
+          inventoryId,
+        ]);
+        await queryClient.invalidateQueries([
+          "listUncategorizedProductRecords",
+          inventoryId,
+        ]);
         await Promise.all(
           data.map((updatedRecord) => {
             const recordId = updatedRecord?.id;
