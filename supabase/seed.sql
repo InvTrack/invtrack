@@ -2,21 +2,32 @@
 insert into public.company (name)
     values ('Pierogostacja'), ('Grôcznô Ryba'), ('Mięsny jeż');
 
--- Pracownicy
-INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at")
-    VALUES ('00000000-0000-0000-0000-000000000000', 'f4b8d51e-b172-4e3c-8253-c3db265d8181', 'authenticated', 'authenticated', 'adam@example.com', '$2a$10$U1mClCPshWee8v1pR6J2geYh9YHkfcXXXolyqAfKCxb271ApmgQqS', '2023-04-23 20:50:31.100985+00', NULL, '', '2023-04-23 20:50:15.18794+00', '', NULL, '', '', NULL, '2023-05-21 19:19:54.495517+00', '{"provider": "email", "providers": ["email"]}', '{"company_id":1,"full_name":"Adam"}', NULL, '2023-04-23 20:50:15.182281+00', '2023-05-22 15:29:13.870493+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL);
-INSERT INTO "auth"."identities" ("id", "user_id", "identity_data", "provider", "last_sign_in_at", "created_at", "updated_at") VALUES ('f4b8d51e-b172-4e3c-8253-c3db265d8181', 'f4b8d51e-b172-4e3c-8253-c3db265d8181', '{"sub": "f4b8d51e-b172-4e3c-8253-c3db265d8181", "email": "adam@example.com"}', 'email', '2023-04-23 20:50:15.186106+00', '2023-04-23 20:50:15.186143+00', '2023-04-23 20:50:15.186143+00');
-update public.worker set name = 'Adam', company_id = 1, is_admin = true where id = 'f4b8d51e-b172-4e3c-8253-c3db265d8181';
+INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at") VALUES
+        ('00000000-0000-0000-0000-000000000000', 'c78156b4-052a-47de-bbd9-db3517a9406d', 'authenticated', 'authenticated', 'adam@example.com', '$2a$10$P9n7io9zuegzlNqbmG1GRe3zGUlDsV8EXEFQC2d7ZJ/B.2.1afBcy', '2024-03-06 12:48:13.948271+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{}', NULL, '2024-03-06 12:48:13.94456+00', '2024-03-06 12:48:13.948381+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL),
+        ('00000000-0000-0000-0000-000000000000', 'eae6bf66-8828-4366-b7ba-5ab9bf3b0707', 'authenticated', 'authenticated', 'nowy@example.com', '$2a$10$JEG3Iosv8HtsGTXQEN0SS.Yso8zDRA/ccQO7w/Eah0FIkRWCNCVEa', '2024-03-06 12:48:28.386941+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{}', NULL, '2024-03-06 12:48:28.384754+00', '2024-03-06 12:48:28.387074+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL);
 
-INSERT INTO "auth"."users" ("instance_id", "id", "aud", "role", "email", "encrypted_password", "email_confirmed_at", "invited_at", "confirmation_token", "confirmation_sent_at", "recovery_token", "recovery_sent_at", "email_change_token_new", "email_change", "email_change_sent_at", "last_sign_in_at", "raw_app_meta_data", "raw_user_meta_data", "is_super_admin", "created_at", "updated_at", "phone", "phone_confirmed_at", "phone_change", "phone_change_token", "phone_change_sent_at", "email_change_token_current", "email_change_confirm_status", "banned_until", "reauthentication_token", "reauthentication_sent_at", "is_sso_user", "deleted_at")
-    VALUES ('00000000-0000-0000-0000-000000000000', '95e0054b-712a-4fbc-b33b-ffbf3ae358c2', 'authenticated', 'authenticated', 'nowy@example.com', '$2a$10$U1mClCPshWee8v1pR6J2geYh9YHkfcXXXolyqAfKCxb271ApmgQqS', '2023-04-23 20:50:31.100985+00', NULL, '', '2023-04-23 20:50:15.18794+00', '', NULL, '', '', NULL, '2023-05-21 19:19:54.495517+00', '{"provider": "email", "providers": ["email"]}', '{"company_id":1}', NULL, '2023-04-23 20:50:15.182281+00', '2023-05-22 15:29:13.870493+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL);
-INSERT INTO "auth"."identities" ("id", "user_id", "identity_data", "provider", "last_sign_in_at", "created_at", "updated_at") VALUES ('95e0054b-712a-4fbc-b33b-ffbf3ae358c2', '95e0054b-712a-4fbc-b33b-ffbf3ae358c2', '{"sub": "95e0054b-712a-4fbc-b33b-ffbf3ae358c2", "email": "nowy@example.com"}', 'email', '2023-04-23 20:50:15.186106+00', '2023-04-23 20:50:15.186143+00', '2023-04-23 20:50:15.186143+00');
+INSERT INTO "auth"."identities" ("provider_id", "user_id", "identity_data", "provider", "last_sign_in_at", "created_at", "updated_at", "id") VALUES
+        ('c78156b4-052a-47de-bbd9-db3517a9406d', 'c78156b4-052a-47de-bbd9-db3517a9406d', '{"sub": "c78156b4-052a-47de-bbd9-db3517a9406d", "email": "adam@example.com", "email_verified": false, "phone_verified": false}', 'email', '2024-03-06 12:48:13.946592+00', '2024-03-06 12:48:13.946623+00', '2024-03-06 12:48:13.946623+00', 'c148dd52-80e0-48dc-a3db-55bb2e7412fa'),
+        ('eae6bf66-8828-4366-b7ba-5ab9bf3b0707', 'eae6bf66-8828-4366-b7ba-5ab9bf3b0707', '{"sub": "eae6bf66-8828-4366-b7ba-5ab9bf3b0707", "email": "nowy@example.com", "email_verified": false, "phone_verified": false}', 'email', '2024-03-06 12:48:28.385693+00', '2024-03-06 12:48:28.385726+00', '2024-03-06 12:48:28.385726+00', '51a5d956-a7b4-43dc-b4d8-46b1ef6d4f4b');
+
+update public.worker set name = 'Adam', company_id = 1, is_admin = true where id = 'c78156b4-052a-47de-bbd9-db3517a9406d';
+
+
+insert into public.product_category (name, company_id, display_order) values 
+    ('Mięsa', 1, 0), 
+    ('Owoce', 1, 1);
+
+insert into public.product (name, unit, category_id, company_id, display_order) values
+    ('Szynka',   'kg',   1,    1, 0), 
+    ('Kurczak',  'kg',   1,    1, 1), 
+    ('Jabłka',   'kg',   2,    1, 0), 
+    ('Banany',   'kg',   2,    1, 1), 
+    ('Arbuzy',   'kg',   2,    1, 2), 
+    ('Łyżeczki', 'szt.', NULL, 1, 0),
+    ('Cukier',   'kg',   NULL, 1, 1);
 
 
 -- Inwentaryzacje
-insert into public.product (name, unit, company_id)
-    values ('Łyżeczki', 'szt.', 1), ('Szynka', 'kg', 1), ('Mąka', 'kg', 1), ('Cukier', 'kg', 1) ;
-
 insert into public.inventory (name, date, company_id)
     values 
       ('Testowa Inwentaryzacja 1',  '2023-02-02 00:00:00+00', 1),

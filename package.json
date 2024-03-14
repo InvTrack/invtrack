@@ -12,6 +12,7 @@
     "reset-db": "supabase db reset",
     "status": "supabase status",
     "sb": "supabase",
+    "db": "supabase db",
     "migrate-up": "supabase migrations up --include-all"
   },
   "devDependencies": {

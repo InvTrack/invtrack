@@ -104,21 +104,21 @@
 </script>
 
 <main class="flex flex-col">
-  <ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0">
+  <ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0 ">
     <div class="flex justify-between pt-8">
-      <PaginationItem class="mb-4" on:click={handlePrev}>
+      <PaginationItem class="mb-4 bg-gray-200 " on:click={handlePrev}>
         <ArrowLeftSolid class="w-5 h-5" />
-        <Heading tag="h6" class="ml-4">Poprzedni</Heading>
+        <Heading tag="h6" class="ml-4 ">Poprzedni</Heading>
       </PaginationItem>
-      <PaginationItem class="mb-4" on:click={handleNext}>
+      <PaginationItem class="mb-4 bg-gray-200 " on:click={handleNext}>
         <Heading tag="h6" class="mr-4">Następny</Heading>
         <ArrowRightSolid class="w-5 h-5" />
       </PaginationItem>
     </div>
     {#if records}
       <Table divClass="relative" class="border-separate">
-        <TableHead theadClass="sticky top-0">
-          <TableHeadCell class="" />
+        <TableHead class="bg-gray-200" theadClass="sticky top-0 bg-gray-200">
+          <TableHeadCell />
           {#each records as record}
             <TableHeadCell class="border-l place-items-center"
               >{parseISODatestring(record.date)}</TableHeadCell

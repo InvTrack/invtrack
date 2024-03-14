@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { Skeleton } from "../components/Skeleton";
-import { useListRecords } from "../db";
+import { useListProductRecords } from "../db";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -27,7 +27,7 @@ export function NewBarcodeScreen({ route, navigation }: NewBarcodeScreenProps) {
 
   const { inventoryId, new_barcode } = route.params;
 
-  const { data: recordList, isSuccess } = useListRecords(+inventoryId);
+  const { data: recordList, isSuccess } = useListProductRecords(+inventoryId);
   const {
     mutate,
     isError: isInsertError,
