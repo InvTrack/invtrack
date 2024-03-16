@@ -1,6 +1,6 @@
 // import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Keyboard, StyleSheet, View } from "react-native";
+import { Keyboard, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { isAndroid } from "../../../constants";
@@ -79,11 +79,11 @@ export const InputBottomSheetContent = ({
   };
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={[
         styles.container,
         {
-          height: keyboardHeight + (isAndroid ? 0 : 156),
+          height: isAndroid ? undefined : keyboardHeight + 156,
           paddingBottom: insets.bottom + 16,
         },
       ]}
@@ -130,7 +130,7 @@ export const InputBottomSheetContent = ({
           autoFocus: true,
         }}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
