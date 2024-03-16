@@ -57,13 +57,7 @@ const SafeLayout = ({
           behavior={isIos ? "padding" : undefined}
           keyboardVerticalOffset={getKeyboardVerticalOffset()}
         >
-          <ScrollView
-            scrollEventThrottle={100}
-            contentContainerStyle={{
-              backfaceVisibility: "hidden",
-              backgroundColor: "transparent",
-            }}
-          >
+          <ScrollView scrollEventThrottle={100}>
             <View style={[styles.container, style]}>{children}</View>
           </ScrollView>
         </KeyboardAvoidingView>

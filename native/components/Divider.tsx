@@ -8,7 +8,7 @@ export const Divider = () => {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     divider: {
-      marginVertical: theme.spacing * 2,
+      marginTop: theme.spacing * 3,
       height: 1,
       width: "100%",
       backgroundColor: theme.colors.lightGrey,

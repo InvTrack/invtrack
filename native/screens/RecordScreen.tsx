@@ -12,7 +12,13 @@ import { createStyles } from "../theme/useStyles";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { CollapsibleItem } from "../components/Collapsible/CollapsibleItem";
+import { SingularCollapsible } from "../components/Collapsible/SingularCollapsible";
+import { Divider } from "../components/Divider";
+import SafeLayout from "../components/SafeLayout";
 import { Skeleton } from "../components/Skeleton";
+import TextInputController from "../components/TextInputController";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
 import {
@@ -60,6 +66,7 @@ const RecordButton = ({
 
 const navigateToPreviousRecord = (
   navigate: RecordScreenNavigationProp["navigate"],
+  isDelivery: RecordScreenProps["route"]["params"]["isDelivery"],
   id: number,
   prevRecordId: number | undefined,
   isFirst: boolean
@@ -67,11 +74,13 @@ const navigateToPreviousRecord = (
   prevRecordId === undefined
     ? () => {}
     : () => {
-        !isFirst && navigate("RecordScreen", { id, recordId: prevRecordId });
+        !isFirst &&
+          navigate("RecordScreen", { id, recordId: prevRecordId, isDelivery });
       };
 
 const navigateToNextRecord = (
   navigate: RecordScreenNavigationProp["navigate"],
+  isDelivery: RecordScreenProps["route"]["params"]["isDelivery"],
   id: number,
   prevRecordId: number | undefined,
   isLast: boolean
@@ -79,7 +88,8 @@ const navigateToNextRecord = (
   prevRecordId === undefined
     ? () => {}
     : () => {
-        !isLast && navigate("RecordScreen", { id, recordId: prevRecordId });
+        !isLast &&
+          navigate("RecordScreen", { id, recordId: prevRecordId, isDelivery });
       };
 
 const onRecordButtonStepperPress =
@@ -96,7 +106,7 @@ const onRecordButtonStepperPress =
 
 export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const styles = useStyles();
-  const { id, recordId } = route.params;
+  const { id, recordId, isDelivery } = route.params;
   const queryClient = useQueryClient();
 
   const recordPanel = useRecordPanel(recordId);
@@ -110,6 +120,21 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
     id,
     record?.product_id
   );
+
+  const {
+    control,
+    //  handleSubmit, getValues, reset, watch
+  } = useForm<{
+    price_per_unit: string;
+  }>({
+    defaultValues: {
+      price_per_unit: "0",
+    },
+    resetOptions: {
+      keepDirtyValues: true,
+    },
+    mode: "onSubmit",
+  });
 
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
     recordId,
@@ -130,22 +155,20 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
     !record?.name
   )
     return (
-      <View style={styles.container}>
-        <View style={styles.contentContainer}>
-          <Skeleton style={styles.skeletonTitle} />
-          <View style={styles.skeletonQuantity}>
-            <Skeleton />
+      <View style={[styles.container, styles.bg]}>
+        <Skeleton style={styles.skeletonTitle} />
+        <View style={styles.skeletonQuantity}>
+          <Skeleton />
+        </View>
+        <View style={styles.skeletonColumns}>
+          <View style={styles.skeletonColumnContainer}>
+            <Skeleton style={styles.skeletonColumn} />
           </View>
-          <View style={styles.skeletonColumns}>
-            <View style={styles.skeletonColumnContainer}>
-              <Skeleton style={styles.skeletonColumn} />
-            </View>
-            <View style={styles.skeletonColumnContainer}>
-              <Skeleton style={styles.skeletonColumn} />
-            </View>
-            <View style={styles.skeletonColumnContainer}>
-              <Skeleton style={styles.skeletonColumn} />
-            </View>
+          <View style={styles.skeletonColumnContainer}>
+            <Skeleton style={styles.skeletonColumn} />
+          </View>
+          <View style={styles.skeletonColumnContainer}>
+            <Skeleton style={styles.skeletonColumn} />
           </View>
         </View>
       </View>
@@ -166,126 +189,154 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
         closeBottomSheet={closeBottomSheet}
       />
     ));
-
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
+    <SafeLayout
+      style={[styles.container, styles.bg]}
+      containerStyle={styles.bg}
+      scrollable
+    >
+      <Typography
+        variant={
+          recordName.length > 12
+            ? recordName.length > 28
+              ? "sBold"
+              : "lBold"
+            : "xlBold"
+        }
+        style={styles.title}
+        color="lightGrey"
+      >
+        {/* nazwa produktu */}
+        {recordName}
+      </Typography>
+      <View style={styles.content}>
+        <Typography variant="l" style={styles.wasTitle} color="lightGrey">
+          Ile było:
+        </Typography>
         <Typography
-          variant={
-            recordName.length > 12
-              ? recordName.length > 28
-                ? "sBold"
-                : "lBold"
-              : "xlBold"
-          }
-          style={styles.title}
+          variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
+          style={styles.wasAmount}
           color="lightGrey"
         >
-          {/* nazwa produktu */}
-          {recordName}
+          {unit && previousQuantity
+            ? previousQuantity + " " + unit
+            : "Brak danych"}
         </Typography>
-        <View style={styles.content}>
-          <Typography variant="l" style={styles.wasTitle} color="lightGrey">
-            Ile było:
-          </Typography>
-          <Typography
-            variant={(previousQuantity || 0) > 999 ? "lBold" : "xlBold"}
-            style={styles.wasAmount}
-            color="lightGrey"
-          >
-            {unit && previousQuantity
-              ? previousQuantity + " " + unit
-              : "Brak danych"}
-          </Typography>
-          <View style={styles.gridRow}>
-            <View style={styles.leftColumn}>
-              {steppers.negative.map(({ click, step }, i) => (
-                <RecordButton
-                  type="negative"
-                  key={"negative" + step + i}
-                  label={step.toString()}
-                  onPress={onRecordButtonStepperPress(
-                    click,
-                    id,
-                    record?.product_id,
-                    queryClient
-                  )}
-                />
-              ))}
-              <Button
-                type="primary"
-                size="l"
-                disabled={isFirst}
-                containerStyle={isFirst && styles.firstRecord}
-                onPress={navigateToPreviousRecord(
-                  navigation.navigate,
-                  record.inventory_id,
-                  prevRecordId,
-                  isFirst
+        <View style={styles.gridRow}>
+          <View style={styles.leftColumn}>
+            {steppers.negative.map(({ click, step }, i) => (
+              <RecordButton
+                type="negative"
+                key={"negative" + step + i}
+                label={step.toString()}
+                onPress={onRecordButtonStepperPress(
+                  click,
+                  id,
+                  record?.product_id,
+                  queryClient
                 )}
-              >
-                <ArrowRightIcon size={32} color="highlight" />
-              </Button>
-            </View>
-            <View style={styles.middleColumn}>
-              <Typography color="lightGrey">Ile jest:</Typography>
-              <Typography
-                variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
-                style={styles.title}
-                color="lightGrey"
-              >
-                {/* liczba + jednostka current */}
-                {unit ? quantity + " " + unit : "Brak"}
-              </Typography>
-              <Button
-                type="primary"
-                size="xl"
-                containerStyle={styles.editButton}
-                onPress={() => openManualInput(quantity!, setQuantity)}
-              >
-                <PencilIcon size={32} color="lightGrey" />
-              </Button>
-            </View>
-            <View style={styles.rightColumn}>
-              {steppers.positive.map(({ click, step }, i) => (
-                <RecordButton
-                  type="positive"
-                  key={"positive" + step + i}
-                  label={`+${step}`}
-                  onPress={onRecordButtonStepperPress(
-                    click,
-                    id,
-                    record?.product_id,
-                    queryClient
-                  )}
-                />
-              ))}
-              <Button
-                type="primary"
-                size="l"
-                disabled={isLast}
-                containerStyle={isLast && styles.lastRecord}
-                onPress={navigateToNextRecord(
-                  navigation.navigate,
-                  record.inventory_id,
-                  nextRecordId,
-                  isLast
+              />
+            ))}
+            <Button
+              type="primary"
+              size="l"
+              disabled={isFirst}
+              containerStyle={isFirst && styles.firstRecord}
+              onPress={navigateToPreviousRecord(
+                navigation.navigate,
+                isDelivery,
+                record.inventory_id,
+                prevRecordId,
+                isFirst
+              )}
+            >
+              <ArrowRightIcon size={32} color="highlight" />
+            </Button>
+          </View>
+          <View style={styles.middleColumn}>
+            <Typography color="lightGrey">Ile jest:</Typography>
+            <Typography
+              variant={(quantity || 0) > 999 ? "lBold" : "xlBold"}
+              style={styles.title}
+              color="lightGrey"
+            >
+              {/* liczba + jednostka current */}
+              {unit ? quantity + " " + unit : "Brak"}
+            </Typography>
+            <Button
+              type="primary"
+              size="xl"
+              containerStyle={styles.editButton}
+              onPress={() => openManualInput(quantity!, setQuantity)}
+            >
+              <PencilIcon size={32} color="lightGrey" />
+            </Button>
+          </View>
+          <View style={styles.rightColumn}>
+            {steppers.positive.map(({ click, step }, i) => (
+              <RecordButton
+                type="positive"
+                key={"positive" + step + i}
+                label={`+${step}`}
+                onPress={onRecordButtonStepperPress(
+                  click,
+                  id,
+                  record?.product_id,
+                  queryClient
                 )}
-              >
-                <ArrowLeftIcon size={32} color="highlight" />
-              </Button>
-            </View>
+              />
+            ))}
+            <Button
+              type="primary"
+              size="l"
+              disabled={isLast}
+              containerStyle={isLast && styles.lastRecord}
+              onPress={navigateToNextRecord(
+                navigation.navigate,
+                isDelivery,
+                record.inventory_id,
+                nextRecordId,
+                isLast
+              )}
+            >
+              <ArrowLeftIcon size={32} color="highlight" />
+            </Button>
           </View>
         </View>
       </View>
-    </View>
+      {isDelivery && (
+        <>
+          <Divider />
+          <SingularCollapsible title="Aktualna cena">
+            <CollapsibleItem isFirst isLast>
+              <TextInputController
+                control={control}
+                name="price_per_unit"
+                textInputProps={{
+                  inputStyle: {
+                    fontSize: 18,
+                  },
+                  containerStyle: { flex: 1 },
+                  label: unit || "",
+                }}
+              />
+            </CollapsibleItem>
+          </SingularCollapsible>
+        </>
+      )}
+    </SafeLayout>
   );
 }
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    container: { backgroundColor: theme.colors.darkBlue, height: "100%" },
-    contentContainer: { paddingHorizontal: theme.spacing * 3 },
+    bg: {
+      backgroundColor: theme.colors.darkBlue,
+    },
+    container: {
+      paddingHorizontal: theme.spacing * 2,
+      marginBottom: theme.spacing * 2,
+    },
     title: { paddingTop: theme.spacing * 3 },
     wasTitle: { marginTop: theme.spacing * 2 },
     wasAmount: {

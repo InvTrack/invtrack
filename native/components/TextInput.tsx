@@ -14,6 +14,7 @@ import {
 
 import { isAndroid } from "../constants";
 import { createStyles } from "../theme/useStyles";
+import { Typography } from "./Typography";
 
 const BORDER_WIDTH = 2;
 export type TextInputProps = Omit<NativeTextInputProps, "onChange"> & {
@@ -27,6 +28,7 @@ export type TextInputProps = Omit<NativeTextInputProps, "onChange"> & {
   onFocus?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onChange: (text: string) => void;
+  label?: string;
 };
 
 export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
@@ -42,6 +44,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
       containerStyle,
       onFocus,
       onBlur,
+      label,
       ...props
     },
     ref: React.Ref<NativeTextInput>
@@ -101,6 +104,11 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
             ]}
             {...props}
           />
+          {label && (
+            <Typography variant="xs" color="highlight" style={{ marginTop: 4 }}>
+              {"zł/" + label}
+            </Typography>
+          )}
         </View>
       </View>
     );
