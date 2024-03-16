@@ -7,6 +7,7 @@ import { ExpandMoreIcon } from "../Icon";
 import { Typography } from "../Typography";
 
 type CollapsibleSection = {
+  id: number;
   title: string;
   data: ReactElement[];
 };
@@ -18,30 +19,38 @@ export const Collapsible = ({
   sections: CollapsibleSection[];
   ListHeaderComponent: ReactElement;
 }) => {
-  const [expandedSection, setExpandedSection] =
-    useState<CollapsibleSection | null>(null);
+  const [expandedSections, setExpandedSections] = useState<
+    CollapsibleSection["id"][]
+  >([]);
   const styles = useStyles();
 
-  const toggleExpand = (section: CollapsibleSection) => {
-    setExpandedSection(expandedSection === section ? null : section);
+  const toggleExpand = (sectionId: CollapsibleSection["id"]) => {
+    if (expandedSections?.find((id) => id === sectionId)) {
+      setExpandedSections(expandedSections.filter((id) => id !== sectionId));
+      return;
+    }
+    setExpandedSections((ids) => [...ids, sectionId]);
+    return;
   };
 
   const renderHeader = ({ section }: { section: CollapsibleSection }) => (
     <Card
       color="mediumBlue"
       style={
-        section === expandedSection
+        expandedSections.find((id) => id === section.id)
           ? styles.expandedSectionCard
           : styles.sectionCard
       }
       padding="dense"
-      onPress={() => toggleExpand(section)}
+      onPress={() => toggleExpand(section.id)}
     >
       <ExpandMoreIcon
         color="lightGrey"
         style={[
           styles.iconMargin,
-          section === expandedSection && { transform: [{ rotate: "-90deg" }] },
+          !!expandedSections.find((id) => id === section.id) && {
+            transform: [{ rotate: "-90deg" }],
+          },
         ]}
       />
       <Typography variant="lBold" color="lightGrey">
@@ -58,7 +67,7 @@ export const Collapsible = ({
       sections={sections}
       renderSectionHeader={renderHeader}
       renderItem={({ item, section }) =>
-        section === expandedSection ? item : null
+        expandedSections.find((id) => id === section.id) ? item : null
       }
       keyExtractor={(item, index) => item.key || index.toString()}
     />
