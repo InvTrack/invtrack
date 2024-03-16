@@ -1,0 +1,1 @@
+alter table "public"."product_record" add column "price_per_unit" numeric;
