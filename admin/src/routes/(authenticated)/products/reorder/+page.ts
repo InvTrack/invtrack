@@ -1,4 +1,7 @@
-export const load = async ({ parent }) => {
+import type { LoadFunctionArgument } from "$lib/helpers";
+
+// TODO: This file is identical to the +page.ts in the directory above. Reuse the data from here
+export const load = async ({ parent }: LoadFunctionArgument) => {
   const { supabase } = await parent();
   const { data: products } = await supabase
     .from("product")

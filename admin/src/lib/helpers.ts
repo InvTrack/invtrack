@@ -1,4 +1,4 @@
-import type { PostgrestError } from "@supabase/supabase-js";
+import type { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
 
 export type Tables<T extends keyof Database["public"]["Tables"]> =
@@ -29,3 +29,6 @@ export const getPaginationRange = (page: number, width: number): [number, number
   page * getMaxColumns(window.innerWidth, convertRemToPixels(width)),
   (page + 1) * getMaxColumns(window.innerWidth, convertRemToPixels(width)) - 1,
 ];
+
+type Parent = {supabase: SupabaseClient<Database>}
+export type LoadFunctionArgument = {parent: () => Promise<Parent>}
