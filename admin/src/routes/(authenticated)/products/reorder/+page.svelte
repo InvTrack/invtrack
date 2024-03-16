@@ -96,8 +96,8 @@
     onContinue={onUnsavedWarningContinue}
     onStay={() => (unsavedChangesModal = false)}
   />
-  <Columns columnsContainer={categoriesContainer} {setUnsavedChanges} />
   <BareItems itemsContainer={uncategorisedProductsContainer} {setUnsavedChanges} />
+  <Columns columnsContainer={categoriesContainer} {setUnsavedChanges} />
   <Button class="mt-4" color="primary" on:click={update}
     >{loading ? "Zapisywanie..." : "Aktualizuj kolejność"}</Button
   >

@@ -26,6 +26,30 @@
         <TableHeadCell />
       </TableHead>
       <TableBody>
+        {#if uncategorisedProducts && uncategorisedProducts.length > 0}
+          <TableBodyRow>
+            <TableBodyCell class="h-1" tdClass="h-1">Brak kategorii</TableBodyCell>
+          </TableBodyRow>
+          {#each uncategorisedProducts as product}
+            <TableBodyRow>
+              <TableBodyCell>
+                {product.name}
+              </TableBodyCell>
+              <TableBodyCell>
+                {product.unit}
+              </TableBodyCell>
+              <TableBodyCell>
+                {parseISODatestring(product.created_at)}
+              </TableBodyCell>
+              <TableBodyCell>
+                {product.steps.map((step) => " " + step)}
+              </TableBodyCell>
+              <TableBodyCell>
+                <Button class="hover:underline" href={`/products/${product.id}`}>Edytuj</Button>
+              </TableBodyCell>
+            </TableBodyRow>
+          {/each}
+        {/if}
         {#each categories.filter((c) => c.items.length > 0) as category}
           <TableBodyRow>
             <TableBodyCell class="h-1" tdClass="h-1">
@@ -52,30 +76,6 @@
             </TableBodyRow>
           {/each}
         {/each}
-        {#if uncategorisedProducts && uncategorisedProducts.length > 0}
-          <TableBodyRow>
-            <TableBodyCell class="h-1" tdClass="h-1">Brak kategorii</TableBodyCell>
-          </TableBodyRow>
-          {#each uncategorisedProducts as product}
-            <TableBodyRow>
-              <TableBodyCell>
-                {product.name}
-              </TableBodyCell>
-              <TableBodyCell>
-                {product.unit}
-              </TableBodyCell>
-              <TableBodyCell>
-                {parseISODatestring(product.created_at)}
-              </TableBodyCell>
-              <TableBodyCell>
-                {product.steps.map((step) => " " + step)}
-              </TableBodyCell>
-              <TableBodyCell>
-                <Button class="hover:underline" href={`/products/${product.id}`}>Edytuj</Button>
-              </TableBodyCell>
-            </TableBodyRow>
-          {/each}
-        {/if}
       </TableBody>
     </Table>
   {/if}
