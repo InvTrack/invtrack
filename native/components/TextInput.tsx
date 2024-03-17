@@ -106,7 +106,7 @@ export const TextInput = React.forwardRef<NativeTextInput, TextInputProps>(
           />
           {label && (
             <Typography variant="xs" color="highlight" style={{ marginTop: 4 }}>
-              {"zł/" + label}
+              {label}
             </Typography>
           )}
         </View>
