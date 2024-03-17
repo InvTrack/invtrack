@@ -1,32 +1,36 @@
 import React, { useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { useBottomSheet } from "../components/BottomSheet";
-import { InputBottomSheetContent } from "../components/BottomSheet/contents";
-import { Button } from "../components/Button";
-import { ArrowLeftIcon, ArrowRightIcon, PencilIcon } from "../components/Icon";
-import { Typography } from "../components/Typography";
-import { useRecordPanel } from "../db";
-import { useListRecordIds } from "../db/hooks/useListRecordIds";
-import { createStyles } from "../theme/useStyles";
+import { useBottomSheet } from "../../components/BottomSheet";
+import { InputBottomSheetContent } from "../../components/BottomSheet/contents";
+import { Button } from "../../components/Button";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  PencilIcon,
+} from "../../components/Icon";
+import { Typography } from "../../components/Typography";
+import { useRecordPanel } from "../../db";
+import { useListRecordIds } from "../../db/hooks/useListRecordIds";
+import { createStyles } from "../../theme/useStyles";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { CollapsibleItem } from "../components/Collapsible/CollapsibleItem";
-import { SingularCollapsible } from "../components/Collapsible/SingularCollapsible";
-import { Divider } from "../components/Divider";
-import SafeLayout from "../components/SafeLayout";
-import { Skeleton } from "../components/Skeleton";
-import TextInputController from "../components/TextInputController";
-import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
-import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
+import { Divider } from "../../components/Divider";
+import SafeLayout from "../../components/SafeLayout";
+import { Skeleton } from "../../components/Skeleton";
+import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
+import { useGetPreviousRecordQuantity } from "../../db/hooks/useGetPreviousRecordQuantity";
 import {
   DeliveryStackParamList,
   InventoryStackParamList,
   RecordScreenNavigationProp,
-} from "../navigation/types";
-import { useRecordPagination } from "../utils/useRecordPagination";
+} from "../../navigation/types";
+import { useRecordPagination } from "../../utils/useRecordPagination";
+import {
+  RecordScreenPriceCollapsible,
+  useRecordScreenForm,
+} from "./RecordScreenForm";
 
 export type RecordScreenProps = NativeStackScreenProps<
   InventoryStackParamList | DeliveryStackParamList,
@@ -121,27 +125,16 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
     record?.product_id
   );
 
-  const {
-    control,
-    //  handleSubmit, getValues, reset, watch
-  } = useForm<{
-    price_per_unit: string;
-  }>({
-    defaultValues: {
-      price_per_unit: "0",
-    },
-    resetOptions: {
-      keepDirtyValues: true,
-    },
-    mode: "onSubmit",
-  });
-
   const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
     recordId,
     recordIds
   );
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const { control, handleSubmit, onSubmit } = useRecordScreenForm(
+    recordPanel.price,
+    recordPanel.setPrice
+  );
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
@@ -307,21 +300,12 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
       {isDelivery && (
         <>
           <Divider />
-          <SingularCollapsible title="Aktualna cena">
-            <CollapsibleItem isFirst isLast>
-              <TextInputController
-                control={control}
-                name="price_per_unit"
-                textInputProps={{
-                  inputStyle: {
-                    fontSize: 18,
-                  },
-                  containerStyle: { flex: 1 },
-                  label: unit || "",
-                }}
-              />
-            </CollapsibleItem>
-          </SingularCollapsible>
+          <RecordScreenPriceCollapsible
+            unit={unit}
+            control={control}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+          />
         </>
       )}
     </SafeLayout>
