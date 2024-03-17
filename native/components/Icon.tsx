@@ -141,3 +141,22 @@ export const DeliveryIcon = (props: IconProps) =>
 export const ExpandMoreIconSrc = require("../assets/images/expand-more.png");
 export const ExpandMoreIcon = (props: IconProps) =>
   createIcon({ source: ExpandMoreIconSrc, props });
+
+const AppIconSrc = require("../assets/images/icon.png");
+export const AppIcon = (props: IconProps) =>
+  createIcon({
+    source: AppIconSrc,
+    props: {
+      ...props,
+      containerStyle: {
+        elevation: 5,
+        shadowColor: "#fff",
+        shadowOffset: { width: 1, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+      },
+      style: {
+        borderRadius: 20,
+      },
+    },
+  });
