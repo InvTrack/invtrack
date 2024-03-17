@@ -1,14 +1,29 @@
 import * as Updates from "expo-updates";
-import { StyleSheet, View } from "react-native";
-import { Button } from "../components/Button";
-import { AppIcon } from "../components/Icon";
-import SafeLayout from "../components/SafeLayout";
-import { Typography } from "../components/Typography";
-import { isIos } from "../constants";
-import { createStyles } from "../theme/useStyles";
+import { Linking, StyleSheet, View } from "react-native";
+import { Button } from "../../components/Button";
+import { AppIcon } from "../../components/Icon";
+import SafeLayout from "../../components/SafeLayout";
+import { Typography } from "../../components/Typography";
+import { isIos } from "../../constants";
+import { useCheckIfNativeUpdateNeeded } from "../../db/hooks/useCheckIfNativeUpdateNeeded";
+import { createStyles } from "../../theme/useStyles";
+const runtimeUpdateMessage =
+  "Nowa wersja InvTrack jest dostępna - zaktualizuj aplikację, aby korzystać z nowych funkcji i poprawek. Nie musisz jej pobierać " +
+  (isIos ? "z App Store" : "ze Sklepu Play") +
+  ". Wystarczy, że potwierdzisz poniżej.";
+
+const nativeUpdateMessage =
+  "Nowa wersja InvTrack jest dostępna - zaktualizuj aplikację, aby korzystać z nowych funkcji i poprawek. Pobierz ją " +
+  (isIos ? "z App Store" : "ze Sklepu Play") +
+  " już teraz.";
+
+const appStoreLink = "https://apps.apple.com/pl/app/id6479214636";
+const playStoreLink =
+  "https://play.google.com/store/apps/details?id=app.invtrack.invtrack";
 
 export const UpdateRequiredScreen = () => {
   const styles = useStyles();
+  const { data: isNativeUpdateNeeded } = useCheckIfNativeUpdateNeeded();
   const { isDownloading, isChecking, isUpdatePending } = Updates.useUpdates();
 
   return (
@@ -35,11 +50,7 @@ export const UpdateRequiredScreen = () => {
         align="left"
         style={styles.updateText}
       >
-        {
-          "Nowa wersja InvTrack jest dostępna - zaktualizuj aplikację, aby korzystać z nowych funkcji i poprawek. Nie musisz jej pobierać "
-        }
-        {isIos ? "z App Store" : "ze Sklepu Play"}
-        {". Wystarczy, że potwierdzisz poniżej."}
+        {isNativeUpdateNeeded ? nativeUpdateMessage : runtimeUpdateMessage}
       </Typography>
       <Button
         type="primary"
@@ -48,11 +59,18 @@ export const UpdateRequiredScreen = () => {
         containerStyle={styles.button}
         isLoading={isDownloading || isChecking}
         disabled={isDownloading || isChecking}
-        onPress={async () =>
-          isUpdatePending ? await Updates.reloadAsync() : void this
+        onPress={
+          isNativeUpdateNeeded
+            ? () => Linking.openURL(isIos ? appStoreLink : playStoreLink)
+            : async () =>
+                isUpdatePending ? await Updates.reloadAsync() : void this
         }
       >
-        Aplikuj aktualizację
+        {isNativeUpdateNeeded
+          ? isIos
+            ? "Otwórz App Store"
+            : "Otwórz Sklep Play"
+          : "Aplikuj aktualizację"}
       </Button>
     </SafeLayout>
   );

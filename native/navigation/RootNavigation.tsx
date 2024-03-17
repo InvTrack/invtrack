@@ -11,7 +11,7 @@ const RootNavigation = () => {
   const netInfo = useNetInfo();
   const { isUpdatePending, isUpdateAvailable } = useUpdates();
 
-  const isUpdateRequired = isUpdatePending || isUpdateAvailable;
+  const isUpdateRequired = isUpdatePending || isUpdateAvailable || true;
   const isLoggedIn = sessionState.loggedIn;
 
   if (netInfo.isConnected && isUpdateRequired) {
