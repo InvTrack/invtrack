@@ -137,7 +137,8 @@ export default function InventoryTabScreen({
             ))}
           </ScrollView>
         }
-        sections={categorizedRecordList?.map(({ title, data }) => ({
+        sections={categorizedRecordList?.map(({ title, data }, i) => ({
+          id: i + 1,
           title: title,
           data: data.map((record) => (
             <IDListCard

@@ -39,7 +39,7 @@
       }),
       {
         setLoading: (x) => (loading = x),
-        onSuccess: "/products",
+        onSuccess: "/products/reorder",
       }
     );
   };
