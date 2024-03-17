@@ -8,7 +8,7 @@ type RecordViewNonNullCategoryName =
         ? NonNullable<RecordView[K]>
         : RecordView[K];
     }
-  | undefined;
+  | null;
 
 type ListCategorizedProductRecords = {
   title: string;
@@ -17,7 +17,7 @@ type ListCategorizedProductRecords = {
 
 const listCategorizedProductRecords = async (
   inventoryId: number
-): Promise<ListCategorizedProductRecords | undefined> => {
+): Promise<ListCategorizedProductRecords | null> => {
   const response = await supabase
     .from("record_view")
     .select(
@@ -32,7 +32,7 @@ const listCategorizedProductRecords = async (
 
   if (response.error) {
     console.log(response.error.message);
-    return undefined;
+    return null;
   }
   // maybe a use case for worklets? :D
   const mapped = response.data.reduce((acc, record) => {
