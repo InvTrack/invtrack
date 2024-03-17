@@ -15,12 +15,16 @@ export const Collapsible = ({
   sections,
   ListHeaderComponent,
 }: {
-  sections: CollapsibleSection[];
+  sections: CollapsibleSection[] | null | undefined;
   ListHeaderComponent: ReactElement;
 }) => {
   const [expandedSection, setExpandedSection] =
     useState<CollapsibleSection | null>(null);
   const styles = useStyles();
+
+  if (sections == null) {
+    return null;
+  }
 
   const toggleExpand = (section: CollapsibleSection) => {
     setExpandedSection(expandedSection === section ? null : section);

@@ -124,7 +124,7 @@ export default function DeliveryTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
-            {uncategorizedRecordList.map((record) => (
+            {uncategorizedRecordList?.map((record) => (
               <IDListCard
                 key={record!.id}
                 recordId={record!.id!}
@@ -137,7 +137,7 @@ export default function DeliveryTabScreen({
             <IDListCardAdd inventoryId={inventoryId} />
           </ScrollView>
         }
-        sections={categorizedRecordList!.map(({ title, data }) => ({
+        sections={categorizedRecordList?.map(({ title, data }) => ({
           title: title,
           data: data.map((record) => (
             <IDListCard

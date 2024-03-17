@@ -88,10 +88,11 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   React.useEffect(() => {
-    if (isAndroid) {
-      StatusBar.setBarStyle("dark-content", true);
-    }
     StatusBar.setBarStyle("light-content", true);
+    if (isAndroid) {
+      StatusBar.setBackgroundColor("#212939");
+      return;
+    }
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {
