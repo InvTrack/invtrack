@@ -25,6 +25,9 @@ export const getKeyboardVerticalOffset = () => {
   return isScreenBig ? 160 : 220;
 };
 
+export const formatFloatString = (value: string) =>
+  parseFloat(value.replace(/,/g, "."));
+
 export function useThemeBreakpoints() {
   const { breakpoints } = useTheme();
   return {

@@ -9,8 +9,6 @@ import { View, ViewStyle } from "react-native";
 import { TextInput, TextInputProps } from "./TextInput";
 import { Typography } from "./Typography";
 
-// import { Typography } from "../Typography";
-
 type TextInputControllerProps<T extends FieldValues> = UseControllerProps<T> & {
   textInputProps?: Omit<TextInputProps, "onChange"> & {
     containerStyle?: ViewStyle;
@@ -29,7 +27,7 @@ export const TextInputController = <T extends FieldValues>({
   } = useController(props);
 
   const { containerStyle, ...restTextInputProps } = textInputProps || {};
-  // TODO Error handling
+
   return (
     <View style={containerStyle}>
       <TextInput
@@ -40,7 +38,11 @@ export const TextInputController = <T extends FieldValues>({
         ref={ref}
       />
       {error && (
-        <Typography variant="xs" color="red" style={{ marginLeft: 8 }}>
+        <Typography
+          variant="xs"
+          color="red"
+          style={{ marginLeft: 8, marginTop: 4 }}
+        >
           {error.message}
         </Typography>
       )}
