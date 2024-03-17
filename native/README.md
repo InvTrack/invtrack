@@ -1,12 +1,25 @@
-# invtrack README
+# invtrack mobile app README
 
-## Introduction
+## Release
 
-this project uwu 🥰
+#### Format: major.minor.fix
+
+We require all app users to update to the latest version, be it an `expo-update`, or a store update. We achieve this by checking using the `expo-updates` api, as well as calling a little utility edge function that returns the current major.minor version (may change to a config table in the future?).
+
+- we bump the minor number for every new build submitted to stores,
+- we bump the fix number for every `expo-updates` update
+
+### TODO list for releases
+
+    1. bump the minor/fix version in: `package.json`, `package-lock.json`, `app.config.js`
+    2. bump the ios `buildNumber` in `app.config.js` - equal to the `package.json` version
+    3. bump the android `versionCode` in `app.config.js` - M.m.f becomes M0.m0.f
+    4. commit to dev, merge dev into staging, test, merge staging into prod. -- TODO cherry-pick flow?
 
 ## Environment
 
-- everything regarding envs for local/build/update is defined in `config.ts`
+- everything regarding envs for local/build/update is defined in `config/env.js` and `app.config.js`
+- be sure to remove any `.env` files you may have before performing an `expo-update`
 
 ## Conventions
 
