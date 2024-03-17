@@ -3,7 +3,7 @@
 // This enables autocomplete, go to definition, etc.
 import { corsHeaders } from "../_shared/cors.ts";
 
-const currentMajorMinorAppVersion = "1.4";
+const currentMajorMinorAppVersion = "1.3";
 Deno.serve(async (req) => {
   // preflight request
   if (req.method === "OPTIONS") {
@@ -16,6 +16,7 @@ Deno.serve(async (req) => {
     return new Response(currentMajorMinorAppVersion, {
       headers: {
         ...corsHeaders,
+        "Content-Type": "application/json",
       },
       status: 200,
     });
