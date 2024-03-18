@@ -19,6 +19,7 @@ const devInfoString =
   appVersion;
 
 export let EnvConfig = {
+  isDevEnv,
   env: process.env?.EXPO_ENV || process.env.NODE_ENV,
   supabaseUrl: "http://172.20.10.14:54321",
   supabaseAnonKey:

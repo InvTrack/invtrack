@@ -6,6 +6,13 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 /**
+ * Update Required Stack
+ */
+export type UpdateRequiredStackParamList = {
+  UpdateRequiredScreen: undefined;
+};
+
+/**
  * Login Stack
  */
 export type LoginStackParamList = {
