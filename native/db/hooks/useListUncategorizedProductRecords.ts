@@ -8,11 +8,11 @@ type RecordViewNullCategoryName =
         ? null
         : RecordView[K];
     }
-  | undefined;
+  | null;
 
 const listUncategorizedProductRecords = async (
   inventoryId: number
-): Promise<RecordViewNullCategoryName[]> => {
+): Promise<RecordViewNullCategoryName[] | null> => {
   const response = await supabase
     .from("record_view")
     .select(

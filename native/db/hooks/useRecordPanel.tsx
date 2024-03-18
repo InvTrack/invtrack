@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { DeliveryForm } from "../../components/DeliveryFormContext/deliveryForm.types";
 import { InventoryForm } from "../../components/InventoryFormContext/inventoryForm.types";
 import { useGetRecord } from "./useGetRecord";
-
+type Form = DeliveryForm | InventoryForm;
 /**
  * This hook simplifies the process of populating the form with the backend data.
  * Registers the records as needed, returns values needed to manipulate the form in a safe way.
@@ -14,7 +14,7 @@ import { useGetRecord } from "./useGetRecord";
  */
 export const useRecordPanel = (recordId: number) => {
   const recordResult = useGetRecord(recordId);
-  const form = useFormContext<DeliveryForm | InventoryForm>();
+  const form = useFormContext<Form>();
   if (!form) throw new Error("Missing form context");
 
   const { data: record, isSuccess } = recordResult;
@@ -30,6 +30,7 @@ export const useRecordPanel = (recordId: number) => {
           value: {
             quantity: record.quantity,
             product_id: record.product_id,
+            price_per_unit: record.price_per_unit,
           },
         });
       }
@@ -49,10 +50,28 @@ export const useRecordPanel = (recordId: number) => {
       if (shouldUpdateQuantity) {
         form.setValue(`${recordId.toString()}.quantity`, record.quantity);
       }
+      const shouldUpdatePrice =
+        record.price_per_unit !==
+          form.getValues()[recordId.toString()]?.price_per_unit &&
+        !form.getFieldState(`${recordId.toString()}.price_per_unit`).isDirty;
+
+      if (shouldUpdatePrice) {
+        form.setValue(
+          `${recordId.toString()}.price_per_unit`,
+          record.price_per_unit
+        );
+      }
     }
-  }, [recordId, record?.product_id, record?.quantity, isSuccess]);
+  }, [
+    recordId,
+    record?.product_id,
+    record?.quantity,
+    record?.price_per_unit,
+    isSuccess,
+  ]);
 
   const quantity = form.watch(`${recordId.toString()}.quantity`) ?? 0;
+  const price = form.watch(`${recordId.toString()}.price_per_unit`) ?? 0;
 
   const setQuantity = useCallback(
     (quantity: number) => {
@@ -66,6 +85,21 @@ export const useRecordPanel = (recordId: number) => {
     },
     [form, recordId, quantity]
   );
+
+  const setPrice = useCallback(
+    (price: number) => {
+      console.log("setPrice");
+      if (price < 0) return;
+      // dot notation is more performant
+      form.setValue(`${recordId.toString()}.price_per_unit`, price, {
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+      return;
+    },
+    [form, recordId, price]
+  );
+
   const stepperFunction = useCallback(
     (step: number) =>
       ({
@@ -103,6 +137,8 @@ export const useRecordPanel = (recordId: number) => {
       steppers: { negative: [], positive: [] },
       setQuantity,
       quantity,
+      setPrice,
+      price,
       ...recordResult,
     } as const;
 
@@ -113,6 +149,8 @@ export const useRecordPanel = (recordId: number) => {
     },
     setQuantity,
     quantity,
+    setPrice,
+    price,
     ...recordResult,
   } as const;
 };

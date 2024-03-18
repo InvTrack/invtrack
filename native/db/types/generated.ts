@@ -211,6 +211,7 @@ export interface Database {
           created_at: string;
           id: number;
           inventory_id: number;
+          price_per_unit: number | null;
           product_id: number;
           quantity: number;
         };
@@ -218,6 +219,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           inventory_id: number;
+          price_per_unit?: number | null;
           product_id: number;
           quantity: number;
         };
@@ -225,6 +227,7 @@ export interface Database {
           created_at?: string;
           id?: number;
           inventory_id?: number;
+          price_per_unit?: number | null;
           product_id?: number;
           quantity?: number;
         };
@@ -364,6 +367,7 @@ export interface Database {
           id: number | null;
           inventory_id: number | null;
           name: string | null;
+          price_per_unit: number | null;
           product_id: number | null;
           quantity: number | null;
           steps: number[] | null;
@@ -425,6 +429,7 @@ export interface Database {
           created_at: string;
           id: number;
           inventory_id: number;
+          price_per_unit: number | null;
           product_id: number;
           quantity: number;
         };

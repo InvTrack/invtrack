@@ -16,13 +16,17 @@ export const Collapsible = ({
   sections,
   ListHeaderComponent,
 }: {
-  sections: CollapsibleSection[];
+  sections: CollapsibleSection[] | null | undefined;
   ListHeaderComponent: ReactElement;
 }) => {
   const [expandedSections, setExpandedSections] = useState<
     CollapsibleSection["id"][]
   >([]);
   const styles = useStyles();
+
+  if (sections == null) {
+    return null;
+  }
 
   const toggleExpand = (sectionId: CollapsibleSection["id"]) => {
     if (expandedSections?.find((id) => id === sectionId)) {

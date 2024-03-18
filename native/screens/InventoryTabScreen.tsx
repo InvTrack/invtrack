@@ -93,7 +93,6 @@ export default function InventoryTabScreen({
         </View>
       </SafeAreaView>
     );
-
   return (
     <SafeAreaView edges={["left", "right"]}>
       <Collapsible
@@ -126,7 +125,7 @@ export default function InventoryTabScreen({
               </Button>
             </View>
             <IDListCardAdd inventoryId={inventoryId} />
-            {uncategorizedRecordList.map((record) => (
+            {uncategorizedRecordList?.map((record) => (
               <IDListCard
                 key={record!.id}
                 recordId={record!.id!}
@@ -138,7 +137,7 @@ export default function InventoryTabScreen({
             ))}
           </ScrollView>
         }
-        sections={categorizedRecordList!.map(({ title, data }, i) => ({
+        sections={categorizedRecordList?.map(({ title, data }, i) => ({
           id: i + 1,
           title: title,
           data: data.map((record) => (

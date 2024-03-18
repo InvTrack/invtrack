@@ -46,6 +46,9 @@
               </TableBodyCell>
               <TableBodyCell>
                 <Button class="hover:underline" href={`/products/${product.id}`}>Edytuj</Button>
+                <Button class="hover:underline" href={`/products/${product.id}/price`}
+                  >Wykres ceny</Button
+                >
               </TableBodyCell>
             </TableBodyRow>
           {/each}
@@ -72,6 +75,9 @@
               </TableBodyCell>
               <TableBodyCell>
                 <Button class="hover:underline" href={`/products/${product.id}`}>Edytuj</Button>
+                <Button class="hover:underline" href={`/products/${product.id}/price`}
+                  >Wykres ceny</Button
+                >
               </TableBodyCell>
             </TableBodyRow>
           {/each}

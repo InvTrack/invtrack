@@ -41,6 +41,11 @@ insert into public.inventory (name, date, company_id)
       ('Testowa Inwentaryzacja 9',  '2023-02-10 00:00:00+00', 1),
       ('Testowa Inwentaryzacja 10', '2023-02-11 00:00:00+00', 1);
 
+update public.product_record set price_per_unit = 19.0 where product_id = 1;
+update public.product_record set price_per_unit = 20.4 where id = 8;
+update public.product_record set price_per_unit = 21.0 where id = 15;
+update public.product_record set price_per_unit = 20.1 where id = 22;
+
 -- insert into public.product_record (inventory_id, product_id, quantity) values 
 --     (1, 1, 5),
 --     (1, 2, 31.0),
