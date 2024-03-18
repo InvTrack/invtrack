@@ -1,14 +1,8 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useRef } from "react";
-import {
-  Animated,
-  Easing,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Animated, Easing, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { BottomTabNavigatorScreen } from "../../navigation/types";
 import { TabBarDot } from "./TabBarDot";
 import { TabBarTriangleCover } from "./TabBarTriangleCover";
@@ -20,6 +14,7 @@ export const CleanTabBar = (props: BottomTabBarProps) => {
 
   return (
     <SafeAreaView
+      edges={["bottom"]}
       style={[
         CleanTabBarStyle.container,
         {

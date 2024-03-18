@@ -1,10 +1,11 @@
 // import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Keyboard, StyleSheet, View } from "react-native";
+import { Keyboard, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { isAndroid } from "../../../constants";
 import { createStyles } from "../../../theme/useStyles";
+import { formatFloatString } from "../../../utils";
 import { useKeyboard } from "../../../utils/useKeyboard";
 import { Button } from "../../Button";
 import TextInputController from "../../TextInputController";
@@ -44,46 +45,18 @@ export const InputBottomSheetContent = ({
 
   const isErrored = !!formState.errors.quantity?.message;
 
-  // useEffect(() => {
-  //   // hack needed to make android focus the input
-  //   if (isAndroid) {
-  //     setTimeout(() => {
-  //       setFocus("quantity");
-  //     }, 1);
-  //     return;
-  //   }
-  //   setFocus("quantity");
-  // }, []);
-
-  // useEffect(() => {
-  //   const keyboardWillHide = Keyboard.addListener("keyboardWillHide", () =>
-  //     setFocus("quantity")
-  //   );
-  //   const keyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
-  //     setFocus("quantity")
-  //   );
-  //   const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () => {
-  //     setFocus("quantity");
-  //   });
-  //   return () => {
-  //     keyboardWillHide.remove();
-  //     keyboardDidHide.remove();
-  //     keyboardDidShow.remove();
-  //   };
-  // }, [isErrored, setFocus, handleSubmit]);
-
   const onSubmit = (data: InputBottomSheetForm) => {
     !isErrored && Keyboard.dismiss();
-    setQuantity(parseFloat(data.quantity.replace(/,/g, ".")));
+    setQuantity(formatFloatString(data.quantity));
     !isErrored && closeBottomSheet();
   };
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={[
         styles.container,
         {
-          height: keyboardHeight + (isAndroid ? 0 : 156),
+          height: isAndroid ? undefined : keyboardHeight + 156,
           paddingBottom: insets.bottom + 16,
         },
       ]}
@@ -130,7 +103,7 @@ export const InputBottomSheetContent = ({
           autoFocus: true,
         }}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

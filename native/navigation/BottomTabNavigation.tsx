@@ -88,6 +88,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
         <DeliveryStack.Screen
           name="RecordScreen"
           component={RecordScreen}
+          initialParams={{ isDelivery: true }}
           options={{
             headerBackground: () => (
               <View
