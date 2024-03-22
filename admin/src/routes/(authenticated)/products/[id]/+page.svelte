@@ -8,6 +8,7 @@
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
   import { currentCompanyId } from "$lib/store";
+  import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
 
   export let data;
   let { supabase, product } = data;
@@ -26,6 +27,7 @@
   let loading = false;
   let unsavedChanges = false;
   let unsavedChangesModal = false;
+  let confirmationModal = false;
   let barcodeErrorModal = false;
   const id = $page.params.id;
 
@@ -119,10 +121,17 @@
     }
     unsavedChanges = true;
   };
+
+  const deleteProduct = () => {
+    genericUpdate(supabase.from("product").delete().eq("id", id), {
+      onSuccess: "/products",
+    });
+  };
+  const deleteProductConfirmation = () => (confirmationModal = true);
 </script>
 
 {#if product}
-  <ScreenCard header={"Produkt - " + product.name}>
+  <ScreenCard header={"Produkt - " + product.name} class="flex flex-col">
     <UnsavedWarningModal
       bind:open={unsavedChangesModal}
       onContinue={onUnsavedWarningContinue}
@@ -136,7 +145,12 @@
         barcodeErrorModal = false;
       }}
     />
-    <form on:submit|preventDefault={update} on:change={onFormChange}>
+    <ConfirmationModal
+      bind:open={confirmationModal}
+      message="Czy na pewno chcesz usunąć ten produkt?"
+      onConfirm={deleteProduct}
+    />
+    <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
       <Label class="space-y-2">
         <Span>Nazwa</Span>
         <Input type="text" name="name" required bind:value={name} />
@@ -192,5 +206,8 @@
         >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
       >
     </form>
+    <Button type="submit" class="w-fit self-end" color="red" on:click={deleteProductConfirmation}
+      >Usuń ten produkt</Button
+    >
   </ScreenCard>
 {/if}

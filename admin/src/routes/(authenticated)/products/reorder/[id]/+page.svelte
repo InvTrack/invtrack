@@ -52,9 +52,7 @@
       onSuccess: "/products/reorder",
     });
   };
-  const deleteCategoryConfirmation = () => {
-    confirmationModal = true;
-  };
+  const deleteCategoryConfirmation = () => (confirmationModal = true);
 
   const onUnsavedWarningContinue = () => {
     unsavedChanges = false;
@@ -64,12 +62,10 @@
     }
   };
 
-  const onFormChange = () => {
-    unsavedChanges = true;
-  };
+  const onFormChange = () => (unsavedChanges = true);
 </script>
 
-<ScreenCard header={"Kategoria - " + category.name}>
+<ScreenCard header={"Kategoria - " + category.name} class="flex flex-col">
   <UnsavedWarningModal
     bind:open={unsavedChangesModal}
     onContinue={onUnsavedWarningContinue}
@@ -80,7 +76,7 @@
     message="Czy na pewno chcesz usunąć tą kategorię?"
     onConfirm={deleteCategory}
   />
-  <form on:submit|preventDefault={update} on:change={onFormChange}>
+  <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
     <Label class="space-y-2">
       <Span>Nazwa</Span>
       <Input type="text" name="name" required bind:value={name} />
