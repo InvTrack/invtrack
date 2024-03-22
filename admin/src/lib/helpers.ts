@@ -32,3 +32,4 @@ export const getPaginationRange = (page: number, width: number): [number, number
 
 type Parent = {supabase: SupabaseClient<Database>}
 export type LoadFunctionArgument = {parent: () => Promise<Parent>}
+export type LoadFunctionWithIdArgument = LoadFunctionArgument & {params: {id: number}}

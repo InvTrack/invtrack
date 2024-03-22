@@ -130,84 +130,82 @@
   const deleteProductConfirmation = () => (confirmationModal = true);
 </script>
 
-{#if product}
-  <ScreenCard header={"Produkt - " + product.name} class="flex flex-col">
-    <UnsavedWarningModal
-      bind:open={unsavedChangesModal}
-      onContinue={onUnsavedWarningContinue}
-      onStay={() => (unsavedChangesModal = false)}
-    />
-    <ErrorModal
-      open={barcodeErrorModal}
-      message="Nie udało się dodać kodu - już istnieje dla tego lub innego produktu"
-      confirmText="OK"
-      onConfirm={() => {
-        barcodeErrorModal = false;
-      }}
-    />
-    <ConfirmationModal
-      bind:open={confirmationModal}
-      message="Czy na pewno chcesz usunąć ten produkt?"
-      onConfirm={deleteProduct}
-    />
-    <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
-      <Label class="space-y-2">
-        <Span>Nazwa</Span>
-        <Input type="text" name="name" required bind:value={name} />
-      </Label>
-      <Label class="space-y-2 mt-2">
-        <Span>Jednostka</Span>
-        <Input type="text" name="unit" required bind:value={unit} />
-      </Label>
-      <Label class="space-y-2 mt-2">
-        <Span>Próg powiadomień</Span>
-        <div class="flex flex-row gap-4">
-          <Input type="text" name="steps" required bind:value={notificationThreshold} />
-        </div>
-      </Label>
-      <Label class="space-y-2 mt-2">
-        <Span>Step</Span>
-        <div class="flex flex-row gap-4">
-          <Input type="text" name="steps" required bind:value={steps[0]} />
-          <Input type="text" name="steps" required bind:value={steps[1]} />
-          <Input type="text" name="steps" required bind:value={steps[2]} />
-        </div>
-      </Label>
-      <div class="space-y-2 mt-2">
-        <Span>Kody</Span>
-        <div class="flex flex-col gap-4">
-          <div class="grid grid-cols-2 place-items-start gap-4">
-            <div class="col-span-2 flex gap-4 w-full">
-              <Input
-                type="text"
-                name="steps"
-                placeholder="Dodaj nowy kod"
-                class="h-min w-full"
-                bind:value={newBarcode}
-              />
-              <Button color="primary" class="shrink-0" on:click={addBarcode}>Dodaj kod</Button>
-            </div>
-            {#each barcodes as _barcode, i}
-              <Input
-                type="text"
-                name="steps"
-                readonly
-                class="h-fit focus:ring-0 focus:border-gray-300 focus:dark:border-gray-600"
-                required
-                bind:value={barcodes[i]}
-              >
-                <CloseCircleSolid slot="right" on:click={() => deleteBarcode(i)} />
-              </Input>
-            {/each}
+<ScreenCard header={"Produkt - " + product.name} class="flex flex-col">
+  <UnsavedWarningModal
+    bind:open={unsavedChangesModal}
+    onContinue={onUnsavedWarningContinue}
+    onStay={() => (unsavedChangesModal = false)}
+  />
+  <ErrorModal
+    open={barcodeErrorModal}
+    message="Nie udało się dodać kodu - już istnieje dla tego lub innego produktu"
+    confirmText="OK"
+    onConfirm={() => {
+      barcodeErrorModal = false;
+    }}
+  />
+  <ConfirmationModal
+    bind:open={confirmationModal}
+    message="Czy na pewno chcesz usunąć ten produkt?"
+    onConfirm={deleteProduct}
+  />
+  <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
+    <Label class="space-y-2">
+      <Span>Nazwa</Span>
+      <Input type="text" name="name" required bind:value={name} />
+    </Label>
+    <Label class="space-y-2 mt-2">
+      <Span>Jednostka</Span>
+      <Input type="text" name="unit" required bind:value={unit} />
+    </Label>
+    <Label class="space-y-2 mt-2">
+      <Span>Próg powiadomień</Span>
+      <div class="flex flex-row gap-4">
+        <Input type="text" name="steps" required bind:value={notificationThreshold} />
+      </div>
+    </Label>
+    <Label class="space-y-2 mt-2">
+      <Span>Step</Span>
+      <div class="flex flex-row gap-4">
+        <Input type="text" name="steps" required bind:value={steps[0]} />
+        <Input type="text" name="steps" required bind:value={steps[1]} />
+        <Input type="text" name="steps" required bind:value={steps[2]} />
+      </div>
+    </Label>
+    <div class="space-y-2 mt-2">
+      <Span>Kody</Span>
+      <div class="flex flex-col gap-4">
+        <div class="grid grid-cols-2 place-items-start gap-4">
+          <div class="col-span-2 flex gap-4 w-full">
+            <Input
+              type="text"
+              name="steps"
+              placeholder="Dodaj nowy kod"
+              class="h-min w-full"
+              bind:value={newBarcode}
+            />
+            <Button color="primary" class="shrink-0" on:click={addBarcode}>Dodaj kod</Button>
           </div>
+          {#each barcodes as _barcode, i}
+            <Input
+              type="text"
+              name="steps"
+              readonly
+              class="h-fit focus:ring-0 focus:border-gray-300 focus:dark:border-gray-600"
+              required
+              bind:value={barcodes[i]}
+            >
+              <CloseCircleSolid slot="right" on:click={() => deleteBarcode(i)} />
+            </Input>
+          {/each}
         </div>
       </div>
-      <Button type="submit" class="mt-4" color="primary"
-        >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
-      >
-    </form>
-    <Button type="submit" class="w-fit self-end" color="red" on:click={deleteProductConfirmation}
-      >Usuń ten produkt</Button
+    </div>
+    <Button type="submit" class="mt-4" color="primary"
+      >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
     >
-  </ScreenCard>
-{/if}
+  </form>
+  <Button type="submit" class="w-fit self-end" color="red" on:click={deleteProductConfirmation}
+    >Usuń ten produkt</Button
+  >
+</ScreenCard>

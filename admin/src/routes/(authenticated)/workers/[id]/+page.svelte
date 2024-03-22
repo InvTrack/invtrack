@@ -53,25 +53,23 @@
   };
 </script>
 
-{#if worker}
-  <ScreenCard header={"Pracownik - " + worker.name}>
-    <UnsavedWarningModal
-      bind:open={unsavedChangesModal}
-      onContinue={onUnsavedWarningContinue}
-      onStay={() => (unsavedChangesModal = false)}
-    />
-    <form on:submit|preventDefault={update} on:change={onFormChange}>
-      <Label class="space-y-2">
-        <Span>Nazwa</Span>
-        <Input type="text" name="name" required bind:value={name} />
-      </Label>
-      <Label class="space-y-2 mt-2">
-        <Span>Admin</Span>
-        <Checkbox name="admin" bind:checked={is_admin} />
-      </Label>
-      <Button type="submit" class="mt-4" color="primary"
-        >{loading ? "Saving ..." : "Update worker"}</Button
-      >
-    </form>
-  </ScreenCard>
-{/if}
+<ScreenCard header={"Pracownik - " + worker.name}>
+  <UnsavedWarningModal
+    bind:open={unsavedChangesModal}
+    onContinue={onUnsavedWarningContinue}
+    onStay={() => (unsavedChangesModal = false)}
+  />
+  <form on:submit|preventDefault={update} on:change={onFormChange}>
+    <Label class="space-y-2">
+      <Span>Nazwa</Span>
+      <Input type="text" name="name" required bind:value={name} />
+    </Label>
+    <Label class="space-y-2 mt-2">
+      <Span>Admin</Span>
+      <Checkbox name="admin" bind:checked={is_admin} />
+    </Label>
+    <Button type="submit" class="mt-4" color="primary"
+      >{loading ? "Saving ..." : "Update worker"}</Button
+    >
+  </form>
+</ScreenCard>
