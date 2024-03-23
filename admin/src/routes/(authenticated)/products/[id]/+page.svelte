@@ -123,9 +123,12 @@
   };
 
   const deleteProduct = () => {
-    genericUpdate(supabase.from("product").delete().eq("id", id), {
-      onSuccess: "/products",
-    });
+    genericUpdate(
+      supabase.from("product").update({ deleted_at: new Date().toISOString() }).eq("id", id),
+      {
+        onSuccess: "/products",
+      }
+    );
   };
   const deleteProductConfirmation = () => (confirmationModal = true);
 </script>

@@ -4,7 +4,7 @@ import { error } from "@sveltejs/kit";
 export const load = async ({ parent }: LoadFunctionArgument) => {
   const { supabase } = await parent();
   const { data: products, error: error1 } = await supabase
-    .from("product")
+    .from("existing_products")
     .select("*")
     .order("display_order", { ascending: true });
 
@@ -14,7 +14,7 @@ export const load = async ({ parent }: LoadFunctionArgument) => {
     .from("product_category")
     .select(
       `*,
-       items:product(*)
+       items:existing_products(*)
     `
     )
     .order("display_order", { ascending: true });
