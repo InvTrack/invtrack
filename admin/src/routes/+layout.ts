@@ -1,12 +1,12 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
-import type { Database } from "$lib/database.types.js";
+import type { PatchedDatabase } from "$lib/helpers";
 import { currentCompanyId } from "$lib/store.js";
 import { createSupabaseLoadClient } from "@supabase/auth-helpers-sveltekit";
 
 export const load = async ({ fetch, data, depends }) => {
   depends("supabase:auth");
 
-  const supabase = createSupabaseLoadClient<Database>({
+  const supabase = createSupabaseLoadClient<PatchedDatabase>({
     supabaseUrl: PUBLIC_SUPABASE_URL,
     supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
     event: { fetch },

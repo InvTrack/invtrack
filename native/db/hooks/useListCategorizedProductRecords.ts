@@ -60,9 +60,5 @@ const listCategorizedProductRecords = async (
 export const useListCategorizedProductRecords = (inventoryId: number) =>
   useQuery(
     ["listCategorizedProductRecords", inventoryId],
-    async () => await listCategorizedProductRecords(inventoryId),
-    {
-      cacheTime: 100,
-      staleTime: 100,
-    }
+    async () => await listCategorizedProductRecords(inventoryId)
   );

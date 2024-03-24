@@ -65,7 +65,7 @@ export const Button = forwardRef(
     const isStringChildren = typeof children === "string";
     return (
       <TouchableOpacity
-        onPress={(e) => debounceOnPress(e, onPress)}
+        onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
         style={[
           styles.buttonBase,
           styles[type],

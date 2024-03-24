@@ -125,34 +125,42 @@ export default function InventoryTabScreen({
               </Button>
             </View>
             <IDListCardAdd inventoryId={inventoryId} />
-            {uncategorizedRecordList?.map((record) => (
-              <IDListCard
-                key={record!.id}
-                recordId={record!.id!}
-                id={+inventoryId}
-                quantity={record!.quantity!}
-                unit={record!.unit!}
-                name={record!.name!}
-              />
-            ))}
+            {uncategorizedRecordList?.map((record) =>
+              record ? (
+                <IDListCard
+                  key={record.id}
+                  recordId={record.id!}
+                  id={+inventoryId}
+                  quantity={record.quantity!}
+                  unit={record.unit!}
+                  name={record.name!}
+                />
+              ) : (
+                <></>
+              )
+            )}
           </ScrollView>
         }
         sections={categorizedRecordList?.map(({ title, data }, i) => ({
           id: i + 1,
           title: title,
-          data: data.map((record) => (
-            <IDListCard
-              key={record!.id}
-              recordId={record!.id!}
-              id={+inventoryId}
-              quantity={record!.quantity!}
-              unit={record!.unit!}
-              name={record!.name!}
-              borderBottom={data![data!.length - 1]!.id === record!.id}
-              borderLeft
-              borderRight
-            />
-          )),
+          data: data.map((record) =>
+            record ? (
+              <IDListCard
+                key={record.id}
+                recordId={record.id!}
+                id={+inventoryId}
+                quantity={record.quantity!}
+                unit={record.unit!}
+                name={record.name!}
+                borderBottom={data![data.length - 1]?.id === record.id}
+                borderLeft
+                borderRight
+              />
+            ) : (
+              <></>
+            )
+          ),
         }))}
       />
     </SafeAreaView>

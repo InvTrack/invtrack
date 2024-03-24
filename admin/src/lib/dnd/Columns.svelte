@@ -1,7 +1,7 @@
 <script lang="ts">
   import { flip } from "svelte/animate";
   import { dndzone, type DndEvent } from "svelte-dnd-action";
-  import { Badge } from "flowbite-svelte";
+  import { Badge, Button } from "flowbite-svelte";
   import type { Columns, DndColumnEvent, DndItemEvent } from "./types";
 
   export let columnsContainer: { columns: Columns };
@@ -61,6 +61,7 @@
           <div>...</div>
         {/if}
       </div>
+      <Button class="hover:underline" href={`/products/reorder/${column.id}`}>Edytuj</Button>
     </div>
   {/each}
 </section>

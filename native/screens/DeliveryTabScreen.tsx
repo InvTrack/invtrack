@@ -135,35 +135,43 @@ export default function DeliveryTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
-            {uncategorizedRecordList?.map((record) => (
-              <IDListCard
-                key={record!.id}
-                recordId={record!.id!}
-                id={+inventoryId}
-                quantity={record!.quantity!}
-                unit={record!.unit!}
-                name={record!.name!}
-              />
-            ))}
+            {uncategorizedRecordList?.map((record) =>
+              record ? (
+                <IDListCard
+                  key={record.id}
+                  recordId={record.id!}
+                  id={+inventoryId}
+                  quantity={record.quantity!}
+                  unit={record.unit!}
+                  name={record.name}
+                />
+              ) : (
+                <></>
+              )
+            )}
             <IDListCardAdd inventoryId={inventoryId} />
           </ScrollView>
         }
         sections={categorizedRecordList?.map(({ title, data }, i) => ({
           id: i + 1,
           title: title,
-          data: data.map((record) => (
-            <IDListCard
-              key={record!.id}
-              recordId={record!.id!}
-              id={+inventoryId}
-              quantity={record!.quantity!}
-              unit={record!.unit!}
-              name={record!.name!}
-              borderBottom={data![data!.length - 1]!.id === record!.id}
-              borderLeft
-              borderRight
-            />
-          )),
+          data: data.map((record) =>
+            record ? (
+              <IDListCard
+                key={record.id}
+                recordId={record.id!}
+                id={+inventoryId}
+                quantity={record.quantity!}
+                unit={record.unit!}
+                name={record.name}
+                borderBottom={data[data.length - 1]?.id === record.id}
+                borderLeft
+                borderRight
+              />
+            ) : (
+              <></>
+            )
+          ),
         }))}
       />
     </SafeAreaView>
