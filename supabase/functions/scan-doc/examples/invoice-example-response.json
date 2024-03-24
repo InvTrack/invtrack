@@ -1,0 +1,3470 @@
+{
+  "status": "succeeded",
+  "createdDateTime": "2024-03-23T11:16:25Z",
+  "lastUpdatedDateTime": "2024-03-23T11:16:30Z",
+  "analyzeResult": {
+    "apiVersion": "2024-02-29-preview",
+    "modelId": "prebuilt-invoice",
+    "stringIndexType": "textElements",
+    "content": "Sprzedawca:\nTAURON Sprzedaż GZE sp. z o.o.\n44-100 GLIWICE, UL. NORBERTA BARLICKIEGO 2\nNIP: 631-22-41-337\nSąd Rejonowy w Gliwicach\nX Wydział Gospodarczy KRS\nTAURON\nKRS 0000036971\nKapitał zakładowy 27 688 500 zł\nBANK ING BANK ŚLĄSKI\n11 1050 0099 6014 0210 0025 9073\nAdres korespondencyjny:\nTAURON Obsługa Klienta sp. z o.o.\nUL. LWOWSKA 23, 40-389 KATOWICE\nKontakt z Wystawcą faktury:\nAdresat:\ntel .: 32 606 0 606\nemail: firma@tauron.pl, www.mojtauron.pl\n44-270 RYBNIK\n'A\n44-270 RYBNIK\nNIP\nFAKTURA VAT NR E/GM/0356462/22 - Obraz Faktury\nZA ENERGIĘ ELEKTRYCZNĄ I USŁUGI DYSTRYBUCJI\nZa okres od 16/07/2022 do 15/09/2022\nLp:\nRozliczenie z tytułu\nWartość netto\nStawka VAT\nKwota VAT\nWartość brutto\nZużycie\n(zł)\n(%)\n(zł)\n(zł)\n[kWh]\n1.\nSprzedaży energii elektrycznej\n15 038,53\n5\n751,93\n15 790,46\n9869\n2.\nŚwiadczonych usług dystrybucji\n2 383,65\n5\n119,18\n2 502,83\n9869\n3.\nWynik rozliczenia ( 1 + 2)\n17 422,18\n5\n871,11\n18 293,29\n4.\nOdsetki za nieterminowe wpłaty\nnp*\n164,38\n5\nDo zapłaty ( 3 + 4 )\n18 457,67\nW tym\nStawka VAT (%)\nWartość netto (zł)\nKwota VAT (zł)\nWartość brutto (zł)\n5\n17 422,18\n871,11\n18 293,29\nOd 9869 kWh energii elektrycznej naliczono akcyzę w kwocie 45,39 zł.\nDo zapłaty:\n18 457,67 zł\nTermin płatności:\n10/10/2022\nSłownie: osiemnaście tysięcy czterysta pięćdziesiąt siedem złotych sześćdziesiąt siedem\ngroszy\nWyszczególnienie odsetek\nNr dokumentu\nData wpłaty\nIlość dni\nOpłata\nFVE E/GM/0265645/22\n25/08/2022\n20\n26,30\nFVE E/GM/0265645/22\n04/09/2022\n30\n138,08\nWystawił:\nCentrum\nRozliczeń: M.T\nData wystawienia:\n22/09/2022\n* np - nie podlega ustawie o podatku od towarów i usług",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "angle": 0,
+        "width": 1077,
+        "height": 1440,
+        "unit": "pixel",
+        "words": [
+          {
+            "content": "Sprzedawca:",
+            "polygon": [32, 43, 126, 42, 127, 62, 32, 64],
+            "confidence": 0.993,
+            "span": { "offset": 0, "length": 11 }
+          },
+          {
+            "content": "TAURON",
+            "polygon": [40, 64, 90, 63, 91, 81, 41, 81],
+            "confidence": 0.993,
+            "span": { "offset": 12, "length": 6 }
+          },
+          {
+            "content": "Sprzedaż",
+            "polygon": [95, 63, 147, 62, 147, 80, 95, 81],
+            "confidence": 0.865,
+            "span": { "offset": 19, "length": 8 }
+          },
+          {
+            "content": "GZE",
+            "polygon": [150, 62, 174, 62, 175, 80, 151, 80],
+            "confidence": 0.994,
+            "span": { "offset": 28, "length": 3 }
+          },
+          {
+            "content": "sp.",
+            "polygon": [178, 62, 195, 62, 195, 80, 178, 80],
+            "confidence": 0.961,
+            "span": { "offset": 32, "length": 3 }
+          },
+          {
+            "content": "z",
+            "polygon": [198, 62, 204, 63, 204, 80, 198, 80],
+            "confidence": 0.995,
+            "span": { "offset": 36, "length": 1 }
+          },
+          {
+            "content": "o.o.",
+            "polygon": [207, 63, 231, 63, 231, 79, 207, 80],
+            "confidence": 0.927,
+            "span": { "offset": 38, "length": 4 }
+          },
+          {
+            "content": "44-100",
+            "polygon": [39, 82, 78, 81, 78, 98, 39, 99],
+            "confidence": 0.992,
+            "span": { "offset": 43, "length": 6 }
+          },
+          {
+            "content": "GLIWICE,",
+            "polygon": [81, 81, 136, 80, 136, 98, 81, 98],
+            "confidence": 0.725,
+            "span": { "offset": 50, "length": 8 }
+          },
+          {
+            "content": "UL.",
+            "polygon": [139, 80, 159, 80, 159, 97, 139, 98],
+            "confidence": 0.829,
+            "span": { "offset": 59, "length": 3 }
+          },
+          {
+            "content": "NORBERTA",
+            "polygon": [162, 80, 230, 79, 230, 97, 162, 97],
+            "confidence": 0.993,
+            "span": { "offset": 63, "length": 8 }
+          },
+          {
+            "content": "BARLICKIEGO",
+            "polygon": [234, 79, 320, 80, 320, 97, 234, 97],
+            "confidence": 0.962,
+            "span": { "offset": 72, "length": 11 }
+          },
+          {
+            "content": "2",
+            "polygon": [325, 80, 333, 80, 333, 97, 325, 97],
+            "confidence": 0.995,
+            "span": { "offset": 84, "length": 1 }
+          },
+          {
+            "content": "NIP:",
+            "polygon": [38, 99, 63, 99, 63, 116, 38, 117],
+            "confidence": 0.897,
+            "span": { "offset": 86, "length": 4 }
+          },
+          {
+            "content": "631-22-41-337",
+            "polygon": [66, 99, 150, 99, 150, 116, 66, 116],
+            "confidence": 0.914,
+            "span": { "offset": 91, "length": 13 }
+          },
+          {
+            "content": "Sąd",
+            "polygon": [38, 118, 60, 118, 60, 136, 39, 136],
+            "confidence": 0.995,
+            "span": { "offset": 105, "length": 3 }
+          },
+          {
+            "content": "Rejonowy",
+            "polygon": [63, 118, 117, 117, 117, 136, 64, 136],
+            "confidence": 0.972,
+            "span": { "offset": 109, "length": 8 }
+          },
+          {
+            "content": "w",
+            "polygon": [120, 117, 131, 117, 131, 135, 121, 136],
+            "confidence": 0.961,
+            "span": { "offset": 118, "length": 1 }
+          },
+          {
+            "content": "Gliwicach",
+            "polygon": [134, 117, 188, 117, 188, 134, 135, 135],
+            "confidence": 0.948,
+            "span": { "offset": 120, "length": 9 }
+          },
+          {
+            "content": "X",
+            "polygon": [38, 135, 46, 135, 46, 153, 38, 153],
+            "confidence": 0.945,
+            "span": { "offset": 130, "length": 1 }
+          },
+          {
+            "content": "Wydział",
+            "polygon": [49, 135, 94, 135, 93, 153, 49, 153],
+            "confidence": 0.963,
+            "span": { "offset": 132, "length": 7 }
+          },
+          {
+            "content": "Gospodarczy",
+            "polygon": [97, 135, 168, 134, 168, 153, 97, 153],
+            "confidence": 0.969,
+            "span": { "offset": 140, "length": 11 }
+          },
+          {
+            "content": "KRS",
+            "polygon": [172, 134, 200, 134, 200, 152, 171, 152],
+            "confidence": 0.99,
+            "span": { "offset": 152, "length": 3 }
+          },
+          {
+            "content": "TAURON",
+            "polygon": [731, 135, 862, 136, 863, 168, 731, 168],
+            "confidence": 0.994,
+            "span": { "offset": 156, "length": 6 }
+          },
+          {
+            "content": "KRS",
+            "polygon": [36, 153, 62, 153, 63, 170, 37, 171],
+            "confidence": 0.995,
+            "span": { "offset": 163, "length": 3 }
+          },
+          {
+            "content": "0000036971",
+            "polygon": [66, 153, 137, 153, 137, 170, 66, 170],
+            "confidence": 0.987,
+            "span": { "offset": 167, "length": 10 }
+          },
+          {
+            "content": "Kapitał",
+            "polygon": [36, 172, 74, 171, 75, 189, 37, 189],
+            "confidence": 0.93,
+            "span": { "offset": 178, "length": 7 }
+          },
+          {
+            "content": "zakładowy",
+            "polygon": [78, 171, 137, 170, 138, 189, 78, 189],
+            "confidence": 0.557,
+            "span": { "offset": 186, "length": 9 }
+          },
+          {
+            "content": "27",
+            "polygon": [141, 170, 154, 170, 154, 189, 141, 189],
+            "confidence": 0.995,
+            "span": { "offset": 196, "length": 2 }
+          },
+          {
+            "content": "688",
+            "polygon": [158, 170, 178, 170, 178, 188, 158, 189],
+            "confidence": 0.996,
+            "span": { "offset": 199, "length": 3 }
+          },
+          {
+            "content": "500",
+            "polygon": [181, 170, 203, 170, 203, 188, 182, 188],
+            "confidence": 0.997,
+            "span": { "offset": 203, "length": 3 }
+          },
+          {
+            "content": "zł",
+            "polygon": [206, 170, 217, 170, 218, 187, 207, 187],
+            "confidence": 0.962,
+            "span": { "offset": 207, "length": 2 }
+          },
+          {
+            "content": "BANK",
+            "polygon": [37, 189, 70, 188, 70, 206, 37, 206],
+            "confidence": 0.992,
+            "span": { "offset": 210, "length": 4 }
+          },
+          {
+            "content": "ING",
+            "polygon": [73, 188, 96, 188, 96, 206, 73, 206],
+            "confidence": 0.995,
+            "span": { "offset": 215, "length": 3 }
+          },
+          {
+            "content": "BANK",
+            "polygon": [99, 188, 134, 188, 134, 206, 99, 206],
+            "confidence": 0.975,
+            "span": { "offset": 219, "length": 4 }
+          },
+          {
+            "content": "ŚLĄSKI",
+            "polygon": [138, 188, 183, 188, 183, 207, 138, 206],
+            "confidence": 0.877,
+            "span": { "offset": 224, "length": 6 }
+          },
+          {
+            "content": "11",
+            "polygon": [37, 207, 50, 207, 50, 225, 38, 225],
+            "confidence": 0.995,
+            "span": { "offset": 231, "length": 2 }
+          },
+          {
+            "content": "1050",
+            "polygon": [53, 207, 79, 206, 79, 225, 54, 225],
+            "confidence": 0.99,
+            "span": { "offset": 234, "length": 4 }
+          },
+          {
+            "content": "0099",
+            "polygon": [82, 206, 110, 206, 111, 225, 83, 225],
+            "confidence": 0.991,
+            "span": { "offset": 239, "length": 4 }
+          },
+          {
+            "content": "6014",
+            "polygon": [114, 206, 142, 206, 142, 225, 114, 225],
+            "confidence": 0.989,
+            "span": { "offset": 244, "length": 4 }
+          },
+          {
+            "content": "0210",
+            "polygon": [145, 206, 173, 206, 173, 225, 146, 225],
+            "confidence": 0.99,
+            "span": { "offset": 249, "length": 4 }
+          },
+          {
+            "content": "0025",
+            "polygon": [177, 206, 205, 206, 205, 224, 177, 225],
+            "confidence": 0.985,
+            "span": { "offset": 254, "length": 4 }
+          },
+          {
+            "content": "9073",
+            "polygon": [208, 206, 239, 206, 239, 224, 208, 224],
+            "confidence": 0.992,
+            "span": { "offset": 259, "length": 4 }
+          },
+          {
+            "content": "Adres",
+            "polygon": [25, 242, 68, 241, 69, 263, 26, 262],
+            "confidence": 0.993,
+            "span": { "offset": 264, "length": 5 }
+          },
+          {
+            "content": "korespondencyjny:",
+            "polygon": [73, 241, 220, 242, 220, 263, 73, 263],
+            "confidence": 0.972,
+            "span": { "offset": 270, "length": 17 }
+          },
+          {
+            "content": "TAURON",
+            "polygon": [35, 262, 86, 262, 86, 281, 35, 281],
+            "confidence": 0.994,
+            "span": { "offset": 288, "length": 6 }
+          },
+          {
+            "content": "Obsługa",
+            "polygon": [90, 262, 135, 263, 135, 282, 90, 281],
+            "confidence": 0.987,
+            "span": { "offset": 295, "length": 7 }
+          },
+          {
+            "content": "Klienta",
+            "polygon": [139, 263, 177, 263, 178, 282, 139, 282],
+            "confidence": 0.914,
+            "span": { "offset": 303, "length": 7 }
+          },
+          {
+            "content": "sp.",
+            "polygon": [181, 264, 198, 264, 198, 282, 181, 282],
+            "confidence": 0.995,
+            "span": { "offset": 311, "length": 3 }
+          },
+          {
+            "content": "z",
+            "polygon": [202, 264, 208, 264, 208, 282, 202, 282],
+            "confidence": 0.995,
+            "span": { "offset": 315, "length": 1 }
+          },
+          {
+            "content": "o.o.",
+            "polygon": [212, 264, 235, 265, 235, 282, 212, 282],
+            "confidence": 0.762,
+            "span": { "offset": 317, "length": 4 }
+          },
+          {
+            "content": "UL.",
+            "polygon": [34, 281, 52, 281, 53, 300, 34, 300],
+            "confidence": 0.745,
+            "span": { "offset": 322, "length": 3 }
+          },
+          {
+            "content": "LWOWSKA",
+            "polygon": [56, 281, 122, 281, 123, 300, 56, 300],
+            "confidence": 0.993,
+            "span": { "offset": 326, "length": 7 }
+          },
+          {
+            "content": "23,",
+            "polygon": [126, 281, 142, 281, 143, 300, 126, 300],
+            "confidence": 0.995,
+            "span": { "offset": 334, "length": 3 }
+          },
+          {
+            "content": "40-389",
+            "polygon": [146, 281, 184, 281, 184, 300, 146, 300],
+            "confidence": 0.972,
+            "span": { "offset": 338, "length": 6 }
+          },
+          {
+            "content": "KATOWICE",
+            "polygon": [188, 281, 257, 280, 257, 299, 188, 300],
+            "confidence": 0.994,
+            "span": { "offset": 345, "length": 8 }
+          },
+          {
+            "content": "Kontakt",
+            "polygon": [23, 315, 82, 315, 82, 338, 23, 337],
+            "confidence": 0.994,
+            "span": { "offset": 354, "length": 7 }
+          },
+          {
+            "content": "z",
+            "polygon": [86, 315, 93, 315, 94, 338, 86, 338],
+            "confidence": 0.995,
+            "span": { "offset": 362, "length": 1 }
+          },
+          {
+            "content": "Wystawcą",
+            "polygon": [98, 315, 173, 315, 174, 338, 98, 338],
+            "confidence": 0.993,
+            "span": { "offset": 364, "length": 8 }
+          },
+          {
+            "content": "faktury:",
+            "polygon": [178, 315, 237, 316, 238, 338, 178, 338],
+            "confidence": 0.982,
+            "span": { "offset": 373, "length": 8 }
+          },
+          {
+            "content": "Adresat:",
+            "polygon": [569, 302, 634, 301, 633, 323, 568, 323],
+            "confidence": 0.991,
+            "span": { "offset": 382, "length": 8 }
+          },
+          {
+            "content": "tel",
+            "polygon": [33, 338, 43, 337, 43, 355, 33, 355],
+            "confidence": 0.995,
+            "span": { "offset": 391, "length": 3 }
+          },
+          {
+            "content": ".:",
+            "polygon": [46, 337, 54, 337, 54, 355, 46, 355],
+            "confidence": 0.961,
+            "span": { "offset": 395, "length": 2 }
+          },
+          {
+            "content": "32",
+            "polygon": [58, 337, 71, 337, 72, 355, 58, 355],
+            "confidence": 0.995,
+            "span": { "offset": 398, "length": 2 }
+          },
+          {
+            "content": "606",
+            "polygon": [75, 337, 96, 337, 96, 355, 75, 355],
+            "confidence": 0.995,
+            "span": { "offset": 401, "length": 3 }
+          },
+          {
+            "content": "0",
+            "polygon": [99, 337, 106, 337, 106, 355, 99, 355],
+            "confidence": 0.878,
+            "span": { "offset": 405, "length": 1 }
+          },
+          {
+            "content": "606",
+            "polygon": [110, 338, 134, 338, 134, 355, 110, 355],
+            "confidence": 0.995,
+            "span": { "offset": 407, "length": 3 }
+          },
+          {
+            "content": "email:",
+            "polygon": [33, 357, 65, 356, 66, 375, 34, 375],
+            "confidence": 0.965,
+            "span": { "offset": 411, "length": 6 }
+          },
+          {
+            "content": "firma@tauron.pl,",
+            "polygon": [69, 356, 163, 356, 163, 376, 69, 375],
+            "confidence": 0.882,
+            "span": { "offset": 418, "length": 16 }
+          },
+          {
+            "content": "www.mojtauron.pl",
+            "polygon": [166, 356, 269, 357, 269, 376, 166, 376],
+            "confidence": 0.946,
+            "span": { "offset": 435, "length": 16 }
+          },
+          {
+            "content": "44-270",
+            "polygon": [577, 361, 616, 361, 616, 378, 577, 379],
+            "confidence": 0.991,
+            "span": { "offset": 452, "length": 6 }
+          },
+          {
+            "content": "RYBNIK",
+            "polygon": [619, 361, 667, 362, 668, 379, 620, 378],
+            "confidence": 0.982,
+            "span": { "offset": 459, "length": 6 }
+          },
+          {
+            "content": "'A",
+            "polygon": [423, 418, 438, 418, 437, 434, 423, 433],
+            "confidence": 0.597,
+            "span": { "offset": 466, "length": 2 }
+          },
+          {
+            "content": "44-270",
+            "polygon": [34, 456, 77, 455, 77, 473, 34, 473],
+            "confidence": 0.993,
+            "span": { "offset": 469, "length": 6 }
+          },
+          {
+            "content": "RYBNIK",
+            "polygon": [81, 455, 132, 455, 132, 472, 81, 473],
+            "confidence": 0.914,
+            "span": { "offset": 476, "length": 6 }
+          },
+          {
+            "content": "NIP",
+            "polygon": [33, 476, 58, 476, 58, 493, 33, 493],
+            "confidence": 0.961,
+            "span": { "offset": 483, "length": 3 }
+          },
+          {
+            "content": "FAKTURA",
+            "polygon": [15, 520, 91, 519, 91, 542, 15, 542],
+            "confidence": 0.995,
+            "span": { "offset": 487, "length": 7 }
+          },
+          {
+            "content": "VAT",
+            "polygon": [96, 519, 126, 519, 126, 542, 96, 542],
+            "confidence": 0.995,
+            "span": { "offset": 495, "length": 3 }
+          },
+          {
+            "content": "NR",
+            "polygon": [130, 519, 155, 520, 154, 542, 130, 542],
+            "confidence": 0.994,
+            "span": { "offset": 499, "length": 2 }
+          },
+          {
+            "content": "E/GM/0356462/22",
+            "polygon": [159, 520, 285, 521, 284, 544, 159, 542],
+            "confidence": 0.969,
+            "span": { "offset": 502, "length": 15 }
+          },
+          {
+            "content": "-",
+            "polygon": [289, 521, 298, 521, 298, 544, 289, 544],
+            "confidence": 0.908,
+            "span": { "offset": 518, "length": 1 }
+          },
+          {
+            "content": "Obraz",
+            "polygon": [303, 521, 347, 521, 346, 545, 302, 544],
+            "confidence": 0.994,
+            "span": { "offset": 520, "length": 5 }
+          },
+          {
+            "content": "Faktury",
+            "polygon": [351, 521, 411, 523, 410, 546, 351, 545],
+            "confidence": 0.993,
+            "span": { "offset": 526, "length": 7 }
+          },
+          {
+            "content": "ZA",
+            "polygon": [18, 543, 37, 543, 37, 566, 18, 566],
+            "confidence": 0.995,
+            "span": { "offset": 534, "length": 2 }
+          },
+          {
+            "content": "ENERGIĘ",
+            "polygon": [42, 543, 111, 543, 111, 566, 42, 566],
+            "confidence": 0.995,
+            "span": { "offset": 537, "length": 7 }
+          },
+          {
+            "content": "ELEKTRYCZNĄ",
+            "polygon": [115, 543, 229, 543, 229, 566, 116, 566],
+            "confidence": 0.962,
+            "span": { "offset": 545, "length": 11 }
+          },
+          {
+            "content": "I",
+            "polygon": [234, 543, 240, 543, 240, 566, 234, 566],
+            "confidence": 0.992,
+            "span": { "offset": 557, "length": 1 }
+          },
+          {
+            "content": "USŁUGI",
+            "polygon": [244, 543, 305, 544, 305, 566, 244, 566],
+            "confidence": 0.992,
+            "span": { "offset": 559, "length": 6 }
+          },
+          {
+            "content": "DYSTRYBUCJI",
+            "polygon": [309, 544, 423, 545, 423, 566, 309, 566],
+            "confidence": 0.993,
+            "span": { "offset": 566, "length": 11 }
+          },
+          {
+            "content": "Za",
+            "polygon": [18, 567, 34, 567, 34, 587, 18, 587],
+            "confidence": 0.995,
+            "span": { "offset": 578, "length": 2 }
+          },
+          {
+            "content": "okres",
+            "polygon": [38, 567, 71, 566, 71, 587, 38, 587],
+            "confidence": 0.995,
+            "span": { "offset": 581, "length": 5 }
+          },
+          {
+            "content": "od",
+            "polygon": [75, 566, 92, 566, 92, 587, 75, 587],
+            "confidence": 0.995,
+            "span": { "offset": 587, "length": 2 }
+          },
+          {
+            "content": "16/07/2022",
+            "polygon": [96, 566, 164, 566, 164, 587, 96, 587],
+            "confidence": 0.986,
+            "span": { "offset": 590, "length": 10 }
+          },
+          {
+            "content": "do",
+            "polygon": [168, 566, 184, 566, 184, 587, 168, 587],
+            "confidence": 0.995,
+            "span": { "offset": 601, "length": 2 }
+          },
+          {
+            "content": "15/09/2022",
+            "polygon": [188, 567, 261, 567, 261, 587, 188, 587],
+            "confidence": 0.993,
+            "span": { "offset": 604, "length": 10 }
+          },
+          {
+            "content": "Lp:",
+            "polygon": [35, 630, 58, 630, 58, 648, 35, 648],
+            "confidence": 0.94,
+            "span": { "offset": 615, "length": 3 }
+          },
+          {
+            "content": "Rozliczenie",
+            "polygon": [145, 630, 217, 631, 217, 650, 146, 650],
+            "confidence": 0.961,
+            "span": { "offset": 619, "length": 11 }
+          },
+          {
+            "content": "z",
+            "polygon": [221, 631, 227, 631, 227, 650, 221, 650],
+            "confidence": 0.995,
+            "span": { "offset": 631, "length": 1 }
+          },
+          {
+            "content": "tytułu",
+            "polygon": [231, 631, 268, 631, 268, 650, 231, 650],
+            "confidence": 0.993,
+            "span": { "offset": 633, "length": 6 }
+          },
+          {
+            "content": "Wartość",
+            "polygon": [380, 622, 432, 621, 432, 639, 380, 638],
+            "confidence": 0.993,
+            "span": { "offset": 640, "length": 7 }
+          },
+          {
+            "content": "netto",
+            "polygon": [436, 621, 469, 622, 469, 639, 436, 639],
+            "confidence": 0.993,
+            "span": { "offset": 648, "length": 5 }
+          },
+          {
+            "content": "Stawka",
+            "polygon": [523, 621, 569, 622, 569, 639, 524, 639],
+            "confidence": 0.993,
+            "span": { "offset": 654, "length": 6 }
+          },
+          {
+            "content": "VAT",
+            "polygon": [572, 622, 599, 622, 599, 638, 572, 639],
+            "confidence": 0.993,
+            "span": { "offset": 661, "length": 3 }
+          },
+          {
+            "content": "Kwota",
+            "polygon": [646, 622, 686, 622, 686, 639, 647, 639],
+            "confidence": 0.995,
+            "span": { "offset": 665, "length": 5 }
+          },
+          {
+            "content": "VAT",
+            "polygon": [689, 622, 716, 622, 716, 639, 689, 639],
+            "confidence": 0.995,
+            "span": { "offset": 671, "length": 3 }
+          },
+          {
+            "content": "Wartość",
+            "polygon": [783, 621, 834, 622, 833, 639, 783, 639],
+            "confidence": 0.994,
+            "span": { "offset": 675, "length": 7 }
+          },
+          {
+            "content": "brutto",
+            "polygon": [837, 622, 875, 623, 874, 639, 837, 639],
+            "confidence": 0.995,
+            "span": { "offset": 683, "length": 6 }
+          },
+          {
+            "content": "Zużycie",
+            "polygon": [966, 622, 1014, 622, 1015, 640, 966, 640],
+            "confidence": 0.861,
+            "span": { "offset": 690, "length": 7 }
+          },
+          {
+            "content": "(zł)",
+            "polygon": [415, 642, 439, 642, 439, 661, 415, 662],
+            "confidence": 0.974,
+            "span": { "offset": 698, "length": 4 }
+          },
+          {
+            "content": "(%)",
+            "polygon": [549, 642, 573, 642, 573, 660, 549, 660],
+            "confidence": 0.962,
+            "span": { "offset": 703, "length": 3 }
+          },
+          {
+            "content": "(zł)",
+            "polygon": [671, 642, 690, 642, 690, 661, 671, 661],
+            "confidence": 0.93,
+            "span": { "offset": 707, "length": 4 }
+          },
+          {
+            "content": "(zł)",
+            "polygon": [818, 642, 837, 642, 837, 661, 818, 661],
+            "confidence": 0.961,
+            "span": { "offset": 712, "length": 4 }
+          },
+          {
+            "content": "[kWh]",
+            "polygon": [969, 642, 1009, 642, 1009, 661, 969, 661],
+            "confidence": 0.992,
+            "span": { "offset": 717, "length": 5 }
+          },
+          {
+            "content": "1.",
+            "polygon": [26, 670, 36, 670, 36, 685, 26, 685],
+            "confidence": 0.847,
+            "span": { "offset": 723, "length": 2 }
+          },
+          {
+            "content": "Sprzedaży",
+            "polygon": [77, 670, 141, 669, 141, 691, 77, 690],
+            "confidence": 0.961,
+            "span": { "offset": 726, "length": 9 }
+          },
+          {
+            "content": "energii",
+            "polygon": [145, 669, 185, 670, 185, 691, 145, 691],
+            "confidence": 0.992,
+            "span": { "offset": 736, "length": 7 }
+          },
+          {
+            "content": "elektrycznej",
+            "polygon": [190, 670, 267, 671, 267, 692, 190, 691],
+            "confidence": 0.991,
+            "span": { "offset": 744, "length": 12 }
+          },
+          {
+            "content": "15",
+            "polygon": [440, 671, 455, 671, 455, 689, 440, 688],
+            "confidence": 0.995,
+            "span": { "offset": 757, "length": 2 }
+          },
+          {
+            "content": "038,53",
+            "polygon": [458, 671, 504, 671, 504, 689, 459, 689],
+            "confidence": 0.962,
+            "span": { "offset": 760, "length": 6 }
+          },
+          {
+            "content": "5",
+            "polygon": [556, 671, 565, 671, 565, 687, 556, 687],
+            "confidence": 0.945,
+            "span": { "offset": 767, "length": 1 }
+          },
+          {
+            "content": "751,93",
+            "polygon": [701, 670, 744, 670, 744, 688, 701, 688],
+            "confidence": 0.993,
+            "span": { "offset": 769, "length": 6 }
+          },
+          {
+            "content": "15",
+            "polygon": [842, 671, 857, 671, 857, 688, 842, 688],
+            "confidence": 0.995,
+            "span": { "offset": 776, "length": 2 }
+          },
+          {
+            "content": "790,46",
+            "polygon": [860, 671, 905, 671, 905, 689, 861, 688],
+            "confidence": 0.985,
+            "span": { "offset": 779, "length": 6 }
+          },
+          {
+            "content": "9869",
+            "polygon": [1033, 669, 1067, 669, 1067, 690, 1033, 690],
+            "confidence": 0.992,
+            "span": { "offset": 786, "length": 4 }
+          },
+          {
+            "content": "2.",
+            "polygon": [26, 699, 36, 699, 36, 715, 26, 715],
+            "confidence": 0.862,
+            "span": { "offset": 791, "length": 2 }
+          },
+          {
+            "content": "Świadczonych",
+            "polygon": [77, 697, 163, 699, 163, 721, 77, 719],
+            "confidence": 0.993,
+            "span": { "offset": 794, "length": 12 }
+          },
+          {
+            "content": "usług",
+            "polygon": [167, 699, 200, 699, 200, 721, 167, 721],
+            "confidence": 0.994,
+            "span": { "offset": 807, "length": 5 }
+          },
+          {
+            "content": "dystrybucji",
+            "polygon": [205, 699, 276, 700, 276, 722, 205, 721],
+            "confidence": 0.993,
+            "span": { "offset": 813, "length": 11 }
+          },
+          {
+            "content": "2",
+            "polygon": [447, 700, 454, 700, 454, 718, 447, 718],
+            "confidence": 0.996,
+            "span": { "offset": 825, "length": 1 }
+          },
+          {
+            "content": "383,65",
+            "polygon": [458, 700, 503, 700, 503, 719, 458, 719],
+            "confidence": 0.994,
+            "span": { "offset": 827, "length": 6 }
+          },
+          {
+            "content": "5",
+            "polygon": [556, 699, 565, 699, 566, 716, 557, 716],
+            "confidence": 0.995,
+            "span": { "offset": 834, "length": 1 }
+          },
+          {
+            "content": "119,18",
+            "polygon": [703, 699, 743, 699, 743, 717, 703, 716],
+            "confidence": 0.968,
+            "span": { "offset": 836, "length": 6 }
+          },
+          {
+            "content": "2",
+            "polygon": [848, 700, 855, 700, 856, 717, 849, 717],
+            "confidence": 0.965,
+            "span": { "offset": 843, "length": 1 }
+          },
+          {
+            "content": "502,83",
+            "polygon": [859, 700, 903, 700, 903, 718, 859, 717],
+            "confidence": 0.99,
+            "span": { "offset": 845, "length": 6 }
+          },
+          {
+            "content": "9869",
+            "polygon": [1034, 700, 1066, 700, 1066, 715, 1034, 715],
+            "confidence": 0.993,
+            "span": { "offset": 852, "length": 4 }
+          },
+          {
+            "content": "3.",
+            "polygon": [26, 729, 36, 729, 35, 745, 25, 744],
+            "confidence": 0.512,
+            "span": { "offset": 857, "length": 2 }
+          },
+          {
+            "content": "Wynik",
+            "polygon": [78, 728, 113, 728, 113, 749, 79, 749],
+            "confidence": 0.984,
+            "span": { "offset": 860, "length": 5 }
+          },
+          {
+            "content": "rozliczenia",
+            "polygon": [117, 728, 182, 728, 182, 750, 117, 749],
+            "confidence": 0.754,
+            "span": { "offset": 866, "length": 11 }
+          },
+          {
+            "content": "(",
+            "polygon": [186, 728, 192, 728, 192, 751, 186, 750],
+            "confidence": 0.995,
+            "span": { "offset": 878, "length": 1 }
+          },
+          {
+            "content": "1",
+            "polygon": [196, 728, 204, 728, 204, 751, 196, 751],
+            "confidence": 0.995,
+            "span": { "offset": 880, "length": 1 }
+          },
+          {
+            "content": "+",
+            "polygon": [208, 728, 215, 728, 215, 751, 208, 751],
+            "confidence": 0.991,
+            "span": { "offset": 882, "length": 1 }
+          },
+          {
+            "content": "2)",
+            "polygon": [219, 728, 239, 729, 239, 751, 219, 751],
+            "confidence": 0.915,
+            "span": { "offset": 884, "length": 2 }
+          },
+          {
+            "content": "17",
+            "polygon": [440, 729, 454, 729, 454, 747, 440, 747],
+            "confidence": 0.997,
+            "span": { "offset": 887, "length": 2 }
+          },
+          {
+            "content": "422,18",
+            "polygon": [457, 729, 504, 729, 504, 748, 458, 747],
+            "confidence": 0.982,
+            "span": { "offset": 890, "length": 6 }
+          },
+          {
+            "content": "5",
+            "polygon": [556, 729, 565, 729, 565, 745, 556, 744],
+            "confidence": 0.968,
+            "span": { "offset": 897, "length": 1 }
+          },
+          {
+            "content": "871,11",
+            "polygon": [701, 728, 742, 728, 742, 745, 701, 745],
+            "confidence": 0.946,
+            "span": { "offset": 899, "length": 6 }
+          },
+          {
+            "content": "18",
+            "polygon": [841, 728, 856, 728, 857, 746, 842, 745],
+            "confidence": 0.995,
+            "span": { "offset": 906, "length": 2 }
+          },
+          {
+            "content": "293,29",
+            "polygon": [860, 728, 903, 728, 903, 746, 860, 746],
+            "confidence": 0.995,
+            "span": { "offset": 909, "length": 6 }
+          },
+          {
+            "content": "4.",
+            "polygon": [26, 758, 36, 758, 36, 773, 26, 773],
+            "confidence": 0.573,
+            "span": { "offset": 916, "length": 2 }
+          },
+          {
+            "content": "Odsetki",
+            "polygon": [78, 757, 123, 757, 123, 778, 78, 776],
+            "confidence": 0.993,
+            "span": { "offset": 919, "length": 7 }
+          },
+          {
+            "content": "za",
+            "polygon": [127, 757, 140, 757, 140, 778, 127, 778],
+            "confidence": 0.996,
+            "span": { "offset": 927, "length": 2 }
+          },
+          {
+            "content": "nieterminowe",
+            "polygon": [144, 757, 228, 758, 227, 780, 144, 779],
+            "confidence": 0.993,
+            "span": { "offset": 930, "length": 12 }
+          },
+          {
+            "content": "wpłaty",
+            "polygon": [232, 758, 275, 759, 275, 781, 231, 780],
+            "confidence": 0.961,
+            "span": { "offset": 943, "length": 6 }
+          },
+          {
+            "content": "np*",
+            "polygon": [549, 759, 571, 759, 571, 776, 549, 776],
+            "confidence": 0.948,
+            "span": { "offset": 950, "length": 3 }
+          },
+          {
+            "content": "164,38",
+            "polygon": [861, 756, 902, 756, 902, 773, 861, 773],
+            "confidence": 0.938,
+            "span": { "offset": 954, "length": 6 }
+          },
+          {
+            "content": "5",
+            "polygon": [26, 786, 34, 786, 35, 803, 26, 803],
+            "confidence": 0.995,
+            "span": { "offset": 961, "length": 1 }
+          },
+          {
+            "content": "Do",
+            "polygon": [78, 787, 95, 787, 94, 807, 78, 806],
+            "confidence": 0.995,
+            "span": { "offset": 963, "length": 2 }
+          },
+          {
+            "content": "zapłaty",
+            "polygon": [99, 787, 141, 787, 141, 808, 99, 807],
+            "confidence": 0.942,
+            "span": { "offset": 966, "length": 7 }
+          },
+          {
+            "content": "(",
+            "polygon": [145, 786, 151, 786, 151, 809, 145, 809],
+            "confidence": 0.993,
+            "span": { "offset": 974, "length": 1 }
+          },
+          {
+            "content": "3",
+            "polygon": [155, 786, 162, 786, 162, 809, 155, 809],
+            "confidence": 0.995,
+            "span": { "offset": 976, "length": 1 }
+          },
+          {
+            "content": "+",
+            "polygon": [167, 786, 174, 786, 174, 809, 167, 809],
+            "confidence": 0.995,
+            "span": { "offset": 978, "length": 1 }
+          },
+          {
+            "content": "4",
+            "polygon": [178, 786, 184, 786, 183, 809, 178, 809],
+            "confidence": 0.996,
+            "span": { "offset": 980, "length": 1 }
+          },
+          {
+            "content": ")",
+            "polygon": [188, 786, 197, 786, 197, 809, 188, 809],
+            "confidence": 0.948,
+            "span": { "offset": 982, "length": 1 }
+          },
+          {
+            "content": "18",
+            "polygon": [841, 785, 855, 785, 855, 803, 841, 803],
+            "confidence": 0.997,
+            "span": { "offset": 984, "length": 2 }
+          },
+          {
+            "content": "457,67",
+            "polygon": [859, 785, 903, 786, 903, 804, 859, 803],
+            "confidence": 0.983,
+            "span": { "offset": 987, "length": 6 }
+          },
+          {
+            "content": "W",
+            "polygon": [55, 829, 64, 829, 64, 847, 54, 847],
+            "confidence": 0.995,
+            "span": { "offset": 994, "length": 1 }
+          },
+          {
+            "content": "tym",
+            "polygon": [70, 829, 92, 830, 92, 848, 70, 847],
+            "confidence": 0.594,
+            "span": { "offset": 996, "length": 3 }
+          },
+          {
+            "content": "Stawka",
+            "polygon": [181, 830, 228, 831, 228, 852, 181, 851],
+            "confidence": 0.995,
+            "span": { "offset": 1000, "length": 6 }
+          },
+          {
+            "content": "VAT",
+            "polygon": [232, 831, 258, 831, 258, 853, 232, 853],
+            "confidence": 0.995,
+            "span": { "offset": 1007, "length": 3 }
+          },
+          {
+            "content": "(%)",
+            "polygon": [263, 831, 288, 831, 287, 854, 262, 853],
+            "confidence": 0.993,
+            "span": { "offset": 1011, "length": 3 }
+          },
+          {
+            "content": "Wartość",
+            "polygon": [404, 832, 459, 832, 460, 851, 404, 851],
+            "confidence": 0.983,
+            "span": { "offset": 1015, "length": 7 }
+          },
+          {
+            "content": "netto",
+            "polygon": [463, 832, 499, 831, 499, 851, 464, 851],
+            "confidence": 0.995,
+            "span": { "offset": 1023, "length": 5 }
+          },
+          {
+            "content": "(zł)",
+            "polygon": [502, 831, 526, 831, 527, 852, 503, 851],
+            "confidence": 0.979,
+            "span": { "offset": 1029, "length": 4 }
+          },
+          {
+            "content": "Kwota",
+            "polygon": [657, 828, 700, 827, 700, 848, 657, 848],
+            "confidence": 0.994,
+            "span": { "offset": 1034, "length": 5 }
+          },
+          {
+            "content": "VAT",
+            "polygon": [704, 827, 729, 827, 729, 848, 704, 848],
+            "confidence": 0.995,
+            "span": { "offset": 1040, "length": 3 }
+          },
+          {
+            "content": "(zł)",
+            "polygon": [733, 827, 756, 827, 756, 848, 733, 848],
+            "confidence": 0.992,
+            "span": { "offset": 1044, "length": 4 }
+          },
+          {
+            "content": "Wartość",
+            "polygon": [883, 827, 938, 827, 938, 847, 883, 847],
+            "confidence": 0.98,
+            "span": { "offset": 1049, "length": 7 }
+          },
+          {
+            "content": "brutto",
+            "polygon": [942, 827, 983, 828, 983, 848, 942, 847],
+            "confidence": 0.994,
+            "span": { "offset": 1057, "length": 6 }
+          },
+          {
+            "content": "(zł)",
+            "polygon": [987, 828, 1010, 828, 1010, 849, 987, 848],
+            "confidence": 0.992,
+            "span": { "offset": 1064, "length": 4 }
+          },
+          {
+            "content": "5",
+            "polygon": [229, 865, 237, 865, 237, 881, 229, 881],
+            "confidence": 0.996,
+            "span": { "offset": 1069, "length": 1 }
+          },
+          {
+            "content": "17",
+            "polygon": [520, 861, 534, 860, 534, 882, 520, 882],
+            "confidence": 0.961,
+            "span": { "offset": 1071, "length": 2 }
+          },
+          {
+            "content": "422,18",
+            "polygon": [539, 860, 586, 860, 585, 882, 538, 882],
+            "confidence": 0.95,
+            "span": { "offset": 1074, "length": 6 }
+          },
+          {
+            "content": "871,11",
+            "polygon": [780, 859, 821, 859, 821, 876, 780, 876],
+            "confidence": 0.851,
+            "span": { "offset": 1081, "length": 6 }
+          },
+          {
+            "content": "18",
+            "polygon": [1001, 860, 1017, 860, 1017, 878, 1002, 877],
+            "confidence": 0.995,
+            "span": { "offset": 1088, "length": 2 }
+          },
+          {
+            "content": "293,29",
+            "polygon": [1020, 860, 1065, 861, 1064, 879, 1020, 878],
+            "confidence": 0.992,
+            "span": { "offset": 1091, "length": 6 }
+          },
+          {
+            "content": "Od",
+            "polygon": [24, 888, 44, 888, 44, 912, 25, 911],
+            "confidence": 0.995,
+            "span": { "offset": 1098, "length": 2 }
+          },
+          {
+            "content": "9869",
+            "polygon": [49, 888, 81, 889, 82, 913, 49, 912],
+            "confidence": 0.992,
+            "span": { "offset": 1101, "length": 4 }
+          },
+          {
+            "content": "kWh",
+            "polygon": [86, 890, 117, 890, 118, 915, 87, 914],
+            "confidence": 0.991,
+            "span": { "offset": 1106, "length": 3 }
+          },
+          {
+            "content": "energii",
+            "polygon": [122, 891, 167, 892, 167, 916, 122, 915],
+            "confidence": 0.991,
+            "span": { "offset": 1110, "length": 7 }
+          },
+          {
+            "content": "elektrycznej",
+            "polygon": [172, 892, 253, 893, 253, 917, 172, 916],
+            "confidence": 0.993,
+            "span": { "offset": 1118, "length": 12 }
+          },
+          {
+            "content": "naliczono",
+            "polygon": [257, 893, 324, 894, 325, 918, 258, 917],
+            "confidence": 0.993,
+            "span": { "offset": 1131, "length": 9 }
+          },
+          {
+            "content": "akcyzę",
+            "polygon": [329, 894, 376, 894, 376, 918, 329, 918],
+            "confidence": 0.993,
+            "span": { "offset": 1141, "length": 6 }
+          },
+          {
+            "content": "w",
+            "polygon": [380, 894, 391, 894, 392, 917, 381, 918],
+            "confidence": 0.995,
+            "span": { "offset": 1148, "length": 1 }
+          },
+          {
+            "content": "kwocie",
+            "polygon": [396, 894, 446, 894, 446, 917, 396, 917],
+            "confidence": 0.993,
+            "span": { "offset": 1150, "length": 6 }
+          },
+          {
+            "content": "45,39",
+            "polygon": [451, 893, 491, 893, 491, 916, 451, 917],
+            "confidence": 0.993,
+            "span": { "offset": 1157, "length": 5 }
+          },
+          {
+            "content": "zł.",
+            "polygon": [496, 893, 513, 893, 514, 915, 496, 916],
+            "confidence": 0.916,
+            "span": { "offset": 1163, "length": 3 }
+          },
+          {
+            "content": "Do",
+            "polygon": [722, 959, 744, 959, 744, 979, 723, 979],
+            "confidence": 0.996,
+            "span": { "offset": 1167, "length": 2 }
+          },
+          {
+            "content": "zapłaty:",
+            "polygon": [748, 959, 807, 958, 807, 980, 748, 979],
+            "confidence": 0.991,
+            "span": { "offset": 1170, "length": 8 }
+          },
+          {
+            "content": "18",
+            "polygon": [957, 958, 974, 958, 974, 979, 957, 979],
+            "confidence": 0.996,
+            "span": { "offset": 1179, "length": 2 }
+          },
+          {
+            "content": "457,67",
+            "polygon": [978, 958, 1029, 959, 1029, 980, 978, 979],
+            "confidence": 0.994,
+            "span": { "offset": 1182, "length": 6 }
+          },
+          {
+            "content": "zł",
+            "polygon": [1039, 959, 1054, 959, 1054, 980, 1038, 980],
+            "confidence": 0.974,
+            "span": { "offset": 1189, "length": 2 }
+          },
+          {
+            "content": "Termin",
+            "polygon": [723, 988, 771, 988, 771, 1010, 723, 1010],
+            "confidence": 0.994,
+            "span": { "offset": 1192, "length": 6 }
+          },
+          {
+            "content": "płatności:",
+            "polygon": [776, 987, 849, 988, 849, 1010, 776, 1010],
+            "confidence": 0.994,
+            "span": { "offset": 1199, "length": 10 }
+          },
+          {
+            "content": "10/10/2022",
+            "polygon": [969, 988, 1049, 987, 1049, 1008, 970, 1007],
+            "confidence": 0.992,
+            "span": { "offset": 1210, "length": 10 }
+          },
+          {
+            "content": "Słownie:",
+            "polygon": [25, 1019, 92, 1021, 92, 1044, 25, 1040],
+            "confidence": 0.993,
+            "span": { "offset": 1221, "length": 8 }
+          },
+          {
+            "content": "osiemnaście",
+            "polygon": [97, 1021, 186, 1024, 186, 1049, 97, 1045],
+            "confidence": 0.973,
+            "span": { "offset": 1230, "length": 11 }
+          },
+          {
+            "content": "tysięcy",
+            "polygon": [190, 1024, 244, 1025, 244, 1050, 190, 1049],
+            "confidence": 0.994,
+            "span": { "offset": 1242, "length": 7 }
+          },
+          {
+            "content": "czterysta",
+            "polygon": [248, 1025, 316, 1026, 316, 1052, 248, 1050],
+            "confidence": 0.993,
+            "span": { "offset": 1250, "length": 9 }
+          },
+          {
+            "content": "pięćdziesiąt",
+            "polygon": [320, 1026, 409, 1026, 409, 1052, 320, 1052],
+            "confidence": 0.993,
+            "span": { "offset": 1260, "length": 12 }
+          },
+          {
+            "content": "siedem",
+            "polygon": [414, 1026, 466, 1026, 466, 1051, 414, 1052],
+            "confidence": 0.995,
+            "span": { "offset": 1273, "length": 6 }
+          },
+          {
+            "content": "złotych",
+            "polygon": [474, 1026, 528, 1025, 528, 1049, 474, 1051],
+            "confidence": 0.995,
+            "span": { "offset": 1280, "length": 7 }
+          },
+          {
+            "content": "sześćdziesiąt",
+            "polygon": [533, 1025, 632, 1022, 632, 1045, 533, 1049],
+            "confidence": 0.991,
+            "span": { "offset": 1288, "length": 13 }
+          },
+          {
+            "content": "siedem",
+            "polygon": [636, 1022, 686, 1020, 686, 1042, 636, 1045],
+            "confidence": 0.994,
+            "span": { "offset": 1302, "length": 6 }
+          },
+          {
+            "content": "groszy",
+            "polygon": [25, 1046, 78, 1046, 77, 1067, 25, 1066],
+            "confidence": 0.994,
+            "span": { "offset": 1309, "length": 6 }
+          },
+          {
+            "content": "Wyszczególnienie",
+            "polygon": [787, 1081, 873, 1081, 873, 1096, 788, 1097],
+            "confidence": 0.951,
+            "span": { "offset": 1316, "length": 16 }
+          },
+          {
+            "content": "odsetek",
+            "polygon": [876, 1081, 916, 1080, 916, 1096, 876, 1096],
+            "confidence": 0.85,
+            "span": { "offset": 1333, "length": 7 }
+          },
+          {
+            "content": "Nr",
+            "polygon": [643, 1112, 655, 1111, 656, 1125, 643, 1126],
+            "confidence": 0.961,
+            "span": { "offset": 1341, "length": 2 }
+          },
+          {
+            "content": "dokumentu",
+            "polygon": [658, 1111, 713, 1110, 713, 1123, 659, 1125],
+            "confidence": 0.964,
+            "span": { "offset": 1344, "length": 9 }
+          },
+          {
+            "content": "Data",
+            "polygon": [835, 1106, 858, 1106, 858, 1119, 836, 1119],
+            "confidence": 0.983,
+            "span": { "offset": 1354, "length": 4 }
+          },
+          {
+            "content": "wpłaty",
+            "polygon": [860, 1106, 893, 1106, 893, 1120, 861, 1119],
+            "confidence": 0.714,
+            "span": { "offset": 1359, "length": 6 }
+          },
+          {
+            "content": "Ilość",
+            "polygon": [923, 1105, 946, 1105, 946, 1118, 924, 1118],
+            "confidence": 0.94,
+            "span": { "offset": 1366, "length": 5 }
+          },
+          {
+            "content": "dni",
+            "polygon": [948, 1105, 964, 1105, 964, 1119, 948, 1118],
+            "confidence": 0.642,
+            "span": { "offset": 1372, "length": 3 }
+          },
+          {
+            "content": "Opłata",
+            "polygon": [1007, 1104, 1040, 1104, 1041, 1118, 1008, 1118],
+            "confidence": 0.832,
+            "span": { "offset": 1376, "length": 6 }
+          },
+          {
+            "content": "FVE",
+            "polygon": [644, 1136, 665, 1135, 666, 1150, 645, 1151],
+            "confidence": 0.995,
+            "span": { "offset": 1383, "length": 3 }
+          },
+          {
+            "content": "E/GM/0265645/22",
+            "polygon": [668, 1135, 756, 1131, 757, 1145, 669, 1150],
+            "confidence": 0.891,
+            "span": { "offset": 1387, "length": 15 }
+          },
+          {
+            "content": "25/08/2022",
+            "polygon": [838, 1129, 891, 1129, 891, 1142, 838, 1142],
+            "confidence": 0.991,
+            "span": { "offset": 1403, "length": 10 }
+          },
+          {
+            "content": "20",
+            "polygon": [939, 1128, 949, 1128, 949, 1141, 938, 1140],
+            "confidence": 0.995,
+            "span": { "offset": 1414, "length": 2 }
+          },
+          {
+            "content": "26,30",
+            "polygon": [1032, 1128, 1059, 1128, 1059, 1141, 1032, 1141],
+            "confidence": 0.991,
+            "span": { "offset": 1417, "length": 5 }
+          },
+          {
+            "content": "FVE",
+            "polygon": [643, 1160, 665, 1160, 666, 1175, 644, 1176],
+            "confidence": 0.961,
+            "span": { "offset": 1423, "length": 3 }
+          },
+          {
+            "content": "E/GM/0265645/22",
+            "polygon": [668, 1159, 758, 1156, 759, 1171, 669, 1175],
+            "confidence": 0.951,
+            "span": { "offset": 1427, "length": 15 }
+          },
+          {
+            "content": "04/09/2022",
+            "polygon": [837, 1153, 892, 1153, 892, 1166, 837, 1167],
+            "confidence": 0.989,
+            "span": { "offset": 1443, "length": 10 }
+          },
+          {
+            "content": "30",
+            "polygon": [938, 1152, 950, 1152, 950, 1165, 938, 1165],
+            "confidence": 0.996,
+            "span": { "offset": 1454, "length": 2 }
+          },
+          {
+            "content": "138,08",
+            "polygon": [1026, 1153, 1059, 1153, 1059, 1166, 1026, 1166],
+            "confidence": 0.948,
+            "span": { "offset": 1457, "length": 6 }
+          },
+          {
+            "content": "Wystawił:",
+            "polygon": [726, 1209, 793, 1206, 794, 1228, 727, 1230],
+            "confidence": 0.974,
+            "span": { "offset": 1464, "length": 9 }
+          },
+          {
+            "content": "Centrum",
+            "polygon": [896, 1191, 951, 1190, 951, 1209, 896, 1209],
+            "confidence": 0.993,
+            "span": { "offset": 1474, "length": 7 }
+          },
+          {
+            "content": "Rozliczeń:",
+            "polygon": [876, 1212, 943, 1211, 943, 1233, 875, 1234],
+            "confidence": 0.983,
+            "span": { "offset": 1482, "length": 10 }
+          },
+          {
+            "content": "M.T",
+            "polygon": [947, 1211, 978, 1211, 978, 1232, 947, 1233],
+            "confidence": 0.995,
+            "span": { "offset": 1493, "length": 3 }
+          },
+          {
+            "content": "Data",
+            "polygon": [727, 1251, 758, 1250, 759, 1271, 727, 1273],
+            "confidence": 0.99,
+            "span": { "offset": 1497, "length": 4 }
+          },
+          {
+            "content": "wystawienia:",
+            "polygon": [762, 1250, 850, 1245, 851, 1268, 763, 1271],
+            "confidence": 0.983,
+            "span": { "offset": 1502, "length": 12 }
+          },
+          {
+            "content": "22/09/2022",
+            "polygon": [907, 1243, 983, 1242, 984, 1260, 908, 1261],
+            "confidence": 0.993,
+            "span": { "offset": 1515, "length": 10 }
+          },
+          {
+            "content": "*",
+            "polygon": [74, 1284, 78, 1284, 78, 1306, 74, 1306],
+            "confidence": 0.86,
+            "span": { "offset": 1526, "length": 1 }
+          },
+          {
+            "content": "np",
+            "polygon": [83, 1284, 95, 1285, 95, 1307, 82, 1306],
+            "confidence": 0.993,
+            "span": { "offset": 1528, "length": 2 }
+          },
+          {
+            "content": "-",
+            "polygon": [100, 1285, 110, 1286, 109, 1307, 99, 1307],
+            "confidence": 0.593,
+            "span": { "offset": 1531, "length": 1 }
+          },
+          {
+            "content": "nie",
+            "polygon": [114, 1286, 132, 1287, 132, 1309, 113, 1308],
+            "confidence": 0.995,
+            "span": { "offset": 1533, "length": 3 }
+          },
+          {
+            "content": "podlega",
+            "polygon": [137, 1287, 185, 1290, 184, 1311, 136, 1309],
+            "confidence": 0.993,
+            "span": { "offset": 1537, "length": 7 }
+          },
+          {
+            "content": "ustawie",
+            "polygon": [189, 1290, 235, 1292, 234, 1314, 189, 1311],
+            "confidence": 0.993,
+            "span": { "offset": 1545, "length": 7 }
+          },
+          {
+            "content": "o",
+            "polygon": [239, 1292, 248, 1293, 247, 1315, 238, 1314],
+            "confidence": 0.995,
+            "span": { "offset": 1553, "length": 1 }
+          },
+          {
+            "content": "podatku",
+            "polygon": [252, 1293, 300, 1296, 300, 1317, 251, 1315],
+            "confidence": 0.991,
+            "span": { "offset": 1555, "length": 7 }
+          },
+          {
+            "content": "od",
+            "polygon": [305, 1296, 319, 1297, 318, 1318, 304, 1318],
+            "confidence": 0.995,
+            "span": { "offset": 1563, "length": 2 }
+          },
+          {
+            "content": "towarów",
+            "polygon": [323, 1297, 374, 1300, 373, 1321, 322, 1319],
+            "confidence": 0.993,
+            "span": { "offset": 1566, "length": 7 }
+          },
+          {
+            "content": "i",
+            "polygon": [379, 1300, 383, 1300, 382, 1322, 378, 1322],
+            "confidence": 0.995,
+            "span": { "offset": 1574, "length": 1 }
+          },
+          {
+            "content": "usług",
+            "polygon": [387, 1300, 425, 1302, 423, 1324, 386, 1322],
+            "confidence": 0.995,
+            "span": { "offset": 1576, "length": 5 }
+          }
+        ],
+        "lines": [
+          {
+            "content": "Sprzedawca:",
+            "polygon": [29, 42, 127, 41, 127, 62, 29, 63],
+            "spans": [{ "offset": 0, "length": 11 }]
+          },
+          {
+            "content": "TAURON Sprzedaż GZE sp. z o.o.",
+            "polygon": [39, 63, 232, 62, 232, 79, 39, 80],
+            "spans": [{ "offset": 12, "length": 30 }]
+          },
+          {
+            "content": "44-100 GLIWICE, UL. NORBERTA BARLICKIEGO 2",
+            "polygon": [38, 80, 333, 79, 333, 96, 38, 98],
+            "spans": [{ "offset": 43, "length": 42 }]
+          },
+          {
+            "content": "NIP: 631-22-41-337",
+            "polygon": [37, 99, 150, 98, 150, 115, 37, 116],
+            "spans": [{ "offset": 86, "length": 18 }]
+          },
+          {
+            "content": "Sąd Rejonowy w Gliwicach",
+            "polygon": [36, 117, 190, 116, 190, 134, 36, 136],
+            "spans": [{ "offset": 105, "length": 24 }]
+          },
+          {
+            "content": "X Wydział Gospodarczy KRS",
+            "polygon": [36, 134, 201, 134, 201, 152, 36, 153],
+            "spans": [{ "offset": 130, "length": 25 }]
+          },
+          {
+            "content": "TAURON",
+            "polygon": [727, 135, 872, 135, 872, 167, 727, 167],
+            "spans": [{ "offset": 156, "length": 6 }]
+          },
+          {
+            "content": "KRS 0000036971",
+            "polygon": [35, 153, 137, 152, 137, 169, 35, 170],
+            "spans": [{ "offset": 163, "length": 14 }]
+          },
+          {
+            "content": "Kapitał zakładowy 27 688 500 zł",
+            "polygon": [35, 171, 217, 170, 217, 187, 35, 189],
+            "spans": [{ "offset": 178, "length": 31 }]
+          },
+          {
+            "content": "BANK ING BANK ŚLĄSKI",
+            "polygon": [36, 187, 183, 187, 183, 206, 36, 206],
+            "spans": [{ "offset": 210, "length": 20 }]
+          },
+          {
+            "content": "11 1050 0099 6014 0210 0025 9073",
+            "polygon": [36, 206, 239, 205, 239, 224, 36, 225],
+            "spans": [{ "offset": 231, "length": 32 }]
+          },
+          {
+            "content": "Adres korespondencyjny:",
+            "polygon": [24, 240, 220, 240, 220, 263, 24, 262],
+            "spans": [{ "offset": 264, "length": 23 }]
+          },
+          {
+            "content": "TAURON Obsługa Klienta sp. z o.o.",
+            "polygon": [34, 262, 235, 263, 235, 282, 34, 281],
+            "spans": [{ "offset": 288, "length": 33 }]
+          },
+          {
+            "content": "UL. LWOWSKA 23, 40-389 KATOWICE",
+            "polygon": [33, 280, 256, 280, 256, 299, 33, 300],
+            "spans": [{ "offset": 322, "length": 31 }]
+          },
+          {
+            "content": "Kontakt z Wystawcą faktury:",
+            "polygon": [22, 314, 238, 315, 238, 338, 22, 337],
+            "spans": [{ "offset": 354, "length": 27 }]
+          },
+          {
+            "content": "Adresat:",
+            "polygon": [565, 302, 634, 301, 634, 322, 565, 323],
+            "spans": [{ "offset": 382, "length": 8 }]
+          },
+          {
+            "content": "tel .: 32 606 0 606",
+            "polygon": [32, 337, 134, 337, 134, 355, 32, 354],
+            "spans": [{ "offset": 391, "length": 19 }]
+          },
+          {
+            "content": "email: firma@tauron.pl, www.mojtauron.pl",
+            "polygon": [33, 356, 268, 356, 268, 375, 33, 374],
+            "spans": [{ "offset": 411, "length": 40 }]
+          },
+          {
+            "content": "44-270 RYBNIK",
+            "polygon": [577, 360, 669, 361, 669, 378, 577, 378],
+            "spans": [{ "offset": 452, "length": 13 }]
+          },
+          {
+            "content": "'A",
+            "polygon": [423, 418, 438, 418, 439, 434, 423, 433],
+            "spans": [{ "offset": 466, "length": 2 }]
+          },
+          {
+            "content": "44-270 RYBNIK",
+            "polygon": [31, 454, 135, 454, 135, 472, 31, 473],
+            "spans": [{ "offset": 469, "length": 13 }]
+          },
+          {
+            "content": "NIP",
+            "polygon": [32, 476, 60, 476, 61, 493, 32, 493],
+            "spans": [{ "offset": 483, "length": 3 }]
+          },
+          {
+            "content": "FAKTURA VAT NR E/GM/0356462/22 - Obraz Faktury",
+            "polygon": [14, 519, 411, 521, 411, 545, 14, 542],
+            "spans": [{ "offset": 487, "length": 46 }]
+          },
+          {
+            "content": "ZA ENERGIĘ ELEKTRYCZNĄ I USŁUGI DYSTRYBUCJI",
+            "polygon": [16, 542, 423, 543, 423, 566, 16, 565],
+            "spans": [{ "offset": 534, "length": 43 }]
+          },
+          {
+            "content": "Za okres od 16/07/2022 do 15/09/2022",
+            "polygon": [17, 566, 261, 566, 261, 586, 17, 586],
+            "spans": [{ "offset": 578, "length": 36 }]
+          },
+          {
+            "content": "Lp:",
+            "polygon": [35, 630, 58, 630, 58, 648, 35, 648],
+            "spans": [{ "offset": 615, "length": 3 }]
+          },
+          {
+            "content": "Rozliczenie z tytułu",
+            "polygon": [144, 630, 268, 630, 268, 650, 144, 649],
+            "spans": [{ "offset": 619, "length": 20 }]
+          },
+          {
+            "content": "Wartość netto",
+            "polygon": [380, 621, 471, 621, 471, 638, 380, 638],
+            "spans": [{ "offset": 640, "length": 13 }]
+          },
+          {
+            "content": "Stawka VAT",
+            "polygon": [522, 621, 599, 621, 599, 638, 522, 638],
+            "spans": [{ "offset": 654, "length": 10 }]
+          },
+          {
+            "content": "Kwota VAT",
+            "polygon": [646, 621, 717, 621, 717, 638, 646, 638],
+            "spans": [{ "offset": 665, "length": 9 }]
+          },
+          {
+            "content": "Wartość brutto",
+            "polygon": [781, 621, 875, 622, 875, 639, 781, 638],
+            "spans": [{ "offset": 675, "length": 14 }]
+          },
+          {
+            "content": "Zużycie",
+            "polygon": [963, 622, 1015, 622, 1015, 639, 963, 640],
+            "spans": [{ "offset": 690, "length": 7 }]
+          },
+          {
+            "content": "(zł)",
+            "polygon": [415, 643, 439, 642, 439, 662, 416, 662],
+            "spans": [{ "offset": 698, "length": 4 }]
+          },
+          {
+            "content": "(%)",
+            "polygon": [549, 642, 572, 642, 573, 660, 549, 660],
+            "spans": [{ "offset": 703, "length": 3 }]
+          },
+          {
+            "content": "(zł)",
+            "polygon": [671, 642, 691, 642, 691, 661, 672, 661],
+            "spans": [{ "offset": 707, "length": 4 }]
+          },
+          {
+            "content": "(zł)",
+            "polygon": [818, 642, 838, 642, 838, 661, 819, 661],
+            "spans": [{ "offset": 712, "length": 4 }]
+          },
+          {
+            "content": "[kWh]",
+            "polygon": [968, 642, 1009, 642, 1009, 661, 968, 661],
+            "spans": [{ "offset": 717, "length": 5 }]
+          },
+          {
+            "content": "1.",
+            "polygon": [25, 670, 36, 670, 36, 685, 26, 685],
+            "spans": [{ "offset": 723, "length": 2 }]
+          },
+          {
+            "content": "Sprzedaży energii elektrycznej",
+            "polygon": [76, 669, 268, 670, 267, 691, 76, 689],
+            "spans": [{ "offset": 726, "length": 30 }]
+          },
+          {
+            "content": "15 038,53",
+            "polygon": [438, 670, 504, 670, 504, 688, 438, 688],
+            "spans": [{ "offset": 757, "length": 9 }]
+          },
+          {
+            "content": "5",
+            "polygon": [555, 671, 567, 671, 567, 687, 555, 687],
+            "spans": [{ "offset": 767, "length": 1 }]
+          },
+          {
+            "content": "751,93",
+            "polygon": [701, 671, 745, 670, 745, 688, 701, 687],
+            "spans": [{ "offset": 769, "length": 6 }]
+          },
+          {
+            "content": "15 790,46",
+            "polygon": [841, 670, 906, 670, 905, 688, 841, 688],
+            "spans": [{ "offset": 776, "length": 9 }]
+          },
+          {
+            "content": "9869",
+            "polygon": [1032, 669, 1067, 669, 1068, 690, 1032, 690],
+            "spans": [{ "offset": 786, "length": 4 }]
+          },
+          {
+            "content": "2.",
+            "polygon": [25, 699, 36, 699, 36, 715, 25, 715],
+            "spans": [{ "offset": 791, "length": 2 }]
+          },
+          {
+            "content": "Świadczonych usług dystrybucji",
+            "polygon": [76, 696, 276, 699, 275, 722, 76, 718],
+            "spans": [{ "offset": 794, "length": 30 }]
+          },
+          {
+            "content": "2 383,65",
+            "polygon": [445, 700, 503, 700, 503, 718, 445, 718],
+            "spans": [{ "offset": 825, "length": 8 }]
+          },
+          {
+            "content": "5",
+            "polygon": [555, 700, 567, 699, 567, 716, 556, 716],
+            "spans": [{ "offset": 834, "length": 1 }]
+          },
+          {
+            "content": "119,18",
+            "polygon": [701, 699, 743, 699, 743, 717, 702, 716],
+            "spans": [{ "offset": 836, "length": 6 }]
+          },
+          {
+            "content": "2 502,83",
+            "polygon": [847, 699, 903, 699, 903, 718, 847, 717],
+            "spans": [{ "offset": 843, "length": 8 }]
+          },
+          {
+            "content": "9869",
+            "polygon": [1032, 700, 1066, 700, 1066, 715, 1033, 715],
+            "spans": [{ "offset": 852, "length": 4 }]
+          },
+          {
+            "content": "3.",
+            "polygon": [25, 729, 36, 729, 36, 745, 25, 744],
+            "spans": [{ "offset": 857, "length": 2 }]
+          },
+          {
+            "content": "Wynik rozliczenia ( 1 + 2)",
+            "polygon": [78, 727, 238, 728, 238, 750, 78, 748],
+            "spans": [{ "offset": 860, "length": 26 }]
+          },
+          {
+            "content": "17 422,18",
+            "polygon": [437, 728, 504, 728, 504, 747, 437, 747],
+            "spans": [{ "offset": 887, "length": 9 }]
+          },
+          {
+            "content": "5",
+            "polygon": [556, 729, 567, 729, 567, 745, 556, 744],
+            "spans": [{ "offset": 897, "length": 1 }]
+          },
+          {
+            "content": "871,11",
+            "polygon": [699, 728, 743, 728, 743, 745, 699, 745],
+            "spans": [{ "offset": 899, "length": 6 }]
+          },
+          {
+            "content": "18 293,29",
+            "polygon": [840, 727, 904, 728, 903, 746, 840, 745],
+            "spans": [{ "offset": 906, "length": 9 }]
+          },
+          {
+            "content": "4.",
+            "polygon": [25, 758, 36, 758, 36, 773, 25, 773],
+            "spans": [{ "offset": 916, "length": 2 }]
+          },
+          {
+            "content": "Odsetki za nieterminowe wpłaty",
+            "polygon": [77, 757, 275, 759, 274, 780, 77, 777],
+            "spans": [{ "offset": 919, "length": 30 }]
+          },
+          {
+            "content": "np*",
+            "polygon": [548, 759, 570, 759, 571, 776, 548, 776],
+            "spans": [{ "offset": 950, "length": 3 }]
+          },
+          {
+            "content": "164,38",
+            "polygon": [858, 756, 903, 756, 903, 773, 859, 773],
+            "spans": [{ "offset": 954, "length": 6 }]
+          },
+          {
+            "content": "5",
+            "polygon": [26, 787, 35, 786, 36, 803, 26, 803],
+            "spans": [{ "offset": 961, "length": 1 }]
+          },
+          {
+            "content": "Do zapłaty ( 3 + 4 )",
+            "polygon": [78, 786, 197, 786, 197, 808, 77, 807],
+            "spans": [{ "offset": 963, "length": 20 }]
+          },
+          {
+            "content": "18 457,67",
+            "polygon": [839, 785, 902, 785, 902, 803, 839, 802],
+            "spans": [{ "offset": 984, "length": 9 }]
+          },
+          {
+            "content": "W tym",
+            "polygon": [54, 829, 95, 830, 95, 848, 54, 847],
+            "spans": [{ "offset": 994, "length": 5 }]
+          },
+          {
+            "content": "Stawka VAT (%)",
+            "polygon": [179, 830, 287, 831, 286, 853, 179, 851],
+            "spans": [{ "offset": 1000, "length": 14 }]
+          },
+          {
+            "content": "Wartość netto (zł)",
+            "polygon": [403, 830, 527, 830, 527, 851, 403, 851],
+            "spans": [{ "offset": 1015, "length": 18 }]
+          },
+          {
+            "content": "Kwota VAT (zł)",
+            "polygon": [657, 826, 756, 826, 756, 847, 657, 847],
+            "spans": [{ "offset": 1034, "length": 14 }]
+          },
+          {
+            "content": "Wartość brutto (zł)",
+            "polygon": [882, 826, 1011, 828, 1010, 848, 882, 846],
+            "spans": [{ "offset": 1049, "length": 19 }]
+          },
+          {
+            "content": "5",
+            "polygon": [228, 865, 240, 865, 240, 881, 228, 881],
+            "spans": [{ "offset": 1069, "length": 1 }]
+          },
+          {
+            "content": "17 422,18",
+            "polygon": [520, 860, 586, 860, 586, 882, 520, 882],
+            "spans": [{ "offset": 1071, "length": 9 }]
+          },
+          {
+            "content": "871,11",
+            "polygon": [779, 859, 821, 859, 821, 876, 779, 876],
+            "spans": [{ "offset": 1081, "length": 6 }]
+          },
+          {
+            "content": "18 293,29",
+            "polygon": [1000, 860, 1065, 860, 1064, 878, 1000, 877],
+            "spans": [{ "offset": 1088, "length": 9 }]
+          },
+          {
+            "content": "Od 9869 kWh energii elektrycznej naliczono akcyzę w kwocie 45,39 zł.",
+            "polygon": [24, 887, 514, 892, 514, 918, 24, 914],
+            "spans": [{ "offset": 1098, "length": 68 }]
+          },
+          {
+            "content": "Do zapłaty:",
+            "polygon": [721, 958, 806, 958, 806, 979, 721, 979],
+            "spans": [{ "offset": 1167, "length": 11 }]
+          },
+          {
+            "content": "18 457,67 zł",
+            "polygon": [956, 958, 1055, 958, 1054, 979, 956, 978],
+            "spans": [{ "offset": 1179, "length": 12 }]
+          },
+          {
+            "content": "Termin płatności:",
+            "polygon": [723, 987, 850, 987, 850, 1009, 723, 1010],
+            "spans": [{ "offset": 1192, "length": 17 }]
+          },
+          {
+            "content": "10/10/2022",
+            "polygon": [968, 987, 1048, 987, 1048, 1007, 968, 1007],
+            "spans": [{ "offset": 1210, "length": 10 }]
+          },
+          {
+            "content": "Słownie: osiemnaście tysięcy czterysta pięćdziesiąt siedem złotych sześćdziesiąt siedem",
+            "polygon": [23, 1018, 691, 1019, 691, 1052, 23, 1050],
+            "spans": [{ "offset": 1221, "length": 87 }]
+          },
+          {
+            "content": "groszy",
+            "polygon": [23, 1046, 78, 1046, 77, 1067, 24, 1066],
+            "spans": [{ "offset": 1309, "length": 6 }]
+          },
+          {
+            "content": "Wyszczególnienie odsetek",
+            "polygon": [786, 1081, 917, 1080, 917, 1095, 786, 1096],
+            "spans": [{ "offset": 1316, "length": 24 }]
+          },
+          {
+            "content": "Nr dokumentu",
+            "polygon": [641, 1111, 713, 1110, 713, 1123, 642, 1125],
+            "spans": [{ "offset": 1341, "length": 12 }]
+          },
+          {
+            "content": "Data wpłaty",
+            "polygon": [833, 1105, 893, 1105, 893, 1119, 833, 1118],
+            "spans": [{ "offset": 1354, "length": 11 }]
+          },
+          {
+            "content": "Ilość dni",
+            "polygon": [922, 1104, 964, 1104, 964, 1118, 922, 1118],
+            "spans": [{ "offset": 1366, "length": 9 }]
+          },
+          {
+            "content": "Opłata",
+            "polygon": [1006, 1105, 1041, 1104, 1041, 1118, 1006, 1118],
+            "spans": [{ "offset": 1376, "length": 6 }]
+          },
+          {
+            "content": "FVE E/GM/0265645/22",
+            "polygon": [643, 1135, 756, 1131, 757, 1145, 644, 1150],
+            "spans": [{ "offset": 1383, "length": 19 }]
+          },
+          {
+            "content": "25/08/2022",
+            "polygon": [836, 1128, 891, 1128, 891, 1142, 836, 1142],
+            "spans": [{ "offset": 1403, "length": 10 }]
+          },
+          {
+            "content": "20",
+            "polygon": [937, 1128, 950, 1128, 950, 1141, 937, 1140],
+            "spans": [{ "offset": 1414, "length": 2 }]
+          },
+          {
+            "content": "26,30",
+            "polygon": [1030, 1129, 1059, 1128, 1059, 1141, 1030, 1140],
+            "spans": [{ "offset": 1417, "length": 5 }]
+          },
+          {
+            "content": "FVE E/GM/0265645/22",
+            "polygon": [643, 1160, 758, 1155, 759, 1171, 643, 1175],
+            "spans": [{ "offset": 1423, "length": 19 }]
+          },
+          {
+            "content": "04/09/2022",
+            "polygon": [836, 1152, 892, 1152, 892, 1166, 837, 1166],
+            "spans": [{ "offset": 1443, "length": 10 }]
+          },
+          {
+            "content": "30",
+            "polygon": [936, 1152, 950, 1152, 950, 1165, 937, 1165],
+            "spans": [{ "offset": 1454, "length": 2 }]
+          },
+          {
+            "content": "138,08",
+            "polygon": [1025, 1152, 1061, 1152, 1061, 1165, 1025, 1165],
+            "spans": [{ "offset": 1457, "length": 6 }]
+          },
+          {
+            "content": "Wystawił:",
+            "polygon": [726, 1208, 793, 1205, 794, 1227, 727, 1230],
+            "spans": [{ "offset": 1464, "length": 9 }]
+          },
+          {
+            "content": "Centrum",
+            "polygon": [894, 1190, 956, 1189, 956, 1208, 895, 1208],
+            "spans": [{ "offset": 1474, "length": 7 }]
+          },
+          {
+            "content": "Rozliczeń: M.T",
+            "polygon": [875, 1212, 979, 1211, 979, 1232, 875, 1233],
+            "spans": [{ "offset": 1482, "length": 14 }]
+          },
+          {
+            "content": "Data wystawienia:",
+            "polygon": [726, 1250, 850, 1244, 851, 1267, 727, 1273],
+            "spans": [{ "offset": 1497, "length": 17 }]
+          },
+          {
+            "content": "22/09/2022",
+            "polygon": [904, 1242, 983, 1241, 984, 1260, 904, 1261],
+            "spans": [{ "offset": 1515, "length": 10 }]
+          },
+          {
+            "content": "* np - nie podlega ustawie o podatku od towarów i usług",
+            "polygon": [74, 1283, 424, 1302, 423, 1323, 74, 1305],
+            "spans": [{ "offset": 1526, "length": 55 }]
+          }
+        ],
+        "spans": [{ "offset": 0, "length": 1581 }]
+      }
+    ],
+    "tables": [
+      {
+        "rowCount": 6,
+        "columnCount": 7,
+        "cells": [
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 0,
+            "content": "Lp:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [20, 616, 73, 616, 74, 665, 20, 665]
+              }
+            ],
+            "spans": [{ "offset": 615, "length": 3 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 1,
+            "content": "Rozliczenie z tytułu",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [73, 616, 343, 617, 343, 666, 74, 665]
+              }
+            ],
+            "spans": [{ "offset": 619, "length": 20 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 2,
+            "content": "Wartość netto\n(zł)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [343, 617, 508, 617, 508, 666, 343, 666]
+              }
+            ],
+            "spans": [
+              { "offset": 640, "length": 13 },
+              { "offset": 698, "length": 4 }
+            ]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 3,
+            "content": "Stawka VAT\n(%)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [508, 617, 614, 617, 614, 666, 508, 666]
+              }
+            ],
+            "spans": [
+              { "offset": 654, "length": 10 },
+              { "offset": 703, "length": 3 }
+            ]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 4,
+            "content": "Kwota VAT\n(zł)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 617, 748, 617, 748, 666, 614, 666]
+              }
+            ],
+            "spans": [
+              { "offset": 665, "length": 9 },
+              { "offset": 707, "length": 4 }
+            ]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 5,
+            "content": "Wartość brutto\n(zł)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [748, 617, 908, 617, 908, 666, 748, 666]
+              }
+            ],
+            "spans": [
+              { "offset": 675, "length": 14 },
+              { "offset": 712, "length": 4 }
+            ]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 6,
+            "content": "Zużycie\n[kWh]",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 617, 1071, 617, 1070, 666, 908, 666]
+              }
+            ],
+            "spans": [
+              { "offset": 690, "length": 7 },
+              { "offset": 717, "length": 5 }
+            ]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 0,
+            "content": "1.",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [20, 665, 74, 665, 74, 695, 20, 693]
+              }
+            ],
+            "spans": [{ "offset": 723, "length": 2 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 1,
+            "content": "Sprzedaży energii elektrycznej",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [74, 665, 343, 666, 343, 697, 74, 695]
+              }
+            ],
+            "spans": [{ "offset": 726, "length": 30 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 2,
+            "content": "15 038,53",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [343, 666, 508, 666, 508, 696, 343, 697]
+              }
+            ],
+            "spans": [{ "offset": 757, "length": 9 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 3,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [508, 666, 614, 666, 614, 696, 508, 696]
+              }
+            ],
+            "spans": [{ "offset": 767, "length": 1 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 4,
+            "content": "751,93",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 666, 748, 666, 748, 696, 614, 696]
+              }
+            ],
+            "spans": [{ "offset": 769, "length": 6 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 5,
+            "content": "15 790,46",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [748, 666, 908, 666, 908, 696, 748, 696]
+              }
+            ],
+            "spans": [{ "offset": 776, "length": 9 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 6,
+            "content": "9869",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 666, 1070, 666, 1070, 697, 908, 696]
+              }
+            ],
+            "spans": [{ "offset": 786, "length": 4 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 0,
+            "content": "2.",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [20, 693, 74, 695, 74, 724, 20, 724]
+              }
+            ],
+            "spans": [{ "offset": 791, "length": 2 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 1,
+            "content": "Świadczonych usług dystrybucji",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [74, 695, 343, 697, 343, 725, 74, 724]
+              }
+            ],
+            "spans": [{ "offset": 794, "length": 30 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 2,
+            "content": "2 383,65",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [343, 697, 508, 696, 508, 725, 343, 725]
+              }
+            ],
+            "spans": [{ "offset": 825, "length": 8 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 3,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [508, 696, 614, 696, 614, 725, 508, 725]
+              }
+            ],
+            "spans": [{ "offset": 834, "length": 1 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 4,
+            "content": "119,18",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 696, 748, 696, 748, 724, 614, 725]
+              }
+            ],
+            "spans": [{ "offset": 836, "length": 6 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 5,
+            "content": "2 502,83",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [748, 696, 908, 696, 908, 724, 748, 724]
+              }
+            ],
+            "spans": [{ "offset": 843, "length": 8 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 6,
+            "content": "9869",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 696, 1070, 697, 1070, 725, 908, 724]
+              }
+            ],
+            "spans": [{ "offset": 852, "length": 4 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 0,
+            "content": "3.",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [20, 724, 74, 724, 74, 752, 20, 752]
+              }
+            ],
+            "spans": [{ "offset": 857, "length": 2 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 1,
+            "content": "Wynik rozliczenia ( 1 + 2)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [74, 724, 343, 725, 343, 753, 74, 752]
+              }
+            ],
+            "spans": [{ "offset": 860, "length": 26 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 2,
+            "content": "17 422,18",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [343, 725, 508, 725, 508, 752, 343, 753]
+              }
+            ],
+            "spans": [{ "offset": 887, "length": 9 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 3,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [508, 725, 614, 725, 614, 752, 508, 752]
+              }
+            ],
+            "spans": [{ "offset": 897, "length": 1 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 4,
+            "content": "871,11",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 725, 748, 724, 748, 752, 614, 752]
+              }
+            ],
+            "spans": [{ "offset": 899, "length": 6 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 5,
+            "content": "18 293,29",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [748, 724, 908, 724, 907, 752, 748, 752]
+              }
+            ],
+            "spans": [{ "offset": 906, "length": 9 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 6,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 724, 1070, 725, 1070, 752, 907, 752]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 0,
+            "content": "4.",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [20, 752, 74, 752, 74, 782, 21, 781]
+              }
+            ],
+            "spans": [{ "offset": 916, "length": 2 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 1,
+            "content": "Odsetki za nieterminowe wpłaty",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [74, 752, 343, 753, 343, 784, 74, 782]
+              }
+            ],
+            "spans": [{ "offset": 919, "length": 30 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 2,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [343, 753, 508, 752, 508, 782, 343, 784]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 3,
+            "content": "np*",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [508, 752, 614, 752, 614, 782, 508, 782]
+              }
+            ],
+            "spans": [{ "offset": 950, "length": 3 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 4,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 752, 748, 752, 748, 782, 614, 782]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 5,
+            "content": "164,38",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [748, 752, 907, 752, 907, 782, 748, 782]
+              }
+            ],
+            "spans": [{ "offset": 954, "length": 6 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 6,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [907, 752, 1070, 752, 1069, 782, 907, 782]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 0,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [21, 781, 74, 782, 74, 811, 21, 811]
+              }
+            ],
+            "spans": [{ "offset": 961, "length": 1 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 1,
+            "content": "Do zapłaty ( 3 + 4 )",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [74, 782, 343, 784, 343, 813, 74, 811]
+              }
+            ],
+            "spans": [{ "offset": 963, "length": 20 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 2,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [343, 784, 508, 782, 508, 812, 343, 813]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 3,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [508, 782, 614, 782, 614, 812, 508, 812]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 4,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 782, 748, 782, 748, 811, 614, 812]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 5,
+            "content": "18 457,67",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [748, 782, 907, 782, 907, 811, 748, 811]
+              }
+            ],
+            "spans": [{ "offset": 984, "length": 9 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 6,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [907, 782, 1069, 782, 1069, 811, 907, 811]
+              }
+            ],
+            "spans": []
+          }
+        ],
+        "boundingRegions": [
+          {
+            "pageNumber": 1,
+            "polygon": [20, 615, 1068, 616, 1068, 817, 20, 816]
+          }
+        ],
+        "spans": [
+          { "offset": 615, "length": 38 },
+          { "offset": 698, "length": 4 },
+          { "offset": 654, "length": 10 },
+          { "offset": 703, "length": 3 },
+          { "offset": 665, "length": 9 },
+          { "offset": 707, "length": 4 },
+          { "offset": 675, "length": 14 },
+          { "offset": 712, "length": 4 },
+          { "offset": 690, "length": 7 },
+          { "offset": 717, "length": 276 }
+        ]
+      },
+      {
+        "rowCount": 2,
+        "columnCount": 5,
+        "cells": [
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 0,
+            "content": "W tym",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [32, 821, 138, 823, 138, 859, 32, 856]
+              }
+            ],
+            "spans": [{ "offset": 994, "length": 5 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 1,
+            "content": "Stawka VAT (%)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [138, 823, 346, 825, 346, 860, 138, 859]
+              }
+            ],
+            "spans": [{ "offset": 1000, "length": 14 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 2,
+            "content": "Wartość netto (zł)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [346, 825, 619, 822, 619, 858, 346, 860]
+              }
+            ],
+            "spans": [{ "offset": 1015, "length": 18 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 3,
+            "content": "Kwota VAT (zł)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [619, 822, 852, 821, 852, 856, 619, 858]
+              }
+            ],
+            "spans": [{ "offset": 1034, "length": 14 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 4,
+            "content": "Wartość brutto (zł)",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [852, 821, 1075, 821, 1075, 856, 852, 856]
+              }
+            ],
+            "spans": [{ "offset": 1049, "length": 19 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 0,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [32, 856, 138, 859, 138, 888, 32, 886]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 1,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [138, 859, 346, 860, 346, 890, 138, 888]
+              }
+            ],
+            "spans": [{ "offset": 1069, "length": 1 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 2,
+            "content": "17 422,18",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [346, 860, 619, 858, 619, 887, 346, 890]
+              }
+            ],
+            "spans": [{ "offset": 1071, "length": 9 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 3,
+            "content": "871,11",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [619, 858, 852, 856, 852, 885, 619, 887]
+              }
+            ],
+            "spans": [{ "offset": 1081, "length": 6 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 4,
+            "content": "18 293,29",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [852, 856, 1075, 856, 1075, 885, 852, 885]
+              }
+            ],
+            "spans": [{ "offset": 1088, "length": 9 }]
+          }
+        ],
+        "boundingRegions": [
+          {
+            "pageNumber": 1,
+            "polygon": [22, 821, 1066, 819, 1066, 890, 22, 892]
+          }
+        ],
+        "spans": [{ "offset": 994, "length": 103 }]
+      },
+      {
+        "rowCount": 4,
+        "columnCount": 4,
+        "cells": [
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 0,
+            "rowSpan": 2,
+            "columnSpan": 4,
+            "content": "Wyszczególnienie odsetek\nNr dokumentu\nData wpłaty\nIlość dni\nOpłata",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [633, 1085, 1064, 1074, 1064, 1122, 633, 1134]
+              }
+            ],
+            "spans": [{ "offset": 1316, "length": 66 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 1,
+            "columnIndex": 1,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [796, 1102, 908, 1099, 908, 1122, 796, 1126]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 1,
+            "columnIndex": 2,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 1099, 985, 1098, 985, 1122, 908, 1122]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 1,
+            "columnIndex": 3,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [985, 1098, 1064, 1098, 1064, 1122, 985, 1122]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 0,
+            "content": "FVE E/GM/0265645/22",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [633, 1134, 796, 1126, 796, 1150, 633, 1159]
+              }
+            ],
+            "spans": [{ "offset": 1383, "length": 19 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 1,
+            "content": "25/08/2022",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [796, 1126, 908, 1122, 908, 1146, 796, 1150]
+              }
+            ],
+            "spans": [{ "offset": 1403, "length": 10 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 2,
+            "content": "20",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 1122, 985, 1122, 985, 1145, 908, 1146]
+              }
+            ],
+            "spans": [{ "offset": 1414, "length": 2 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 3,
+            "content": "26,30",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [985, 1122, 1064, 1122, 1063, 1145, 985, 1145]
+              }
+            ],
+            "spans": [{ "offset": 1417, "length": 5 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 0,
+            "content": "FVE E/GM/0265645/22",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [633, 1159, 796, 1150, 796, 1176, 633, 1184]
+              }
+            ],
+            "spans": [{ "offset": 1423, "length": 19 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 1,
+            "content": "04/09/2022",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [796, 1150, 908, 1146, 908, 1172, 796, 1176]
+              }
+            ],
+            "spans": [{ "offset": 1443, "length": 10 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 2,
+            "content": "30",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [908, 1146, 985, 1145, 985, 1170, 908, 1172]
+              }
+            ],
+            "spans": [{ "offset": 1454, "length": 2 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 3,
+            "content": "138,08",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [985, 1145, 1063, 1145, 1063, 1169, 985, 1170]
+              }
+            ],
+            "spans": [{ "offset": 1457, "length": 6 }]
+          }
+        ],
+        "boundingRegions": [
+          {
+            "pageNumber": 1,
+            "polygon": [640, 1083, 1063, 1076, 1065, 1174, 642, 1182]
+          }
+        ],
+        "spans": [{ "offset": 1316, "length": 147 }]
+      }
+    ],
+    "styles": [],
+    "documents": [
+      {
+        "docType": "invoice",
+        "boundingRegions": [
+          { "pageNumber": 1, "polygon": [0, 0, 1077, 0, 1077, 1440, 0, 1440] }
+        ],
+        "fields": {
+          "AmountDue": {
+            "type": "currency",
+            "valueCurrency": {
+              "currencySymbol": "zł",
+              "amount": 18457.67,
+              "currencyCode": "PLN"
+            },
+            "content": "18 457,67 zł",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [957, 958, 1054, 958, 1054, 980, 957, 980]
+              }
+            ],
+            "confidence": 0.443,
+            "spans": [{ "offset": 1179, "length": 12 }]
+          },
+          "BillingAddress": {
+            "type": "address",
+            "content": "UL. LWOWSKA 23, 40-389 KATOWICE",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [34, 280, 257, 280, 257, 300, 34, 300]
+              }
+            ],
+            "confidence": 0.275,
+            "spans": [{ "offset": 322, "length": 31 }],
+            "valueAddress": {
+              "houseNumber": "23",
+              "road": "UL. LWOWSKA",
+              "postalCode": "40-389",
+              "city": "KATOWICE",
+              "streetAddress": "23 UL. LWOWSKA"
+            }
+          },
+          "BillingAddressRecipient": {
+            "type": "string",
+            "valueString": "TAURON Obsługa Klienta sp. z o.o.",
+            "content": "TAURON Obsługa Klienta sp. z o.o.",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [35, 262, 235, 262, 235, 282, 35, 282]
+              }
+            ],
+            "confidence": 0.28,
+            "spans": [{ "offset": 288, "length": 33 }]
+          },
+          "CustomerAddress": {
+            "type": "address",
+            "content": "44-270 RYBNIK",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [34, 455, 132, 454, 132, 472, 34, 473]
+              }
+            ],
+            "confidence": 0.35,
+            "spans": [{ "offset": 469, "length": 13 }],
+            "valueAddress": {
+              "postalCode": "44-270",
+              "city": "RYBNIK",
+              "streetAddress": ""
+            }
+          },
+          "CustomerName": {
+            "type": "string",
+            "valueString": "TAURON Obsługa Klienta sp. z o.o.",
+            "content": "TAURON Obsługa Klienta sp. z o.o.",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [35, 262, 235, 262, 235, 282, 35, 282]
+              }
+            ],
+            "confidence": 0.28,
+            "spans": [{ "offset": 288, "length": 33 }]
+          },
+          "DueDate": {
+            "type": "date",
+            "valueDate": "2022-10-10",
+            "content": "10/10/2022",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [969, 988, 1049, 987, 1049, 1008, 970, 1007]
+              }
+            ],
+            "confidence": 0.938,
+            "spans": [{ "offset": 1210, "length": 10 }]
+          },
+          "InvoiceDate": {
+            "type": "date",
+            "valueDate": "2022-09-22",
+            "content": "22/09/2022",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [907, 1243, 983, 1242, 984, 1260, 908, 1261]
+              }
+            ],
+            "confidence": 0.937,
+            "spans": [{ "offset": 1515, "length": 10 }]
+          },
+          "InvoiceId": {
+            "type": "string",
+            "valueString": "E/GM/0356462/22",
+            "content": "E/GM/0356462/22",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [159, 520, 285, 521, 284, 544, 159, 542]
+              }
+            ],
+            "confidence": 0.848,
+            "spans": [{ "offset": 502, "length": 15 }]
+          },
+          "InvoiceTotal": {
+            "type": "currency",
+            "valueCurrency": { "amount": 18293.29, "currencyCode": "PLN" },
+            "content": "18 293,29",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1001, 859, 1065, 861, 1064, 880, 1000, 877]
+              }
+            ],
+            "confidence": 0.817,
+            "spans": [{ "offset": 1088, "length": 9 }]
+          },
+          "Items": {
+            "type": "array",
+            "valueArray": [
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 15790.46,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "15 790,46",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [842, 670, 905, 671, 905, 689, 842, 688]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 776, "length": 9 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "Sprzedaży energii elektrycznej",
+                    "content": "Sprzedaży energii elektrycznej",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [77, 668, 267, 671, 267, 693, 77, 690]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 726, "length": 30 }]
+                  },
+                  "Tax": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 751.93,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "751,93",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [701, 670, 744, 670, 744, 688, 701, 688]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 769, "length": 6 }]
+                  },
+                  "TaxRate": {
+                    "type": "string",
+                    "valueString": "5",
+                    "content": "5",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [556, 671, 565, 671, 565, 687, 556, 687]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 767, "length": 1 }]
+                  },
+                  "UnitPrice": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 15038.53,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "15 038,53",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [440, 669, 505, 671, 504, 691, 439, 688]
+                      }
+                    ],
+                    "confidence": 0.955,
+                    "spans": [{ "offset": 757, "length": 9 }]
+                  }
+                },
+                "content": "1.\nSprzedaży energii elektrycznej\n15 038,53\n5\n751,93\n15 790,46\n9869",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [26, 669, 1067, 669, 1067, 692, 26, 692]
+                  }
+                ],
+                "confidence": 0.877,
+                "spans": [{ "offset": 723, "length": 67 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 2502.83,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "2 502,83",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [848, 699, 903, 700, 903, 718, 848, 717]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 843, "length": 8 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "Świadczonych usług dystrybucji",
+                    "content": "Świadczonych usług dystrybucji",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [77, 697, 276, 700, 276, 723, 77, 720]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 794, "length": 30 }]
+                  },
+                  "Tax": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 119.18,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "119,18",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [703, 699, 743, 699, 743, 717, 703, 716]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 836, "length": 6 }]
+                  },
+                  "TaxRate": {
+                    "type": "string",
+                    "valueString": "5",
+                    "content": "5",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [556, 699, 565, 699, 566, 716, 557, 716]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 834, "length": 1 }]
+                  },
+                  "UnitPrice": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 2383.65,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "2 383,65",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [447, 700, 503, 700, 503, 719, 447, 719]
+                      }
+                    ],
+                    "confidence": 0.838,
+                    "spans": [{ "offset": 825, "length": 8 }]
+                  }
+                },
+                "content": "2.\nŚwiadczonych usług dystrybucji\n2 383,65\n5\n119,18\n2 502,83\n9869",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [26, 697, 1066, 697, 1066, 722, 26, 722]
+                  }
+                ],
+                "confidence": 0.877,
+                "spans": [{ "offset": 791, "length": 65 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 18293.29,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "18 293,29",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [841, 726, 904, 728, 903, 748, 840, 745]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 906, "length": 9 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "Wynik rozliczenia ( 1 + 2)",
+                    "content": "Wynik rozliczenia ( 1 + 2)",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [78, 727, 239, 728, 239, 751, 78, 750]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 860, "length": 26 }]
+                  },
+                  "Tax": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 871.11,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "871,11",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [701, 728, 742, 728, 742, 745, 701, 745]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 899, "length": 6 }]
+                  },
+                  "TaxRate": {
+                    "type": "string",
+                    "valueString": "5",
+                    "content": "5",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [556, 729, 565, 729, 565, 745, 556, 744]
+                      }
+                    ],
+                    "confidence": 0.957,
+                    "spans": [{ "offset": 897, "length": 1 }]
+                  },
+                  "UnitPrice": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 17422.18,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "17 422,18",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [440, 728, 504, 729, 504, 748, 440, 747]
+                      }
+                    ],
+                    "confidence": 0.954,
+                    "spans": [{ "offset": 887, "length": 9 }]
+                  }
+                },
+                "content": "3.\nWynik rozliczenia ( 1 + 2)\n17 422,18\n5\n871,11\n18 293,29",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [25, 721, 903, 728, 903, 756, 25, 750]
+                  }
+                ],
+                "confidence": 0.876,
+                "spans": [{ "offset": 857, "length": 58 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 164.38,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "164,38",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [861, 756, 902, 756, 902, 773, 861, 773]
+                      }
+                    ],
+                    "confidence": 0.803,
+                    "spans": [{ "offset": 954, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "Odsetki za nieterminowe wpłaty",
+                    "content": "Odsetki za nieterminowe wpłaty",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [78, 755, 275, 759, 275, 782, 78, 778]
+                      }
+                    ],
+                    "confidence": 0.953,
+                    "spans": [{ "offset": 919, "length": 30 }]
+                  }
+                },
+                "content": "4.\nOdsetki za nieterminowe wpłaty\nnp*\n164,38",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [26, 756, 902, 756, 902, 781, 26, 781]
+                  }
+                ],
+                "confidence": 0.847,
+                "spans": [{ "offset": 916, "length": 44 }]
+              }
+            ]
+          },
+          "PaymentDetails": {
+            "type": "array",
+            "valueArray": [
+              {
+                "type": "object",
+                "valueObject": {
+                  "IBAN": {
+                    "type": "string",
+                    "valueString": "11 1050 0099 6014 0210 0025 9073",
+                    "content": "11 1050 0099 6014 0210 0025 9073",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [37, 206, 239, 206, 239, 225, 37, 225]
+                      }
+                    ],
+                    "confidence": 0.924,
+                    "spans": [{ "offset": 231, "length": 32 }]
+                  }
+                },
+                "confidence": 0.995
+              }
+            ]
+          },
+          "ServiceEndDate": {
+            "type": "date",
+            "valueDate": "2022-09-15",
+            "content": "15/09/2022",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [188, 567, 261, 567, 261, 587, 188, 587]
+              }
+            ],
+            "confidence": 0.957,
+            "spans": [{ "offset": 604, "length": 10 }]
+          },
+          "ServiceStartDate": {
+            "type": "date",
+            "valueDate": "2022-07-16",
+            "content": "16/07/2022",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [96, 566, 164, 566, 164, 587, 96, 587]
+              }
+            ],
+            "confidence": 0.95,
+            "spans": [{ "offset": 590, "length": 10 }]
+          },
+          "SubTotal": {
+            "type": "currency",
+            "valueCurrency": { "amount": 17422.18, "currencyCode": "PLN" },
+            "content": "17 422,18",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [520, 860, 586, 860, 586, 882, 520, 882]
+              }
+            ],
+            "confidence": 0.82,
+            "spans": [{ "offset": 1071, "length": 9 }]
+          },
+          "TotalTax": {
+            "type": "currency",
+            "valueCurrency": { "amount": 871.11, "currencyCode": "PLN" },
+            "content": "871,11",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [780, 859, 821, 859, 821, 876, 780, 876]
+              }
+            ],
+            "confidence": 0.936,
+            "spans": [{ "offset": 1081, "length": 6 }]
+          },
+          "VendorAddress": {
+            "type": "address",
+            "content": "44-100 GLIWICE, UL. NORBERTA BARLICKIEGO 2",
+            "boundingRegions": [
+              { "pageNumber": 1, "polygon": [39, 80, 333, 78, 333, 97, 39, 99] }
+            ],
+            "confidence": 0.887,
+            "spans": [{ "offset": 43, "length": 42 }],
+            "valueAddress": {
+              "houseNumber": "2",
+              "road": "UL. NORBERTA BARLICKIEGO",
+              "postalCode": "44-100",
+              "city": "GLIWICE",
+              "streetAddress": "2 UL. NORBERTA BARLICKIEGO"
+            }
+          },
+          "VendorAddressRecipient": {
+            "type": "string",
+            "valueString": "TAURON Sprzedaż GZE sp. z o.o.",
+            "content": "TAURON Sprzedaż GZE sp. z o.o.",
+            "boundingRegions": [
+              { "pageNumber": 1, "polygon": [40, 62, 231, 62, 231, 81, 40, 81] }
+            ],
+            "confidence": 0.89,
+            "spans": [{ "offset": 12, "length": 30 }]
+          },
+          "VendorName": {
+            "type": "string",
+            "valueString": "TAURON",
+            "content": "TAURON",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [731, 135, 862, 136, 863, 168, 731, 168]
+              }
+            ],
+            "confidence": 0.957,
+            "spans": [{ "offset": 156, "length": 6 }]
+          },
+          "VendorTaxId": {
+            "type": "string",
+            "valueString": "631-22-41-337",
+            "content": "631-22-41-337",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [66, 99, 150, 99, 150, 116, 66, 116]
+              }
+            ],
+            "confidence": 0.948,
+            "spans": [{ "offset": 91, "length": 13 }]
+          }
+        },
+        "confidence": 1,
+        "spans": [{ "offset": 0, "length": 1581 }]
+      }
+    ],
+    "contentFormat": "text"
+  }
+}
