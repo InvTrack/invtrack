@@ -1,8 +1,7 @@
-import type { LoadFunctionArgument } from "$lib/helpers";
 import { error } from "@sveltejs/kit";
 
 // TODO: This file is identical to the +page.ts in the directory above. Reuse the data from here
-export const load = async ({ parent }: LoadFunctionArgument) => {
+export const load = async ({ parent }) => {
   const { supabase } = await parent();
   const { data: products, error: error1 } = await supabase
     .from("existing_products")

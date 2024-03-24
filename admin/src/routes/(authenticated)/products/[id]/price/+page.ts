@@ -1,6 +1,5 @@
-import type { LoadFunctionWithIdArgument } from "$lib/helpers";
 import { error } from "@sveltejs/kit";
-export const load = async ({ parent, params }: LoadFunctionWithIdArgument) => {
+export const load = async ({ parent, params }) => {
   const id = params.id;
   const { supabase } = await parent();
 

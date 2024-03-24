@@ -1,7 +1,6 @@
-import type { LoadFunctionArgument } from "$lib/helpers";
 import { error } from "@sveltejs/kit";
 
-export const load = async ({ parent }: LoadFunctionArgument) => {
+export const load = async ({ parent }) => {
   const { supabase } = await parent();
   const { data: products, error: error1 } = await supabase
     .from("existing_products")
