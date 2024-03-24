@@ -1,23 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "../supabase";
-import { Product, ProductTable } from "../types";
 import { useSession } from "./sessionContext";
 
-const listProducts = async () => {
-  const res = await supabase.from<"product", ProductTable>("product").select();
+const listExistingProducts = async () => {
+  const res = await supabase.from("existing_products").select();
 
   return {
     ...res,
-    data: res.data as Product[],
+    data: res.data || [],
   };
 };
 
-export const useListProducts = () => {
+// function entirely unused currently, consider deletion?
+export const useListExistingProducts = () => {
   const { session } = useSession();
   const query = useQuery(
     ["products", session?.user.id],
-    () => session && listProducts()
+    () => session && listExistingProducts()
   );
   return { ...query, data: query.data?.data };
 };
