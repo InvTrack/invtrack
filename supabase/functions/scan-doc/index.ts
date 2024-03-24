@@ -51,6 +51,13 @@ const parseFloatForResponse = (value: number | null): number | null =>
   value == null ? null : parseFloat(value.toFixed(2));
 
 /**
+ * normalize strings to remove newlines
+ *
+ * should wrap every string returned in a response
+ */
+const parseStringForResponse = (value: string | null): string | null =>
+  value == null ? null : value.replace(/\r?\n|\r/g, "");
+/**
  * standardize possible floats to 4 decimal places
  *
  * should wrap every expected number
@@ -110,6 +117,7 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
+  let mappedOver;
 
   // return new Response("err", { status: 404, headers: corsHeaders });
   if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
@@ -177,8 +185,8 @@ Deno.serve(async (req) => {
     return {};
   }
   if (result.analyzeResult.documents[0].fields.Items.type === "array") {
-    const mappedOver =
-      result.analyzeResult.documents[0].fields.Items.valueArray?.map((item) => {
+    mappedOver = result.analyzeResult.documents[0].fields.Items.valueArray?.map(
+      (item) => {
         if (item.type !== "object") {
           return;
         }
@@ -195,13 +203,16 @@ Deno.serve(async (req) => {
           price_per_unit,
           quantity,
         };
-      });
-    return new Response(JSON.stringify(mappedOver, null, 2), {
+      }
+    );
+
+    return new Response(JSON.stringify(mappedOver), {
       headers: corsHeaders,
     });
   }
-
-  return new Response(JSON.stringify(result), { headers: corsHeaders });
+  return new Response(JSON.stringify(mappedOver), {
+    headers: corsHeaders,
+  });
 });
 
 // To invoke:
