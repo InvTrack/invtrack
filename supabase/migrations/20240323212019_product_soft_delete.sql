@@ -48,23 +48,3 @@ AS $function$
   end;
 $function$
 ;
-
-CREATE OR REPLACE VIEW public.record_view AS
-SELECT
-  product.name,
-  product.unit,
-  product.steps,
-  product_record.price_per_unit,
-  product_record.quantity,
-  product_record.inventory_id,
-  product_record.id,
-  product_record.product_id,
-  barcode.code as barcode,
-  product_category.name as category_name,
-  product_category.display_order as category_display_order,
-  product.display_order
-FROM
-  product_record
-  LEFT JOIN product ON product_record.product_id = product.id AND product.deleted_at IS NULL
-  LEFT JOIN barcode ON product_record.product_id = barcode.product_id
-  LEFT JOIN product_category ON product.category_id = product_category.id;
