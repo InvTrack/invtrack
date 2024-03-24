@@ -69,34 +69,32 @@
   };
 </script>
 
-{#if inventory}
-  <ScreenCard header={"Inwentaryzacja - " + inventory.name} class="flex flex-col">
-    <UnsavedWarningModal
-      bind:open={unsavedChangesModal}
-      onContinue={onUnsavedWarningContinue}
-      onStay={() => (unsavedChangesModal = false)}
-    />
-    <ConfirmationModal
-      bind:open={confirmationModal}
-      message="Czy na pewno chcesz usunąć tę inwentaryzację?"
-      onConfirm={deleteInventory}
-    />
+<ScreenCard header={"Inwentaryzacja - " + inventory.name} class="flex flex-col">
+  <UnsavedWarningModal
+    bind:open={unsavedChangesModal}
+    onContinue={onUnsavedWarningContinue}
+    onStay={() => (unsavedChangesModal = false)}
+  />
+  <ConfirmationModal
+    bind:open={confirmationModal}
+    message="Czy na pewno chcesz usunąć tę inwentaryzację?"
+    onConfirm={deleteInventory}
+  />
 
-    <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
-      <Label class="space-y-2">
-        <Span>Nazwa</Span>
-        <Input type="text" name="name" placeholder="Name" bind:value={name} />
-      </Label>
-      <Label class="space-y-2 mt-2">
-        <Span>Data</Span>
-        <Input type="text" name="date" placeholder="Date" bind:value={date} />
-      </Label>
-      <Button type="submit" class="mt-4" color="primary"
-        >{loading ? "Zapisywanie ..." : "Aktualizuj inwentaryzację"}</Button
-      >
-    </form>
-    <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventoryConfirmation}
-      >Usuń tę inwentaryzację</Button
+  <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
+    <Label class="space-y-2">
+      <Span>Nazwa</Span>
+      <Input type="text" name="name" placeholder="Name" bind:value={name} />
+    </Label>
+    <Label class="space-y-2 mt-2">
+      <Span>Data</Span>
+      <Input type="text" name="date" placeholder="Date" bind:value={date} />
+    </Label>
+    <Button type="submit" class="mt-4" color="primary"
+      >{loading ? "Zapisywanie ..." : "Aktualizuj inwentaryzację"}</Button
     >
-  </ScreenCard>
-{/if}
+  </form>
+  <Button type="submit" class="w-fit self-end" color="red" on:click={deleteInventoryConfirmation}
+    >Usuń tę inwentaryzację</Button
+  >
+</ScreenCard>
