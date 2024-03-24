@@ -7,7 +7,7 @@ import { Card } from "./Card";
 import { Typography } from "./Typography";
 
 type IDListCardProps = {
-  name: string;
+  name: string | null | undefined;
   id: number;
   recordId: number;
   quantity: number;
@@ -29,6 +29,9 @@ export const IDListCard = ({
 }: IDListCardProps) => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
+  if (!name) {
+    return null;
+  }
   return (
     <View
       style={[
