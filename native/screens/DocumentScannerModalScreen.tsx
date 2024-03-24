@@ -1,5 +1,5 @@
 import { Camera } from "expo-camera";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Linking, StyleSheet } from "react-native";
 
 import { Button } from "../components/Button";
@@ -8,6 +8,7 @@ import { Typography } from "../components/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { DocumentScanner } from "../components/DocumentScanner";
+import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import SafeLayout from "../components/SafeLayout";
@@ -19,10 +20,25 @@ export type DocumentScannerModalScreen = NativeStackScreenProps<
   "DocumentScannerModal"
 >;
 
-export function DocumentScannerModalScreen({}: DocumentScannerModalScreen) {
+export const DocumentScannerModalScreen = ({
+  navigation,
+}: DocumentScannerModalScreen) => {
   const styles = useStyles();
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const {
+    dispatch,
+    state: { processedInvoice, photo },
+  } = useContext(DocumentScannerContext);
+
+  useEffect(() => {
+    if (!photo) {
+      return;
+    }
+    navigation.goBack();
+    dispatch({ type: "PHOTO_RESET_DATA" });
+    return;
+  }, [processedInvoice]);
 
   const awaitingPermission = !permission;
   const permissionDeniedCanAskAgain =
@@ -102,7 +118,7 @@ export function DocumentScannerModalScreen({}: DocumentScannerModalScreen) {
       <DocumentScanner />
     </SafeLayout>
   );
-}
+};
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({

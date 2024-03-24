@@ -5,16 +5,27 @@ interface DocumentScannerContextValue {
   dispatch: React.Dispatch<DocumentScannerAction>;
   state: {
     isPreviewShown: boolean;
-    block: false;
     isProcessingPhotoData: boolean;
     isCameraReady: boolean | null;
     photo: CameraCapturedPicture | null;
     ratio: string;
+    processedInvoice: ProcessedInvoice;
   };
 }
 export interface DocumentScannerContextProviderProps {
   children: React.ReactNode;
 }
+
+/**
+ * assignable to Inventory/Delivery Forms
+ */
+export type ProcessedInvoice = {
+  [record_id: string]: {
+    quantity: number;
+    product_id: number;
+    price_per_unit: number | null;
+  };
+} | null;
 
 export type DocumentScannerAction =
   | {
@@ -48,18 +59,28 @@ export type DocumentScannerAction =
       payload: {
         photo: CameraCapturedPicture;
       };
+    }
+  | {
+      type: "PHOTO_RESET_DATA";
+      payload?: {};
+    }
+  | {
+      type: "PROCESSED_INVOICE";
+      payload: {
+        processedInvoice: ProcessedInvoice;
+      };
     };
 
 export const DocumentScannerContext =
   createContext<DocumentScannerContextValue>({
     dispatch: () => {},
     state: {
-      block: false,
       isProcessingPhotoData: false,
       isPreviewShown: false,
       isCameraReady: null,
       photo: null,
       ratio: "16:9",
+      processedInvoice: null,
     },
   });
 
@@ -83,6 +104,15 @@ const reducer = (
       return { ...state, isProcessingPhotoData: true };
     case "PHOTO_END":
       return { ...state, isProcessingPhotoData: false };
+    case "PHOTO_RESET_DATA":
+      return {
+        ...state,
+        photo: null,
+        isPreviewShown: false,
+        isProcessingPhotoData: false,
+      };
+    case "PROCESSED_INVOICE":
+      return { ...state, processedInvoice: payload.processedInvoice };
     default:
       return { ...state };
   }
@@ -93,11 +123,11 @@ const DocumentScannerContextProvider = ({
 }: DocumentScannerContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, {
     isPreviewShown: false,
-    block: false,
     isProcessingPhotoData: false,
     isCameraReady: null,
     photo: null,
     ratio: "16:9",
+    processedInvoice: null,
   });
 
   return (

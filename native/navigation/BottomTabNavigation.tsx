@@ -110,7 +110,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackVisible: false,
           }}
         />
-        <InventoryStack.Screen
+        <DeliveryStack.Screen
           name="AddRecordScreen"
           component={AddRecordScreen}
           options={{
