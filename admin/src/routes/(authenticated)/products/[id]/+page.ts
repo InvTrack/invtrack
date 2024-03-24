@@ -4,10 +4,13 @@ export const load = async ({ parent, params }) => {
   const { supabase } = await parent();
   const { data: product, error: supabaseError } = await supabase
     .from("product")
-    .select(`
+    .select(
+      `
       *,
-      barcode(*)
-    `)
+      barcode(*),
+      name_alias:product_name_alias(alias)
+    `
+    )
     .eq("id", id)
     .single();
 
@@ -15,6 +18,7 @@ export const load = async ({ parent, params }) => {
     console.error(supabaseError);
     throw error(404, "Product not found.");
   }
+
   return {
     product,
   };

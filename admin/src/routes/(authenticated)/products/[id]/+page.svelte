@@ -9,6 +9,7 @@
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
   import { currentCompanyId } from "$lib/store";
   import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
+  import Tooltip from "$lib/Tooltip.svelte";
 
   export let data;
   let { supabase, product } = data;
@@ -19,6 +20,7 @@
   $: notificationThreshold = product.notification_threshold;
 
   let barcodes: string[] = product.barcode.map((b) => b.code);
+  let aliases: string[] = product.name_alias.map((a) => a.alias);
   let company_id: number;
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
@@ -29,6 +31,7 @@
   let unsavedChangesModal = false;
   let confirmationModal = false;
   let barcodeErrorModal = false;
+  let aliasErrorModal = false;
   const id = $page.params.id;
 
   beforeNavigate(({ cancel, to }) => {
@@ -44,6 +47,10 @@
   let newBarcode: string | null = null;
   let newBarcodes: string[] = [];
   let deleteBarcodes: string[] = [];
+
+  let newAlias: string | null = null;
+  let newAliases: string[] = [];
+  let deleteAliases: string[] = [];
 
   const addBarcode = () => {
     if (!newBarcode) return;
@@ -61,6 +68,24 @@
     unsavedChanges = true;
     deleteBarcodes = [...deleteBarcodes, barcodes[barcodeIndex]];
     barcodes = barcodes.filter((_, i) => i !== barcodeIndex);
+  };
+
+  const addAlias = () => {
+    if (!newAlias) return;
+    if (aliases.find((v) => v === newAlias) || newAliases.find((v) => v === newAlias)) {
+      barcodeErrorModal = true;
+      return;
+    }
+    aliases = [...aliases, newAlias];
+    newAliases = [...newAliases, newAlias];
+    newAlias = null;
+    unsavedChanges = true;
+  };
+
+  const deleteAlias = (aliasIndex: number) => {
+    unsavedChanges = true;
+    deleteAliases = [...deleteAliases, aliases[aliasIndex]];
+    aliases = aliases.filter((_, i) => i !== aliasIndex);
   };
 
   const update = async () => {
@@ -104,6 +129,35 @@
       // TODO - handle error when request fails
       deleteBarcodes = [];
     }
+    if (newAliases) {
+      newAliases.forEach((newAlias) => {
+        genericUpdate(
+          supabase
+            .from("product_name_alias")
+            .insert({ alias: newAlias, company_id, product_id: product.id }),
+          {
+            setLoading: (x) => (loading = x),
+            onError: () => {
+              barcodeErrorModal = true;
+            },
+          }
+        );
+      });
+      // TODO - handle error when request fails
+      newAliases = [];
+    }
+    if (deleteAliases) {
+      deleteAliases.forEach((aliasToDelete) => {
+        genericUpdate(
+          supabase.from("product_name_alias").delete().match({ company_id, alias: aliasToDelete }),
+          {
+            setLoading: (x) => (loading = x),
+          }
+        );
+      });
+      // TODO - handle error when request fails
+      deleteAliases = [];
+    }
     unsavedChanges = false;
   };
 
@@ -145,6 +199,14 @@
     confirmText="OK"
     onConfirm={() => {
       barcodeErrorModal = false;
+    }}
+  />
+  <ErrorModal
+    open={aliasErrorModal}
+    message="Nie udało się dodać aliasu - spróbuj za chwilę"
+    confirmText="OK"
+    onConfirm={() => {
+      aliasErrorModal = false;
     }}
   />
   <ConfirmationModal
@@ -203,10 +265,51 @@
           {/each}
         </div>
       </div>
+      <div class="space-y-2 mt-2">
+        <Span class="flex flex-row"
+          >Aliasy nazw <Tooltip id="alias-ttip">
+            <div class="p-3 space-y-2">
+              <h3 class="font-semibold text-gray-900 dark:text-white">Aliasy nazw - co to?</h3>
+              Hurtownicy różnie nazywają ten sam produkt. Aby umożliwić łatwe rozpoznawanie produktów
+              na fakturach podczas skanowania, dodaj aliasy dokładnie tak, jak widnieją na fakturze.
+              <br />
+              <strong class="text-gray-900 dark:text-white">
+                Można robić to automatycznie w aplikacji.
+              </strong>
+            </div>
+          </Tooltip></Span
+        >
+        <div class="flex flex-col gap-4">
+          <div class="grid grid-cols-2 place-items-start gap-4">
+            <div class="col-span-2 flex gap-4 w-full">
+              <Input
+                type="text"
+                name="steps"
+                placeholder="Dodaj nowy kod"
+                class="h-min w-full"
+                bind:value={newAlias}
+              />
+              <Button color="primary" class="shrink-0" on:click={addAlias}>Dodaj alias</Button>
+            </div>
+            {#each aliases as _alias, i}
+              <Input
+                type="text"
+                name="steps"
+                readonly
+                class="h-fit focus:ring-0 focus:border-gray-300 focus:dark:border-gray-600"
+                required
+                bind:value={aliases[i]}
+              >
+                <CloseCircleSolid slot="right" on:click={() => deleteAlias(i)} />
+              </Input>
+            {/each}
+          </div>
+        </div>
+      </div>
+      <Button type="submit" class="mt-4" color="primary"
+        >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
+      >
     </div>
-    <Button type="submit" class="mt-4" color="primary"
-      >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
-    >
   </form>
   <Button type="submit" class="w-fit self-end" color="red" on:click={deleteProductConfirmation}
     >Usuń ten produkt</Button
