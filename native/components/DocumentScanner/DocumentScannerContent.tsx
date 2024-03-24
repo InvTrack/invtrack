@@ -1,20 +1,37 @@
 import { Camera, CameraType, ImageType } from "expo-camera";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { createStyles } from "../../theme/useStyles";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { DocumentScannerContext } from "./DocumentScannerContext";
 import { PhotoPreview } from "./PhotoPreview";
 
+const getBestRatio = (ratios: string[]) => {
+  if (ratios.includes("16:9")) return "16:9";
+
+  const mRatios = ratios.map((ratio) => {
+    const [width, height] = ratio.split(":").map((n) => parseInt(n));
+    return width / height;
+  });
+  const maxRatio = Math.max(...mRatios);
+  const index = mRatios.indexOf(maxRatio);
+  return ratios[index];
+};
+
 export const DocumentScannerContent = () => {
   const styles = useStyles();
   const cameraRef = useRef<Camera>(null);
   const {
     dispatch,
-    state: { isPreviewShown, isCameraReady, isProcessingPhotoData, photo },
+    state: {
+      isPreviewShown,
+      isCameraReady,
+      isProcessingPhotoData,
+      photo,
+      ratio,
+    },
   } = useContext(DocumentScannerContext);
-  const [is16by9, setIs16by9] = useState(false);
 
   useEffect(() => {
     if (!isCameraReady) {
@@ -27,14 +44,18 @@ export const DocumentScannerContent = () => {
       }
       try {
         const ratios = await cameraRef.current?.getSupportedRatiosAsync();
-        setIs16by9(ratios.includes("16:9"));
+        const ratio = getBestRatio(ratios);
+        dispatch({
+          type: "SET_RATIO",
+          payload: { ratio },
+        });
       } catch (error) {
         console.log(error);
       }
     };
 
     getCameraRatio();
-  }, [isCameraReady, cameraRef, setIs16by9]);
+  }, [isCameraReady, cameraRef, dispatch]);
 
   const takePicture = async () => {
     if (!cameraRef.current || isProcessingPhotoData) return;
@@ -61,7 +82,7 @@ export const DocumentScannerContent = () => {
         ref={cameraRef}
         style={[!isCameraReady && { display: "none" }, styles.camera]}
         type={CameraType.back}
-        ratio={is16by9 ? "16:9" : "4:3"}
+        ratio={ratio}
         onCameraReady={() => dispatch({ type: "CAMERA_READY" })}
       >
         <TouchableOpacity

@@ -9,33 +9,47 @@ interface DocumentScannerContextValue {
     isProcessingPhotoData: boolean;
     isCameraReady: boolean | null;
     photo: CameraCapturedPicture | null;
-    ratio: "16:9";
+    ratio: string;
   };
 }
 export interface DocumentScannerContextProviderProps {
   children: React.ReactNode;
 }
 
-export interface DocumentScannerAction {
-  type: DocumentScannerActionType;
-  payload?: DocumentScannerActionPayload;
-}
-export type DocumentScannerActionType =
-  | "SWITCH_PREVIEW"
-  | "CAMERA_READY"
-  | "SET_RATIO"
-  | "PHOTO_START"
-  | "PHOTO_END"
-  | "PHOTO_RETAKE"
-  | "PHOTO_TAKE";
-export type DocumentScannerActionPayload = Partial<
-  DocumentScannerContextValue["state"]
->;
+export type DocumentScannerAction =
+  | {
+      type: "SWITCH_PREVIEW";
+      payload?: {};
+    }
+  | {
+      type: "CAMERA_READY";
+      payload?: {};
+    }
+  | {
+      type: "SET_RATIO";
+      payload: {
+        ratio: string;
+      };
+    }
+  | {
+      type: "PHOTO_START";
+      payload?: {};
+    }
+  | {
+      type: "PHOTO_END";
+      payload?: {};
+    }
+  | {
+      type: "PHOTO_RETAKE";
+      payload?: {};
+    }
+  | {
+      type: "PHOTO_TAKE";
+      payload: {
+        photo: CameraCapturedPicture;
+      };
+    };
 
-export interface DocumentScannerAction {
-  type: DocumentScannerActionType;
-  payload?: DocumentScannerActionPayload;
-}
 export const DocumentScannerContext =
   createContext<DocumentScannerContextValue>({
     dispatch: () => {},
