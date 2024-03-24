@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabase";
 
 const listMissingProducts = async (inventoryId: number) => {
-  const allProductsReq = await supabase.from("product").select("id");
+  const allProductsReq = await supabase.from("existing_products").select("id");
   const allProducts = allProductsReq.data?.map((product) => product.id);
   if (!allProducts) return [];
 
@@ -22,7 +22,7 @@ const listMissingProducts = async (inventoryId: number) => {
   if (!productsNotInInventory) return [];
 
   const productsNotInInventoryReq = await supabase
-    .from("product")
+    .from("existing_products")
     .select("id, name, unit, steps")
     .in("id", productsNotInInventory);
   return productsNotInInventoryReq.data ?? [];
