@@ -81,7 +81,10 @@ export const Button = forwardRef(
         {isLoading ? (
           <LoadingSpinner />
         ) : isStringChildren ? (
-          <Typography variant={size === "xs" ? "s" : "m"} style={styles.string}>
+          <Typography
+            variant={size === "xs" ? "xs" : size === "s" ? "s" : "m"}
+            style={styles.string}
+          >
             {children}
           </Typography>
         ) : (

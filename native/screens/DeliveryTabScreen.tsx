@@ -100,6 +100,17 @@ export default function DeliveryTabScreen({
           <ScrollView style={styles.scroll}>
             <View style={styles.doubleButtonContainer}>
               <Button
+                containerStyle={styles.barcodeIconContainer}
+                size="l"
+                type="primary"
+                onPress={() => {
+                  // necessary hack, handled by parent navigator - be cautious
+                  navigation.navigate("DocumentScannerModal" as any);
+                }}
+              >
+                <ScanBarcodeIcon size={34} color="lightGrey" />
+              </Button>
+              <Button
                 containerStyle={styles.saveButtonContainer}
                 size="l"
                 type="primary"

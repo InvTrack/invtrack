@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Header } from "../components/Header";
 import { isAndroid } from "../constants";
 import { BarcodeModalScreen } from "../screens/BarcodeModalScreen";
+import { DocumentScannerModalScreen } from "../screens/DocumentScannerModalScreen";
 import { NewBarcodeScreen } from "../screens/NewBarcodeScreen";
 import { NewStockScreen } from "../screens/NewStockScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -19,6 +20,21 @@ export const HomeStackNavigation = () => {
       <Stack.Screen
         name={"BarcodeModal"}
         component={BarcodeModalScreen}
+        options={{
+          // in @react-navigation/native-stack on android,
+          // modals are not implemented yet (lol),
+          // despite the docs stating otherwise. haiku:
+          // Native stack on 'id,
+          // Modals yet to be deployed,
+          // Docs, truth they avoid.
+          // https://github.com/software-mansion/react-native-screens/issues/1650
+          presentation: isAndroid ? "card" : "modal",
+          headerShown: true,
+        }}
+      />
+      <Stack.Screen
+        name={"DocumentScannerModal"}
+        component={DocumentScannerModalScreen}
         options={{
           // in @react-navigation/native-stack on android,
           // modals are not implemented yet (lol),

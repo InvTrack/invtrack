@@ -29,6 +29,7 @@ export type HomeStackParamList = {
     inventoryId: number;
     navigateTo: "InventoryTab" | "DeliveryTab";
   };
+  DocumentScannerModal: undefined;
   SettingsScreen: undefined;
   NewBarcodeScreen: { inventoryId: number; new_barcode: string };
   NewStockScreen: undefined;
