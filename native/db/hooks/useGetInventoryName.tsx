@@ -8,7 +8,7 @@ const getInventoryName = async (inventoryId: number) => {
     .eq("id", inventoryId)
     .single();
   if (res.error) console.log(res.error);
-  return res.data?.name;
+  return res.data?.name ?? "";
 };
 
 export const useGetInventoryName = (inventoryId: number) =>

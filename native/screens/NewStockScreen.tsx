@@ -56,6 +56,8 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
     isError,
   } = useCreateInventory();
 
+  const is_delivery = watch("is_delivery");
+
   useEffect(() => {
     if (isSuccess && inventory) {
       if (is_delivery) {
@@ -74,7 +76,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
         },
       });
     }
-  }, [isSuccess, inventory]);
+  }, [navigation, isSuccess, inventory, is_delivery]);
 
   useEffect(() => {
     if (isError) {
@@ -93,7 +95,6 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
   const setDateValue = (value: string) => {
     reset({ ...getValues, date: value });
   };
-  const is_delivery = watch("is_delivery");
 
   const handlePress = () => {
     handleSubmit(onSubmit)();
