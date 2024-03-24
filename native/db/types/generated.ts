@@ -229,6 +229,56 @@ export type Database = {
           }
         ];
       };
+      product_name_alias: {
+        Row: {
+          alias: string;
+          company_id: number;
+          id: number;
+          product_id: number;
+        };
+        Insert: {
+          alias?: string;
+          company_id: number;
+          id?: number;
+          product_id: number;
+        };
+        Update: {
+          alias?: string;
+          company_id?: number;
+          id?: number;
+          product_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_product_name_alias_company_id_fkey";
+            columns: ["company_id"];
+            isOneToOne: false;
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "public_product_name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "deleted_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "public_product_name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "public_product_name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       product_record: {
         Row: {
           created_at: string;
