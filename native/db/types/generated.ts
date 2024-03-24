@@ -65,6 +65,18 @@ export interface Database {
             columns: ["product_id"];
             referencedRelation: "product";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "barcode_product_id_fkey";
+            columns: ["product_id"];
+            referencedRelation: "deleted_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "barcode_product_id_fkey";
+            columns: ["product_id"];
+            referencedRelation: "existing_products";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -131,6 +143,7 @@ export interface Database {
           category_id: number | null;
           company_id: number | null;
           created_at: string;
+          deleted_at: string | null;
           display_order: number;
           id: number;
           name: string;
@@ -142,6 +155,7 @@ export interface Database {
           category_id?: number | null;
           company_id?: number | null;
           created_at?: string;
+          deleted_at?: string | null;
           display_order?: number;
           id?: number;
           name?: string;
@@ -153,6 +167,7 @@ export interface Database {
           category_id?: number | null;
           company_id?: number | null;
           created_at?: string;
+          deleted_at?: string | null;
           display_order?: number;
           id?: number;
           name?: string;
@@ -249,6 +264,18 @@ export interface Database {
             columns: ["product_id"];
             referencedRelation: "product";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_product_id_fkey";
+            columns: ["product_id"];
+            referencedRelation: "deleted_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_product_id_fkey";
+            columns: ["product_id"];
+            referencedRelation: "existing_products";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -308,6 +335,110 @@ export interface Database {
           {
             foreignKeyName: "worker_company_id_fkey";
             columns: ["id"];
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      deleted_products: {
+        Row: {
+          category_id: number | null;
+          company_id: number | null;
+          created_at: string | null;
+          deleted_at: string | null;
+          display_order: number | null;
+          id: number | null;
+          name: string | null;
+          notification_threshold: number | null;
+          steps: number[] | null;
+          unit: string | null;
+        };
+        Insert: {
+          category_id?: number | null;
+          company_id?: number | null;
+          created_at?: string | null;
+          deleted_at?: string | null;
+          display_order?: number | null;
+          id?: number | null;
+          name?: string | null;
+          notification_threshold?: number | null;
+          steps?: number[] | null;
+          unit?: string | null;
+        };
+        Update: {
+          category_id?: number | null;
+          company_id?: number | null;
+          created_at?: string | null;
+          deleted_at?: string | null;
+          display_order?: number | null;
+          id?: number | null;
+          name?: string | null;
+          notification_threshold?: number | null;
+          steps?: number[] | null;
+          unit?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "product_category_id_fkey";
+            columns: ["category_id"];
+            referencedRelation: "product_category";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_company_id_fkey";
+            columns: ["company_id"];
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      existing_products: {
+        Row: {
+          category_id: number | null;
+          company_id: number | null;
+          created_at: string | null;
+          deleted_at: string | null;
+          display_order: number | null;
+          id: number | null;
+          name: string | null;
+          notification_threshold: number | null;
+          steps: number[] | null;
+          unit: string | null;
+        };
+        Insert: {
+          category_id?: number | null;
+          company_id?: number | null;
+          created_at?: string | null;
+          deleted_at?: string | null;
+          display_order?: number | null;
+          id?: number | null;
+          name?: string | null;
+          notification_threshold?: number | null;
+          steps?: number[] | null;
+          unit?: string | null;
+        };
+        Update: {
+          category_id?: number | null;
+          company_id?: number | null;
+          created_at?: string | null;
+          deleted_at?: string | null;
+          display_order?: number | null;
+          id?: number | null;
+          name?: string | null;
+          notification_threshold?: number | null;
+          steps?: number[] | null;
+          unit?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "product_category_id_fkey";
+            columns: ["category_id"];
+            referencedRelation: "product_category";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_company_id_fkey";
+            columns: ["company_id"];
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -391,6 +522,18 @@ export interface Database {
             columns: ["product_id"];
             referencedRelation: "product";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_product_id_fkey";
+            columns: ["product_id"];
+            referencedRelation: "deleted_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_product_id_fkey";
+            columns: ["product_id"];
+            referencedRelation: "existing_products";
+            referencedColumns: ["id"];
           }
         ];
       };
@@ -462,22 +605,6 @@ export interface Database {
           current_product_id: number;
         };
         Returns: number;
-      };
-      handle_new_inventory_func: {
-        Args: {
-          new_date: string;
-          inventory_id: number;
-        };
-        Returns: {
-          company_id: number | null;
-          created_at: string;
-          date: string;
-          id: number;
-          is_delivery: boolean;
-          last_product_record_updated_at: string | null;
-          low_quantity_notification_sent: boolean | null;
-          name: string;
-        };
       };
       send_low_quantity_notification: {
         Args: Record<PropertyKey, never>;
