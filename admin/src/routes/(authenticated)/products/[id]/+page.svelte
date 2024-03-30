@@ -16,10 +16,8 @@
   $: steps = product.steps;
   $: notificationThreshold = product.notification_threshold;
 
-  let newBarcode: string | null = null;
+  let barcodesRef: Barcodes;
   let barcodes: string[] = product.barcode.map((b) => b.code);
-  let newBarcodes: string[] = [];
-  let deleteBarcodes: string[] = [];
 
   let company_id: number;
 
@@ -29,7 +27,6 @@
   let unsavedChanges = false;
 
   let confirmationModal = false;
-  let barcodeErrorModal = false;
   const id = $page.params.id;
 
   const update = async () => {
@@ -46,38 +43,12 @@
         .eq("id", id),
       { setLoading: (x) => (loading = x) }
     );
-    if (newBarcodes) {
-      newBarcodes.forEach((newBarcode) => {
-        genericUpdate(
-          supabase.from("barcode").insert({ code: newBarcode, company_id, product_id: product.id }),
-          {
-            setLoading: (x) => (loading = x),
-            onError: () => {
-              barcodeErrorModal = true;
-            },
-          }
-        );
-      });
-      // TODO - handle error when request fails
-      newBarcodes = [];
-    }
-    if (deleteBarcodes) {
-      deleteBarcodes.forEach((barcodeToDelete) => {
-        genericUpdate(
-          supabase.from("barcode").delete().match({ company_id, code: barcodeToDelete }),
-          {
-            setLoading: (x) => (loading = x),
-          }
-        );
-      });
-      // TODO - handle error when request fails
-      deleteBarcodes = [];
-    }
+    barcodesRef.submit(supabase, (x) => (loading = x), company_id, product.id);
     unsavedChanges = false;
   };
 
   const onFormChange = () => {
-    if (newBarcode) {
+    if (barcodesRef && barcodesRef.newBarcode) {
       unsavedChanges = false;
       return;
     }
@@ -125,14 +96,7 @@
         <Input type="text" name="steps" required bind:value={steps[2]} />
       </div>
     </Label>
-    <Barcodes
-      bind:unsavedChanges
-      bind:newBarcode
-      bind:barcodeErrorModal
-      bind:barcodes
-      bind:newBarcodes
-      bind:deleteBarcodes
-    />
+    <Barcodes bind:this={barcodesRef} bind:barcodes bind:unsavedChanges />
     <Button type="submit" class="mt-4" color="primary"
       >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
     >
