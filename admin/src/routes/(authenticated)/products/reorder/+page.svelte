@@ -3,8 +3,8 @@
   import { genericUpdate } from "$lib/genericUpdate.js";
   import { currentCompanyId } from "$lib/store.js";
   import { Button } from "flowbite-svelte";
-  import Columns from "$lib/dnd/Columns.svelte";
-  import BareItems from "$lib/dnd/BareItems.svelte";
+  import Columns from "./Columns.svelte";
+  import BareItems from "./BareItems.svelte";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   export let data;
