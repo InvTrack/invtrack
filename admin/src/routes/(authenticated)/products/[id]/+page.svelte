@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { beforeNavigate, goto } from "$app/navigation";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
@@ -23,23 +22,12 @@
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
 
-  let navigateTo: URL | undefined = undefined;
   let loading = false;
   let unsavedChanges = false;
-  let unsavedChangesModal = false;
+
   let confirmationModal = false;
   let barcodeErrorModal = false;
   const id = $page.params.id;
-
-  beforeNavigate(({ cancel, to }) => {
-    if (!unsavedChanges) {
-      return;
-    }
-    cancel();
-    unsavedChangesModal = true;
-    navigateTo = to?.url;
-    return;
-  });
 
   let newBarcode: string | null = null;
   let newBarcodes: string[] = [];
@@ -107,13 +95,6 @@
     unsavedChanges = false;
   };
 
-  const onUnsavedWarningContinue = () => {
-    unsavedChanges = false;
-    unsavedChangesModal = false;
-    if (navigateTo) {
-      goto(navigateTo);
-    }
-  };
   const onFormChange = () => {
     if (newBarcode) {
       unsavedChanges = false;
@@ -134,11 +115,7 @@
 </script>
 
 <ScreenCard header={"Produkt - " + product.name} class="flex flex-col">
-  <UnsavedWarningModal
-    bind:open={unsavedChangesModal}
-    onContinue={onUnsavedWarningContinue}
-    onStay={() => (unsavedChangesModal = false)}
-  />
+  <UnsavedWarningModal bind:unsavedChanges />
   <ErrorModal
     open={barcodeErrorModal}
     message="Nie udało się dodać kodu - już istnieje dla tego lub innego produktu"
