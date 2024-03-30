@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { beforeNavigate, goto } from "$app/navigation";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
@@ -19,22 +18,11 @@
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
 
-  let navigateTo: URL | undefined = undefined;
   let loading = false;
   let unsavedChanges = false;
-  let unsavedChangesModal = false;
+
   let confirmationModal = false;
   const id = $page.params.id;
-
-  beforeNavigate(({ cancel, to }) => {
-    if (!unsavedChanges) {
-      return;
-    }
-    cancel();
-    unsavedChangesModal = true;
-    navigateTo = to?.url;
-    return;
-  });
 
   const update = async () => {
     // TODO - handle error when request fails
@@ -50,13 +38,6 @@
     unsavedChanges = false;
   };
 
-  const onUnsavedWarningContinue = () => {
-    unsavedChanges = false;
-    unsavedChangesModal = false;
-    if (navigateTo) {
-      goto(navigateTo);
-    }
-  };
   const onFormChange = () => {
     unsavedChanges = true;
   };
@@ -73,11 +54,7 @@
 </script>
 
 <ScreenCard header={"Receptura - " + recipe.name} class="flex flex-col">
-  <UnsavedWarningModal
-    bind:open={unsavedChangesModal}
-    onContinue={onUnsavedWarningContinue}
-    onStay={() => (unsavedChangesModal = false)}
-  />
+  <UnsavedWarningModal bind:unsavedChanges />
   <ConfirmationModal
     bind:open={confirmationModal}
     message="Czy na pewno chcesz usunąć tą recepturę?"

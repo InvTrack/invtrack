@@ -1,13 +1,9 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { onMount } from "svelte";
-  import type { Tables } from "$lib/helpers";
-  import { genericGet } from "$lib/genericGet";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Button, Input, Label, Span } from "flowbite-svelte";
   import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
-  import { beforeNavigate, goto } from "$app/navigation";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   export let data;
@@ -18,22 +14,10 @@
 
   let loading = false;
   let unsavedChanges = false;
-  let unsavedChangesModal = false;
+
   let confirmationModal = false;
 
-  let navigateTo: URL | undefined = undefined;
-
   const id = $page.params.id;
-
-  beforeNavigate(({ cancel, to }) => {
-    if (!unsavedChanges) {
-      return;
-    }
-    cancel();
-    unsavedChangesModal = true;
-    navigateTo = to?.url;
-    return;
-  });
 
   const update = () => {
     genericUpdate(
@@ -56,25 +40,13 @@
     confirmationModal = true;
   };
 
-  const onUnsavedWarningContinue = () => {
-    unsavedChanges = false;
-    unsavedChangesModal = false;
-    if (navigateTo) {
-      goto(navigateTo);
-    }
-  };
-
   const onFormChange = () => {
     unsavedChanges = true;
   };
 </script>
 
 <ScreenCard header={"Inwentaryzacja - " + inventory.name} class="flex flex-col">
-  <UnsavedWarningModal
-    bind:open={unsavedChangesModal}
-    onContinue={onUnsavedWarningContinue}
-    onStay={() => (unsavedChangesModal = false)}
-  />
+  <UnsavedWarningModal bind:unsavedChanges />
   <ConfirmationModal
     bind:open={confirmationModal}
     message="Czy na pewno chcesz usunąć tę inwentaryzację?"
