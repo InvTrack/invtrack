@@ -3,11 +3,10 @@
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
-  import { CloseCircleSolid } from "flowbite-svelte-icons";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
-  import ErrorModal from "$lib/modals/ErrorModal.svelte";
   import { currentCompanyId } from "$lib/store";
   import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
+  import Barcodes from "./Barcodes.svelte";
 
   export let data;
   let { supabase, product } = data;
@@ -17,7 +16,11 @@
   $: steps = product.steps;
   $: notificationThreshold = product.notification_threshold;
 
+  let newBarcode: string | null = null;
   let barcodes: string[] = product.barcode.map((b) => b.code);
+  let newBarcodes: string[] = [];
+  let deleteBarcodes: string[] = [];
+
   let company_id: number;
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
@@ -28,28 +31,6 @@
   let confirmationModal = false;
   let barcodeErrorModal = false;
   const id = $page.params.id;
-
-  let newBarcode: string | null = null;
-  let newBarcodes: string[] = [];
-  let deleteBarcodes: string[] = [];
-
-  const addBarcode = () => {
-    if (!newBarcode) return;
-    if (barcodes.find((v) => v === newBarcode) || newBarcodes.find((v) => v === newBarcode)) {
-      barcodeErrorModal = true;
-      return;
-    }
-    barcodes = [...barcodes, newBarcode];
-    newBarcodes = [...newBarcodes, newBarcode];
-    newBarcode = null;
-    unsavedChanges = true;
-  };
-
-  const deleteBarcode = (barcodeIndex: number) => {
-    unsavedChanges = true;
-    deleteBarcodes = [...deleteBarcodes, barcodes[barcodeIndex]];
-    barcodes = barcodes.filter((_, i) => i !== barcodeIndex);
-  };
 
   const update = async () => {
     // TODO - handle error when request fails
@@ -116,14 +97,6 @@
 
 <ScreenCard header={"Produkt - " + product.name} class="flex flex-col">
   <UnsavedWarningModal bind:unsavedChanges />
-  <ErrorModal
-    open={barcodeErrorModal}
-    message="Nie udało się dodać kodu - już istnieje dla tego lub innego produktu"
-    confirmText="OK"
-    onConfirm={() => {
-      barcodeErrorModal = false;
-    }}
-  />
   <ConfirmationModal
     bind:open={confirmationModal}
     message="Czy na pewno chcesz usunąć ten produkt?"
@@ -152,35 +125,14 @@
         <Input type="text" name="steps" required bind:value={steps[2]} />
       </div>
     </Label>
-    <div class="space-y-2 mt-2">
-      <Span>Kody</Span>
-      <div class="flex flex-col gap-4">
-        <div class="grid grid-cols-2 place-items-start gap-4">
-          <div class="col-span-2 flex gap-4 w-full">
-            <Input
-              type="text"
-              name="steps"
-              placeholder="Dodaj nowy kod"
-              class="h-min w-full"
-              bind:value={newBarcode}
-            />
-            <Button color="primary" class="shrink-0" on:click={addBarcode}>Dodaj kod</Button>
-          </div>
-          {#each barcodes as _barcode, i}
-            <Input
-              type="text"
-              name="steps"
-              readonly
-              class="h-fit focus:ring-0 focus:border-gray-300 focus:dark:border-gray-600"
-              required
-              bind:value={barcodes[i]}
-            >
-              <CloseCircleSolid slot="right" on:click={() => deleteBarcode(i)} />
-            </Input>
-          {/each}
-        </div>
-      </div>
-    </div>
+    <Barcodes
+      bind:unsavedChanges
+      bind:newBarcode
+      bind:barcodeErrorModal
+      bind:barcodes
+      bind:newBarcodes
+      bind:deleteBarcodes
+    />
     <Button type="submit" class="mt-4" color="primary"
       >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
     >
