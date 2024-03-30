@@ -3,14 +3,13 @@
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button } from "flowbite-svelte";
-  import { CloseCircleSolid } from "flowbite-svelte-icons";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
-  import ErrorModal from "$lib/modals/ErrorModal.svelte";
   import { currentCompanyId } from "$lib/store";
   import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
+  import Parts from "./Parts.svelte";
 
   export let data;
-  let { supabase, recipe } = data;
+  let { supabase, recipe, products } = data;
   $: ({ supabase } = data);
   $: name = recipe.name;
 
@@ -24,6 +23,9 @@
   let confirmationModal = false;
   const id = $page.params.id;
 
+  let partsRef: Parts;
+  let parts = recipe.recipe_part;
+
   const update = async () => {
     // TODO - handle error when request fails
     genericUpdate(
@@ -35,20 +37,22 @@
         .eq("id", id),
       { setLoading: (x) => (loading = x), onSuccess: "/recipes" }
     );
+    partsRef.submit(supabase, (x) => (loading = x), recipe.id);
     unsavedChanges = false;
   };
 
   const onFormChange = () => {
+    if (partsRef && (partsRef.selectedProductId || partsRef.quantity)) {
+      unsavedChanges = false;
+      return;
+    }
     unsavedChanges = true;
   };
 
   const deleteEntity = () => {
-    // genericUpdate(
-    //   supabase.from("product").update({ deleted_at: new Date().toISOString() }).eq("id", id),
-    //   {
-    //     onSuccess: "/products",
-    //   }
-    // );
+    genericUpdate(supabase.from("recipe").delete().eq("id", recipe.id), {
+      onSuccess: "/recipes",
+    });
   };
   const deleteProductConfirmation = () => (confirmationModal = true);
 </script>
@@ -65,6 +69,7 @@
       <Span>Nazwa</Span>
       <Input type="text" name="name" required bind:value={name} />
     </Label>
+    <Parts bind:this={partsRef} bind:unsavedChanges bind:parts bind:products />
     <Button type="submit" class="mt-4" color="primary"
       >{loading ? "Zapisywanie..." : "Aktualizuj recepturę"}</Button
     >
