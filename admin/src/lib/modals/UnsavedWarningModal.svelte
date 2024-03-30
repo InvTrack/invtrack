@@ -5,6 +5,14 @@
   export let open = false;
   export let onContinue: () => void;
   export let onStay: () => void;
+
+  // const onUnsavedWarningContinue = () => {
+  //   unsavedChanges = false;
+  //   unsavedChangesModal = false;
+  //   if (navigateTo) {
+  //     goto(navigateTo);
+  //   }
+  // };
 </script>
 
 <Modal bind:open size="xs" outsideclose>

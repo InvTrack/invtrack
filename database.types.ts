@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+export interface Database {
   graphql_public: {
     Tables: {
       [_ in never]: never
@@ -57,31 +57,15 @@ export type Database = {
           {
             foreignKeyName: "barcode_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "barcode_product_id_fkey"
             columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "deleted_products"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "barcode_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "existing_products"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "barcode_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "product"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       company: {
@@ -137,10 +121,9 @@ export type Database = {
           {
             foreignKeyName: "inventory_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       product: {
@@ -148,7 +131,6 @@ export type Database = {
           category_id: number | null
           company_id: number | null
           created_at: string
-          deleted_at: string | null
           display_order: number
           id: number
           name: string
@@ -160,7 +142,6 @@ export type Database = {
           category_id?: number | null
           company_id?: number | null
           created_at?: string
-          deleted_at?: string | null
           display_order?: number
           id?: number
           name?: string
@@ -172,7 +153,6 @@ export type Database = {
           category_id?: number | null
           company_id?: number | null
           created_at?: string
-          deleted_at?: string | null
           display_order?: number
           id?: number
           name?: string
@@ -184,17 +164,15 @@ export type Database = {
           {
             foreignKeyName: "product_category_id_fkey"
             columns: ["category_id"]
-            isOneToOne: false
             referencedRelation: "product_category"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "product_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       product_category: {
@@ -223,10 +201,9 @@ export type Database = {
           {
             foreignKeyName: "product_category_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       product_record: {
@@ -258,38 +235,86 @@ export type Database = {
           {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
-            isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
-            isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
             referencedColumns: ["inventory_id"]
           },
           {
             foreignKeyName: "product_record_product_id_fkey"
             columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "deleted_products"
+            referencedRelation: "product"
             referencedColumns: ["id"]
-          },
+          }
+        ]
+      }
+      recipe: {
+        Row: {
+          company_id: number | null
+          created_at: string
+          id: number
+          name: string | null
+        }
+        Insert: {
+          company_id?: number | null
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          company_id?: number | null
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Relationships: [
           {
-            foreignKeyName: "product_record_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "existing_products"
+            foreignKeyName: "recipe_company_id_fkey"
+            columns: ["company_id"]
+            referencedRelation: "company"
             referencedColumns: ["id"]
-          },
+          }
+        ]
+      }
+      recipe_part: {
+        Row: {
+          created_at: string
+          id: number
+          product_id: number
+          quantity: number
+          recipe_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          product_id: number
+          quantity: number
+          recipe_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          product_id?: number
+          quantity?: number
+          recipe_id?: number
+        }
+        Relationships: [
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "recipe_part_product_id_fkey"
             columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "product"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "recipe_part_recipe_id_fkey"
+            columns: ["recipe_id"]
+            referencedRelation: "recipe"
+            referencedColumns: ["id"]
+          }
         ]
       }
       worker: {
@@ -321,17 +346,15 @@ export type Database = {
           {
             foreignKeyName: "worker_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "worker_id_fkey"
             columns: ["id"]
-            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
     }
@@ -350,118 +373,9 @@ export type Database = {
           {
             foreignKeyName: "worker_company_id_fkey"
             columns: ["id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
-          },
-        ]
-      }
-      deleted_products: {
-        Row: {
-          category_id: number | null
-          company_id: number | null
-          created_at: string | null
-          deleted_at: string | null
-          display_order: number | null
-          id: number | null
-          name: string | null
-          notification_threshold: number | null
-          steps: number[] | null
-          unit: string | null
-        }
-        Insert: {
-          category_id?: number | null
-          company_id?: number | null
-          created_at?: string | null
-          deleted_at?: string | null
-          display_order?: number | null
-          id?: number | null
-          name?: string | null
-          notification_threshold?: number | null
-          steps?: number[] | null
-          unit?: string | null
-        }
-        Update: {
-          category_id?: number | null
-          company_id?: number | null
-          created_at?: string | null
-          deleted_at?: string | null
-          display_order?: number | null
-          id?: number | null
-          name?: string | null
-          notification_threshold?: number | null
-          steps?: number[] | null
-          unit?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "product_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "product_category"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "company"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      existing_products: {
-        Row: {
-          category_id: number | null
-          company_id: number | null
-          created_at: string | null
-          deleted_at: string | null
-          display_order: number | null
-          id: number | null
-          name: string | null
-          notification_threshold: number | null
-          steps: number[] | null
-          unit: string | null
-        }
-        Insert: {
-          category_id?: number | null
-          company_id?: number | null
-          created_at?: string | null
-          deleted_at?: string | null
-          display_order?: number | null
-          id?: number | null
-          name?: string | null
-          notification_threshold?: number | null
-          steps?: number[] | null
-          unit?: string | null
-        }
-        Update: {
-          category_id?: number | null
-          company_id?: number | null
-          created_at?: string | null
-          deleted_at?: string | null
-          display_order?: number | null
-          id?: number | null
-          name?: string | null
-          notification_threshold?: number | null
-          steps?: number[] | null
-          unit?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "product_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "product_category"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_company_id_fkey"
-            columns: ["company_id"]
-            isOneToOne: false
-            referencedRelation: "company"
-            referencedColumns: ["id"]
-          },
+          }
         ]
       }
       low_quantity_notifications_user_id_view: {
@@ -473,10 +387,9 @@ export type Database = {
           {
             foreignKeyName: "worker_id_fkey"
             columns: ["user_id"]
-            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       low_quantity_product_records_view: {
@@ -493,24 +406,21 @@ export type Database = {
           {
             foreignKeyName: "product_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
-            isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
-            isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
             referencedColumns: ["inventory_id"]
-          },
+          }
         ]
       }
       record_view: {
@@ -532,38 +442,21 @@ export type Database = {
           {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
-            isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey"
             columns: ["inventory_id"]
-            isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
             referencedColumns: ["inventory_id"]
           },
           {
             foreignKeyName: "product_record_product_id_fkey"
             columns: ["product_id"]
-            isOneToOne: false
             referencedRelation: "product"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_record_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "deleted_products"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_record_product_id_fkey"
-            columns: ["product_id"]
-            isOneToOne: false
-            referencedRelation: "existing_products"
-            referencedColumns: ["id"]
-          },
+          }
         ]
       }
       worker_for_current_user: {
@@ -579,17 +472,15 @@ export type Database = {
           {
             foreignKeyName: "worker_company_id_fkey"
             columns: ["company_id"]
-            isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "worker_id_fkey"
             columns: ["id"]
-            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
     }
@@ -636,6 +527,22 @@ export type Database = {
           current_product_id: number
         }
         Returns: number
+      }
+      handle_new_inventory_func: {
+        Args: {
+          new_date: string
+          inventory_id: number
+        }
+        Returns: {
+          company_id: number | null
+          created_at: string
+          date: string
+          id: number
+          is_delivery: boolean
+          last_product_record_updated_at: string | null
+          low_quantity_notification_sent: boolean | null
+          name: string
+        }
       }
       send_low_quantity_notification: {
         Args: Record<PropertyKey, never>
@@ -755,10 +662,9 @@ export type Database = {
           {
             foreignKeyName: "objects_bucketId_fkey"
             columns: ["bucket_id"]
-            isOneToOne: false
             referencedRelation: "buckets"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
     }
@@ -791,7 +697,7 @@ export type Database = {
         Args: {
           name: string
         }
-        Returns: string[]
+        Returns: unknown
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
@@ -829,86 +735,4 @@ export type Database = {
     }
   }
 }
-
-type PublicSchema = Database[Extract<keyof Database, "public">]
-
-export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-        PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
-    : never
-
-export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
-      }
-      ? I
-      : never
-    : never
-
-export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
-      }
-      ? U
-      : never
-    : never
-
-export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof PublicSchema["Enums"]
-    | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
 
