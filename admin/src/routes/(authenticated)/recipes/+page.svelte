@@ -34,6 +34,6 @@
     </TableBody>
   </Table>
   <div class="flex mt-2 gap-4">
-    <Button class="hover:underline" href={`/products/add`}>Dodaj</Button>
+    <Button class="hover:underline" href={`/recipes/add`}>Dodaj</Button>
   </div>
 </ScreenCard>

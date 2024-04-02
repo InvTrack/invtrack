@@ -6,7 +6,8 @@
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import { currentCompanyId } from "$lib/store";
   import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
-  import Parts from "./Parts.svelte";
+  import Parts from "../Parts.svelte";
+  import type { Tables } from "$lib/helpers";
 
   export let data;
   let { supabase, recipe, products } = data;
