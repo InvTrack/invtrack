@@ -3,7 +3,6 @@
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
   import { Label, Span, Input, Button, Checkbox } from "flowbite-svelte";
-  import { beforeNavigate, goto } from "$app/navigation";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   export let data;
@@ -14,19 +13,8 @@
 
   let loading = false;
   let unsavedChanges = false;
-  let unsavedChangesModal = false;
-  let navigateTo: URL | undefined = undefined;
-  const id = $page.params.id;
 
-  beforeNavigate(({ cancel, to }) => {
-    if (!unsavedChanges) {
-      return;
-    }
-    cancel();
-    unsavedChangesModal = true;
-    navigateTo = to?.url;
-    return;
-  });
+  const id = $page.params.id;
 
   const update = () =>
     genericUpdate(
@@ -40,25 +28,13 @@
       { onSuccess: "/workers", setLoading: (x) => (loading = x) }
     );
 
-  const onUnsavedWarningContinue = () => {
-    unsavedChanges = false;
-    unsavedChangesModal = false;
-    if (navigateTo) {
-      goto(navigateTo);
-    }
-  };
-
   const onFormChange = () => {
     unsavedChanges = true;
   };
 </script>
 
 <ScreenCard header={"Pracownik - " + worker.name}>
-  <UnsavedWarningModal
-    bind:open={unsavedChangesModal}
-    onContinue={onUnsavedWarningContinue}
-    onStay={() => (unsavedChangesModal = false)}
-  />
+  <UnsavedWarningModal bind:unsavedChanges />
   <form on:submit|preventDefault={update} on:change={onFormChange}>
     <Label class="space-y-2">
       <Span>Nazwa</Span>
