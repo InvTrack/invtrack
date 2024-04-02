@@ -45,7 +45,7 @@ create policy "Admin can do anything within company"
 on "public"."recipe"
 as permissive
 for all
-to public
+to authenticated
 using ((( SELECT worker_for_current_user.is_admin
    FROM worker_for_current_user) AND ( SELECT (worker_for_current_user.company_id = recipe.company_id)
    FROM worker_for_current_user)));
@@ -53,16 +53,10 @@ using ((( SELECT worker_for_current_user.is_admin
 
 CREATE POLICY "Admin can do whatever, within company"
 ON public.recipe_part 
+as permissive
+for all
+to authenticated
 USING (( SELECT worker_for_current_user.is_admin
    FROM worker_for_current_user) AND (EXISTS ( SELECT 1 FROM public.recipe r WHERE (
         (r.company_id = ( SELECT current_company_id.id FROM public.current_company_id)) AND 
         (r.id = recipe_part.recipe_id)))));
-
--- create policy "Admin can do anything within company"
--- on "public"."recipe_part"
--- as permissive
--- for all
--- to public
--- using ((( SELECT worker_for_current_user.is_admin
---    FROM worker_for_current_user) AND ( SELECT (worker_for_current_user.company_id = recipe_part.company_id)
---    FROM worker_for_current_user)));
