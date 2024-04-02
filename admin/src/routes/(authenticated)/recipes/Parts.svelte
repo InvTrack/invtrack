@@ -44,7 +44,6 @@
       return;
     }
     const newPart: Part = { product_id: selectedProductId, quantity };
-    console.log(newPart);
     parts = [...parts, newPart];
     newParts = [...newParts, newPart];
     quantity = null;
