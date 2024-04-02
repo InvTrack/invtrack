@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { beforeNavigate } from "$app/navigation";
   import type { Tables } from "$lib/helpers";
   import { genericUpdate } from "$lib/genericUpdate";
   import ScreenCard from "$lib/ScreenCard.svelte";
@@ -10,10 +9,7 @@
   let { supabase } = data;
   $: ({ supabase } = data);
 
-  let navigateTo: URL | undefined = undefined;
   let loading = false;
-  let unsavedChanges = false;
-  let unsavedChangesModal = false;
 
   let company_id: number | null;
   let name: Tables<"product">["name"] = "";
@@ -22,16 +18,6 @@
   let unit: Tables<"product">["unit"] = "kg";
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
-
-  beforeNavigate(({ cancel, to }) => {
-    if (!unsavedChanges) {
-      return;
-    }
-    cancel();
-    unsavedChangesModal = true;
-    navigateTo = to?.url;
-    return;
-  });
 
   const update = async () => {
     // TODO - handle error when request fails
