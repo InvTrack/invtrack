@@ -12,20 +12,36 @@ export const useProcessInvoice = () => {
 
   const documentScannerContext = useContext(DocumentScannerContext);
   if (!documentScannerContext) {
+    showError("Nie udało się przetworzyć zdjęcia");
     throw new Error(
       "useProcessInvoice must be used within a DocumentScannerContext"
     );
   }
-  const { dispatch } = documentScannerContext;
+  const {
+    dispatch,
+    state: { inventory_id },
+  } = documentScannerContext;
 
-  return useMutation(
-    ["processInvoice"],
-    async (base64Photo: string): Promise<ProcessedInvoice | null> => {
+  return useMutation({
+    mutationFn: async ({
+      base64Photo,
+    }: {
+      base64Photo: string;
+      inventory_id: number | null;
+    }): Promise<ProcessedInvoice | null> => {
+      if (inventory_id == null) {
+        showError("Nie udało się przetworzyć zdjęcia");
+        console.log(
+          "useProcessInvoice - no inventory_id, this should not happen"
+        );
+        return null;
+      }
       const { data, error } = await supabase.functions.invoke("scan-doc", {
         headers: {
           "Content-Type": "application/json",
         },
         body: {
+          inventory_id,
           image: {
             data: base64Photo,
           },
@@ -43,6 +59,6 @@ export const useProcessInvoice = () => {
       });
 
       return data as ProcessedInvoice;
-    }
-  );
+    },
+  });
 };

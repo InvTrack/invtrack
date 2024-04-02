@@ -10,6 +10,7 @@ interface DocumentScannerContextValue {
     photo: CameraCapturedPicture | null;
     ratio: string;
     processedInvoice: ProcessedInvoice;
+    inventory_id: number | null;
   };
 }
 export interface DocumentScannerContextProviderProps {
@@ -69,19 +70,32 @@ export type DocumentScannerAction =
       payload: {
         processedInvoice: ProcessedInvoice;
       };
+    }
+  | {
+      type: "SET_INVENTORY_ID";
+      payload: {
+        inventory_id: number;
+      };
+    }
+  | {
+      type: "RESET_INVENTORY_ID";
+      payload?: {};
     };
+
+const initialState = {
+  isProcessingPhotoData: false,
+  isPreviewShown: false,
+  isCameraReady: null,
+  photo: null,
+  ratio: "16:9",
+  processedInvoice: null,
+  inventory_id: null,
+};
 
 export const DocumentScannerContext =
   createContext<DocumentScannerContextValue>({
     dispatch: () => {},
-    state: {
-      isProcessingPhotoData: false,
-      isPreviewShown: false,
-      isCameraReady: null,
-      photo: null,
-      ratio: "16:9",
-      processedInvoice: null,
-    },
+    state: initialState,
   });
 
 DocumentScannerContext.displayName = "DocumentScannerContext";
@@ -113,6 +127,10 @@ const reducer = (
       };
     case "PROCESSED_INVOICE":
       return { ...state, processedInvoice: payload.processedInvoice };
+    case "SET_INVENTORY_ID":
+      return { ...state, inventory_id: payload.inventory_id };
+    case "RESET_INVENTORY_ID":
+      return { ...state, inventory_id: null };
     default:
       return { ...state };
   }
@@ -121,14 +139,7 @@ const reducer = (
 const DocumentScannerContextProvider = ({
   children,
 }: DocumentScannerContextProviderProps) => {
-  const [state, dispatch] = useReducer(reducer, {
-    isPreviewShown: false,
-    isProcessingPhotoData: false,
-    isCameraReady: null,
-    photo: null,
-    ratio: "16:9",
-    processedInvoice: null,
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <DocumentScannerContext.Provider value={{ state, dispatch }}>

@@ -10,7 +10,7 @@ export const PhotoPreview = () => {
   const { isConnected } = useNetInfo();
   const {
     dispatch,
-    state: { photo },
+    state: { photo, inventory_id },
   } = useContext(DocumentScannerContext);
 
   const { mutate, isLoading, data: _data } = useProcessInvoice();
@@ -56,7 +56,7 @@ export const PhotoPreview = () => {
               isLoading
                 ? () => null
                 : () => {
-                    mutate(photo?.base64!);
+                    mutate({ inventory_id, base64Photo: photo?.base64! });
                   }
             }
             size="s"

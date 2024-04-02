@@ -9,6 +9,8 @@ import DocumentIntelligence, {
 } from "@azure-rest/ai-document-intelligence@1.0.0-beta.2";
 import isEmpty from "lodash/isEmpty";
 import { isNil } from "../_shared/isNil.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
+import { Database } from "../_shared/database.types.ts";
 
 const DocumentIntelligenceEndpoint = Deno.env.get(
   "DOCUMENT_INTELLIGENCE_ENDPOINT"
@@ -56,7 +58,13 @@ const parseFloatForResponse = (value: number | null): number | null =>
  * should wrap every string returned in a response
  */
 const parseStringForResponse = (value: string | null): string | null =>
-  value == null ? null : value.replace(/\r?\n|\r/g, "");
+  value == null
+    ? null
+    : value
+        .replace(/\r?\n|\r/g, " ")
+        .trim()
+        .normalize("NFC");
+
 /**
  * standardize possible floats to 4 decimal places
  *
@@ -67,13 +75,13 @@ const parseFloat4Precision = (value: number): number =>
 
 const getName = (item: DocumentFieldOutput | undefined) => {
   if (item == null) {
-    return "";
+    return null;
   }
   // the value MAY be an empty string
   if (item?.type !== "string" || isNil(item.valueString)) {
     return "";
   }
-  return item.valueString;
+  return item.valueString ?? null;
 };
 
 const getPricePerUnit = (
@@ -117,40 +125,82 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
-  let mappedOver;
 
-  // return new Response("err", { status: 404, headers: corsHeaders });
+  const requestBody: { image?: { data?: unknown }; inventory_id?: unknown } =
+    await req.json();
+
+  if (
+    requestBody?.image?.data == null ||
+    requestBody?.inventory_id == null ||
+    typeof requestBody.image.data !== "string" ||
+    typeof requestBody.inventory_id !== "number"
+  ) {
+    return new Response("Missing or malformed request body properties", {
+      status: 400,
+      headers: corsHeaders,
+    });
+  }
+
+  const authHeader = req.headers.get("Authorization");
+  if (authHeader == null) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+  const supabase = createClient<Database>(
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    { global: { headers: { Authorization: authHeader } } }
+  );
+
+  const { data: productAliasData, error: productAliasError } = await supabase
+    .from("product_name_alias")
+    .select("alias, product_id");
+
+  if (productAliasError) {
+    return new Response("Error fetching table data", { status: 500 });
+  }
+
+  const productIds = productAliasData?.map((item) => item.product_id);
+  const { data: productRecordData, error: productRecordError } = await supabase
+    .from("product_record")
+    .select("id, product_id")
+    .eq("inventory_id", requestBody.inventory_id)
+    .in("product_id", productIds);
+
+  if (productRecordError) {
+    return new Response("Error fetching table data", { status: 500 });
+  }
+
+  let documentAnalysisResult:
+    | ({
+        sanitizedName: string | null;
+        price_per_unit: number | null;
+        quantity: number | null;
+      } | null)[]
+    | null = null;
+
   if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
     return new Response("Environment variables are not set up correctly.", {
       status: 500,
     });
   }
 
-  // const base64DataFromReq = await req.json();
+  const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
+    key: DocumentIntelligenceApiKey,
+  });
 
-  // const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
-  //   key: DocumentIntelligenceApiKey,
-  // });
+  const initialResponse = await client
+    .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
+    .post({
+      contentType: "application/json",
+      body: {
+        base64Source: requestBody.image.data,
+      },
+    });
 
-  // const initialResponse = await client
-  //   .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
-  //   .post({
-  //     contentType: "application/json",
-  //     body: {
-  //       base64Source: base64DataFromReq.image.data,
-  //     },
-  //   });
+  const poller = await getLongRunningPoller(client, initialResponse);
+  const result = (await poller.pollUntilDone())
+    .body as AnalyzeResultOperationOutput;
 
-  // console.time("pollUntilDone");
-
-  // const poller = await getLongRunningPoller(client, initialResponse);
-  // const result = (await poller.pollUntilDone())
-  //   .body as AnalyzeResultOperationOutput;
-  // console.log(result);
-  // console.timeEnd("pollUntilDone");
-  // // around 5s!!!! -- try out if closer datacenters are available
-  //
-  const result = mockResponse as AnalyzeResultOperationOutput;
   // analyzeResult?.documents?.[0].fields contents are defined here
   // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
   if (
@@ -182,16 +232,31 @@ Deno.serve(async (req) => {
   }
 
   if (result.analyzeResult.documents[0].fields.Items.type === "object") {
-    return {};
+    const itemValue =
+      result.analyzeResult.documents[0].fields.Items.valueObject;
+    const sanitizedName = parseStringForResponse(
+      getName(itemValue?.Description)
+    );
+    const price_per_unit = parseFloatForResponse(getPricePerUnit(itemValue));
+    const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
+    documentAnalysisResult = [
+      {
+        sanitizedName,
+        price_per_unit,
+        quantity,
+      },
+    ];
   }
   if (result.analyzeResult.documents[0].fields.Items.type === "array") {
-    mappedOver = result.analyzeResult.documents[0].fields.Items.valueArray?.map(
-      (item) => {
+    documentAnalysisResult =
+      result.analyzeResult.documents[0].fields.Items.valueArray?.map((item) => {
         if (item.type !== "object") {
-          return;
+          return null;
         }
         const itemValue = item.valueObject;
-        const name = getName(itemValue?.Description);
+        const sanitizedName = parseStringForResponse(
+          getName(itemValue?.Description)
+        );
         const price_per_unit = parseFloatForResponse(
           getPricePerUnit(itemValue)
         );
@@ -199,26 +264,73 @@ Deno.serve(async (req) => {
           getQuantity(itemValue?.Quantity)
         );
         return {
-          name,
+          sanitizedName,
           price_per_unit,
           quantity,
         };
-      }
-    );
-
-    return new Response(JSON.stringify(mappedOver), {
-      headers: corsHeaders,
-    });
+      }) ?? null;
   }
-  return new Response(JSON.stringify(mappedOver), {
+
+  const formattedToAppFormFormat = productRecordData.reduce(
+    (acc, item) => {
+      const product_id = item.product_id;
+      const record_id = item.id;
+
+      // ineffective but it's ok for now :D
+      const matchedAlias = productAliasData.find(
+        (alias) => alias.product_id === product_id
+      );
+
+      if (matchedAlias == null) {
+        return {
+          ...acc,
+        };
+      }
+
+      const matchedDocumentData = documentAnalysisResult?.filter(
+        (documentItem) => documentItem?.sanitizedName === matchedAlias.alias
+      ) ?? [{ price_per_unit: null, quantity: null }];
+
+      const price_per_unit = Math.max(
+        ...matchedDocumentData.map((item) => item?.price_per_unit ?? 0)
+      );
+
+      const quantity = matchedDocumentData.reduce(
+        (sum, item) => sum + (item?.quantity ?? 0),
+        0
+      );
+
+      return {
+        ...acc,
+        [record_id]: {
+          product_id,
+          price_per_unit: price_per_unit
+            ? parseFloatForResponse(price_per_unit)
+            : null,
+          quantity: quantity ? parseFloatForResponse(quantity) : null,
+        },
+      };
+    },
+    {} as Record<
+      number,
+      {
+        product_id: number;
+        price_per_unit: number | null;
+        quantity: number | null;
+      }
+    >
+  );
+
+  return new Response(JSON.stringify(formattedToAppFormFormat), {
     headers: corsHeaders,
   });
 });
 
-// To invoke:
+// remember that with an anon key you get nothing due to RLS
+// with service_role yout get multiple companies' data
 // curl -v 'http://127.0.0.1:54321/functions/v1/scan-doc' \
 //   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-
+// --data '{}'
 const mockResponse = {
   status: "succeeded",
   createdDateTime: "2024-03-23T12:41:57Z",
