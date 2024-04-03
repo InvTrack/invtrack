@@ -61,11 +61,13 @@ export type PatchedDatabase = {
     : Database[A];
 };
 
-export type ScanDocResponse = Record<
-  number,
-  {
-    product_id: number;
-    price_per_unit: number | null;
-    quantity: number | null;
-  }
->;
+export interface ScanDocResponse {
+  form: {
+    [recordId: number]: {
+      product_id: number;
+      price_per_unit: number | null;
+      quantity: number | null;
+    };
+  };
+  unmatchedAliases: string[];
+}

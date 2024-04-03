@@ -271,25 +271,30 @@ Deno.serve(async (req) => {
       }) ?? null;
   }
 
-  const formattedToAppFormFormat = productRecordData.reduce(
+  // this is extremely inefficient and we should find a better solution
+  const matchAliasesToRecognizedData = productRecordData.reduce(
     (acc, item) => {
       const product_id = item.product_id;
       const record_id = item.id;
 
-      // ineffective but it's ok for now :D
-      const matchedAlias = productAliasData.find(
+      const matchedAliases = productAliasData.filter(
         (alias) => alias.product_id === product_id
       );
 
-      if (matchedAlias == null) {
-        return {
-          ...acc,
-        };
+      if (isEmpty(matchedAliases)) {
+        return { ...acc };
       }
 
       const matchedDocumentData = documentAnalysisResult?.filter(
-        (documentItem) => documentItem?.sanitizedName === matchedAlias.alias
-      ) ?? [{ price_per_unit: null, quantity: null }];
+        (documentItem) =>
+          matchedAliases.some(
+            (matchedAlias) => documentItem?.sanitizedName === matchedAlias.alias
+          )
+      );
+
+      if (matchedDocumentData == null) {
+        return { ...acc };
+      }
 
       const price_per_unit = Math.max(
         ...matchedDocumentData.map((item) => item?.price_per_unit ?? 0)
@@ -301,29 +306,51 @@ Deno.serve(async (req) => {
       );
 
       return {
-        ...acc,
-        [record_id]: {
-          product_id,
-          price_per_unit: price_per_unit
-            ? parseFloatForResponse(price_per_unit)
-            : null,
-          quantity: quantity ? parseFloatForResponse(quantity) : null,
+        recognized: {
+          ...acc.recognized,
+          [record_id]: {
+            product_id,
+            price_per_unit: price_per_unit
+              ? parseFloatForResponse(price_per_unit)
+              : null,
+            quantity: quantity ? parseFloatForResponse(quantity) : null,
+          },
         },
+        recognizedAliases: [
+          ...acc.recognizedAliases,
+          ...matchedAliases.map((a) => a.alias),
+        ],
       };
     },
-    {} as Record<
-      number,
-      {
-        product_id: number;
-        price_per_unit: number | null;
-        quantity: number | null;
-      }
-    >
+    {} as {
+      recognized: Record<
+        number,
+        {
+          product_id: number;
+          price_per_unit: number | null;
+          quantity: number | null;
+        }
+      >;
+      recognizedAliases: string[];
+    }
   );
 
-  return new Response(JSON.stringify(formattedToAppFormFormat), {
-    headers: corsHeaders,
-  });
+  const unmatchedAliases =
+    matchAliasesToRecognizedData.recognizedAliases.filter((recognizedAlias) =>
+      documentAnalysisResult?.some(
+        (res) => res?.sanitizedName === recognizedAlias
+      )
+    );
+
+  return new Response(
+    JSON.stringify({
+      form: matchAliasesToRecognizedData.recognized,
+      unmatchedAliases,
+    }),
+    {
+      headers: corsHeaders,
+    }
+  );
 });
 
 // remember that with an anon key you get nothing due to RLS
