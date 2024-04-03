@@ -10,15 +10,15 @@ export type InventoryTable = Database["public"]["Tables"]["inventory"];
 /**
  * Jeden "wpis" danego produktu w inwentaryzacji. Jedna informacja o tym "ile" i "jakiego" produktu. Np. "produkt #462 - 5kg"
  */
-export type Record = RecordTable["Row"];
-export type RecordInsert = RecordTable["Insert"];
-export type RecordTable = Database["public"]["Tables"]["product_record"];
+export type ProductRecord = ProductRecordTable["Row"];
+export type ProductRecordInsert = ProductRecordTable["Insert"];
+export type ProductRecordTable = Database["public"]["Tables"]["product_record"];
 
 /**
  * Widok wpisu - wpis poszerzony o kilka wygodnych informacji, np o jednostkę obliczeniową i nazwę słowną produktu
  */
-export type RecordView = RecordViewTable["Row"];
-export type RecordViewTable = Database["public"]["Views"]["record_view"];
+export type ProductRecordView = ProductRecordViewTable["Row"];
+export type ProductRecordViewTable = Database["public"]["Views"]["record_view"];
 
 /**
  * Abstrakcyjny typ produktu - zbiór cech wspólnych. np: "nazwa: Jabłko, jednostka: Sztuki"
@@ -60,3 +60,12 @@ export type PatchedDatabase = {
       }
     : Database[A];
 };
+
+export type ScanDocResponse = Record<
+  number,
+  {
+    product_id: number;
+    price_per_unit: number | null;
+    quantity: number | null;
+  }
+>;

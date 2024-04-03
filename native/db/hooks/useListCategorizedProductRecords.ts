@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabase";
-import { RecordView } from "../types";
+import { ProductRecordView } from "../types";
 
-type RecordViewNonNullCategoryName =
+type ProductRecordViewNonNullCategoryName =
   | {
-      [K in keyof Omit<RecordView, "barcode">]: K extends "category_name"
-        ? NonNullable<RecordView[K]>
-        : RecordView[K];
+      [K in keyof Omit<ProductRecordView, "barcode">]: K extends "category_name"
+        ? NonNullable<ProductRecordView[K]>
+        : ProductRecordView[K];
     }
   | null;
 
 type ListCategorizedProductRecords = {
   title: string;
-  data: RecordViewNonNullCategoryName[];
+  data: ProductRecordViewNonNullCategoryName[];
 }[];
 
 const listCategorizedProductRecords = async (
@@ -47,9 +47,14 @@ const listCategorizedProductRecords = async (
     }, {} as { [key: string]: number });
 
     if (title in indexMap) {
-      acc[indexMap[title]].data!.push(record as RecordViewNonNullCategoryName);
+      acc[indexMap[title]].data!.push(
+        record as ProductRecordViewNonNullCategoryName
+      );
     } else {
-      acc.push({ title, data: [record as RecordViewNonNullCategoryName] });
+      acc.push({
+        title,
+        data: [record as ProductRecordViewNonNullCategoryName],
+      });
     }
     return acc;
   }, [] as ListCategorizedProductRecords);
