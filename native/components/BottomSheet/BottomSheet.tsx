@@ -1,11 +1,5 @@
-import { useTheme } from "@react-navigation/native";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
-import {
-  LayoutChangeEvent,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { LayoutChangeEvent, StyleSheet, TouchableOpacity } from "react-native";
 import {
   ComposedGesture,
   Gesture,
@@ -30,7 +24,6 @@ import { useInternalBottomSheet } from "./internal/useInternalBottomSheet";
 export const BOTTOMSHEET_TIMING_CLOSE = 250;
 
 const BottomSheet = () => {
-  const theme = useTheme();
   const styles = useStyles();
   const { height: screenHeight } = useDimensions();
   const {
@@ -130,7 +123,8 @@ const BottomSheet = () => {
       } else {
         BottomSheetOffsetY.value = withTiming(0, { duration: 150 });
       }
-    });
+    })
+    .simultaneousWithExternalGesture(scrollRef);
 
   useEffect(() => {
     if (!isOpen) {
@@ -146,7 +140,6 @@ const BottomSheet = () => {
 
   return showBottomSheet ? (
     <>
-      <StatusBar backgroundColor={theme.colors.transparent} />
       <Animated.View style={overlayStyle}>
         <TouchableOpacity
           activeOpacity={1}
@@ -154,10 +147,7 @@ const BottomSheet = () => {
           onPress={() => onClose()}
         />
       </Animated.View>
-      <GestureDetector
-        gesture={panGestureHandler}
-        // simultaneousHandlers={scrollRef}
-      >
+      <GestureDetector gesture={panGestureHandler}>
         <Animated.View style={bottomSheetStyle} onLayout={onLayout}>
           <BottomSheetContent
             // TODO: make the scroll handler defined here, then combine them to a race?
