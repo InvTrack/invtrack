@@ -85,6 +85,7 @@ export type DeliveryStackParamList = {
   DeliveryTabScreen: { id: number };
   RecordScreen: { id: number; recordId: number; isDelivery?: boolean };
   AddRecordScreen: { inventoryId: number };
+  IdentifyAliasesScreen: { inventoryId: number };
 };
 export type DeliveryTabProps = CompositeScreenProps<
   BottomTabScreenProps<BottomTabParamList, "DeliveryTab">,
@@ -107,7 +108,15 @@ export type RecordScreenNavigationProp = NativeStackScreenProps<
   "RecordScreen"
 >["navigation"];
 
-// export type ProductPickerScreenNavigationProp = NativeStackScreenProps<
-//   null,
-//   "ProductPickerScreen"
-// >["navigation"];
+/**
+ * IdentifyAliasesScreen
+ */
+export type IdentifyAliasesScreenProps = NativeStackScreenProps<
+  DeliveryStackParamList,
+  "IdentifyAliasesScreen"
+>;
+
+export type IdentifyAliasesScreenNavigationProp = NativeStackScreenProps<
+  DeliveryStackParamList,
+  "IdentifyAliasesScreen"
+>["navigation"];

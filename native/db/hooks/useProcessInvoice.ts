@@ -1,11 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
-import {
-  DocumentScannerContext,
-  ProcessedInvoice,
-} from "../../components/DocumentScanner/DocumentScannerContext";
+import { DocumentScannerContext } from "../../components/DocumentScanner/DocumentScannerContext";
 import { useSnackbar } from "../../components/Snackbar/context";
 import { supabase } from "../supabase";
+import { ScanDocResponse } from "../types";
 
 export const useProcessInvoice = () => {
   const { showError } = useSnackbar();
@@ -22,13 +20,13 @@ export const useProcessInvoice = () => {
     state: { inventory_id },
   } = documentScannerContext;
 
-  return useMutation({
-    mutationFn: async ({
+  return useMutation(
+    async ({
       base64Photo,
     }: {
       base64Photo: string;
       inventory_id: number | null;
-    }): Promise<ProcessedInvoice | null> => {
+    }): Promise<ScanDocResponse> => {
       if (inventory_id == null) {
         showError("Nie udało się przetworzyć zdjęcia");
         console.log(
@@ -36,29 +34,32 @@ export const useProcessInvoice = () => {
         );
         return null;
       }
+      const reqBody = {
+        inventory_id,
+        image: {
+          data: base64Photo,
+        },
+      };
+
       const { data, error } = await supabase.functions.invoke("scan-doc", {
         headers: {
           "Content-Type": "application/json",
         },
-        body: {
-          inventory_id,
-          image: {
-            data: base64Photo,
-          },
-        },
+        body: reqBody,
       });
       if (error) {
         showError("Nie udało się przetworzyć zdjęcia");
         console.log(error);
         return null;
       }
+      const parsedData = JSON.parse(data);
 
       dispatch({
-        type: "PROCESSED_INVOICE",
-        payload: { processedInvoice: data },
+        type: "INVOICE_PROCESSING_RESULT",
+        payload: { processedInvoice: parsedData },
       });
 
-      return data as ProcessedInvoice;
-    },
-  });
+      return parsedData as ScanDocResponse;
+    }
+  );
 };

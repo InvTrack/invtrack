@@ -1,5 +1,6 @@
 import { CameraCapturedPicture } from "expo-camera";
 import React, { createContext, useReducer } from "react";
+import { ScanDocResponse } from "../../db/types";
 
 interface DocumentScannerContextValue {
   dispatch: React.Dispatch<DocumentScannerAction>;
@@ -9,24 +10,13 @@ interface DocumentScannerContextValue {
     isCameraReady: boolean | null;
     photo: CameraCapturedPicture | null;
     ratio: string;
-    processedInvoice: ProcessedInvoice;
+    processedInvoice: ScanDocResponse;
     inventory_id: number | null;
   };
 }
 export interface DocumentScannerContextProviderProps {
   children: React.ReactNode;
 }
-
-/**
- * assignable to Inventory/Delivery Forms
- */
-export type ProcessedInvoice = {
-  [record_id: string]: {
-    quantity: number;
-    product_id: number;
-    price_per_unit: number | null;
-  };
-} | null;
 
 export type DocumentScannerAction =
   | {
@@ -66,9 +56,9 @@ export type DocumentScannerAction =
       payload?: {};
     }
   | {
-      type: "PROCESSED_INVOICE";
+      type: "INVOICE_PROCESSING_RESULT";
       payload: {
-        processedInvoice: ProcessedInvoice;
+        processedInvoice: ScanDocResponse;
       };
     }
   | {
@@ -103,6 +93,7 @@ const reducer = (
   state: DocumentScannerContextValue["state"],
   { type, payload }: DocumentScannerAction
 ): DocumentScannerContextValue["state"] => {
+  console.log("DocumentScannerContext", { type, payload });
   switch (type) {
     case "SWITCH_PREVIEW":
       return { ...state, isPreviewShown: !state.isPreviewShown };
@@ -125,7 +116,7 @@ const reducer = (
         isPreviewShown: false,
         isProcessingPhotoData: false,
       };
-    case "PROCESSED_INVOICE":
+    case "INVOICE_PROCESSING_RESULT":
       return { ...state, processedInvoice: payload.processedInvoice };
     case "SET_INVENTORY_ID":
       return { ...state, inventory_id: payload.inventory_id };

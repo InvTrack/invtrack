@@ -61,7 +61,7 @@ export type PatchedDatabase = {
     : Database[A];
 };
 
-export interface ScanDocResponse {
+export type ScanDocResponse = {
   form: {
     [recordId: number]: {
       product_id: number;
@@ -70,4 +70,4 @@ export interface ScanDocResponse {
     };
   };
   unmatchedAliases: string[];
-}
+} | null;

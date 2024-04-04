@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { Collapsible } from "../components/Collapsible/Collapsible";
 import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.types";
+import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { IDListCard } from "../components/IDListCard";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { ScanBarcodeIcon } from "../components/Icon";
@@ -25,9 +26,12 @@ export default function DeliveryTabScreen({
   navigation,
 }: DeliveryTabScreenProps) {
   const styles = useStyles();
+  const { isConnected } = useNetInfo();
+  const deliveryForm = useFormContext<DeliveryForm>();
+  const { showError, showInfo, showSuccess } = useSnackbar();
+  const { dispatch, state } = useContext(DocumentScannerContext);
 
   const inventoryId = route.params?.id;
-  const { isConnected } = useNetInfo();
 
   const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
     useListUncategorizedProductRecords(+inventoryId);
@@ -35,17 +39,28 @@ export default function DeliveryTabScreen({
     useListCategorizedProductRecords(+inventoryId);
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
-  const deliveryForm = useFormContext<DeliveryForm>();
   const {
     mutate,
     isSuccess: isUpdateSuccess,
     isError: isUpdateError,
   } = useUpdateRecords(+inventoryId);
-  const { showError, showInfo, showSuccess } = useSnackbar();
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
   }, [inventoryId, inventoryName, navigation]);
+
+  useEffect(() => {
+    dispatch({
+      type: "SET_INVENTORY_ID",
+      payload: { inventory_id: 10 },
+    });
+  }, [inventoryId]);
+
+  useEffect(() => {
+    if (state.processedInvoice?.unmatchedAliases) {
+      navigation.navigate("IdentifyAliasesScreen", { inventoryId });
+    }
+  }, [state.processedInvoice?.unmatchedAliases]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
