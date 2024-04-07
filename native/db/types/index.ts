@@ -70,8 +70,8 @@ export type ScanDocResponse = {
   form: {
     [recordId: number]: {
       product_id: number;
-      price_per_unit: number | null;
-      quantity: number | null;
+      price_per_unit: number;
+      quantity: number;
     };
   };
   unmatchedAliases: string[];

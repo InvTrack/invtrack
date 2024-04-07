@@ -1,4 +1,3 @@
-import debounce from "lodash/debounce";
 import React, { forwardRef } from "react";
 import {
   GestureResponderEvent,
@@ -42,7 +41,7 @@ const debounceOnPress = (
   onPress: ButtonOnPress | undefined
 ) => {
   e.persist();
-  return debounce(onPress ?? (() => undefined), 50)(e);
+  return (onPress ?? (() => undefined))(e);
 };
 
 export const Button = forwardRef(

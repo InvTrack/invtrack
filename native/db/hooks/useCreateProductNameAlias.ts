@@ -8,12 +8,7 @@ import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
 
 export const useCreateProductNameAlias = () => {
   const { showError, showSuccess } = useSnackbar();
-  const { data } = useGetCurrentCompanyId();
-  if (data?.id == null) {
-    throw new Error("Company id should be defined, this should not happen");
-  }
-
-  const company_id = data?.id!;
+  const { data: currentCompanyId } = useGetCurrentCompanyId();
   return useMutation(
     async (
       productNameAliases: AliasForm
@@ -21,6 +16,12 @@ export const useCreateProductNameAlias = () => {
       if (isEmpty(productNameAliases)) {
         return [];
       }
+      if (currentCompanyId?.id == null) {
+        console.error("Company id should be defined, this should not happen");
+        return [];
+      }
+      const company_id = currentCompanyId?.id;
+
       const mapped = Object.entries(productNameAliases).reduce(
         (acc, [product_id, aliases]) => {
           if (product_id === "usedAliases") {

@@ -7,6 +7,7 @@ import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import isEmpty from "lodash/isEmpty";
 import { DocumentScanner } from "../components/DocumentScanner";
 import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
@@ -35,7 +36,7 @@ export const DocumentScannerModalScreen = ({
     if (photo == null) {
       return;
     }
-    if (inventory_id && processedInvoice?.unmatchedAliases == null) {
+    if (inventory_id && !isEmpty(processedInvoice?.unmatchedAliases)) {
       navigation.replace("IdentifyAliasesScreen", {
         inventoryId: inventory_id,
       });

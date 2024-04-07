@@ -93,7 +93,25 @@ const reducer = (
   state: DocumentScannerContextValue["state"],
   { type, payload }: DocumentScannerAction
 ): DocumentScannerContextValue["state"] => {
-  console.log("DocumentScannerContext", { type, payload });
+  console.log(
+    "DocumentScannerContext",
+    type === "PHOTO_TAKE"
+      ? JSON.stringify(
+          {
+            type,
+          },
+          null,
+          2
+        )
+      : JSON.stringify(
+          {
+            type,
+            payload,
+          },
+          null,
+          2
+        )
+  );
   switch (type) {
     case "SWITCH_PREVIEW":
       return { ...state, isPreviewShown: !state.isPreviewShown };
