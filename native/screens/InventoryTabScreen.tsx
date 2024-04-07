@@ -37,6 +37,8 @@ export default function InventoryTabScreen({
     useListCategorizedProductRecords(+inventoryId);
 
   const inventoryForm = useFormContext<InventoryForm>();
+  const inventoryFormValues = inventoryForm.watch();
+
   const {
     mutate,
     isSuccess: isUpdateSuccess,
@@ -131,7 +133,12 @@ export default function InventoryTabScreen({
                   key={record.id}
                   recordId={record.id!}
                   id={+inventoryId}
-                  quantity={record.quantity!}
+                  quantity={
+                    record.id
+                      ? inventoryFormValues[record.id]?.quantity ??
+                        record.quantity
+                      : null
+                  }
                   unit={record.unit!}
                   name={record.name!}
                 />
@@ -150,7 +157,12 @@ export default function InventoryTabScreen({
                 key={record.id}
                 recordId={record.id!}
                 id={+inventoryId}
-                quantity={record.quantity!}
+                quantity={
+                  record.id
+                    ? inventoryFormValues[record.id]?.quantity ??
+                      record.quantity
+                    : null
+                }
                 unit={record.unit!}
                 name={record.name!}
                 borderBottom={data![data.length - 1]?.id === record.id}

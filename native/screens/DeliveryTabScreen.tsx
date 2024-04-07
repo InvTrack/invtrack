@@ -26,19 +26,22 @@ export default function DeliveryTabScreen({
   navigation,
 }: DeliveryTabScreenProps) {
   const styles = useStyles();
+
   const { isConnected } = useNetInfo();
-  const deliveryForm = useFormContext<DeliveryForm>();
+  const inventoryId = route.params?.id;
+
   const { showError, showInfo, showSuccess } = useSnackbar();
   const { dispatch } = useContext(DocumentScannerContext);
 
-  const inventoryId = route.params?.id;
-
+  const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
     useListUncategorizedProductRecords(+inventoryId);
   const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
     useListCategorizedProductRecords(+inventoryId);
 
-  const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const deliveryForm = useFormContext<DeliveryForm>();
+  const deliveryFormValues = deliveryForm.watch();
+
   const {
     mutate,
     isSuccess: isUpdateSuccess,
@@ -150,7 +153,12 @@ export default function DeliveryTabScreen({
                   key={record.id}
                   recordId={record.id!}
                   id={+inventoryId}
-                  quantity={record.quantity!}
+                  quantity={
+                    record.id
+                      ? deliveryFormValues[record.id]?.quantity ??
+                        record.quantity
+                      : null
+                  }
                   unit={record.unit!}
                   name={record.name}
                 />
@@ -170,7 +178,11 @@ export default function DeliveryTabScreen({
                 key={record.id}
                 recordId={record.id!}
                 id={+inventoryId}
-                quantity={record.quantity!}
+                quantity={
+                  record.id
+                    ? deliveryFormValues[record.id]?.quantity ?? record.quantity
+                    : null
+                }
                 unit={record.unit!}
                 name={record.name}
                 borderBottom={data[data.length - 1]?.id === record.id}
