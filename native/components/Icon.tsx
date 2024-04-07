@@ -142,6 +142,10 @@ export const ExpandMoreIconSrc = require("../assets/images/expand-more.png");
 export const ExpandMoreIcon = (props: IconProps) =>
   createIcon({ source: ExpandMoreIconSrc, props });
 
+export const checkmarkIconSrc = require("../assets/images/checkmark.png");
+export const CheckmarkIcon = (props: IconProps) =>
+  createIcon({ source: checkmarkIconSrc, props });
+
 const AppIconSrc = require("../assets/images/icon.png");
 export const AppIcon = (props: IconProps) =>
   createIcon({
