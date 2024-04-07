@@ -1,6 +1,11 @@
 import { BarCodeScanningResult, Camera, CameraType, Point } from "expo-camera";
 import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import Animated, {
   interpolate,
@@ -13,7 +18,6 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { createStyles } from "../../theme/useStyles";
-import { useDimensions } from "../../utils/useDimensions";
 import { Button } from "../Button";
 import { CameraSwitchIcon } from "../Icon";
 import { Typography } from "../Typography";
@@ -38,7 +42,7 @@ export default function Landing() {
   const animatedCorner4X = useSharedValue(corner4.x);
   const animatedCorner4Y = useSharedValue(corner4.y);
 
-  const { width, height } = useDimensions();
+  const { width, height } = useWindowDimensions();
   const { top: topInset } = useSafeAreaInsets();
 
   const interpolateXAnim = (x: Animated.SharedValue<number>) =>

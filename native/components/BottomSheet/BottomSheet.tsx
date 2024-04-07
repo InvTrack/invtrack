@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
-import { LayoutChangeEvent, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  LayoutChangeEvent,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import {
   ComposedGesture,
   Gesture,
@@ -17,7 +22,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { createStyles } from "../../theme/useStyles";
-import { useDimensions } from "../../utils/useDimensions";
 import BottomSheetContent from "./internal/BottomSheetContent";
 import { useInternalBottomSheet } from "./internal/useInternalBottomSheet";
 
@@ -25,7 +29,7 @@ export const BOTTOMSHEET_TIMING_CLOSE = 250;
 
 const BottomSheet = () => {
   const styles = useStyles();
-  const { height: screenHeight } = useDimensions();
+  const { height: screenHeight } = useWindowDimensions();
   const {
     replaceBottomSheet,
     isOpen,

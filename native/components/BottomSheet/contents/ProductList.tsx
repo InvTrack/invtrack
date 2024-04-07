@@ -46,7 +46,7 @@ export const ProductListBottomSheetContent = ({
             size="xs"
             type="primary"
             // custom size lol :D
-            containerStyle={{ flexBasis: "45%", height: 64 }}
+            containerStyle={styles.button}
             onPress={() => {
               setValue(String(product.id), alias);
               closeBottomSheet();
@@ -77,8 +77,6 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
       paddingBottom: theme.spacing,
     },
-    button: {
-      width: "30%",
-    },
+    button: { flexBasis: "47%", height: 64 },
   })
 );
