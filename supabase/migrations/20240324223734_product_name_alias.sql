@@ -8,17 +8,17 @@ create table "public"."product_name_alias" (
 
 alter table "public"."product_name_alias" enable row level security;
 
-CREATE UNIQUE INDEX product_name_alias_pkey ON public.product_name_alias USING btree (id);
+CREATE UNIQUE INDEX product_name_alias_alias_key ON public.product_name_alias USING btree (alias);
 
-alter table "public"."product_name_alias" add constraint "product_name_alias_pkey" PRIMARY KEY using index "product_name_alias_pkey";
+CREATE UNIQUE INDEX product_name_alias_id_key ON public.product_name_alias USING btree (id);
 
-alter table "public"."product_name_alias" add constraint "public_product_name_alias_company_id_fkey" FOREIGN KEY (company_id) REFERENCES company(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+alter table "public"."product_name_alias" add constraint product_name_alias_pkey primary key using index "product_name_alias_id_key";
 
-alter table "public"."product_name_alias" validate constraint "public_product_name_alias_company_id_fkey";
+alter table "public"."product_name_alias" add constraint public_product_name_alias_company_id_fkey foreign key (company_id) references company (id) on update cascade on delete cascade;
 
-alter table "public"."product_name_alias" add constraint "public_product_name_alias_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id) ON UPDATE CASCADE ON DELETE CASCADE not valid;
+alter table "public"."product_name_alias" add constraint product_name_alias_product_id_fkey foreign key (product_id) references product (id) on update cascade on delete cascade;
 
-alter table "public"."product_name_alias" validate constraint "public_product_name_alias_product_id_fkey";
+alter table "public"."product_name_alias" add constraint product_name_alias_alias_check check ((length(alias) < 100));
 
 create policy "Admin can do anything within company"
 on "public"."product_name_alias"
