@@ -2,8 +2,6 @@
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { UseFormSetValue } from "react-hook-form";
-import { AliasForm } from "../../../screens/IdentifyAliasesScreen";
 import { createStyles } from "../../../theme/useStyles";
 import { Button } from "../../Button";
 import { Typography } from "../../Typography";
@@ -17,7 +15,7 @@ export const ProductListBottomSheetContent = ({
   closeBottomSheet: () => void;
   products: { id: number; name: string }[];
   alias: string;
-  setValue: UseFormSetValue<AliasForm>;
+  setValue: (product_id: string, alias: string) => void;
 }) => {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
@@ -50,11 +48,11 @@ export const ProductListBottomSheetContent = ({
             // custom size lol :D
             containerStyle={{ flexBasis: "45%", height: 64 }}
             onPress={() => {
-              setValue(`${alias}`, product.id);
+              setValue(String(product.id), alias);
               closeBottomSheet();
             }}
           >
-            {product.name + "fagdsatew4taqafwefwaq243"}
+            {product.name}
           </Button>
         ))}
       </View>

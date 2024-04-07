@@ -44,6 +44,11 @@ export type CurrentCompanyId = CurrentCompanyIdTable["Row"];
 export type CurrentCompanyIdTable =
   Database["public"]["Views"]["current_company_id"];
 
+export type ProductNameAlias =
+  Database["public"]["Tables"]["product_name_alias"];
+export type ProductNameAliasTable = ProductNameAlias["Row"];
+export type ProductNameAliasInsert = ProductNameAlias["Insert"];
+
 // Patch the database to remove excessive nullability from "existing_products" and "deleted_products"
 export type PatchedDatabase = {
   [A in keyof Database]: A extends "public"

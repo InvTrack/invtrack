@@ -41,11 +41,14 @@ const BottomSheetContent = forwardRef(
       return (
         <NativeViewGestureHandler ref={ref}>
           <Animated.ScrollView
+            // TODO make it generic
+            style={{ maxHeight: 300 }}
             onScroll={scrollHandler}
             showsVerticalScrollIndicator={false}
             bounces={false}
             scrollEventThrottle={16}
             keyboardShouldPersistTaps="handled"
+            stickyHeaderIndices={[0]}
           >
             <View style={styles.top}>
               <View style={styles.thingy} />
