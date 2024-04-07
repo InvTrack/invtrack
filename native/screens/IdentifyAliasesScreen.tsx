@@ -1,6 +1,6 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UseFormGetValues, UseFormSetValue, useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
 import { Badge } from "../components/Badge";
@@ -38,14 +38,17 @@ const setAlias =
     aliasSet.add(alias);
     setValue("usedAliases", [...aliasSet]);
   };
-export const IdentifyAliasesScreen = ({}: IdentifyAliasesScreenProps) => {
+
+export const IdentifyAliasesScreen = ({
+  navigation,
+}: IdentifyAliasesScreenProps) => {
   const { isConnected } = useNetInfo();
   const styles = useStyles();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const { state } = useContext(DocumentScannerContext);
   const { data: products } = useListExistingProducts();
-  const { mutate } = useCreateProductNameAlias();
+  const { mutate, isSuccess } = useCreateProductNameAlias();
   const aliases = state.processedInvoice?.unmatchedAliases;
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
@@ -62,7 +65,11 @@ export const IdentifyAliasesScreen = ({}: IdentifyAliasesScreenProps) => {
   });
 
   const usedAliases = watch("usedAliases");
-
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.goBack();
+    }
+  }, [isSuccess]);
   const handlePress = () => {
     handleSubmit(
       (data) => {
@@ -78,7 +85,7 @@ export const IdentifyAliasesScreen = ({}: IdentifyAliasesScreenProps) => {
   if (isEmpty(aliases) || !aliases) {
     // error
     return (
-      <EmptyScreenTemplate style={styles.container}>
+      <EmptyScreenTemplate>
         Błąd - brak aliasów do wyświetlenia
       </EmptyScreenTemplate>
     );
@@ -103,17 +110,14 @@ export const IdentifyAliasesScreen = ({}: IdentifyAliasesScreenProps) => {
       </Button>
       {aliases.map((alias, i) => (
         <>
-          <Badge isShown={usedAliases?.includes(alias)} />
+          <Badge isShown={usedAliases?.includes(alias)} key={`b${i}`} />
           <DropdownButton
             key={i}
-            containerStyle={{ marginBottom: 8, marginTop: -4 }}
+            containerStyle={styles.dropdown}
             onPress={() =>
               openBottomSheet(() => (
                 <ProductListBottomSheetContent
-                  products={products!.map((product) => ({
-                    id: product.id,
-                    name: product.name,
-                  }))}
+                  products={products!}
                   alias={alias}
                   closeBottomSheet={closeBottomSheet}
                   setValue={setAlias(setValue, getValues)}
@@ -147,23 +151,10 @@ const useStyles = createStyles((theme) =>
       height: "100%",
       paddingHorizontal: theme.spacing * 2,
     },
+    dropdown: { marginBottom: theme.spacing, marginTop: -theme.spacing },
     saveButtonContainer: {
+      marginTop: theme.spacing * 2,
       flexShrink: 1,
-    },
-    badgePosition: {
-      position: "relative",
-      top: 6,
-      left: 5,
-      zIndex: 10,
-    },
-    badgeSize: {
-      borderRadius: 20,
-      height: 20,
-      width: 20,
-    },
-    badge: {
-      padding: 2,
-      backgroundColor: theme.colors.green,
     },
   })
 );

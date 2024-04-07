@@ -4,6 +4,7 @@ import { Header } from "../components/Header";
 import { isAndroid } from "../constants";
 import { BarcodeModalScreen } from "../screens/BarcodeModalScreen";
 import { DocumentScannerModalScreen } from "../screens/DocumentScannerModalScreen";
+import { IdentifyAliasesScreen } from "../screens/IdentifyAliasesScreen";
 import { NewBarcodeScreen } from "../screens/NewBarcodeScreen";
 import { NewStockScreen } from "../screens/NewStockScreen";
 import SettingsScreen from "../screens/SettingsScreen";
@@ -46,6 +47,13 @@ export const HomeStackNavigation = () => {
             // Docs, truth they avoid.
             // https://github.com/software-mansion/react-native-screens/issues/1650
             presentation: isAndroid ? "card" : "modal",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="IdentifyAliasesScreen"
+          component={IdentifyAliasesScreen}
+          options={{
             headerShown: true,
           }}
         />

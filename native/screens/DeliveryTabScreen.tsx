@@ -11,7 +11,7 @@ import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.typ
 import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { IDListCard } from "../components/IDListCard";
 import { IDListCardAdd } from "../components/IDListCardAdd";
-import { ScanBarcodeIcon } from "../components/Icon";
+import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
@@ -29,7 +29,7 @@ export default function DeliveryTabScreen({
   const { isConnected } = useNetInfo();
   const deliveryForm = useFormContext<DeliveryForm>();
   const { showError, showInfo, showSuccess } = useSnackbar();
-  const { dispatch, state } = useContext(DocumentScannerContext);
+  const { dispatch } = useContext(DocumentScannerContext);
 
   const inventoryId = route.params?.id;
 
@@ -55,12 +55,6 @@ export default function DeliveryTabScreen({
       payload: { inventory_id: 10 },
     });
   }, [inventoryId]);
-
-  useEffect(() => {
-    if (state.processedInvoice?.unmatchedAliases) {
-      navigation.navigate("IdentifyAliasesScreen", { inventoryId });
-    }
-  }, [state.processedInvoice?.unmatchedAliases]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -123,7 +117,7 @@ export default function DeliveryTabScreen({
                   navigation.navigate("DocumentScannerModal" as any);
                 }}
               >
-                <ScanBarcodeIcon size={34} color="lightGrey" />
+                <DocumentScannerIcon size={34} color="lightGrey" />
               </Button>
               <Button
                 containerStyle={styles.saveButtonContainer}

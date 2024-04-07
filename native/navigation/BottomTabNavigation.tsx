@@ -14,7 +14,6 @@ import { useListInventories } from "../db";
 
 import { AddRecordScreen } from "../screens/AddRecordScreen";
 import DeliveryTabScreen from "../screens/DeliveryTabScreen";
-import { IdentifyAliasesScreen } from "../screens/IdentifyAliasesScreen";
 import InventoryTabScreen from "../screens/InventoryTabScreen";
 import { ListTab } from "../screens/ListTabScreen";
 import { RecordScreen } from "../screens/RecordScreen";
@@ -132,25 +131,6 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
               fontFamily: theme.text.xs.fontFamily,
             },
             headerTitleAlign: "center",
-            headerBackVisible: false,
-          }}
-        />
-        <DeliveryStack.Screen
-          name="IdentifyAliasesScreen"
-          component={IdentifyAliasesScreen}
-          options={{
-            headerBackground: () => (
-              <View
-                style={{
-                  borderColor: theme.colors.darkBlue,
-                  borderTopWidth: 2,
-                  backgroundColor: theme.colors.mediumBlue,
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            ),
-            headerTitle: "",
             headerBackVisible: false,
           }}
         />

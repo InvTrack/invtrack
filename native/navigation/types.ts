@@ -33,6 +33,7 @@ export type HomeStackParamList = {
   SettingsScreen: undefined;
   NewBarcodeScreen: { inventoryId: number; new_barcode: string };
   NewStockScreen: undefined;
+  IdentifyAliasesScreen: { inventoryId: number };
 };
 
 /**
@@ -85,7 +86,6 @@ export type DeliveryStackParamList = {
   DeliveryTabScreen: { id: number };
   RecordScreen: { id: number; recordId: number; isDelivery?: boolean };
   AddRecordScreen: { inventoryId: number };
-  IdentifyAliasesScreen: { inventoryId: number };
 };
 export type DeliveryTabProps = CompositeScreenProps<
   BottomTabScreenProps<BottomTabParamList, "DeliveryTab">,
@@ -112,11 +112,11 @@ export type RecordScreenNavigationProp = NativeStackScreenProps<
  * IdentifyAliasesScreen
  */
 export type IdentifyAliasesScreenProps = NativeStackScreenProps<
-  DeliveryStackParamList,
+  HomeStackParamList,
   "IdentifyAliasesScreen"
 >;
 
 export type IdentifyAliasesScreenNavigationProp = NativeStackScreenProps<
-  DeliveryStackParamList,
+  HomeStackParamList,
   "IdentifyAliasesScreen"
 >["navigation"];

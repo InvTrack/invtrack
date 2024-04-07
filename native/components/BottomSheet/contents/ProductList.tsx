@@ -1,4 +1,3 @@
-// import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -34,18 +33,12 @@ export const ProductListBottomSheetContent = ({
           Wybierz produkt dla tej pozycji
         </Typography>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={styles.productsContainer}>
         {products.map((product) => (
           <Button
+            key={product.id}
             size="xs"
             type="primary"
-            // custom size lol :D
             containerStyle={styles.button}
             onPress={() => {
               setValue(String(product.id), alias);
@@ -77,6 +70,12 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
       paddingBottom: theme.spacing,
     },
+    // custom size lol :D
     button: { flexBasis: "47%", height: 64 },
+    productsContainer: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+    },
   })
 );

@@ -28,14 +28,20 @@ export const DocumentScannerModalScreen = ({
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const {
     dispatch,
-    state: { processedInvoice, photo },
+    state: { processedInvoice, photo, inventory_id },
   } = useContext(DocumentScannerContext);
 
   useEffect(() => {
-    if (!photo) {
+    if (photo == null) {
       return;
     }
-    navigation.goBack();
+    if (inventory_id && processedInvoice?.unmatchedAliases == null) {
+      navigation.replace("IdentifyAliasesScreen", {
+        inventoryId: inventory_id,
+      });
+    } else {
+      navigation.goBack();
+    }
     dispatch({ type: "PHOTO_RESET_DATA" });
     return;
   }, [processedInvoice]);

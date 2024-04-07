@@ -146,6 +146,10 @@ export const checkmarkIconSrc = require("../assets/images/checkmark.png");
 export const CheckmarkIcon = (props: IconProps) =>
   createIcon({ source: checkmarkIconSrc, props });
 
+export const documentScannerIconSrc = require("../assets/images/document_scanner.png");
+export const DocumentScannerIcon = (props: IconProps) =>
+  createIcon({ source: documentScannerIconSrc, props });
+
 const AppIconSrc = require("../assets/images/icon.png");
 export const AppIcon = (props: IconProps) =>
   createIcon({
