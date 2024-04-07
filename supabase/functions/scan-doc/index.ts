@@ -125,10 +125,13 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
-
+  //
+  //
   const requestBody: { image?: { data?: unknown }; inventory_id?: unknown } =
     await req.json();
-
+  // const requestBody = { image: { data: "" }, inventory_id: 11 };
+  //
+  //
   if (
     requestBody?.image?.data == null ||
     requestBody?.inventory_id == null ||
@@ -200,6 +203,8 @@ Deno.serve(async (req) => {
   const poller = await getLongRunningPoller(client, initialResponse);
   const result = (await poller.pollUntilDone())
     .body as AnalyzeResultOperationOutput;
+
+  // const result = mockResponse;
 
   // analyzeResult?.documents?.[0].fields contents are defined here
   // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
@@ -308,12 +313,16 @@ Deno.serve(async (req) => {
       return {
         recognized: {
           ...acc.recognized,
-          [record_id]: {
+          [String(record_id)]: {
             product_id,
             price_per_unit: price_per_unit
               ? parseFloatForResponse(price_per_unit)
-              : null,
-            quantity: quantity ? parseFloatForResponse(quantity) : null,
+              : // temporary until null handling/merging is figured out in the app
+                0,
+            quantity: quantity
+              ? parseFloatForResponse(quantity)
+              : // temporary until null handling/merging is figured out in the app
+                0,
           },
         },
         recognizedAliases: [
@@ -322,9 +331,9 @@ Deno.serve(async (req) => {
         ],
       };
     },
-    {} as {
+    { recognized: {}, recognizedAliases: [] } as {
       recognized: Record<
-        number,
+        string,
         {
           product_id: number;
           price_per_unit: number | null;
@@ -335,12 +344,19 @@ Deno.serve(async (req) => {
     }
   );
 
-  const unmatchedAliases =
-    matchAliasesToRecognizedData.recognizedAliases.filter((recognizedAlias) =>
-      documentAnalysisResult?.some(
-        (res) => res?.sanitizedName === recognizedAlias
-      )
-    );
+  // we want them unique
+  const unmatchedAliases = [
+    ...new Set(
+      documentAnalysisResult
+        ?.filter(
+          (analysis) =>
+            !matchAliasesToRecognizedData.recognizedAliases.some(
+              (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
+            )
+        )
+        .map((item) => item?.sanitizedName) ?? []
+    ),
+  ];
 
   return new Response(
     JSON.stringify({
