@@ -3,17 +3,14 @@
   import { genericUpdate } from "$lib/genericUpdate.js";
   import { currentCompanyId } from "$lib/store.js";
   import { Button } from "flowbite-svelte";
-  import Columns from "$lib/dnd/Columns.svelte";
-  import BareItems from "$lib/dnd/BareItems.svelte";
-  import { beforeNavigate, goto } from "$app/navigation";
+  import Columns from "./Columns.svelte";
+  import BareItems from "./BareItems.svelte";
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
 
   export let data;
 
   let loading = false;
   let unsavedChanges = false;
-  let unsavedChangesModal = false;
-  let navigateTo: URL | undefined = undefined;
   let company_id: number | null = null;
   let { supabase, uncategorisedProducts, categories } = data;
   // Wrap the array in an object. Otherwise, <HorizontalList/> would create a new array local to itself on every edit, making it inaccessible here.
@@ -22,16 +19,6 @@
   let categoriesContainer = { columns: categories || [] };
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
-
-  beforeNavigate(({ cancel, to }) => {
-    if (!unsavedChanges) {
-      return;
-    }
-    cancel();
-    unsavedChangesModal = true;
-    navigateTo = to?.url;
-    return;
-  });
 
   const update = () => {
     loading = true;
@@ -80,22 +67,10 @@
   };
 
   const setUnsavedChanges = () => (unsavedChanges = true);
-
-  const onUnsavedWarningContinue = () => {
-    unsavedChanges = false;
-    unsavedChangesModal = false;
-    if (navigateTo) {
-      goto(navigateTo);
-    }
-  };
 </script>
 
 <ScreenCard header="Produkty">
-  <UnsavedWarningModal
-    bind:open={unsavedChangesModal}
-    onContinue={onUnsavedWarningContinue}
-    onStay={() => (unsavedChangesModal = false)}
-  />
+  <UnsavedWarningModal bind:unsavedChanges />
   <BareItems itemsContainer={uncategorisedProductsContainer} {setUnsavedChanges} />
   <Columns columnsContainer={categoriesContainer} {setUnsavedChanges} />
   <Button class="mt-4" color="primary" on:click={update}

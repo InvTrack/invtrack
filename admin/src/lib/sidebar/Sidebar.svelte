@@ -14,6 +14,7 @@
     BellActiveAltSolid,
     BriefcaseSolid,
     HomeSolid,
+    InboxFullSolid,
     ListSolid,
     MoonSolid,
     SunSolid,
@@ -131,6 +132,14 @@
         <svelte:fragment slot="icon">
           <BriefcaseSolid
             active={activeUrl === "/products"}
+            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          /></svelte:fragment
+        >
+      </SidebarItem>
+      <SidebarItem label="Recepturownik" href="/recipes">
+        <svelte:fragment slot="icon">
+          <InboxFullSolid
+            active={activeUrl === "/recipes"}
             class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
           /></svelte:fragment
         >

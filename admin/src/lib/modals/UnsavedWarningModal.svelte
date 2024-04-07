@@ -1,10 +1,30 @@
 <script lang="ts">
+  import { beforeNavigate, goto } from "$app/navigation";
   import { Button, Modal } from "flowbite-svelte";
   import { ExclamationCircleOutline } from "flowbite-svelte-icons";
 
-  export let open = false;
-  export let onContinue: () => void;
-  export let onStay: () => void;
+  export let unsavedChanges: boolean;
+  let navigateTo: URL | undefined = undefined;
+  let open: boolean;
+
+  const onStay: () => void = () => (open = false);
+  const onContinue: () => void = () => {
+    unsavedChanges = false;
+    open = false;
+    if (navigateTo) {
+      goto(navigateTo);
+    }
+  };
+
+  beforeNavigate(({ cancel, to }) => {
+    if (!unsavedChanges) {
+      return;
+    }
+    cancel();
+    open = true;
+    navigateTo = to?.url;
+    return;
+  });
 </script>
 
 <Modal bind:open size="xs" outsideclose>
