@@ -23,4 +23,4 @@ jobs:
       - run: |
           supabase link --project-ref $PRODUCTION_PROJECT_ID
           supabase db push --include-all
-          supabase functions deploy --project-ref $PRODUCTION_DB_PASSWORD
+          supabase functions deploy --project-ref $PRODUCTION_PROJECT_ID
