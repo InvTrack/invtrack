@@ -5,7 +5,7 @@ import { SessionContext } from "../auth";
 import { supabase } from "../supabase";
 import { CurrentCompanyIdTable } from "../types";
 
-const getCurrentCompanyId = () =>
+export const getCurrentCompanyId = () =>
   supabase
     .from<"current_company_id", CurrentCompanyIdTable>("current_company_id")
     .select()

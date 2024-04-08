@@ -88,7 +88,8 @@ const Snackbar = ({ item }: SnackbarProps) => {
           {
             paddingTop: insets.top,
             paddingBottom: (insets.top + SNACKBAR_HEIGHT) / 4,
-            height: insets.top + SNACKBAR_HEIGHT,
+            height:
+              insets.top + SNACKBAR_HEIGHT + (insets.top + SNACKBAR_HEIGHT) / 4,
           },
           styles[type],
           animatedStyle,
@@ -113,7 +114,7 @@ export const SnackbarRenderer = () => {
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
-      ...theme.text.l,
+      ...theme.text.m,
       color: theme.colors.lightGrey,
       zIndex: 1000,
       position: "absolute",

@@ -52,6 +52,21 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
       </HeaderWrapper>
     );
   }
+  if (route.name === "DocumentScannerModal") {
+    return (
+      <HeaderWrapper omitInsets={isIos}>
+        <View />
+        <PlusIcon
+          onPress={navigation.goBack}
+          color="darkGrey"
+          size={36}
+          style={{
+            transform: [{ rotate: "45deg" }],
+          }}
+        />
+      </HeaderWrapper>
+    );
+  }
   return (
     <HeaderWrapper>
       {navigation.canGoBack() ? (

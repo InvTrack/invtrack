@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 
 import isEmpty from "lodash/isEmpty";
 import { supabase } from "../supabase";
-import { RecordView } from "../types";
+import { ProductRecordView } from "../types";
 
 export type BarcodeList = {
-  [barcode: string]: RecordView["id"];
+  [barcode: string]: ProductRecordView["id"];
 };
 
 const barcodeList = async (inventory_id: number) => {

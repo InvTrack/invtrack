@@ -88,7 +88,6 @@ export const useRecordPanel = (recordId: number) => {
 
   const setPrice = useCallback(
     (price: number) => {
-      console.log("setPrice");
       if (price < 0) return;
       // dot notation is more performant
       form.setValue(`${recordId.toString()}.price_per_unit`, price, {

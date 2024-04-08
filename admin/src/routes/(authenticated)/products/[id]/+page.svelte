@@ -6,7 +6,9 @@
   import UnsavedWarningModal from "$lib/modals/UnsavedWarningModal.svelte";
   import { currentCompanyId } from "$lib/store";
   import ConfirmationModal from "$lib/modals/ConfirmationModal.svelte";
+  import Tooltip from "$lib/Tooltip.svelte";
   import Barcodes from "./Barcodes.svelte";
+  import ProductNameAliases from "./ProductNameAliases.svelte";
 
   export let data;
   let { supabase, product } = data;
@@ -18,7 +20,8 @@
 
   let barcodesRef: Barcodes;
   let barcodes: string[] = product.barcode.map((b) => b.code);
-
+  let productNameAliasesRef: ProductNameAliases;
+  let aliases: string[] = product.name_alias.map((a) => a.alias);
   let company_id: number;
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
@@ -44,6 +47,7 @@
       { setLoading: (x) => (loading = x) }
     );
     barcodesRef.submit(supabase, (x) => (loading = x), company_id, product.id);
+    productNameAliasesRef.submit(supabase, (x) => (loading = x), company_id, product.id);
     unsavedChanges = false;
   };
 
@@ -97,6 +101,7 @@
       </div>
     </Label>
     <Barcodes bind:this={barcodesRef} bind:barcodes bind:unsavedChanges />
+    <ProductNameAliases bind:this={productNameAliasesRef} bind:aliases bind:unsavedChanges />
     <Button type="submit" class="mt-4" color="primary"
       >{loading ? "Zapisywanie..." : "Aktualizuj produkt"}</Button
     >

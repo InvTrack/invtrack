@@ -1,8 +1,7 @@
 import { MutableRefObject } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import { Animated, StyleSheet, View, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createStyles } from "../../theme/useStyles";
-import { useDimensions } from "../../utils/useDimensions";
 import { TRACER_SIZE, interpolatableX, interpolatableY } from "./common";
 
 interface BarcodeOutlineProps {
@@ -25,7 +24,7 @@ export const BarcodeOutline = ({
   animatedTRCornerX,
   animatedTRCornerY,
 }: BarcodeOutlineProps) => {
-  const { width, height } = useDimensions();
+  const { width, height } = useWindowDimensions();
   const { top: topInset } = useSafeAreaInsets();
 
   const styles = useStyles();

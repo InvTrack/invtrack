@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../supabase";
-import { RecordView } from "../types";
+import { ProductRecordView } from "../types";
 
-type RecordViewNullCategoryName =
+type ProductRecordViewNullCategoryName =
   | {
-      [K in keyof Omit<RecordView, "barcode">]: K extends "category_name"
+      [K in keyof Omit<ProductRecordView, "barcode">]: K extends "category_name"
         ? null
-        : RecordView[K];
+        : ProductRecordView[K];
     }
   | null;
 
 const listUncategorizedProductRecords = async (
   inventoryId: number
-): Promise<RecordViewNullCategoryName[] | null> => {
+): Promise<ProductRecordViewNullCategoryName[] | null> => {
   const response = await supabase
     .from("record_view")
     .select(
@@ -26,7 +26,7 @@ const listUncategorizedProductRecords = async (
     console.log(response.error.message);
   }
 
-  return response.data as RecordViewNullCategoryName[];
+  return response.data as ProductRecordViewNullCategoryName[];
 };
 
 export const useListUncategorizedProductRecords = (inventoryId: number) =>

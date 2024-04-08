@@ -33,6 +33,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { SnackbarRenderer } from "./components/Snackbar";
 import { SnackbarProvider } from "./components/Snackbar/context";
 import { isAndroid } from "./constants";
+import { getCurrentCompanyId } from "./db/hooks/useGetCurrentCompanyId";
 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
@@ -93,6 +94,12 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
       StatusBar.setBackgroundColor("#212939");
       return;
     }
+    queryClient.prefetchQuery({
+      queryKey: ["current_company_id"],
+      queryFn: getCurrentCompanyId,
+      staleTime: ONE_SECOND * 60 * 60,
+      cacheTime: ONE_SECOND * 60 * 30,
+    });
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {
