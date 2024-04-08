@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "../supabase";
-import { RecordViewTable } from "../types";
 
 export type UseGetRecordQueryKey = ["product_record", recordId: number];
 
 const getRecord = async (recordId: number) => {
   const { data, error } = await supabase
-    .from<"record_view", RecordViewTable>("record_view")
+    .from("record_view")
     .select()
     .eq("id", recordId)
     .single();

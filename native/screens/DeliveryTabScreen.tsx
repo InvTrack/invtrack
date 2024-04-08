@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -8,9 +8,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { Collapsible } from "../components/Collapsible/Collapsible";
 import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.types";
+import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { IDListCard } from "../components/IDListCard";
 import { IDListCardAdd } from "../components/IDListCardAdd";
-import { ScanBarcodeIcon } from "../components/Icon";
+import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
@@ -26,26 +27,37 @@ export default function DeliveryTabScreen({
 }: DeliveryTabScreenProps) {
   const styles = useStyles();
 
-  const inventoryId = route.params?.id;
   const { isConnected } = useNetInfo();
+  const inventoryId = route.params?.id;
 
+  const { showError, showInfo, showSuccess } = useSnackbar();
+  const { dispatch } = useContext(DocumentScannerContext);
+
+  const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
     useListUncategorizedProductRecords(+inventoryId);
   const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
     useListCategorizedProductRecords(+inventoryId);
 
-  const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const deliveryForm = useFormContext<DeliveryForm>();
+  const deliveryFormValues = deliveryForm.watch();
+
   const {
     mutate,
     isSuccess: isUpdateSuccess,
     isError: isUpdateError,
   } = useUpdateRecords(+inventoryId);
-  const { showError, showInfo, showSuccess } = useSnackbar();
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
   }, [inventoryId, inventoryName, navigation]);
+
+  useEffect(() => {
+    dispatch({
+      type: "SET_INVENTORY_ID",
+      payload: { inventory_id: 10 },
+    });
+  }, [inventoryId]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -100,6 +112,17 @@ export default function DeliveryTabScreen({
           <ScrollView style={styles.scroll}>
             <View style={styles.doubleButtonContainer}>
               <Button
+                containerStyle={styles.barcodeIconContainer}
+                size="l"
+                type="primary"
+                onPress={() => {
+                  // necessary hack, handled by parent navigator - be cautious
+                  navigation.navigate("DocumentScannerModal" as any);
+                }}
+              >
+                <DocumentScannerIcon size={34} color="lightGrey" />
+              </Button>
+              <Button
                 containerStyle={styles.saveButtonContainer}
                 size="l"
                 type="primary"
@@ -130,7 +153,12 @@ export default function DeliveryTabScreen({
                   key={record.id}
                   recordId={record.id!}
                   id={+inventoryId}
-                  quantity={record.quantity!}
+                  quantity={
+                    record.id
+                      ? deliveryFormValues[record.id]?.quantity ??
+                        record.quantity
+                      : null
+                  }
                   unit={record.unit!}
                   name={record.name}
                 />
@@ -150,7 +178,11 @@ export default function DeliveryTabScreen({
                 key={record.id}
                 recordId={record.id!}
                 id={+inventoryId}
-                quantity={record.quantity!}
+                quantity={
+                  record.id
+                    ? deliveryFormValues[record.id]?.quantity ?? record.quantity
+                    : null
+                }
                 unit={record.unit!}
                 name={record.name}
                 borderBottom={data[data.length - 1]?.id === record.id}

@@ -10,7 +10,7 @@ type IDListCardProps = {
   name: string | null | undefined;
   id: number;
   recordId: number;
-  quantity: number;
+  quantity: number | null;
   unit: string;
   borderLeft?: boolean;
   borderRight?: boolean;
@@ -69,7 +69,7 @@ export const IDListCard = ({
           variant={"lBold"}
           style={styles.textRight}
         >
-          {quantity + " " + unit}
+          {(quantity === null ? "..." : quantity) + " " + unit}
         </Typography>
       </Card>
     </View>

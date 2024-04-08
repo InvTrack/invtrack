@@ -29,9 +29,11 @@ export type HomeStackParamList = {
     inventoryId: number;
     navigateTo: "InventoryTab" | "DeliveryTab";
   };
+  DocumentScannerModal: undefined;
   SettingsScreen: undefined;
   NewBarcodeScreen: { inventoryId: number; new_barcode: string };
   NewStockScreen: undefined;
+  IdentifyAliasesScreen: { inventoryId: number };
 };
 
 /**
@@ -106,7 +108,15 @@ export type RecordScreenNavigationProp = NativeStackScreenProps<
   "RecordScreen"
 >["navigation"];
 
-// export type ProductPickerScreenNavigationProp = NativeStackScreenProps<
-//   null,
-//   "ProductPickerScreen"
-// >["navigation"];
+/**
+ * IdentifyAliasesScreen
+ */
+export type IdentifyAliasesScreenProps = NativeStackScreenProps<
+  HomeStackParamList,
+  "IdentifyAliasesScreen"
+>;
+
+export type IdentifyAliasesScreenNavigationProp = NativeStackScreenProps<
+  HomeStackParamList,
+  "IdentifyAliasesScreen"
+>["navigation"];

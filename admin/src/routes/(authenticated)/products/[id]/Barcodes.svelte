@@ -1,6 +1,7 @@
 <svelte:options accessors />
 
 <script lang="ts">
+  import Tooltip from "$lib/Tooltip.svelte";
   import { genericUpdate } from "$lib/genericUpdate";
   import type { PatchedDatabase } from "$lib/helpers";
   import ErrorModal from "$lib/modals/ErrorModal.svelte";
@@ -75,8 +76,20 @@
     confirmText="OK"
     onConfirm={() => (barcodeErrorModal = false)}
   />
-  <Span>Kody</Span>
   <div class="flex flex-col gap-4">
+    <Span class="flex flex-row"
+      >Kody <Tooltip id="alias-ttip">
+        <div class="p-3 space-y-2">
+          <h3 class="font-semibold text-gray-900 dark:text-white">Kody - co to?</h3>
+          Większość produktów posiada na opakowaniach kody kreskowe/qr. Możesz zobaczyć/edytować kody
+          wprowadzone w aplikacji przez pracowników.
+          <br />
+          <strong class="text-gray-900 dark:text-white">
+            Mimo tego, że można robić to tutaj, zalecamy wprowadzać kody w aplikacji.
+          </strong>
+        </div>
+      </Tooltip></Span
+    >
     <div class="grid grid-cols-2 place-items-start gap-4">
       <div class="col-span-2 flex gap-4 w-full">
         <Input

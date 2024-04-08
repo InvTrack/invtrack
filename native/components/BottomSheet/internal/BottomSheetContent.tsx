@@ -1,5 +1,11 @@
 import React, { forwardRef, RefObject, useEffect } from "react";
-import { BackHandler, Keyboard, StyleSheet, View } from "react-native";
+import {
+  BackHandler,
+  Keyboard,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import {
   NativeViewGestureHandler,
   PanGestureHandler,
@@ -17,7 +23,7 @@ interface Props {
 const BottomSheetContent = forwardRef(
   ({ scrollOffset, Component, onClose }: Props, ref) => {
     const styles = useStyles();
-
+    const { height } = useWindowDimensions();
     const scrollHandler = useAnimatedScrollHandler((e) => {
       scrollOffset.value = e.contentOffset.y;
     });
@@ -41,11 +47,13 @@ const BottomSheetContent = forwardRef(
       return (
         <NativeViewGestureHandler ref={ref}>
           <Animated.ScrollView
+            style={{ maxHeight: height / 1.8 }}
             onScroll={scrollHandler}
             showsVerticalScrollIndicator={false}
             bounces={false}
             scrollEventThrottle={16}
             keyboardShouldPersistTaps="handled"
+            stickyHeaderIndices={[0]}
           >
             <View style={styles.top}>
               <View style={styles.thingy} />
