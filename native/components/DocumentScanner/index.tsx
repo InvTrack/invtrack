@@ -71,7 +71,6 @@ export const DocumentScanner = () => {
     <PhotoPreview />
   ) : (
     <>
-      {/* HACKYYY ! */}
       {!isCameraReady && <LoadingSpinner size="large" />}
       <Camera
         ref={cameraRef}
