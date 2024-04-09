@@ -199,7 +199,6 @@ Deno.serve(async (req) => {
     .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
     .post({
       contentType: "application/json",
-
       body: {
         base64Source: requestBody.image.data,
       },
