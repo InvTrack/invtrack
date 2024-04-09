@@ -9,7 +9,7 @@ import DocumentIntelligence, {
 } from "@azure-rest/ai-document-intelligence@1.0.0-beta.2";
 import isEmpty from "lodash/isEmpty";
 import { isNil } from "../_shared/isNil.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
+import { createClient } from "@supabase/supabase-js@2";
 import { Database } from "../_shared/database.types.ts";
 
 const DocumentIntelligenceEndpoint = Deno.env.get(
@@ -25,7 +25,7 @@ const DocumentIntelligenceApiKey = Deno.env.get(
  * allow a 0.03 tolerance
  */
 const isCloseEnough = (value1: number, value2: number): boolean =>
-  Math.abs(parseFloat4Precision(value1 - value2)) <= 0.03;
+  Math.abs(parseFloat6Precision(value1 - value2)) <= 0.03;
 
 const getValueAsNumber = (
   item: DocumentFieldOutput | undefined
@@ -34,13 +34,13 @@ const getValueAsNumber = (
     return null;
   }
   if (item.type === "number") {
-    return parseFloat4Precision(item.valueNumber!);
+    return parseFloat6Precision(item.valueNumber!);
   }
   if (item.type === "currency") {
-    return parseFloat4Precision(item.valueCurrency!.amount);
+    return parseFloat6Precision(item.valueCurrency!.amount);
   }
   if (item.type === "string") {
-    return parseFloat4Precision(parseFloat(item.valueString!));
+    return parseFloat6Precision(parseFloat(item.valueString!));
   }
   return null;
 };
@@ -66,12 +66,12 @@ const parseStringForResponse = (value: string | null): string | null =>
         .normalize("NFC");
 
 /**
- * standardize possible floats to 4 decimal places
+ * standardize possible floats to 6 decimal places
  *
  * should wrap every expected number
  */
-const parseFloat4Precision = (value: number): number =>
-  parseFloat(value.toFixed(4));
+const parseFloat6Precision = (value: number): number =>
+  parseFloat(value.toFixed(6));
 
 const getName = (item: DocumentFieldOutput | undefined) => {
   if (item == null) {
@@ -107,17 +107,17 @@ const getPricePerUnit = (
   }
 
   if (!isCloseEnough(quantity * unitPrice + tax, amount)) {
-    return parseFloat4Precision((amount - tax) / quantity);
+    return parseFloat6Precision((amount - tax) / quantity);
   }
 
-  return parseFloat4Precision(unitPrice);
+  return parseFloat6Precision(unitPrice);
 };
 
 const getQuantity = (item: DocumentFieldOutput | undefined): number | null => {
   if (item == null || item?.type !== "number" || item.valueNumber == null) {
     return null;
   }
-  return parseFloat4Precision(item.valueNumber);
+  return parseFloat6Precision(item.valueNumber);
 };
 
 Deno.serve(async (req) => {
@@ -138,14 +138,16 @@ Deno.serve(async (req) => {
     typeof requestBody.image.data !== "string" ||
     typeof requestBody.inventory_id !== "number"
   ) {
+    console.error("Missing or malformed request body properties");
     return new Response("Missing or malformed request body properties", {
       status: 400,
-      headers: corsHeaders,
+      headers: { ...corsHeaders },
     });
   }
 
   const authHeader = req.headers.get("Authorization");
   if (authHeader == null) {
+    console.error("Unauthorized");
     return new Response("Unauthorized", { status: 401 });
   }
   const supabase = createClient<Database>(
@@ -159,6 +161,7 @@ Deno.serve(async (req) => {
     .select("alias, product_id");
 
   if (productAliasError) {
+    console.error("Error fetching table data");
     return new Response("Error fetching table data", { status: 500 });
   }
 
@@ -170,6 +173,7 @@ Deno.serve(async (req) => {
     .in("product_id", productIds);
 
   if (productRecordError) {
+    console.error("Error fetching table data");
     return new Response("Error fetching table data", { status: 500 });
   }
 
@@ -182,29 +186,30 @@ Deno.serve(async (req) => {
     | null = null;
 
   if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
+    console.error("Environment variables are not set up correctly");
     return new Response("Environment variables are not set up correctly.", {
       status: 500,
     });
   }
 
-  const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
-    key: DocumentIntelligenceApiKey,
-  });
+  // const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
+  //   key: DocumentIntelligenceApiKey,
+  // });
+  // const initialResponse = await client
+  //   .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
+  //   .post({
+  //     contentType: "application/json",
 
-  const initialResponse = await client
-    .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
-    .post({
-      contentType: "application/json",
-      body: {
-        base64Source: requestBody.image.data,
-      },
-    });
+  //     body: {
+  //       base64Source: requestBody.image.data,
+  //     },
+  //   });
 
-  const poller = await getLongRunningPoller(client, initialResponse);
-  const result = (await poller.pollUntilDone())
-    .body as AnalyzeResultOperationOutput;
+  // const poller = await getLongRunningPoller(client, initialResponse);
+  // const result = (await poller.pollUntilDone())
+  //   .body as AnalyzeResultOperationOutput;
 
-  // const result = mockResponse;
+  const result = mockResponse;
 
   // analyzeResult?.documents?.[0].fields contents are defined here
   // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
@@ -213,16 +218,22 @@ Deno.serve(async (req) => {
     isEmpty(result.analyzeResult?.documents) ||
     !result.analyzeResult?.documents
   ) {
-    return new Response("No useful data found during processing", {
+    console.error(
+      `No useful data found during processing, status ${
+        result.status
+      }, ${JSON.stringify(result.error, null, 2)}`
+    );
+    return new Response(`No useful data found during processing`, {
       status: 400,
-      headers: corsHeaders,
+      headers: { ...corsHeaders },
     });
   }
 
   if (result.analyzeResult.documents.length > 1) {
+    console.error("More than one page in document");
     return new Response("More than one page in document", {
       status: 400,
-      headers: corsHeaders,
+      headers: { ...corsHeaders },
     });
   }
 
@@ -230,9 +241,10 @@ Deno.serve(async (req) => {
     isEmpty(result.analyzeResult?.documents[0].fields) ||
     !result.analyzeResult.documents[0].fields
   ) {
+    console.error("No data extracted from document");
     return new Response("No data extracted from document", {
       status: 400,
-      headers: corsHeaders,
+      headers: { ...corsHeaders },
     });
   }
 
@@ -364,7 +376,7 @@ Deno.serve(async (req) => {
       unmatchedAliases,
     }),
     {
-      headers: corsHeaders,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     }
   );
 });

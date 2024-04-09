@@ -1,7 +1,7 @@
 {
   "imports": {
     "papaparse": "https://esm.sh/papaparse@5.4.1",
-    "@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2",
+    "@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2.38.4",
     "@onesignal/node-onesignal": "https://esm.sh/@onesignal/node-onesignal@2.0.1-beta2?target=deno&no-check",
     "@azure-rest/ai-document-intelligence@1.0.0-beta.2": "https://esm.sh/@azure-rest/ai-document-intelligence@1.0.0-beta.2?target=deno",
     "lodash/isEmpty": "https://esm.sh/lodash.isempty@4.4.0?target=deno&no-dts"
