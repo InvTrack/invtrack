@@ -47,7 +47,7 @@ export const PhotoPreview = () => {
               marginBottom: 32,
             }}
           >
-            Retake
+            Wróć
           </Button>
           <Button
             disabled={!isConnected}
@@ -68,7 +68,7 @@ export const PhotoPreview = () => {
               marginBottom: 32,
             }}
           >
-            Save
+            Wyślij
           </Button>
         </>
       )}

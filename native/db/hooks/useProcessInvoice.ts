@@ -42,9 +42,6 @@ export const useProcessInvoice = () => {
       };
 
       const { data, error } = await supabase.functions.invoke("scan-doc", {
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: reqBody,
       });
       if (error) {
@@ -52,14 +49,13 @@ export const useProcessInvoice = () => {
         console.log(error);
         return null;
       }
-      const parsedData = JSON.parse(data);
 
       dispatch({
         type: "INVOICE_PROCESSING_RESULT",
-        payload: { processedInvoice: parsedData },
+        payload: { processedInvoice: data },
       });
 
-      return parsedData as ScanDocResponse;
+      return data as ScanDocResponse;
     }
   );
 };
