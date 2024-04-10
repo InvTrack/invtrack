@@ -8,6 +8,7 @@ import TextInputController from "../components/TextInputController";
 import { ScrollView, StyleSheet } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useQueryClient } from "@tanstack/react-query";
 import { DevInfo } from "../components/DevInfo";
 import { PrivacyPolicy } from "../components/PrivacyPolicy";
 import { Typography } from "../components/Typography";
@@ -22,6 +23,7 @@ type SettingsScreenProps = NativeStackScreenProps<
 >;
 
 export default function SettingsScreen({ navigation }: SettingsScreenProps) {
+  const queryClient = useQueryClient();
   const styles = useStyles();
   const { session } = useSession();
   // const { data: user, isLoading } = useGetUser();
@@ -89,6 +91,7 @@ export default function SettingsScreen({ navigation }: SettingsScreenProps) {
         <Button
           onPress={async () => {
             await supabase.auth.signOut();
+            queryClient.clear();
             // @ts-ignore
             navigation.navigate("StartScreen");
           }}
