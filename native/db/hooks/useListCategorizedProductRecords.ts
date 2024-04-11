@@ -35,6 +35,8 @@ const listCategorizedProductRecords = async (
     return null;
   }
   // maybe a use case for worklets? :D
+  // https://github.com/software-mansion/react-native-reanimated/discussions/4968
+
   const mapped = response.data.reduce((acc, record) => {
     const title = record.category_name;
     if (!title) return acc;

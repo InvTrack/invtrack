@@ -11,7 +11,7 @@ import {
 } from "../../components/Icon";
 import { Typography } from "../../components/Typography";
 import { useRecordPanel } from "../../db";
-import { useListRecordIds } from "../../db/hooks/useListRecordIds";
+import { useListProductRecordIds } from "../../db/hooks/useListProductRecordIds";
 import { createStyles } from "../../theme/useStyles";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -119,7 +119,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const record = recordPanel?.data;
 
   const { data: inventoryName } = useGetInventoryName(+id);
-  const { data: recordIds } = useListRecordIds(id);
+  const { data: recordIds } = useListProductRecordIds(id);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     id,
     record?.product_id
