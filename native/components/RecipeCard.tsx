@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { useFormContext } from "react-hook-form";
@@ -17,7 +17,6 @@ import { Typography } from "./Typography";
 
 type RecipeCardProps = {
   name: string | null | undefined;
-  id: number;
   recipePart:
     | null
     | NonNullable<
@@ -29,9 +28,46 @@ type RecipeCardProps = {
   borderBottom?: boolean;
 };
 
+const getRecordAndMultiplier = (
+  recipePart: RecipeCardProps["recipePart"],
+  recordsList: ReturnType<typeof useListRecords>["data"]
+) =>
+  (Array.isArray(recipePart)
+    ? // this possibly falsely assumes that every product occurs only once per recipe
+      recipePart.map((rp) => {
+        const matchingRecord = recordsList?.find(
+          (r) => r.product_id === rp.product_id
+        );
+        return {
+          record_quantity_backup: matchingRecord?.quantity,
+          record_id: matchingRecord?.id,
+          product_id: matchingRecord?.product_id,
+          multiplier: rp.quantity,
+        };
+      })
+    : recordsList.reduce((acc, curr) => {
+        if (curr.product_id === recipePart?.product_id) {
+          return [
+            ...acc,
+            {
+              record_quantity_backup: curr?.quantity,
+              record_id: curr?.id,
+              product_id: curr?.product_id,
+              multiplier: recipePart.quantity,
+            },
+          ];
+        }
+        return acc;
+      }, [] as any)) as {
+    record_quantity_backup: number | null;
+    record_id: number | null;
+    product_id: number | null;
+    multiplier: number | null;
+  }[];
+// : recordsList.find((r) => r.product_id === recipePart?.product_id);
+
 export const RecipeCard = ({
   name,
-  id: _id,
   recipePart,
   inventoryId,
   borderLeft = false,
@@ -47,6 +83,11 @@ export const RecipeCard = ({
     return null;
   }
 
+  const recordAndMultiplier = useMemo(
+    () => getRecordAndMultiplier(recipePart, recordsList),
+    [inventoryId, recipePart, recordsList]
+  );
+
   // value is an integer, see InputBottomSheetContent props
   const setQuantity = (value: number) => {
     if (value === recipeQuantity) return void this;
@@ -58,20 +99,8 @@ export const RecipeCard = ({
     if (recipeQuantity + delta < 0) return void this;
 
     if (Array.isArray(recipePart)) {
-      // this possibly falsely assumes that every product occurs only once per recipe
-      const recordAndMultiplier = recipePart?.map((rp) => {
-        const matchingRecord = recordsList?.find(
-          (r) => r.product_id === rp.product_id
-        );
-        return {
-          record_quantity_backup: matchingRecord?.quantity,
-          record_id: matchingRecord?.id,
-          product_id: matchingRecord?.product_id,
-          multiplier: rp.quantity,
-        };
-      });
       recordAndMultiplier.forEach((ram) => {
-        if (ram.record_id == null) return void this;
+        if (ram.record_id == null || ram.multiplier == null) return void this;
 
         const stringifiedRecordId = String(ram.record_id);
 
@@ -101,28 +130,23 @@ export const RecipeCard = ({
      * when a recipe contains only a single product
      */
 
-    const recipePartRecord = recordsList.find(
-      (r) => r.product_id === recipePart?.product_id
-    );
     if (
-      recipePartRecord?.id == null ||
-      recipePartRecord?.product_id == null ||
-      recipePartRecord?.quantity == null ||
-      recipePart?.quantity == null
+      recordAndMultiplier[0]?.record_id == null ||
+      recordAndMultiplier[0]?.multiplier == null
     )
       return void this;
 
-    const stringifiedRecordId = String(recipePartRecord.id);
+    const stringifiedRecordId = String(recordAndMultiplier[0].record_id);
 
     // the object may not exist, if the user did not navigate to the given RecordScreen
     // may change during the form refactor
     const oldRecordValues = watch(stringifiedRecordId) || {
       price_per_unit: null,
-      product_id: recipePartRecord.product_id,
-      quantity: recipePartRecord.quantity,
+      product_id: recordAndMultiplier[0].product_id,
+      quantity: recordAndMultiplier[0].record_quantity_backup,
     };
 
-    const dMultiplied = roundFloat(delta * recipePart.quantity);
+    const dMultiplied = roundFloat(delta * recordAndMultiplier[0].multiplier);
     const newRecordQuantity = roundFloat(
       oldRecordValues.quantity + dMultiplied
     );
