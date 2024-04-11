@@ -49,7 +49,7 @@ export const Button = forwardRef(
     {
       onPress,
       containerStyle,
-      // labelColor, TODO
+      labelStyle,
       disabled = false,
       type,
       size,
@@ -82,7 +82,7 @@ export const Button = forwardRef(
         ) : isStringChildren ? (
           <Typography
             variant={size === "xs" ? "xs" : size === "s" ? "s" : "m"}
-            style={styles.string}
+            style={[styles.string, labelStyle]}
           >
             {children}
           </Typography>
