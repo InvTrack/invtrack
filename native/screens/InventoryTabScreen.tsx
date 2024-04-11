@@ -13,9 +13,11 @@ import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
 import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
+import { RecipeCard } from "../components/RecipeCard";
 import { useSnackbar } from "../components/Snackbar/context";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
+import { useListRecipes } from "../db/hooks/useListRecipes";
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { InventoryTabScreenProps } from "../navigation/types";
@@ -35,6 +37,7 @@ export default function InventoryTabScreen({
     useListUncategorizedProductRecords(+inventoryId);
   const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
     useListCategorizedProductRecords(+inventoryId);
+  const { data: recipeList, isSuccess: recipesIsSuccess } = useListRecipes();
 
   const inventoryForm = useFormContext<InventoryForm>();
   const inventoryFormValues = inventoryForm.watch();
@@ -81,7 +84,7 @@ export default function InventoryTabScreen({
     )();
   };
 
-  if (!uncategorizedIsSuccess || !categorizedIsSuccess)
+  if (!uncategorizedIsSuccess || !categorizedIsSuccess || !recipesIsSuccess)
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
@@ -126,7 +129,15 @@ export default function InventoryTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
-            <IDListCardAdd inventoryId={inventoryId} />
+            {recipeList.map((recipe) => (
+              <RecipeCard
+                key={recipe.id}
+                id={recipe.id}
+                inventoryId={inventoryId}
+                name={recipe.name}
+                recipePart={recipe.recipe_part}
+              />
+            ))}
             {uncategorizedRecordList?.map((record) =>
               record ? (
                 <IDListCard
@@ -146,6 +157,7 @@ export default function InventoryTabScreen({
                 <></>
               )
             )}
+            <IDListCardAdd inventoryId={inventoryId} />
           </ScrollView>
         }
         sections={categorizedRecordList?.map(({ title, data }, i) => ({
