@@ -1,5 +1,5 @@
 import debounce from "lodash/debounce";
-import React, { forwardRef } from "react";
+import React from "react";
 import {
   GestureResponderEvent,
   StyleProp,
@@ -20,7 +20,7 @@ type ButtonProps = {
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TypographyProps["style"];
   disabled?: boolean;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   isLoading?: boolean;
 };
 
@@ -35,71 +35,59 @@ const debounceOnPress = (
   return debounce(onPress ?? (() => undefined), 50)(e);
 };
 
-export const DropdownButton = forwardRef(
-  (
-    {
-      onPress,
-      containerStyle,
-      // labelColor, TODO
-      disabled = false,
-      children,
-      isLoading = false,
-    }: ButtonProps,
-    _ref
-  ) => {
-    const styles = useStyles();
-    const isStringChildren = typeof children === "string";
-    return (
-      <TouchableOpacity
-        onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
-        style={[
-          {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: 4,
-            borderRadius: 10,
-          },
-          styles.primary,
-          styles.l,
-          styles.fullWidth,
-          disabled && styles.disabled,
-          containerStyle,
-        ]}
-        disabled={disabled}
-        activeOpacity={0.8}
-      >
-        <View
-          style={[
-            styles.buttonBase,
-            {
-              alignItems: "flex-start",
-            },
-          ]}
-        >
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : isStringChildren ? (
-            <Typography variant="m" style={styles.string}>
-              {children}
-            </Typography>
-          ) : (
-            children
-          )}
-        </View>
-        <ExpandMoreIcon />
-      </TouchableOpacity>
-    );
-  }
-);
+export const DropdownButton = ({
+  onPress,
+  containerStyle,
+  // labelColor, TODO
+  disabled = false,
+  children,
+  isLoading = false,
+}: ButtonProps) => {
+  const styles = useStyles();
+  const isStringChildren = typeof children === "string";
+  return (
+    <TouchableOpacity
+      onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
+      style={[
+        styles.container,
+        styles.primary,
+        styles.l,
+        styles.fullWidth,
+        disabled && styles.disabled,
+        containerStyle,
+      ]}
+      disabled={disabled}
+      activeOpacity={0.8}
+    >
+      <View style={styles.buttonBase}>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : isStringChildren ? (
+          <Typography variant="m" style={styles.string}>
+            {children}
+          </Typography>
+        ) : (
+          children
+        )}
+      </View>
+      <ExpandMoreIcon containerStyle={styles.iconContainer} />
+    </TouchableOpacity>
+  );
+};
 
 DropdownButton.displayName = "Button";
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      padding: 4,
+      borderRadius: 10,
+    },
     buttonBase: {
       flexShrink: 1,
       margin: theme.spacing * 0.5,
-      alignItems: "center",
       justifyContent: "center",
       borderRadius: theme.borderRadiusSmall,
     },
@@ -119,6 +107,11 @@ const useStyles = createStyles((theme) =>
     l: {
       height: 58,
       width: 58,
+    },
+    iconContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 4,
     },
   })
 );

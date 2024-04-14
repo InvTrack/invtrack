@@ -325,6 +325,83 @@ export interface Database {
           }
         ]
       }
+      recipe: {
+        Row: {
+          company_id: number | null
+          created_at: string
+          id: number
+          name: string | null
+        }
+        Insert: {
+          company_id?: number | null
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          company_id?: number | null
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_company_id_fkey"
+            columns: ["company_id"]
+            referencedRelation: "company"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      recipe_part: {
+        Row: {
+          created_at: string
+          id: number
+          product_id: number
+          quantity: number
+          recipe_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          product_id: number
+          quantity: number
+          recipe_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          product_id?: number
+          quantity?: number
+          recipe_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_part_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "product"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_part_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "deleted_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_part_product_id_fkey"
+            columns: ["product_id"]
+            referencedRelation: "existing_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_part_recipe_id_fkey"
+            columns: ["recipe_id"]
+            referencedRelation: "recipe"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       worker: {
         Row: {
           company_id: number | null

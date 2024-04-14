@@ -127,6 +127,7 @@ export default function DeliveryTabScreen({
                 size="l"
                 type="primary"
                 fullWidth
+                labelStyle={styles.saveButtonLabel}
                 onPress={handlePress}
                 disabled={!isConnected}
               >
@@ -219,6 +220,9 @@ const useStyles = createStyles((theme) =>
       marginBottom: theme.spacing,
       marginTop: theme.spacing * 2,
       gap: theme.spacing,
+    },
+    saveButtonLabel: {
+      ...theme.text.l,
     },
     skeletonDate: {
       paddingTop: theme.spacing,

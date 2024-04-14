@@ -1,18 +1,15 @@
-// TODO this could be improved by creating a recordIds cache
+import { useListProductRecordIds } from "../db/hooks/useListProductRecordIds";
+
 export const useRecordPagination = (
   recordId: number | undefined,
-  recordIds: (number | null)[] | undefined
+  recordIds: ReturnType<typeof useListProductRecordIds>["data"]
 ): {
   nextRecordId: number | undefined;
   prevRecordId: number | undefined;
   isLast: boolean;
   isFirst: boolean;
 } => {
-  if (
-    !recordIds ||
-    recordIds.length === 0 ||
-    recordIds.some((id) => id === null)
-  ) {
+  if (!recordIds || recordIds.length === 0) {
     return {
       nextRecordId: undefined,
       prevRecordId: undefined,
@@ -21,16 +18,7 @@ export const useRecordPagination = (
     };
   }
 
-  const numberRecordIds: number[] = recordIds as number[];
-
-  if (numberRecordIds.length === 0) {
-    return {
-      nextRecordId: undefined,
-      prevRecordId: undefined,
-      isLast: false,
-      isFirst: false,
-    };
-  }
+  const numberRecordIds: number[] = recordIds.map((r) => r.id);
 
   const index = numberRecordIds.findIndex((id) => id === recordId);
   const isLast = index === numberRecordIds.length - 1;
