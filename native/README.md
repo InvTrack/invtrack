@@ -11,10 +11,16 @@ We require all app users to update to the latest version, be it an `expo-update`
 
 ### TODO list for releases
 
+Use `npm version minor --git-tag-version=false` to bump the package/package-lock.json versions
+
     1. bump the minor/fix version in: `package.json`, `package-lock.json`, `app.config.js`
     2. bump the ios `buildNumber` in `app.config.js` - equal to the `package.json` version
     3. bump the android `versionCode` in `app.config.js` - M.m.f becomes M0.m0.f
     4. commit to dev, merge dev into staging, test, merge staging into prod. -- TODO cherry-pick flow?
+
+- #### If releasing a minor version
+
+Due to how we have the update check set up right now, we need to schedule updates in App Store Connect/Play Console, and deploy the updated `utilities` edge function accordingly. This is very clunky and will be done properly using `react-native-check-version` in the future.
 
 ## Environment
 
