@@ -20,7 +20,7 @@ type ButtonProps = {
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: TypographyProps["style"];
   disabled?: boolean;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   isLoading?: boolean;
 };
 
@@ -49,12 +49,7 @@ export const DropdownButton = ({
     <TouchableOpacity
       onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
       style={[
-        {
-          flexDirection: "row",
-          justifyContent: "space-between",
-          padding: 4,
-          borderRadius: 10,
-        },
+        styles.container,
         styles.primary,
         styles.l,
         styles.fullWidth,
@@ -64,14 +59,7 @@ export const DropdownButton = ({
       disabled={disabled}
       activeOpacity={0.8}
     >
-      <View
-        style={[
-          styles.buttonBase,
-          {
-            alignItems: "flex-start",
-          },
-        ]}
-      >
+      <View style={styles.buttonBase}>
         {isLoading ? (
           <LoadingSpinner />
         ) : isStringChildren ? (
@@ -82,7 +70,7 @@ export const DropdownButton = ({
           children
         )}
       </View>
-      <ExpandMoreIcon />
+      <ExpandMoreIcon containerStyle={styles.iconContainer} />
     </TouchableOpacity>
   );
 };
@@ -91,10 +79,15 @@ DropdownButton.displayName = "Button";
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      padding: 4,
+      borderRadius: 10,
+    },
     buttonBase: {
       flexShrink: 1,
       margin: theme.spacing * 0.5,
-      alignItems: "center",
       justifyContent: "center",
       borderRadius: theme.borderRadiusSmall,
     },
@@ -114,6 +107,11 @@ const useStyles = createStyles((theme) =>
     l: {
       height: 58,
       width: 58,
+    },
+    iconContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginRight: 4,
     },
   })
 );
