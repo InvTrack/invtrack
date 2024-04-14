@@ -170,7 +170,9 @@ export const RecipeCard = ({
       <Card color="mediumBlue" style={styles.card} padding="none">
         <Typography
           color="lightGrey"
-          variant="sBold"
+          variant={
+            name.length > 28 ? (name.length > 44 ? "xsBold" : "sBold") : "lBold"
+          }
           numberOfLines={4}
           textProps={{ lineBreakMode: "tail", ellipsizeMode: "tail" }}
           style={styles.textLeft}

@@ -106,9 +106,10 @@ export default function InventoryTabScreen({
             <View style={styles.doubleButtonContainer}>
               <Button
                 containerStyle={styles.saveButtonContainer}
-                size="l"
+                size="xl"
                 type="primary"
                 fullWidth
+                labelStyle={styles.saveButtonLabel}
                 onPress={handlePress}
                 disabled={!isConnected}
               >
@@ -200,6 +201,9 @@ const useStyles = createStyles((theme) =>
     },
     saveButtonContainer: {
       flexShrink: 1,
+    },
+    saveButtonLabel: {
+      ...theme.text.l,
     },
     barcodeIconContainer: {
       flexGrow: 1,

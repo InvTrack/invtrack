@@ -70,6 +70,7 @@ export const InputBottomSheetContent = ({
         <Button
           type="primary"
           size="xs"
+          labelStyle={styles.buttonLabel}
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
@@ -122,7 +123,8 @@ const useStyles = createStyles((theme) =>
       paddingHorizontal: theme.spacing * 2,
     },
     inputLabel: {
-      paddingBottom: theme.spacing,
+      paddingBottom: theme.spacing / 2,
+      alignSelf: "flex-end",
     },
     topRow: {
       flexDirection: "row",
@@ -132,6 +134,9 @@ const useStyles = createStyles((theme) =>
     },
     button: {
       width: "30%",
+    },
+    buttonLabel: {
+      ...theme.text.m,
     },
   })
 );

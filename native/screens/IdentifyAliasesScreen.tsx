@@ -128,7 +128,7 @@ export const IdentifyAliasesScreen = ({
             <Typography
               color="lightGrey"
               numberOfLines={2}
-              variant={alias.length > 40 ? "xs" : "s"}
+              variant={alias.length > 50 ? "xs" : "s"}
             >
               {alias}
             </Typography>
