@@ -50,10 +50,10 @@ export const useSession = () => {
       return null;
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
+    supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       if (session) {
-        return supabase
+        return await supabase
           .from("worker")
           .select("id, company_id")
           .eq("id", session.user.id)
