@@ -11,7 +11,7 @@ export const DevInfo = () => {
       style={{
         position: "absolute",
         alignSelf: "flex-end",
-        fontSize: 12,
+        fontSize: 10,
         bottom: safeAreaBottomInset,
       }}
     >
