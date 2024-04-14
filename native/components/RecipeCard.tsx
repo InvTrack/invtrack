@@ -30,35 +30,19 @@ type RecipeCardProps = {
 
 const getRecordAndMultiplier = (
   recipePart: RecipeCardProps["recipePart"],
-  recordsList: ReturnType<typeof useListRecords>["data"]
+  recordsList: ReturnType<typeof useListRecords>["data"] // this possibly falsely assumes that every product occurs only once per recipe
 ) =>
-  (Array.isArray(recipePart)
-    ? // this possibly falsely assumes that every product occurs only once per recipe
-      recipePart.map((rp) => {
-        const matchingRecord = recordsList?.find(
-          (r) => r.product_id === rp.product_id
-        );
-        return {
-          record_quantity_backup: matchingRecord?.quantity,
-          record_id: matchingRecord?.id,
-          product_id: matchingRecord?.product_id,
-          multiplier: rp.quantity,
-        };
-      })
-    : recordsList.reduce((acc, curr) => {
-        if (curr.product_id === recipePart?.product_id) {
-          return [
-            ...acc,
-            {
-              record_quantity_backup: curr?.quantity,
-              record_id: curr?.id,
-              product_id: curr?.product_id,
-              multiplier: recipePart.quantity,
-            },
-          ];
-        }
-        return acc;
-      }, [] as any)) as {
+  recipePart?.map((rp) => {
+    const matchingRecord = recordsList?.find(
+      (r) => r.product_id === rp.product_id
+    );
+    return {
+      record_quantity_backup: matchingRecord?.quantity,
+      record_id: matchingRecord?.id,
+      product_id: matchingRecord?.product_id,
+      multiplier: rp.quantity,
+    };
+  }) as {
     record_quantity_backup: number | null;
     record_id: number | null;
     product_id: number | null;
