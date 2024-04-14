@@ -9,7 +9,7 @@ import { InventoryFormContextProvider } from "../components/InventoryFormContext
 
 import { isEmpty } from "lodash";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
-import { CleanTabBar } from "../components/TabBar";
+import { TabBar } from "../components/TabBar";
 import { useListInventories } from "../db";
 
 import { AddRecordScreen } from "../screens/AddRecordScreen";
@@ -253,7 +253,7 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
   return (
     <Tab.Navigator
       initialRouteName="ListTab"
-      tabBar={(props) => <CleanTabBar {...props} />}
+      tabBar={(props) => <TabBar {...props} />}
     >
       <Tab.Screen
         name="ListTab"

@@ -1,7 +1,9 @@
 import React from "react";
 import { Animated, View } from "react-native";
-import { CleanTabBarStyle } from "./TabStyle";
+import { TabBarStyle } from "./TabStyle";
 import type { TabBarTriangleProps } from "./types";
+
+// based on https://github.com/mikalyh/react-navigation-tabbar-collection?tab=MIT-1-ov-file#readme
 
 export const TabBarTriangleCover = ({
   color,
@@ -19,7 +21,7 @@ export const TabBarTriangleCover = ({
     >
       <View
         style={[
-          CleanTabBarStyle.triangleTop,
+          TabBarStyle.triangleTop,
           {
             borderBottomColor: color,
           },
@@ -27,7 +29,7 @@ export const TabBarTriangleCover = ({
       />
       <View
         style={[
-          CleanTabBarStyle.triangleBottom,
+          TabBarStyle.triangleBottom,
           {
             backgroundColor: color,
           },
