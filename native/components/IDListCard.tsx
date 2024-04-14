@@ -55,9 +55,7 @@ export const IDListCard = ({
       >
         <Typography
           color="lightGrey"
-          variant={
-            name.length > 11 ? (name.length > 22 ? "xsBold" : "sBold") : "lBold"
-          }
+          variant={name.length > 22 ? (name.length > 35 ? "xs" : "s") : "l"}
           numberOfLines={2}
           textProps={{ lineBreakMode: "tail", ellipsizeMode: "tail" }}
           style={styles.textLeft}

@@ -189,10 +189,11 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
       scrollable
     >
       <Typography
+        numberOfLines={2}
         variant={
-          recordName.length > 12
-            ? recordName.length > 28
-              ? "sBold"
+          recordName.length > 40
+            ? recordName.length > 60
+              ? "mBold"
               : "lBold"
             : "xlBold"
         }
