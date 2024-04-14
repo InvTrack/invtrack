@@ -1,5 +1,5 @@
 import debounce from "lodash/debounce";
-import React, { forwardRef } from "react";
+import React from "react";
 import {
   GestureResponderEvent,
   StyleProp,
@@ -35,62 +35,57 @@ const debounceOnPress = (
   return debounce(onPress ?? (() => undefined), 50)(e);
 };
 
-export const DropdownButton = forwardRef(
-  (
-    {
-      onPress,
-      containerStyle,
-      // labelColor, TODO
-      disabled = false,
-      children,
-      isLoading = false,
-    }: ButtonProps,
-    _ref
-  ) => {
-    const styles = useStyles();
-    const isStringChildren = typeof children === "string";
-    return (
-      <TouchableOpacity
-        onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
+export const DropdownButton = ({
+  onPress,
+  containerStyle,
+  // labelColor, TODO
+  disabled = false,
+  children,
+  isLoading = false,
+}: ButtonProps) => {
+  const styles = useStyles();
+  const isStringChildren = typeof children === "string";
+  return (
+    <TouchableOpacity
+      onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
+      style={[
+        {
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: 4,
+          borderRadius: 10,
+        },
+        styles.primary,
+        styles.l,
+        styles.fullWidth,
+        disabled && styles.disabled,
+        containerStyle,
+      ]}
+      disabled={disabled}
+      activeOpacity={0.8}
+    >
+      <View
         style={[
+          styles.buttonBase,
           {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: 4,
-            borderRadius: 10,
+            alignItems: "flex-start",
           },
-          styles.primary,
-          styles.l,
-          styles.fullWidth,
-          disabled && styles.disabled,
-          containerStyle,
         ]}
-        disabled={disabled}
-        activeOpacity={0.8}
       >
-        <View
-          style={[
-            styles.buttonBase,
-            {
-              alignItems: "flex-start",
-            },
-          ]}
-        >
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : isStringChildren ? (
-            <Typography variant="m" style={styles.string}>
-              {children}
-            </Typography>
-          ) : (
-            children
-          )}
-        </View>
-        <ExpandMoreIcon />
-      </TouchableOpacity>
-    );
-  }
-);
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : isStringChildren ? (
+          <Typography variant="m" style={styles.string}>
+            {children}
+          </Typography>
+        ) : (
+          children
+        )}
+      </View>
+      <ExpandMoreIcon />
+    </TouchableOpacity>
+  );
+};
 
 DropdownButton.displayName = "Button";
 
