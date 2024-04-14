@@ -6,9 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { BottomTabNavigatorScreen } from "../../navigation/types";
 import { TabBarDot } from "./TabBarDot";
 import { TabBarTriangleCover } from "./TabBarTriangleCover";
-import { CleanTabBarStyle } from "./TabStyle";
+import { TabBarStyle } from "./TabStyle";
 
-export const CleanTabBar = (props: BottomTabBarProps) => {
+// based on https://github.com/mikalyh/react-navigation-tabbar-collection?tab=MIT-1-ov-file#readme
+
+export const TabBar = (props: BottomTabBarProps) => {
   const theme = useTheme();
   const BACKGROUND_COLOR = theme.colors.mediumBlue;
 
@@ -16,20 +18,20 @@ export const CleanTabBar = (props: BottomTabBarProps) => {
     <SafeAreaView
       edges={["bottom"]}
       style={[
-        CleanTabBarStyle.container,
+        TabBarStyle.container,
         {
           backgroundColor: BACKGROUND_COLOR,
         },
       ]}
     >
-      <View style={CleanTabBarStyle.content}>
-        <CleanTabBarContent {...props} />
+      <View style={TabBarStyle.content}>
+        <TabBarContent {...props} />
       </View>
     </SafeAreaView>
   );
 };
 
-export const CleanTabBarContent = ({
+export const TabBarContent = ({
   state,
   descriptors,
   navigation,
@@ -137,7 +139,7 @@ export const CleanTabBarContent = ({
     });
 
     return (
-      <Animated.View key={index} style={CleanTabBarStyle.item}>
+      <Animated.View key={index} style={TabBarStyle.item}>
         <TouchableOpacity
           accessibilityRole="button"
           accessibilityState={isFocused ? { selected: true } : {}}
@@ -145,11 +147,11 @@ export const CleanTabBarContent = ({
           testID={options.tabBarTestID}
           onPress={onPress}
           onLongPress={onLongPress}
-          style={CleanTabBarStyle.touchableItem}
+          style={TabBarStyle.touchableItem}
         >
           <Animated.View
             style={[
-              CleanTabBarStyle.itemIconLayer,
+              TabBarStyle.itemIconLayer,
               {
                 transform: [
                   { translateY: translateYIcon },
@@ -162,14 +164,14 @@ export const CleanTabBarContent = ({
           </Animated.View>
           <TabBarTriangleCover
             color={BACKGROUND_COLOR}
-            style={CleanTabBarStyle.filterIcon}
+            style={TabBarStyle.filterIcon}
             translateY={translateYFilterIcon}
           />
 
           <Animated.View
             pointerEvents="none"
             style={[
-              CleanTabBarStyle.itemTextLayer,
+              TabBarStyle.itemTextLayer,
               {
                 transform: [
                   { translateY: translateYText },
@@ -181,7 +183,7 @@ export const CleanTabBarContent = ({
             <Text
               numberOfLines={1}
               style={[
-                CleanTabBarStyle.itemText,
+                TabBarStyle.itemText,
                 labelStyle,
                 {
                   color: color,
@@ -193,7 +195,7 @@ export const CleanTabBarContent = ({
           </Animated.View>
           <TabBarTriangleCover
             color={BACKGROUND_COLOR}
-            style={CleanTabBarStyle.filterText}
+            style={TabBarStyle.filterText}
             translateY={-5}
           />
 

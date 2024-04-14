@@ -1,6 +1,8 @@
 import { StyleSheet } from "react-native";
 
-export const CleanTabBarStyle = StyleSheet.create({
+// based on https://github.com/mikalyh/react-navigation-tabbar-collection?tab=MIT-1-ov-file#readme
+
+export const TabBarStyle = StyleSheet.create({
   container: {
     flexDirection: "column",
     alignItems: "center",
