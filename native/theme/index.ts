@@ -1,15 +1,15 @@
 export type ThemeFontSize = typeof fontSize;
 const fontSize = {
-  xl: 40,
-  xlBold: 40,
-  l: 24,
-  lBold: 24,
-  m: 22,
-  mBold: 22,
-  s: 20,
-  sBold: 20,
-  xs: 17,
-  xsBold: 17,
+  xl: 32,
+  xlBold: 32,
+  l: 19,
+  lBold: 19,
+  m: 17,
+  mBold: 17,
+  s: 16,
+  sBold: 16,
+  xs: 14,
+  xsBold: 14,
 } as const;
 
 export type ThemeColors = keyof typeof themeColors;
@@ -52,42 +52,42 @@ export const mainTheme = {
   text: {
     xl: {
       fontSize: fontSize.xl,
-      lineHeight: 37,
+      lineHeight: 34,
       fontFamily: "latoRegular",
     },
     xlBold: {
       fontSize: fontSize.xl,
-      lineHeight: 37,
+      lineHeight: 34,
       fontFamily: "latoBold",
     },
     l: {
       fontSize: fontSize.l,
-      lineHeight: 27,
+      lineHeight: 21,
       fontFamily: "latoRegular",
     },
     lBold: {
       fontSize: fontSize.l,
-      lineHeight: 27,
+      lineHeight: 21,
       fontFamily: "latoBold",
     },
     m: {
       fontSize: fontSize.m,
-      lineHeight: 24,
+      lineHeight: 20,
       fontFamily: "latoRegular",
     },
     mBold: {
       fontSize: fontSize.m,
-      lineHeight: 24,
+      lineHeight: 20,
       fontFamily: "latoBold",
     },
     s: {
       fontSize: fontSize.s,
-      lineHeight: 20,
+      lineHeight: 18,
       fontFamily: "latoRegular",
     },
     sBold: {
       fontSize: fontSize.s,
-      lineHeight: 20,
+      lineHeight: 18,
       fontFamily: "latoBold",
     },
     xs: {

@@ -19,10 +19,12 @@ export const InputBottomSheetContent = ({
   quantity,
   setQuantity,
   closeBottomSheet,
+  shouldAllowFloatAsValue = true,
 }: {
-  quantity: number;
+  quantity: number | null;
   setQuantity: (quantity: number) => void;
   closeBottomSheet: () => void;
+  shouldAllowFloatAsValue?: boolean;
 }) => {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
@@ -38,7 +40,7 @@ export const InputBottomSheetContent = ({
     formState,
   } = useForm<InputBottomSheetForm>({
     defaultValues: {
-      quantity: quantity.toString(),
+      quantity: quantity?.toString(),
     },
     mode: "onChange",
   });
@@ -68,6 +70,7 @@ export const InputBottomSheetContent = ({
         <Button
           type="primary"
           size="xs"
+          labelStyle={styles.buttonLabel}
           containerStyle={styles.button}
           onPress={handleSubmit(onSubmit)}
         >
@@ -90,11 +93,16 @@ export const InputBottomSheetContent = ({
             value: 999999999,
             message: "Maksymalna ilość to 999999999",
           },
-          pattern: {
-            message:
-              "Niepoprawna wartość, tylko liczby, maksymalnie 2 miejsca po przecinku",
-            value: /^[0-9]+([.,][0-9]{1,2})?$/,
-          },
+          pattern: shouldAllowFloatAsValue
+            ? {
+                message:
+                  "Niepoprawna wartość, tylko liczby, maksymalnie 2 miejsca po przecinku",
+                value: /^[0-9]+([.,][0-9]{1,2})?$/,
+              }
+            : {
+                message: "Niepoprawna wartość, tylko liczby całkowite",
+                value: /^[0-9]+$/,
+              },
         }}
         textInputProps={{
           onSubmitEditing: handleSubmit(onSubmit),
@@ -115,7 +123,8 @@ const useStyles = createStyles((theme) =>
       paddingHorizontal: theme.spacing * 2,
     },
     inputLabel: {
-      paddingBottom: theme.spacing,
+      paddingBottom: theme.spacing / 2,
+      alignSelf: "flex-end",
     },
     topRow: {
       flexDirection: "row",
@@ -125,6 +134,9 @@ const useStyles = createStyles((theme) =>
     },
     button: {
       width: "30%",
+    },
+    buttonLabel: {
+      ...theme.text.m,
     },
   })
 );

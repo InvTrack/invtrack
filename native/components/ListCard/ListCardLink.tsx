@@ -46,9 +46,9 @@ export const ListCardLink = ({ title, id, isDelivery }: ListCardAddProps) => {
         variant={
           (title?.length ?? 0) > 22
             ? title?.length ?? 0 > 44
-              ? "xsBold"
-              : "sBold"
-            : "lBold"
+              ? "xs"
+              : "s"
+            : "l"
         }
         numberOfLines={2}
         textProps={{ lineBreakMode: "tail", ellipsizeMode: "tail" }}

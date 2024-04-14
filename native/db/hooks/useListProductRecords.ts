@@ -7,7 +7,7 @@ const listRecords = async (inventoryId: number) => {
     .from("record_view")
     .select()
     .eq("inventory_id", inventoryId)
-    .order("id", { ascending: true });
+    .order("display_order", { ascending: true, nullsFirst: true });
   if (error) throw new Error(error.message);
   return data;
 };

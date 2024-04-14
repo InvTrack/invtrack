@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
       justifyContent: "center",
       alignSelf: "center",
-      marginBottom: theme.spacing * 2,
+      marginTop: theme.spacing * 2.5,
     },
   })
 );

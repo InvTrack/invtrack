@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import {
   GestureResponderEvent,
   StyleProp,
@@ -44,55 +44,50 @@ const debounceOnPress = (
   return (onPress ?? (() => undefined))(e);
 };
 
-export const Button = forwardRef(
-  (
-    {
-      onPress,
-      containerStyle,
-      // labelColor, TODO
-      disabled = false,
-      type,
-      size,
-      shadow = false,
-      fullWidth = false,
-      children,
-      isLoading = false,
-    }: ButtonProps,
-    _ref
-  ) => {
-    const styles = useStyles();
-    const isStringChildren = typeof children === "string";
-    return (
-      <TouchableOpacity
-        onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
-        style={[
-          styles.buttonBase,
-          styles[type],
-          styles[size],
-          disabled && styles.disabled,
-          shadow && styles.shadow,
-          fullWidth && styles.fullWidth,
-          containerStyle,
-        ]}
-        disabled={disabled}
-        activeOpacity={0.8}
-      >
-        {isLoading ? (
-          <LoadingSpinner />
-        ) : isStringChildren ? (
-          <Typography
-            variant={size === "xs" ? "xs" : size === "s" ? "s" : "m"}
-            style={styles.string}
-          >
-            {children}
-          </Typography>
-        ) : (
-          children
-        )}
-      </TouchableOpacity>
-    );
-  }
-);
+export const Button = ({
+  onPress,
+  containerStyle,
+  labelStyle,
+  disabled = false,
+  type,
+  size,
+  shadow = false,
+  fullWidth = false,
+  children,
+  isLoading = false,
+}: ButtonProps) => {
+  const styles = useStyles();
+  const isStringChildren = typeof children === "string";
+  return (
+    <TouchableOpacity
+      onPress={isLoading ? () => {} : (e) => debounceOnPress(e, onPress)}
+      style={[
+        styles.buttonBase,
+        styles[type],
+        styles[size],
+        disabled && styles.disabled,
+        shadow && styles.shadow,
+        fullWidth && styles.fullWidth,
+        containerStyle,
+      ]}
+      disabled={disabled}
+      activeOpacity={0.8}
+    >
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : isStringChildren ? (
+        <Typography
+          variant={size === "xs" ? "xs" : size === "s" ? "s" : "m"}
+          style={[styles.string, labelStyle]}
+        >
+          {children}
+        </Typography>
+      ) : (
+        children
+      )}
+    </TouchableOpacity>
+  );
+};
 
 Button.displayName = "Button";
 
