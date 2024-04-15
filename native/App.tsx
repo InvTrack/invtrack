@@ -90,11 +90,21 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   React.useEffect(() => {
+    // // frequently used for tests
+    // (async () => {
+    //   console.log(
+    //     await AsyncStorage.getAllKeys(),
+    //     await AsyncStorage.getItem("query-cache"),
+    //     await AsyncStorage.clear()
+    //   );
+    // })();
+
     StatusBar.setBarStyle("light-content", true);
     if (isAndroid) {
       StatusBar.setBackgroundColor("#212939");
       return;
     }
+
     queryClient.prefetchQuery({
       queryKey: ["current_company_id"],
       queryFn: getCurrentCompanyId,
