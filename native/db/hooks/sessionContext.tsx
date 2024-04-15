@@ -53,7 +53,7 @@ export const useSession = () => {
     supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       if (session) {
-        return await supabase
+        return supabase
           .from("worker")
           .select("id, company_id")
           .eq("id", session.user.id)
