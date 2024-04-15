@@ -4,7 +4,19 @@ import { documentScannerSliceReducer } from "./documentScannerSlice";
 
 // @ts-expect-error
 const logger = (store) => (next) => (action) => {
-  console.log(`@redux_logger@\n`, JSON.stringify(action, null, 2));
+  console.log(
+    `@redux_logger@\n`,
+    JSON.stringify(
+      action,
+      (_, value) => {
+        if (typeof value === "string") {
+          return value.substring(0, 500);
+        }
+        return value;
+      },
+      2
+    )
+  );
   return next(action);
 };
 
