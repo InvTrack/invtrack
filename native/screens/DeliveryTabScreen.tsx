@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -8,7 +8,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { Collapsible } from "../components/Collapsible/Collapsible";
 import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.types";
-import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { IDListCard } from "../components/IDListCard";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
@@ -19,6 +18,8 @@ import { useListCategorizedProductRecords } from "../db/hooks/useListCategorized
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
 import { DeliveryTabScreenProps } from "../navigation/types";
+import { documentScannerAction } from "../redux/documentScannerSlice";
+import { useAppDispatch } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
 
 export default function DeliveryTabScreen({
@@ -31,7 +32,7 @@ export default function DeliveryTabScreen({
   const inventoryId = route.params?.id;
 
   const { showError, showInfo, showSuccess } = useSnackbar();
-  const { dispatch } = useContext(DocumentScannerContext);
+  const dispatch = useAppDispatch();
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
@@ -53,10 +54,9 @@ export default function DeliveryTabScreen({
   }, [inventoryId, inventoryName, navigation]);
 
   useEffect(() => {
-    dispatch({
-      type: "SET_INVENTORY_ID",
-      payload: { inventory_id: 10 },
-    });
+    dispatch(
+      documentScannerAction.SET_INVENTORY_ID({ inventory_id: +inventoryId })
+    );
   }, [inventoryId]);
 
   useEffect(() => {

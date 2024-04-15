@@ -113,28 +113,26 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
     }, 200);
   }
   return (
-    <Provider store={store}>
-      <SafeAreaProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <BottomSheetProvider>
-            <SessionContext.Provider value={sessionState}>
-              <PersistQueryClientProvider
-                client={queryClient}
-                persistOptions={{
-                  persister: asyncPersist,
-                }}
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <BottomSheetProvider>
+          <SessionContext.Provider value={sessionState}>
+            <PersistQueryClientProvider
+              client={queryClient}
+              persistOptions={{
+                persister: asyncPersist,
+              }}
+            >
+              <ThemeProvider
+                value={colorScheme === "dark" ? mainTheme : mainTheme}
               >
-                <ThemeProvider
-                  value={colorScheme === "dark" ? mainTheme : mainTheme}
-                >
-                  {children}
-                </ThemeProvider>
-              </PersistQueryClientProvider>
-            </SessionContext.Provider>
-          </BottomSheetProvider>
-        </GestureHandlerRootView>
-      </SafeAreaProvider>
-    </Provider>
+                {children}
+              </ThemeProvider>
+            </PersistQueryClientProvider>
+          </SessionContext.Provider>
+        </BottomSheetProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 };
 
@@ -143,9 +141,11 @@ export default function App() {
     <NavigationContainer>
       <ProvideProviders>
         <SnackbarProvider>
-          <SnackbarRenderer />
-          <RootNavigation />
-          <BottomSheet />
+          <Provider store={store}>
+            <SnackbarRenderer />
+            <RootNavigation />
+            <BottomSheet />
+          </Provider>
         </SnackbarProvider>
       </ProvideProviders>
     </NavigationContainer>

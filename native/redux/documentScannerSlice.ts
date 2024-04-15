@@ -8,7 +8,7 @@ interface DocumentScannerSlice {
   isProcessingPhotoData: boolean;
   isCameraReady: boolean | null;
   photo: CameraCapturedPicture | null;
-  ratio: string;
+  ratio: string | null;
   processedInvoice: ScanDocResponse;
   inventory_id: number | null;
 }
@@ -18,7 +18,7 @@ const initialState: DocumentScannerSlice = {
   isPreviewShown: false,
   isCameraReady: null,
   photo: null,
-  ratio: "16:9",
+  ratio: null,
   processedInvoice: null,
   inventory_id: null,
 } as DocumentScannerSlice;
@@ -82,6 +82,8 @@ export const documentScannerSlice = createSlice({
     selectRatio: (state) => state.ratio,
     selectPhoto: (state) => state.photo,
     selectInventoryId: (state) => state.inventory_id,
+    selectProcessedInvoice: (state) => state.processedInvoice,
+    selectUnmatchedAliases: (state) => state.processedInvoice?.unmatchedAliases,
   },
 });
 
