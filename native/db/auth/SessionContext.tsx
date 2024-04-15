@@ -63,7 +63,7 @@ export const useSession = () => {
       // console.log("auth changed", session);
       setSession(session);
       if (session) {
-        return await supabase
+        return supabase
           .from("worker")
           .select("id, company_id")
           .eq("id", session.user.id)
