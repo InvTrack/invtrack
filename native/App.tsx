@@ -34,6 +34,8 @@ import { SnackbarRenderer } from "./components/Snackbar";
 import { SnackbarProvider } from "./components/Snackbar/context";
 import { isAndroid } from "./constants";
 import { getCurrentCompanyId } from "./db/hooks/useGetCurrentCompanyId";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
@@ -111,26 +113,28 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
     }, 200);
   }
   return (
-    <SafeAreaProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetProvider>
-          <SessionContext.Provider value={sessionState}>
-            <PersistQueryClientProvider
-              client={queryClient}
-              persistOptions={{
-                persister: asyncPersist,
-              }}
-            >
-              <ThemeProvider
-                value={colorScheme === "dark" ? mainTheme : mainTheme}
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetProvider>
+            <SessionContext.Provider value={sessionState}>
+              <PersistQueryClientProvider
+                client={queryClient}
+                persistOptions={{
+                  persister: asyncPersist,
+                }}
               >
-                {children}
-              </ThemeProvider>
-            </PersistQueryClientProvider>
-          </SessionContext.Provider>
-        </BottomSheetProvider>
-      </GestureHandlerRootView>
-    </SafeAreaProvider>
+                <ThemeProvider
+                  value={colorScheme === "dark" ? mainTheme : mainTheme}
+                >
+                  {children}
+                </ThemeProvider>
+              </PersistQueryClientProvider>
+            </SessionContext.Provider>
+          </BottomSheetProvider>
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 
