@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useSnackbar } from "../../components/Snackbar/context";
+import { useSnackbar } from "../../components/Snackbar/hooks";
 import {
   documentScannerAction,
   documentScannerSelector,

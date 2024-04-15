@@ -1,6 +1,7 @@
 import { Action, ThunkAction, Tuple, configureStore } from "@reduxjs/toolkit";
 import { counterSliceReducer } from "./counterSlice";
 import { documentScannerSliceReducer } from "./documentScannerSlice";
+import { snackbarSliceReducer } from "./snackbarSlice";
 
 // @ts-expect-error
 const logger = (store) => (next) => (action) => {
@@ -24,6 +25,7 @@ export const store = configureStore({
   reducer: {
     counter: counterSliceReducer,
     documentScanner: documentScannerSliceReducer,
+    snackbar: snackbarSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     new Tuple(logger, ...getDefaultMiddleware()),

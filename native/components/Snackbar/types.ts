@@ -5,13 +5,3 @@ export type SnackbarItem = {
   type: SnackbarType;
   id: number;
 };
-
-export type SnackbarAction =
-  | {
-      type: "SHOW_SNACKBAR";
-      payload: { message: SnackbarMessage; type: SnackbarType };
-    }
-  | {
-      type: "HIDE_SNACKBAR";
-      payload: { id: number };
-    };

@@ -10,7 +10,7 @@ import TextInputController from "../components/TextInputController";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSnackbar } from "../components/Snackbar/context";
+import { useSnackbar } from "../components/Snackbar/hooks";
 import { ToggleController } from "../components/ToggleController";
 import { Typography } from "../components/Typography";
 import { isAndroid } from "../constants";

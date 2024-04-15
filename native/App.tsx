@@ -31,7 +31,6 @@ import { useFonts } from "expo-font";
 import { useAppState } from "./utils/useAppState";
 import * as SplashScreen from "expo-splash-screen";
 import { SnackbarRenderer } from "./components/Snackbar";
-import { SnackbarProvider } from "./components/Snackbar/context";
 import { isAndroid } from "./constants";
 import { getCurrentCompanyId } from "./db/hooks/useGetCurrentCompanyId";
 import { Provider } from "react-redux";
@@ -140,13 +139,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <ProvideProviders>
-        <SnackbarProvider>
-          <Provider store={store}>
-            <SnackbarRenderer />
-            <RootNavigation />
-            <BottomSheet />
-          </Provider>
-        </SnackbarProvider>
+        <Provider store={store}>
+          <SnackbarRenderer />
+          <RootNavigation />
+          <BottomSheet />
+        </Provider>
       </ProvideProviders>
     </NavigationContainer>
   );
