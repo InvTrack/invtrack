@@ -12,7 +12,7 @@ import { IDListCard } from "../components/IDListCard";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
-import { useSnackbar } from "../components/Snackbar/context";
+import { useSnackbar } from "../components/Snackbar/hooks";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
