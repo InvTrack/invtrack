@@ -37,9 +37,12 @@ export const useProcessInvoice = () => {
         },
       };
 
-      const { data, error } = await supabase.functions.invoke("scan-doc", {
-        body: reqBody,
-      });
+      const { data, error } = await supabase.functions.invoke(
+        "process-invoice",
+        {
+          body: reqBody,
+        }
+      );
       if (error) {
         showError("Nie udało się przetworzyć zdjęcia");
         console.log(error);
