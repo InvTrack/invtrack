@@ -1,22 +1,26 @@
-import { useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ScanDocResponse } from "../../db/types";
-import { DocumentScannerContext } from "../DocumentScanner/DocumentScannerContext";
+import { documentScannerSelector } from "../../redux/documentScannerSlice";
+import { useAppSelector } from "../../redux/hooks";
 import { DeliveryForm } from "./deliveryForm.types";
-const getValues = (scanDocResponse: ScanDocResponse) => {
+
+const getValuesForForm = (scanDocResponse: ScanDocResponse) => {
   if (scanDocResponse == null) {
     return undefined;
   }
   return scanDocResponse.form;
 };
+
 export const DeliveryFormContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const { state } = useContext(DocumentScannerContext);
+  const processedInvoice = useAppSelector(
+    documentScannerSelector.selectProcessedInvoice
+  );
   const methods = useForm<DeliveryForm>({
-    values: getValues(state.processedInvoice),
+    values: getValuesForForm(processedInvoice),
     resetOptions: { keepDirtyValues: true },
   });
 

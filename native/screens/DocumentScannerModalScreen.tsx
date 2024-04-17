@@ -1,5 +1,5 @@
 import { Camera } from "expo-camera";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Linking, StyleSheet } from "react-native";
 
 import { Button } from "../components/Button";
@@ -9,11 +9,12 @@ import { Typography } from "../components/Typography";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import isEmpty from "lodash/isEmpty";
 import { DocumentScanner } from "../components/DocumentScanner";
-import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import SafeLayout from "../components/SafeLayout";
 import { HomeStackParamList } from "../navigation/types";
+import { documentScannerSelector } from "../redux/documentScannerSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
 
 export type DocumentScannerModalScreen = NativeStackScreenProps<
@@ -27,10 +28,16 @@ export const DocumentScannerModalScreen = ({
   const styles = useStyles();
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const {
-    dispatch,
-    state: { processedInvoice, photo, inventory_id },
-  } = useContext(DocumentScannerContext);
+
+  const processedInvoice = useAppSelector(
+    documentScannerSelector.selectProcessedInvoice
+  );
+  const photo = useAppSelector(documentScannerSelector.selectPhoto);
+  const inventory_id = useAppSelector(
+    documentScannerSelector.selectInventoryId
+  );
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (photo == null) {

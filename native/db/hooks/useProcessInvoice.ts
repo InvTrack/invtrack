@@ -1,24 +1,20 @@
 import { useMutation } from "@tanstack/react-query";
-import { useContext } from "react";
-import { DocumentScannerContext } from "../../components/DocumentScanner/DocumentScannerContext";
-import { useSnackbar } from "../../components/Snackbar/context";
+import { useSnackbar } from "../../components/Snackbar/hooks";
+import {
+  documentScannerAction,
+  documentScannerSelector,
+} from "../../redux/documentScannerSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { supabase } from "../supabase";
 import { ScanDocResponse } from "../types";
 
 export const useProcessInvoice = () => {
   const { showError } = useSnackbar();
 
-  const documentScannerContext = useContext(DocumentScannerContext);
-  if (!documentScannerContext) {
-    showError("Nie udało się przetworzyć zdjęcia");
-    throw new Error(
-      "useProcessInvoice must be used within a DocumentScannerContext"
-    );
-  }
-  const {
-    dispatch,
-    state: { inventory_id },
-  } = documentScannerContext;
+  const inventory_id = useAppSelector(
+    documentScannerSelector.selectInventoryId
+  );
+  const dispatch = useAppDispatch();
 
   return useMutation(
     async ({
@@ -50,10 +46,11 @@ export const useProcessInvoice = () => {
         return null;
       }
 
-      dispatch({
-        type: "INVOICE_PROCESSING_RESULT",
-        payload: { processedInvoice: data },
-      });
+      dispatch(
+        documentScannerAction.INVOICE_PROCESSING_RESULT({
+          processedInvoice: data,
+        })
+      );
 
       return data as ScanDocResponse;
     }

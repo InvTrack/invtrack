@@ -34,6 +34,18 @@ export const roundFloat = (value: number): number =>
 export const formatAndRoundFloat = (value: string): number =>
   roundFloat(formatFloatString(value));
 
+export const getBestCameraRatio = (ratios: string[]): string => {
+  if (ratios.includes("16:9")) return "16:9";
+
+  const mRatios = ratios.map((ratio) => {
+    const [width, height] = ratio.split(":").map((n) => parseInt(n));
+    return width / height;
+  });
+  const maxRatio = Math.max(...mRatios);
+  const index = mRatios.indexOf(maxRatio);
+  return ratios[index];
+};
+
 export function useThemeBreakpoints() {
   const { breakpoints } = useTheme();
   return {
