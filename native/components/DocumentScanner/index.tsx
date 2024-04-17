@@ -1,21 +1,18 @@
-import { Camera, CameraType, ImageType } from "expo-camera";
+import { Camera as ExpoCamera, ImageType } from "expo-camera";
 
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
 import { appAction, appSelector } from "../../redux/appSlice";
 import {
   documentScannerAction,
   documentScannerSelector,
 } from "../../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { createStyles } from "../../theme/useStyles";
 import { getBestCameraRatio } from "../../utils";
-import { LoadingSpinner } from "../LoadingSpinner";
+import { Camera } from "../Camera";
 import { PhotoPreview } from "./PhotoPreview";
 
 export const DocumentScanner = () => {
-  const styles = useStyles();
-  const cameraRef = useRef<Camera>(null);
+  const cameraRef = useRef<ExpoCamera>(null);
 
   const isPreviewShown = useAppSelector(
     documentScannerSelector.selectIsPreviewShown
@@ -74,43 +71,11 @@ export const DocumentScanner = () => {
   return isPreviewShown ? (
     <PhotoPreview />
   ) : (
-    <>
-      {(!isCameraReady || ratio == null) && <LoadingSpinner size="large" />}
-      <Camera
-        ref={cameraRef}
-        style={[
-          (!isCameraReady || ratio == null) && { display: "none" },
-          styles.camera,
-        ]}
-        type={CameraType.back}
-        // not displayed if null, as specified above
-        ratio={ratio!}
-        onCameraReady={() =>
-          dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: true }))
-        }
-      >
-        <TouchableOpacity
-          onPress={takePicture}
-          style={{
-            alignSelf: "center",
-            width: 70,
-            height: 70,
-            marginBottom: 32,
-            borderRadius: 50,
-            borderWidth: 5,
-            borderColor: "#fff",
-          }}
-        />
-      </Camera>
-    </>
+    <Camera
+      ref={cameraRef}
+      onTakePhoto={takePicture}
+      shouldShowTakePhotoButton
+      shouldShowInfoPageIcon
+    />
   );
 };
-
-const useStyles = createStyles(() =>
-  StyleSheet.create({
-    camera: {
-      flex: 1,
-      justifyContent: "flex-end",
-    },
-  })
-);
