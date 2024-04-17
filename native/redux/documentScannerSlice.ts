@@ -8,7 +8,6 @@ interface DocumentScannerSlice {
   isProcessingPhotoData: boolean;
   isCameraReady: boolean | null;
   photo: CameraCapturedPicture | null;
-  ratio: string | null;
   processedInvoice: ScanDocResponse;
   inventory_id: number | null;
 }
@@ -18,7 +17,6 @@ const initialState: DocumentScannerSlice = {
   isPreviewShown: false,
   isCameraReady: null,
   photo: null,
-  ratio: null,
   processedInvoice: null,
   inventory_id: null,
 } as DocumentScannerSlice;
@@ -31,20 +29,12 @@ export const documentScannerSlice = createSlice({
       ...state,
       isPreviewShown: !state.isPreviewShown,
     }),
-    CAMERA_READY: (state) => ({ ...state, isCameraReady: true }),
-    SET_RATIO: (
-      state,
-      { payload }: PayloadAction<{ ratio: DocumentScannerSlice["ratio"] }>
-    ) => ({
-      ...state,
-      ratio: payload?.ratio || "16:9",
-    }),
     PHOTO_TAKE: (
       state,
       { payload }: PayloadAction<{ photo: DocumentScannerSlice["photo"] }>
     ) => ({
       ...state,
-      photo: payload?.photo || null,
+      photo: payload.photo || null,
     }),
     PHOTO_RETAKE: (state) => ({
       ...state,
@@ -77,9 +67,7 @@ export const documentScannerSlice = createSlice({
   },
   selectors: {
     selectIsPreviewShown: (state) => state.isPreviewShown,
-    selectIsCameraReady: (state) => state.isCameraReady,
     selectIsProcessingPhotoData: (state) => state.isProcessingPhotoData,
-    selectRatio: (state) => state.ratio,
     selectPhoto: (state) => state.photo,
     selectInventoryId: (state) => state.inventory_id,
     selectProcessedInvoice: (state) => state.processedInvoice,

@@ -2,26 +2,16 @@ import { Camera, CameraType, ImageType } from "expo-camera";
 
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { appAction, appSelector } from "../../redux/appSlice";
 import {
   documentScannerAction,
   documentScannerSelector,
 } from "../../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createStyles } from "../../theme/useStyles";
+import { getBestCameraRatio } from "../../utils";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { PhotoPreview } from "./PhotoPreview";
-
-const getBestRatio = (ratios: string[]) => {
-  if (ratios.includes("16:9")) return "16:9";
-
-  const mRatios = ratios.map((ratio) => {
-    const [width, height] = ratio.split(":").map((n) => parseInt(n));
-    return width / height;
-  });
-  const maxRatio = Math.max(...mRatios);
-  const index = mRatios.indexOf(maxRatio);
-  return ratios[index];
-};
 
 export const DocumentScanner = () => {
   const styles = useStyles();
@@ -30,15 +20,19 @@ export const DocumentScanner = () => {
   const isPreviewShown = useAppSelector(
     documentScannerSelector.selectIsPreviewShown
   );
-  const isCameraReady = useAppSelector(
-    documentScannerSelector.selectIsCameraReady
-  );
+  const isCameraReady = useAppSelector(appSelector.selectIsCameraReady);
   const isProcessingPhotoData = useAppSelector(
     documentScannerSelector.selectIsProcessingPhotoData
   );
-  const ratio = useAppSelector(documentScannerSelector.selectRatio);
+  const ratio = useAppSelector(appSelector.selectCameraRatio);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: false }));
+    };
+  }, []);
 
   useEffect(() => {
     if (ratio || !isCameraReady) {
@@ -51,15 +45,15 @@ export const DocumentScanner = () => {
       }
       try {
         const ratios = await cameraRef.current?.getSupportedRatiosAsync();
-        const ratio = getBestRatio(ratios);
-        dispatch(documentScannerAction.SET_RATIO({ ratio }));
+        const ratio = getBestCameraRatio(ratios);
+        dispatch(appAction.SET_CAMERA_RATIO({ cameraRatio: ratio }));
       } catch (error) {
         console.log(error);
       }
     };
 
     getCameraRatio();
-  }, [isCameraReady, cameraRef, dispatch]);
+  }, [isCameraReady, ratio, cameraRef, dispatch]);
 
   const takePicture = async () => {
     if (!cameraRef.current || isProcessingPhotoData) return;
@@ -91,7 +85,9 @@ export const DocumentScanner = () => {
         type={CameraType.back}
         // not displayed if null, as specified above
         ratio={ratio!}
-        onCameraReady={() => dispatch(documentScannerAction.CAMERA_READY())}
+        onCameraReady={() =>
+          dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: true }))
+        }
       >
         <TouchableOpacity
           onPress={takePicture}

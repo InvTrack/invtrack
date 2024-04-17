@@ -1,4 +1,5 @@
 import { Action, ThunkAction, Tuple, configureStore } from "@reduxjs/toolkit";
+import { appSliceReducer } from "./appSlice";
 import { counterSliceReducer } from "./counterSlice";
 import { documentScannerSliceReducer } from "./documentScannerSlice";
 import { snackbarSliceReducer } from "./snackbarSlice";
@@ -23,6 +24,7 @@ const logger = (store) => (next) => (action) => {
 
 export const store = configureStore({
   reducer: {
+    app: appSliceReducer,
     counter: counterSliceReducer,
     documentScanner: documentScannerSliceReducer,
     snackbar: snackbarSliceReducer,
