@@ -11,8 +11,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { createStyles } from "../../theme/useStyles";
 
+import { snackbarAction } from "../../redux/snackbarSlice";
 import { Typography } from "../Typography";
-import { useSnackbar } from "./context";
+import { useSnackbar } from "./hooks";
 import { SnackbarItem } from "./types";
 
 const ANIMATION_DURATION = 500;
@@ -41,7 +42,7 @@ const Snackbar = ({ item }: SnackbarProps) => {
 
   const onHide = () => {
     clearTimeout(timeout.current);
-    dispatch({ type: "HIDE_SNACKBAR", payload: { id } });
+    dispatch(snackbarAction.HIDE_SNACKBAR({ id }));
   };
 
   const gestureHandler = Gesture.Pan()
@@ -105,7 +106,6 @@ const Snackbar = ({ item }: SnackbarProps) => {
 
 export const SnackbarRenderer = () => {
   const { state: items } = useSnackbar();
-  //TODO: add a logger entry here
   return items
     .slice(0, 1)
     .map((item) => <Snackbar item={item} key={item.id} />);

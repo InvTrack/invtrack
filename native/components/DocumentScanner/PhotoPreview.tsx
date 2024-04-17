@@ -1,17 +1,23 @@
 import { useNetInfo } from "@react-native-community/netinfo";
-import { useContext } from "react";
 import { ImageBackground } from "react-native";
 import { useProcessInvoice } from "../../db/hooks/useProcessInvoice";
+import {
+  documentScannerAction,
+  documentScannerSelector,
+} from "../../redux/documentScannerSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Button } from "../Button";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { DocumentScannerContext } from "./DocumentScannerContext";
 
 export const PhotoPreview = () => {
   const { isConnected } = useNetInfo();
-  const {
-    dispatch,
-    state: { photo, inventory_id },
-  } = useContext(DocumentScannerContext);
+
+  const photo = useAppSelector(documentScannerSelector.selectPhoto);
+  const inventory_id = useAppSelector(
+    documentScannerSelector.selectInventoryId
+  );
+
+  const dispatch = useAppDispatch();
 
   const { mutate, isLoading, data: _data } = useProcessInvoice();
 
@@ -36,7 +42,9 @@ export const PhotoPreview = () => {
           <Button
             disabled={!isConnected || isLoading}
             onPress={
-              isLoading ? () => null : () => dispatch({ type: "PHOTO_RETAKE" })
+              isLoading
+                ? () => null
+                : () => dispatch(documentScannerAction.PHOTO_RETAKE())
             }
             size="s"
             type="primary"

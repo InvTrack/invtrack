@@ -14,7 +14,7 @@ import isEmpty from "lodash/isEmpty";
 import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { RecipeCard } from "../components/RecipeCard";
-import { useSnackbar } from "../components/Snackbar/context";
+import { useSnackbar } from "../components/Snackbar/hooks";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListRecipes } from "../db/hooks/useListRecipes";

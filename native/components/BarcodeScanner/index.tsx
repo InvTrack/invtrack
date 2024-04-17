@@ -1,37 +1,23 @@
-import { BarCodeScanningResult, Camera, CameraType, Point } from "expo-camera";
+import {
+  AutoFocus,
+  BarCodeScanningResult,
+  Camera,
+  CameraType,
+} from "expo-camera";
 
 import { useNavigation } from "@react-navigation/native";
-import React, { useRef, useState } from "react";
-import {
-  Alert,
-  Animated,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { useListBarcodes } from "../../db/hooks/useListBarcodes";
 
+import { appAction, appSelector } from "../../redux/appSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
+import { getBestCameraRatio } from "../../utils";
 import { CameraSwitchIcon } from "../Icon";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { BarcodeOutline } from "./BarcodeOutline";
-
-const setCornerXY =
-  (animatedX: Animated.Value, animatedY: Animated.Value) => (value: Point) =>
-    Animated.parallel([
-      Animated.timing(animatedX, {
-        toValue: value.x,
-        duration: 50,
-        useNativeDriver: true,
-      }),
-      Animated.timing(animatedY, {
-        toValue: value.y,
-        duration: 50,
-        useNativeDriver: true,
-      }),
-    ]).start();
 
 export const BarcodeScanner = ({
   inventoryId,
@@ -43,48 +29,59 @@ export const BarcodeScanner = ({
   const styles = useStyles();
   const navigation = useNavigation<BarcodeModalScreenProps["navigation"]>();
 
-  const [type, setType] = useState(CameraType.back);
-  const animatedTLCornerX = useRef(new Animated.Value(0));
-  const animatedTLCornerY = useRef(new Animated.Value(0));
-  const animatedBLCornerX = useRef(new Animated.Value(0));
-  const animatedBLCornerY = useRef(new Animated.Value(0));
-  const animatedBRCornerX = useRef(new Animated.Value(0));
-  const animatedBRCornerY = useRef(new Animated.Value(0));
-  const animatedTRCornerX = useRef(new Animated.Value(0));
-  const animatedTRCornerY = useRef(new Animated.Value(0));
+  const isCameraReady = useAppSelector(appSelector.selectIsCameraReady);
+  const ratio = useAppSelector(appSelector.selectCameraRatio);
+  const dispatch = useAppDispatch();
+
+  const cameraRef = useRef<Camera>(null);
   const [alertShown, setAlertShown] = useState(false);
+  const [type, setType] = useState(CameraType.back);
   const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
+
+  // workaround to trigger refocuses on ios
+  const [_, setAutoFocus] = useState(AutoFocus.on);
+  const timeout = setTimeout(() => setAutoFocus(AutoFocus.on), 50);
+  const updateCameraFocus = () => setAutoFocus(() => AutoFocus.off);
+  useEffect(() => {
+    return () => clearTimeout(timeout);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: false }));
+    };
+  }, []);
+
+  useEffect(() => {
+    if (ratio || !isCameraReady) {
+      return;
+    }
+
+    const getCameraRatio = async () => {
+      if (!cameraRef?.current) {
+        return;
+      }
+      try {
+        const ratios = await cameraRef.current?.getSupportedRatiosAsync();
+        const ratio = getBestCameraRatio(ratios);
+        dispatch(appAction.SET_CAMERA_RATIO({ cameraRatio: ratio }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getCameraRatio();
+  }, [isCameraReady, ratio, cameraRef, dispatch]);
 
   const toggleCameraType = () => {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
   };
+
   const doubleTap = Gesture.Tap().numberOfTaps(2).onStart(toggleCameraType);
-
-  const setTLCornerAnimation = setCornerXY(
-    animatedTLCornerX.current,
-    animatedTLCornerY.current
-  );
-  const setBLCornerAnimation = setCornerXY(
-    animatedBLCornerX.current,
-    animatedBLCornerY.current
-  );
-  const setBRCornerAnimation = setCornerXY(
-    animatedBRCornerX.current,
-    animatedBRCornerY.current
-  );
-  const setTRCornerAnimation = setCornerXY(
-    animatedTRCornerX.current,
-    animatedTRCornerY.current
-  );
-
-  const setCorners = (corners: Point[]) => {
-    setTLCornerAnimation(corners[0]);
-    setBLCornerAnimation(corners[1]);
-    setBRCornerAnimation(corners[2]);
-    setTRCornerAnimation(corners[3]);
-  };
+  const singleTap = Gesture.Tap().onStart(updateCameraFocus);
+  const composedGestures = Gesture.Exclusive(doubleTap, singleTap);
 
   if (isLoading && !barcodeList) {
     return (
@@ -95,8 +92,7 @@ export const BarcodeScanner = ({
   }
 
   const handleBarcodeScan = (event: BarCodeScanningResult) => {
-    const { cornerPoints, data } = event;
-    setCorners(cornerPoints);
+    const { data } = event;
     const barcodeMappedToId = barcodeList?.[data];
     if (!barcodeMappedToId) {
       !alertShown &&
@@ -134,28 +130,39 @@ export const BarcodeScanner = ({
   };
 
   return (
-    <GestureDetector gesture={doubleTap}>
-      <Camera
-        style={styles.camera}
-        type={type}
-        onBarCodeScanned={handleBarcodeScan}
-      >
-        <BarcodeOutline
-          animatedTLCornerX={animatedTLCornerX}
-          animatedTLCornerY={animatedTLCornerY}
-          animatedBLCornerX={animatedBLCornerX}
-          animatedBLCornerY={animatedBLCornerY}
-          animatedBRCornerX={animatedBRCornerX}
-          animatedBRCornerY={animatedBRCornerY}
-          animatedTRCornerX={animatedTRCornerX}
-          animatedTRCornerY={animatedTRCornerY}
-        />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <CameraSwitchIcon size={32} color="highlight" />
-          </TouchableOpacity>
-        </View>
-      </Camera>
+    <GestureDetector gesture={composedGestures}>
+      <View style={styles.container}>
+        {(!isCameraReady || ratio == null) && <LoadingSpinner size="large" />}
+        <Camera
+          ref={cameraRef}
+          style={[
+            (!isCameraReady || ratio == null) && { display: "none" },
+            styles.camera,
+          ]}
+          // not displayed if null, as specified above
+          ratio={ratio!}
+          onCameraReady={() =>
+            dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: true }))
+          }
+          type={type}
+          onBarCodeScanned={handleBarcodeScan}
+        >
+          <View style={styles.cameraFloatersContainer}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={toggleCameraType}
+              >
+                <CameraSwitchIcon size={32} color="highlight" />
+              </TouchableOpacity>
+            </View>
+            <Image
+              style={styles.overlay}
+              source={require("../../assets/images/barcode-scanner-overlay.png")}
+            />
+          </View>
+        </Camera>
+      </View>
     </GestureDetector>
   );
 };
@@ -172,12 +179,10 @@ const useStyles = createStyles((theme) =>
       flex: 1,
     },
     buttonContainer: {
-      flexDirection: "row",
+      position: "absolute",
+      top: 32,
+      right: 16,
       backgroundColor: "transparent",
-      marginTop: 32,
-      marginRight: 16,
-      justifyContent: "flex-end",
-      alignItems: "flex-start",
     },
     button: {
       width: 64,
@@ -195,5 +200,10 @@ const useStyles = createStyles((theme) =>
     paddingH: {
       paddingHorizontal: theme.spacing,
     },
+    cameraFloatersContainer: {
+      flex: 1,
+      justifyContent: "center",
+    },
+    overlay: { alignSelf: "center", width: 250, height: 250 },
   })
 );

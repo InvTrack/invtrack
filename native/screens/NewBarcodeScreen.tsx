@@ -9,7 +9,7 @@ import { useListProductRecords } from "../db";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSnackbar } from "../components/Snackbar/context";
+import { useSnackbar } from "../components/Snackbar/hooks";
 import { useInsertBarcode } from "../db/hooks/useUpdateBarcode";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
