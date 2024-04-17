@@ -1,5 +1,34 @@
 # invtrack mobile app README
 
+## Setup
+
+- make sure to use the node version specified in .nvmrc,
+
+- run `npm i`,
+
+- if running on Windows, make sure to disable autocrlf wizardry, prettier takes care of that `git config --global core.autocrlf false`.
+
+## Usage
+
+- run `npm start`, then choose your desired option from the CLI. Make sure your machine is connected to the same network as the device you want to run the development app on.
+
+## Environment
+
+- everything regarding envs for local/build/update is defined in `config/env.js` and `app.config.js`
+- be sure to remove any `.env` files you may have before performing an `expo-update`
+
+## Conventions
+
+- when you encounter confilcts in package-lock.json, accept the upstream branch version, resolve conflicts in package.json and run `npm i`,
+
+- explicitly define return type of util/global/exported functions,
+
+- where possible, use our own components instead of direct react-native imports,
+
+## Troubleshooting
+
+- if you encounter infite loading after logging in, it helped to clear the AsyncStorage. Check out `App.tsx` for a commented snippet
+
 ## Release
 
 #### Format: major.minor.fix
@@ -21,28 +50,3 @@ Use `npm version minor --git-tag-version=false` to bump the package/package-lock
 - #### If releasing a minor version
 
 Due to how we have the update check set up right now, we need to schedule updates in App Store Connect/Play Console, and deploy the updated `utilities` edge function accordingly. This is very clunky and will be done properly using `react-native-check-version` in the future.
-
-## Environment
-
-- everything regarding envs for local/build/update is defined in `config/env.js` and `app.config.js`
-- be sure to remove any `.env` files you may have before performing an `expo-update`
-
-## Conventions
-
-- when you encounter confilcts in package-lock.json, accept the upstream branch version, resolve conflicts in package.json and run `npm i`,
-
-- explicitly define return type of util/global/exported functions,
-
-- where possible, use our own components instead of direct react-native imports,
-
-## Setup
-
-- make sure to use the node version specified in .nvmrc,
-
-- run `npm i`,
-
-- if running on Windows, make sure to disable autocrlf wizardry, prettier takes care of that `git config --global core.autocrlf false`.
-
-## Usage
-
-- run `npm start`, then choose your desired option from the CLI. Make sure your machine is connected to the same network as the device you want to run the development app on.
