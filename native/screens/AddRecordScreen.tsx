@@ -10,7 +10,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { isEmpty } from "lodash";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
-import { useSnackbar } from "../components/Snackbar/context";
+import { useSnackbar } from "../components/Snackbar/hooks";
 import { useCreateProductRecords } from "../db/hooks/useCreateProductRecords";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListMissingProducts } from "../db/hooks/useListMissingProducts";

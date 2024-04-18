@@ -31,9 +31,10 @@ import { useFonts } from "expo-font";
 import { useAppState } from "./utils/useAppState";
 import * as SplashScreen from "expo-splash-screen";
 import { SnackbarRenderer } from "./components/Snackbar";
-import { SnackbarProvider } from "./components/Snackbar/context";
 import { isAndroid } from "./constants";
 import { getCurrentCompanyId } from "./db/hooks/useGetCurrentCompanyId";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
 SplashScreen.preventAutoHideAsync();
@@ -89,11 +90,21 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   React.useEffect(() => {
+    // // frequently used for tests
+    // (async () => {
+    //   console.log(
+    //     await AsyncStorage.getAllKeys(),
+    //     await AsyncStorage.getItem("query-cache"),
+    //     await AsyncStorage.clear()
+    //   );
+    // })();
+
     StatusBar.setBarStyle("light-content", true);
     if (isAndroid) {
       StatusBar.setBackgroundColor("#212939");
       return;
     }
+
     queryClient.prefetchQuery({
       queryKey: ["current_company_id"],
       queryFn: getCurrentCompanyId,
@@ -138,11 +149,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <ProvideProviders>
-        <SnackbarProvider>
+        <Provider store={store}>
           <SnackbarRenderer />
           <RootNavigation />
           <BottomSheet />
-        </SnackbarProvider>
+        </Provider>
       </ProvideProviders>
     </NavigationContainer>
   );

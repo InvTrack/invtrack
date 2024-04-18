@@ -1,13 +1,12 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { UseFormGetValues, UseFormSetValue, useForm } from "react-hook-form";
 import { StyleSheet } from "react-native";
 import { Badge } from "../components/Badge";
 import { useBottomSheet } from "../components/BottomSheet";
 import { ProductListBottomSheetContent } from "../components/BottomSheet/contents/ProductList";
 import { Button } from "../components/Button";
-import { DocumentScannerContext } from "../components/DocumentScanner/DocumentScannerContext";
 import { DropdownButton } from "../components/DropdownButton";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import SafeLayout from "../components/SafeLayout";
@@ -15,6 +14,8 @@ import { Typography } from "../components/Typography";
 import { useCreateProductNameAlias } from "../db/hooks/useCreateProductNameAlias";
 import { useListExistingProducts } from "../db/hooks/useListProducts";
 import { IdentifyAliasesScreenProps } from "../navigation/types";
+import { documentScannerSelector } from "../redux/documentScannerSlice";
+import { useAppSelector } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
 
 export type AliasForm = (
@@ -46,10 +47,11 @@ export const IdentifyAliasesScreen = ({
   const styles = useStyles();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
-  const { state } = useContext(DocumentScannerContext);
   const { data: products } = useListExistingProducts();
   const { mutate, isSuccess } = useCreateProductNameAlias();
-  const aliases = state.processedInvoice?.unmatchedAliases;
+  const aliases = useAppSelector(
+    documentScannerSelector.selectUnmatchedAliases
+  );
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
     defaultValues: async () =>

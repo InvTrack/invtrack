@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import isEmpty from "lodash/isEmpty";
-import { useSnackbar } from "../../components/Snackbar/context";
+import { useSnackbar } from "../../components/Snackbar/hooks";
 import { AliasForm } from "../../screens/IdentifyAliasesScreen";
 import { supabase } from "../supabase";
 import { ProductNameAliasInsert, ProductNameAliasTable } from "../types";

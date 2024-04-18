@@ -1,34 +1,41 @@
 import { Camera, CameraType, ImageType } from "expo-camera";
 
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import { appAction, appSelector } from "../../redux/appSlice";
+import {
+  documentScannerAction,
+  documentScannerSelector,
+} from "../../redux/documentScannerSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createStyles } from "../../theme/useStyles";
+import { getBestCameraRatio } from "../../utils";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { DocumentScannerContext } from "./DocumentScannerContext";
 import { PhotoPreview } from "./PhotoPreview";
-
-const getBestRatio = (ratios: string[]) => {
-  if (ratios.includes("16:9")) return "16:9";
-
-  const mRatios = ratios.map((ratio) => {
-    const [width, height] = ratio.split(":").map((n) => parseInt(n));
-    return width / height;
-  });
-  const maxRatio = Math.max(...mRatios);
-  const index = mRatios.indexOf(maxRatio);
-  return ratios[index];
-};
 
 export const DocumentScanner = () => {
   const styles = useStyles();
   const cameraRef = useRef<Camera>(null);
-  const {
-    dispatch,
-    state: { isPreviewShown, isCameraReady, isProcessingPhotoData, ratio },
-  } = useContext(DocumentScannerContext);
+
+  const isPreviewShown = useAppSelector(
+    documentScannerSelector.selectIsPreviewShown
+  );
+  const isCameraReady = useAppSelector(appSelector.selectIsCameraReady);
+  const isProcessingPhotoData = useAppSelector(
+    documentScannerSelector.selectIsProcessingPhotoData
+  );
+  const ratio = useAppSelector(appSelector.selectCameraRatio);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isCameraReady) {
+    return () => {
+      dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: false }));
+    };
+  }, []);
+
+  useEffect(() => {
+    if (ratio || !isCameraReady) {
       return;
     }
 
@@ -38,32 +45,29 @@ export const DocumentScanner = () => {
       }
       try {
         const ratios = await cameraRef.current?.getSupportedRatiosAsync();
-        const ratio = getBestRatio(ratios);
-        dispatch({
-          type: "SET_RATIO",
-          payload: { ratio },
-        });
+        const ratio = getBestCameraRatio(ratios);
+        dispatch(appAction.SET_CAMERA_RATIO({ cameraRatio: ratio }));
       } catch (error) {
         console.log(error);
       }
     };
 
     getCameraRatio();
-  }, [isCameraReady, cameraRef, dispatch]);
+  }, [isCameraReady, ratio, cameraRef, dispatch]);
 
   const takePicture = async () => {
     if (!cameraRef.current || isProcessingPhotoData) return;
 
-    dispatch({ type: "PHOTO_START" });
+    dispatch(documentScannerAction.PHOTO_START());
     const photo = await cameraRef.current.takePictureAsync({
       exif: false,
       base64: true,
       quality: 0.8,
       imageType: ImageType.jpg,
     });
-    dispatch({ type: "PHOTO_TAKE", payload: { photo } });
-    dispatch({ type: "SWITCH_PREVIEW" });
-    dispatch({ type: "PHOTO_END" });
+    dispatch(documentScannerAction.PHOTO_TAKE({ photo }));
+    dispatch(documentScannerAction.SWITCH_PREVIEW());
+    dispatch(documentScannerAction.PHOTO_END());
     return;
   };
 
@@ -71,13 +75,19 @@ export const DocumentScanner = () => {
     <PhotoPreview />
   ) : (
     <>
-      {!isCameraReady && <LoadingSpinner size="large" />}
+      {(!isCameraReady || ratio == null) && <LoadingSpinner size="large" />}
       <Camera
         ref={cameraRef}
-        style={[!isCameraReady && { display: "none" }, styles.camera]}
+        style={[
+          (!isCameraReady || ratio == null) && { display: "none" },
+          styles.camera,
+        ]}
         type={CameraType.back}
-        ratio={ratio}
-        onCameraReady={() => dispatch({ type: "CAMERA_READY" })}
+        // not displayed if null, as specified above
+        ratio={ratio!}
+        onCameraReady={() =>
+          dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: true }))
+        }
       >
         <TouchableOpacity
           onPress={takePicture}
