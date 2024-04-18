@@ -45,7 +45,7 @@ const askToOpenInfoPage = () => {
       {
         text: "Przejdź",
         onPress: () => {
-          Linking.openURL("https://invtrack.app/");
+          Linking.openURL("https://invtrack.app/jak-dobrze-wykonywac-skany");
         },
       },
     ]
