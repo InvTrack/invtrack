@@ -4,7 +4,6 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { isIos } from "../constants";
 import { HeaderRight } from "./HeaderRight";
 import { ArrowRightIcon, PlusIcon } from "./Icon";
 
@@ -39,7 +38,7 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
 
   if (route.name === "BarcodeModal") {
     return (
-      <HeaderWrapper omitInsets={isIos}>
+      <HeaderWrapper>
         <View />
         <PlusIcon
           onPress={navigation.goBack}
@@ -54,7 +53,7 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
   }
   if (route.name === "DocumentScannerModal") {
     return (
-      <HeaderWrapper omitInsets={isIos}>
+      <HeaderWrapper>
         <View />
         <PlusIcon
           onPress={navigation.goBack}

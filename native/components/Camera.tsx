@@ -17,6 +17,7 @@ import {
 } from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { isIos } from "../constants";
 import { appAction, appSelector } from "../redux/appSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
@@ -72,9 +73,11 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
     const [type, setType] = useState(CameraType.back);
 
     // workaround to trigger refocuses on ios
-    const [_, setAutoFocus] = useState(AutoFocus.on);
+    const [autoFocus, setAutoFocus] = useState(AutoFocus.on);
     const timeout = setTimeout(() => setAutoFocus(AutoFocus.on), 50);
-    const updateCameraFocus = () => setAutoFocus(() => AutoFocus.off);
+    const updateCameraFocus = () => {
+      setAutoFocus(() => AutoFocus.off);
+    };
 
     useEffect(() => {
       return () => clearTimeout(timeout);
@@ -87,10 +90,10 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
     }, []);
 
     useEffect(() => {
-      if (ratio || !isCameraReady) {
+      // ratio needed on android only
+      if (ratio || !isCameraReady || isIos) {
         return;
       }
-
       const getCameraRatio = async () => {
         if (!(cameraRef as RefObject<ExpoCamera>).current) {
           return;
@@ -119,17 +122,21 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
     const singleTap = Gesture.Tap().onStart(updateCameraFocus);
 
     const composedGestures = shouldAllowCameraToggle
-      ? singleTap
-      : Gesture.Exclusive(doubleTap, singleTap);
+      ? Gesture.Exclusive(doubleTap, singleTap)
+      : singleTap;
 
     return (
       <GestureDetector gesture={composedGestures}>
         <View style={styles.container}>
-          {(!isCameraReady || ratio == null) && <LoadingSpinner size="large" />}
+          {(isIos ? !isCameraReady : !isCameraReady || ratio == null) && (
+            <LoadingSpinner size="large" />
+          )}
           <ExpoCamera
             ref={cameraRef}
             style={[
-              (!isCameraReady || ratio == null) && { display: "none" },
+              (isIos ? !isCameraReady : !isCameraReady || ratio == null) && {
+                display: "none",
+              },
               styles.camera,
             ]}
             // not displayed if null, as specified above
@@ -139,10 +146,9 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
             }
             type={type}
             onBarCodeScanned={onBarCodeScanned}
+            autoFocus={autoFocus}
           >
             {shouldShowInfoPageIcon || shouldAllowCameraToggle ? (
-              <></>
-            ) : (
               <View style={styles.cameraFloatersContainer}>
                 <View style={styles.buttonsBarContainer}>
                   {shouldShowInfoPageIcon && (
@@ -168,6 +174,8 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
                   />
                 )}
               </View>
+            ) : (
+              <></>
             )}
             {shouldShowTakePhotoButton && (
               <TouchableOpacity

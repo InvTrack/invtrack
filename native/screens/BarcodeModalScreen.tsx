@@ -99,7 +99,7 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
   }
 
   return (
-    <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
+    <SafeAreaView edges={["left", "right"]} style={styles.container}>
       <BarcodeScanner inventoryId={+inventoryId} navigateTo={navigateTo} />
     </SafeAreaView>
   );
