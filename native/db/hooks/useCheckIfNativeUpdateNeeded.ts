@@ -4,13 +4,13 @@ import { EnvConfig } from "../../config/env";
 import { supabase } from "../supabase";
 
 const checkIfNativeUpdateNeeded = async (): Promise<boolean> => {
-  const res = await supabase.functions.invoke("utilities", {
-    body: JSON.stringify({ function: "getAppVersion" }),
-  });
-
   if (EnvConfig.isDevEnv) {
     return false;
   }
+
+  const res = await supabase.functions.invoke("utilities", {
+    body: JSON.stringify({ function: "getAppVersion" }),
+  });
 
   if (res.error) {
     console.error(res.error);
