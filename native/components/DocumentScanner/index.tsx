@@ -7,9 +7,14 @@ import {
 } from "../../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Camera } from "../Camera";
-import { PhotoPreview } from "./PhotoPreview";
+import { InvoicePhotoPreview } from "./InvoicePhotoPreview";
+import { SalesRaportPhotoPreview } from "./SalesRaportPhotoPreview";
 
-export const DocumentScanner = () => {
+export const DocumentScanner = ({
+  isScanningSalesRaport,
+}: {
+  isScanningSalesRaport: boolean;
+}) => {
   const cameraRef = useRef<ExpoCamera>(null);
 
   const isPreviewShown = useAppSelector(
@@ -36,9 +41,14 @@ export const DocumentScanner = () => {
     return;
   };
 
-  return isPreviewShown ? (
-    <PhotoPreview />
-  ) : (
+  if (isPreviewShown && isScanningSalesRaport) {
+    return <SalesRaportPhotoPreview />;
+  }
+  if (isPreviewShown && !isScanningSalesRaport) {
+    return <InvoicePhotoPreview />;
+  }
+
+  return (
     <Camera
       ref={cameraRef}
       onTakePhoto={takePicture}
