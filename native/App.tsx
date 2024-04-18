@@ -32,7 +32,6 @@ import { useAppState } from "./utils/useAppState";
 import * as SplashScreen from "expo-splash-screen";
 import { SnackbarRenderer } from "./components/Snackbar";
 import { isAndroid } from "./constants";
-import { getCurrentCompanyId } from "./db/hooks/useGetCurrentCompanyId";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
@@ -104,13 +103,6 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
       StatusBar.setBackgroundColor("#212939");
       return;
     }
-
-    queryClient.prefetchQuery({
-      queryKey: ["current_company_id"],
-      queryFn: getCurrentCompanyId,
-      staleTime: ONE_SECOND * 60 * 60,
-      cacheTime: ONE_SECOND * 60 * 30,
-    });
   }, []);
 
   if (!fontsLoaded || sessionState.loading) {
