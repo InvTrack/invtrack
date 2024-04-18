@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { IDListCard } from "../components/IDListCard";
-import { ScanBarcodeIcon } from "../components/Icon";
+import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
 import { InventoryForm } from "../components/InventoryFormContext/inventoryForm.types";
 import { Skeleton } from "../components/Skeleton";
 
@@ -104,6 +104,19 @@ export default function InventoryTabScreen({
         ListHeaderComponent={
           <ScrollView style={styles.scroll}>
             <View style={styles.doubleButtonContainer}>
+              <Button
+                containerStyle={styles.barcodeIconContainer}
+                size="l"
+                type="primary"
+                onPress={() => {
+                  // necessary hack, handled by parent navigator - be cautious
+                  navigation.navigate("DocumentScannerModal" as any, {
+                    isScanningSalesRaport: true,
+                  });
+                }}
+              >
+                <DocumentScannerIcon size={34} color="lightGrey" />
+              </Button>
               <Button
                 containerStyle={styles.saveButtonContainer}
                 size="xl"

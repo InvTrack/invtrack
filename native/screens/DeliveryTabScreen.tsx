@@ -117,7 +117,9 @@ export default function DeliveryTabScreen({
                 type="primary"
                 onPress={() => {
                   // necessary hack, handled by parent navigator - be cautious
-                  navigation.navigate("DocumentScannerModal" as any);
+                  navigation.navigate("DocumentScannerModal" as any, {
+                    isScanningSalesRaport: false,
+                  });
                 }}
               >
                 <DocumentScannerIcon size={34} color="lightGrey" />

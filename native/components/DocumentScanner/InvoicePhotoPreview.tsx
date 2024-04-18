@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Button } from "../Button";
 import { LoadingSpinner } from "../LoadingSpinner";
 
-export const PhotoPreview = () => {
+export const InvoicePhotoPreview = () => {
   const { isConnected } = useNetInfo();
 
   const photo = useAppSelector(documentScannerSelector.selectPhoto);

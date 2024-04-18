@@ -24,6 +24,7 @@ export type DocumentScannerModalScreen = NativeStackScreenProps<
 
 export const DocumentScannerModalScreen = ({
   navigation,
+  route,
 }: DocumentScannerModalScreen) => {
   const styles = useStyles();
 
@@ -129,7 +130,9 @@ export const DocumentScannerModalScreen = ({
 
   return (
     <SafeLayout style={styles.container}>
-      <DocumentScanner />
+      <DocumentScanner
+        isScanningSalesRaport={route.params.isScanningSalesRaport}
+      />
     </SafeLayout>
   );
 };
