@@ -132,7 +132,7 @@ export const RecipeCard = ({
 
         const dMultiplied = roundFloat(delta * ram.multiplier);
         const newRecordQuantity = roundFloat(
-          oldRecordValues.quantity + dMultiplied
+          oldRecordValues.quantity - dMultiplied
         );
 
         setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
