@@ -57,6 +57,10 @@ export const documentScannerSlice = createSlice({
         processedInvoice: DocumentScannerSlice["processedInvoice"];
       }>
     ) => ({ ...state, processedInvoice: payload.processedInvoice }),
+    RESET_INVOICE_PROCESSING_RESULT: (state) => ({
+      ...state,
+      processedInvoice: null,
+    }),
     SET_INVENTORY_ID: (
       state,
       {

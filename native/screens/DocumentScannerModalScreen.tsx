@@ -13,7 +13,10 @@ import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import SafeLayout from "../components/SafeLayout";
 import { HomeStackParamList } from "../navigation/types";
-import { documentScannerSelector } from "../redux/documentScannerSlice";
+import {
+  documentScannerAction,
+  documentScannerSelector,
+} from "../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
 
@@ -51,7 +54,7 @@ export const DocumentScannerModalScreen = ({
     } else {
       navigation.goBack();
     }
-    dispatch({ type: "PHOTO_RESET_DATA" });
+    dispatch(documentScannerAction.PHOTO_RESET_DATA());
     return;
   }, [processedInvoice]);
 
