@@ -168,7 +168,7 @@ Deno.serve(async (req) => {
   const productIds = productAliasData?.map((item) => item.product_id);
   const { data: productRecordData, error: productRecordError } = await supabase
     .from("product_record")
-    .select("id, product_id")
+    .select("id, product_id, quantity")
     .eq("inventory_id", requestBody.inventory_id)
     .in("product_id", productIds);
 
@@ -317,10 +317,11 @@ Deno.serve(async (req) => {
         ...matchedDocumentData.map((item) => item?.price_per_unit ?? 0)
       );
 
-      const quantity = matchedDocumentData.reduce(
-        (sum, item) => sum + (item?.quantity ?? 0),
-        0
-      );
+      const quantity =
+        matchedDocumentData.reduce(
+          (sum, item) => sum + (item?.quantity ?? 0),
+          0
+        ) + item.quantity;
 
       return {
         recognized: {
@@ -385,4 +386,4 @@ Deno.serve(async (req) => {
 // with service_role yout get multiple companies' data
 // curl -v 'http://127.0.0.1:54321/functions/v1/scan-doc' \
 //   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-// --data '{}'
+// --data '{"inventory_id":10,"image":{"data":""}}'
