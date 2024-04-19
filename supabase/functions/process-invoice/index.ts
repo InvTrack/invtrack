@@ -168,7 +168,7 @@ Deno.serve(async (req) => {
   const productIds = productAliasData?.map((item) => item.product_id);
   const { data: productRecordData, error: productRecordError } = await supabase
     .from("product_record")
-    .select("id, product_id, quantity")
+    .select("id, product_id, quantity, price_per_unit")
     .eq("inventory_id", requestBody.inventory_id)
     .in("product_id", productIds);
 
@@ -290,9 +290,9 @@ Deno.serve(async (req) => {
 
   // this is extremely inefficient and we should find a better solution
   const matchAliasesToRecognizedData = productRecordData.reduce(
-    (acc, item) => {
-      const product_id = item.product_id;
-      const record_id = item.id;
+    (acc, productRecord) => {
+      const product_id = productRecord.product_id;
+      const record_id = productRecord.id;
 
       const matchedAliases = productAliasData.filter(
         (alias) => alias.product_id === product_id
@@ -314,14 +314,16 @@ Deno.serve(async (req) => {
       }
 
       const price_per_unit = Math.max(
-        ...matchedDocumentData.map((item) => item?.price_per_unit ?? 0)
+        ...matchedDocumentData.map(
+          (item) => item?.price_per_unit ?? productRecord?.price_per_unit ?? 0
+        )
       );
 
       const quantity =
         matchedDocumentData.reduce(
           (sum, item) => sum + (item?.quantity ?? 0),
           0
-        ) + item.quantity;
+        ) + productRecord.quantity;
 
       return {
         recognized: {
@@ -387,3 +389,5 @@ Deno.serve(async (req) => {
 // curl -v 'http://127.0.0.1:54321/functions/v1/scan-doc' \
 //   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
 // --data '{"inventory_id":10,"image":{"data":""}}'
+
+// const mockResponse =
