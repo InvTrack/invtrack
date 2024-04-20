@@ -32,16 +32,16 @@ export const useRecordPanel = (recordId: number) => {
       }
 
       const shouldUpdateQuantity =
-        record.quantity !== form.getValues()[recordId.toString()]?.quantity &&
-        !form.getFieldState(`${recordId.toString()}.quantity`).isDirty;
+        !form.getFieldState(`${recordId.toString()}.quantity`).isDirty ||
+        record.quantity !== form.getValues()[recordId.toString()]?.quantity;
 
       if (shouldUpdateQuantity) {
         form.setValue(`${recordId.toString()}.quantity`, record.quantity);
       }
       const shouldUpdatePrice =
+        !form.getFieldState(`${recordId.toString()}.price_per_unit`).isDirty ||
         record.price_per_unit !==
-          form.getValues()[recordId.toString()]?.price_per_unit &&
-        !form.getFieldState(`${recordId.toString()}.price_per_unit`).isDirty;
+          form.getValues()[recordId.toString()]?.price_per_unit;
 
       if (shouldUpdatePrice) {
         form.setValue(
