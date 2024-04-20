@@ -5,6 +5,7 @@ import { AppIcon } from "../../components/Icon";
 import SafeLayout from "../../components/SafeLayout";
 import { Typography } from "../../components/Typography";
 import { isIos } from "../../constants";
+import { supabase } from "../../db";
 import { useCheckIfNativeUpdateNeeded } from "../../db/hooks/useCheckIfNativeUpdateNeeded";
 import { createStyles } from "../../theme/useStyles";
 const runtimeUpdateMessage =
@@ -26,6 +27,14 @@ export const UpdateRequiredScreen = () => {
   const { data: isNativeUpdateNeeded } = useCheckIfNativeUpdateNeeded();
   const { isDownloading, isChecking, isUpdatePending } = Updates.useUpdates();
 
+  const handleAppReloadSafely = async () => {
+    // TODO remove logout once the reload auth bug is fixed
+    if (isUpdatePending) {
+      await supabase.auth.signOut();
+      await Updates.reloadAsync();
+    }
+    return void this;
+  };
   return (
     <SafeLayout
       containerStyle={styles.container}
@@ -62,8 +71,7 @@ export const UpdateRequiredScreen = () => {
         onPress={
           isNativeUpdateNeeded
             ? () => Linking.openURL(isIos ? appStoreLink : playStoreLink)
-            : async () =>
-                isUpdatePending ? await Updates.reloadAsync() : void this
+            : handleAppReloadSafely
         }
       >
         {isNativeUpdateNeeded
