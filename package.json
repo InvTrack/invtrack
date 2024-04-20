@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "react-native-dotenv": "^3.4.8",
-    "supabase": "^1.110.1"
+    "supabase": "1.162.4"
   }
 }
