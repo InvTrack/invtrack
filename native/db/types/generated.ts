@@ -353,6 +353,40 @@ export interface Database {
           }
         ];
       };
+      recipe_name_alias: {
+        Row: {
+          alias: string;
+          company_id: number;
+          id: number;
+          recipe_id: number;
+        };
+        Insert: {
+          alias?: string;
+          company_id: number;
+          id?: number;
+          recipe_id: number;
+        };
+        Update: {
+          alias?: string;
+          company_id?: number;
+          id?: number;
+          recipe_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "public_recipe_name_alias_company_id_fkey";
+            columns: ["company_id"];
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recipe_name_alias_recipe_id_fkey";
+            columns: ["recipe_id"];
+            referencedRelation: "recipe";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       recipe_part: {
         Row: {
           created_at: string;
