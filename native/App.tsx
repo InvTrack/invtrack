@@ -70,6 +70,13 @@ const onAppStateChange = (status: AppStateStatus) => {
   if (Platform.OS !== "web") {
     focusManager.setFocused(status === "active");
   }
+  if (status === "active") {
+    queryClient.refetchQueries({
+      type: "all",
+      stale: true,
+      queryKey: ["checkIfNativeUpdateNeeded"],
+    });
+  }
 };
 
 const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
