@@ -150,6 +150,10 @@ export const documentScannerIconSrc = require("../assets/images/document_scanner
 export const DocumentScannerIcon = (props: IconProps) =>
   createIcon({ source: documentScannerIconSrc, props });
 
+const infoIconSrc = require("../assets/images/info.png");
+export const InfoIcon = (props: IconProps) =>
+  createIcon({ source: infoIconSrc, props });
+
 const AppIconSrc = require("../assets/images/icon.png");
 export const AppIcon = (props: IconProps) =>
   createIcon({

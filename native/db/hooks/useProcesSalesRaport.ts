@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { supabase } from "../supabase";
 import { ScanDocResponse } from "../types";
 
-export const useProcessInvoice = () => {
+export const useProcessSalesRaport = () => {
   const { showError } = useSnackbar();
 
   const inventory_id = useAppSelector(
@@ -26,7 +26,7 @@ export const useProcessInvoice = () => {
       if (inventory_id == null) {
         showError("Nie udało się przetworzyć zdjęcia");
         console.log(
-          "useProcessInvoice - no inventory_id, this should not happen"
+          "useProcessSalesRaport - no inventory_id, this should not happen"
         );
         return null;
       }
@@ -38,7 +38,7 @@ export const useProcessInvoice = () => {
       };
 
       const { data, error } = await supabase.functions.invoke(
-        "process-invoice",
+        "process-pos-raport",
         {
           body: reqBody,
         }

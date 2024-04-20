@@ -34,8 +34,9 @@ export const roundFloat = (value: number): number =>
 export const formatAndRoundFloat = (value: string): number =>
   roundFloat(formatFloatString(value));
 
-export const getBestCameraRatio = (ratios: string[]): string => {
-  if (ratios.includes("16:9")) return "16:9";
+export const getBestCameraRatio = (ratios: string[] | null): string => {
+  if (!ratios) return "16:9";
+  if (ratios?.includes("16:9")) return "16:9";
 
   const mRatios = ratios.map((ratio) => {
     const [width, height] = ratio.split(":").map((n) => parseInt(n));
