@@ -108,6 +108,7 @@ export default function InventoryTabScreen({
                 containerStyle={styles.barcodeIconContainer}
                 size="l"
                 type="primary"
+                disabled
                 onPress={() => {
                   // necessary hack, handled by parent navigator - be cautious
                   navigation.navigate("DocumentScannerModal" as any, {
