@@ -66,11 +66,20 @@ export type PatchedDatabase = {
     : Database[A];
 };
 
-export type ScanDocResponse = {
+export type ProcessInvoiceResponse = {
   form: {
     [recordId: number]: {
       product_id: number;
       price_per_unit: number;
+      quantity: number;
+    };
+  };
+  unmatchedAliases: string[];
+} | null;
+
+export type ProcessSalesRaportResponse = {
+  form: {
+    [recipe_id: string]: {
       quantity: number;
     };
   };

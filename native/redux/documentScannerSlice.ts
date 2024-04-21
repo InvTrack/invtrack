@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CameraCapturedPicture } from "expo-camera";
-import { ScanDocResponse } from "../db/types";
+import { ProcessInvoiceResponse } from "../db/types";
 import { RootState } from "./store";
 
 interface DocumentScannerSlice {
@@ -8,7 +8,7 @@ interface DocumentScannerSlice {
   isProcessingPhotoData: boolean;
   isCameraReady: boolean | null;
   photo: CameraCapturedPicture | null;
-  processedInvoice: ScanDocResponse;
+  processedInvoice: ProcessInvoiceResponse;
   inventory_id: number | null;
 }
 
