@@ -52,6 +52,9 @@ const askToOpenInfoPage = () => {
   );
 };
 
+/**
+ * make sure to pass in a ref, as it's required inside
+ */
 export const Camera = forwardRef<ExpoCamera, CameraProps>(
   (
     {
@@ -91,13 +94,14 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
 
     useEffect(() => {
       // ratio needed on android only
+      if (cameraRef == null) {
+        console.error("Camera - cameraRef is missing! This should not happen.");
+        return;
+      }
       if (ratio || !isCameraReady || isIos) {
         return;
       }
       const getCameraRatio = async () => {
-        if (!(cameraRef as RefObject<ExpoCamera>).current) {
-          return;
-        }
         try {
           const ratios = await (
             cameraRef as RefObject<ExpoCamera>
