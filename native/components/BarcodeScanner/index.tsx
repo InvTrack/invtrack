@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import { BarCodeScanningResult } from "expo-camera";
-import React, { useState } from "react";
+import { BarCodeScanningResult, Camera as ExpoCamera } from "expo-camera";
+import React, { useRef, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useListBarcodes } from "../../db/hooks/useListBarcodes";
 import { Camera } from "../Camera";
@@ -18,7 +18,7 @@ export const BarcodeScanner = ({
 }) => {
   const styles = useStyles();
   const navigation = useNavigation<BarcodeModalScreenProps["navigation"]>();
-
+  const cameraRef = useRef<ExpoCamera>(null);
   const [alertShown, setAlertShown] = useState(false);
   const { data: barcodeList, isLoading } = useListBarcodes(inventoryId);
 
@@ -70,6 +70,7 @@ export const BarcodeScanner = ({
 
   return (
     <Camera
+      ref={cameraRef}
       onBarCodeScanned={handleBarcodeScan}
       shouldShowScannerOverlay
       shouldAllowCameraToggle
