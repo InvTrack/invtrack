@@ -12,8 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DevInfo } from "../components/DevInfo";
 import { PrivacyPolicy } from "../components/PrivacyPolicy";
 import { Typography } from "../components/Typography";
-import { supabase } from "../db";
-import { useSession } from "../db/hooks/sessionContext";
+import { supabase, useSession } from "../db";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
