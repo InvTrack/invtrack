@@ -20,7 +20,7 @@ import {
   useColorScheme,
 } from "react-native";
 
-import { SessionContext, useSession } from "./db";
+import { SessionContext, useSessionState } from "./db";
 import { mainTheme } from "./theme";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -70,6 +70,13 @@ const onAppStateChange = (status: AppStateStatus) => {
   if (Platform.OS !== "web") {
     focusManager.setFocused(status === "active");
   }
+  if (status === "active") {
+    queryClient.refetchQueries({
+      type: "all",
+      stale: true,
+      queryKey: ["checkIfNativeUpdateNeeded"],
+    });
+  }
 };
 
 const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
@@ -82,7 +89,7 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   const colorScheme = useColorScheme();
-  const sessionState = useSession();
+  const sessionState = useSessionState();
   const [fontsLoaded] = useFonts({
     latoBold: require("./assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("./assets/fonts/Lato-Regular.ttf"),

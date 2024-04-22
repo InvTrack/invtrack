@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { useSession } from "../auth";
 import { supabase } from "../supabase";
-import { useSession } from "./sessionContext";
 
 const listExistingProducts = async () => {
   const res = await supabase.from("existing_products").select();
