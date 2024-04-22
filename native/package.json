@@ -1,6 +1,6 @@
 {
   "name": "invtrack",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
