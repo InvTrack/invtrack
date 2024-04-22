@@ -1,29 +1,35 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { DeliveryForm } from "../../components/DeliveryFormContext/deliveryForm.types";
-import { InventoryForm } from "../../components/InventoryFormContext/inventoryForm.types";
 import { supabase } from "../supabase";
 
-const updateRecords = async (records: DeliveryForm | InventoryForm) => {
-  if (!Object.keys(records).length) return;
-  const recordsToUpdate = Object.entries(records).map(
-    ([record_id, { quantity, price_per_unit }]) => {
-      return {
-        id: Number(record_id),
-        price_per_unit,
-        quantity,
-      };
-    }
-  );
+const updateRecordsForm = async (form: DeliveryForm) => {
+  if (
+    !Object.keys(form.product_records).length ||
+    !Object.keys(form.recipe_records).length
+  )
+    return;
+
   const data = await Promise.all(
-    recordsToUpdate.map(({ quantity, price_per_unit, id }) =>
-      supabase
-        .from("product_record")
-        .update({ quantity, price_per_unit })
-        .eq("id", id)
-        .select()
-        .single()
-    )
+    Object.entries(form.product_records)
+      .map(([record_id, { quantity, price_per_unit }]) => {
+        return supabase
+          .from("product_record")
+          .update({ quantity, price_per_unit })
+          .eq("id", Number(record_id))
+          .select()
+          .single();
+      })
+      .concat(
+        Object.entries(form.recipe_records).map(([record_id, { quantity }]) => {
+          return supabase
+            .from("recipe_record")
+            .update({ quantity })
+            .eq("id", Number(record_id))
+            .select()
+            .single();
+        })
+      )
   );
   return data.map((d) => d.data);
 };
@@ -32,16 +38,16 @@ export const useUpdateRecords = (inventoryId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (records) => await updateRecords(records),
-    onMutate: async (records: DeliveryForm) => {
-      const recordsIterable = Object.entries(records);
+    mutationFn: async (form) => await updateRecordsForm(form),
+    onMutate: async (form: DeliveryForm) => {
+      const recordsIterable = Object.entries(form.product_records);
       // concurrency
       await Promise.all(
         recordsIterable.map(([recordId, _record]) => {
           queryClient.cancelQueries(["product_record", recordId]);
           queryClient.setQueryData(
             ["product_record", recordId],
-            (old: any) => ({ ...old, ...records[recordId] })
+            (old: any) => ({ ...old, ...form.product_records[recordId] })
           );
         })
       );

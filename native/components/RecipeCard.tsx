@@ -124,7 +124,7 @@ export const RecipeCard = ({
 
         // the object may not exist, if the user did not navigate to the given RecordScreen
         // may change during the form refactor
-        const oldRecordValues = watch(`${stringifiedRecordId}`) || {
+        const oldRecordValues = watch(`product_records.${stringifiedRecordId}`) || {
           price_per_unit: null,
           product_id: ram.product_id,
           quantity: ram.record_quantity_backup,
@@ -135,7 +135,7 @@ export const RecipeCard = ({
           oldRecordValues.quantity - dMultiplied
         );
 
-        setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
+        setValue(`product_records.${stringifiedRecordId}.quantity`, newRecordQuantity, {
           shouldDirty: true,
           shouldTouch: true,
         });
@@ -158,7 +158,7 @@ export const RecipeCard = ({
 
     // the object may not exist, if the user did not navigate to the given RecordScreen
     // may change during the form refactor
-    const oldRecordValues = watch(stringifiedRecordId) || {
+    const oldRecordValues = watch(`product_records.${stringifiedRecordId}`) || {
       price_per_unit: null,
       product_id: recordAndMultiplier[0].product_id,
       quantity: recordAndMultiplier[0].record_quantity_backup,
@@ -168,7 +168,7 @@ export const RecipeCard = ({
     const newRecordQuantity = roundFloat(
       oldRecordValues.quantity + dMultiplied
     );
-    setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
+    setValue(`product_records.${stringifiedRecordId}.quantity`, newRecordQuantity, {
       shouldDirty: true,
       shouldTouch: true,
     });

@@ -31,14 +31,14 @@ export const DeliveryFormContextProvider = ({
     for (const record_id in valuesForForm) {
       if (record_id in dirtyFields) continue;
       methods.setValue(
-        `${record_id}.quantity`,
+        `product_records.${record_id}.quantity`,
         valuesForForm[record_id].quantity,
         {
           shouldDirty: true,
         }
       );
       methods.setValue(
-        `${record_id}.price_per_unit`,
+        `product_records.${record_id}.price_per_unit`,
         valuesForForm[record_id].price_per_unit,
         {
           shouldDirty: true,

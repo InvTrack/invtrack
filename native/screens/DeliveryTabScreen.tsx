@@ -81,6 +81,7 @@ export default function DeliveryTabScreen({
           showError("Brak połączenia z internetem");
           return;
         }
+        console.log(data)
         mutate(data);
       },
       (_errors) => {
