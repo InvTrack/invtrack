@@ -147,7 +147,7 @@ const useStyles = createStyles((theme) =>
     container: {
       backgroundColor: theme.colors.darkBlue,
     },
-    listContainer: { paddingHorizontal: theme.spacing * 4 },
+    listContainer: { paddingHorizontal: theme.spacing * 2 },
     scroll: {
       width: "100%",
       height: "100%",
