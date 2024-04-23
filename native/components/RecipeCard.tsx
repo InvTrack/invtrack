@@ -10,9 +10,8 @@ import { useBottomSheet } from "./BottomSheet";
 import { InputBottomSheetContent } from "./BottomSheet/contents";
 import { Button } from "./Button";
 import { Card } from "./Card";
-import { DeliveryForm } from "./DeliveryFormContext/deliveryForm.types";
 import { PencilIcon } from "./Icon";
-import { InventoryForm } from "./InventoryFormContext/inventoryForm.types";
+import { StockForm } from "./StockFormContext/types";
 import { Typography } from "./Typography";
 
 type RecipeCardProps = {
@@ -94,7 +93,7 @@ export const RecipeCard = ({
 }: RecipeCardProps) => {
   const styles = useStyles();
   const { closeBottomSheet, openBottomSheet } = useBottomSheet();
-  const { watch, setValue } = useFormContext<InventoryForm | DeliveryForm>();
+  const { watch, setValue } = useFormContext<StockForm>();
   const { data: recordsList } = useListRecords(inventoryId);
   const [recipeQuantity, setRecipeQuantity] = useState(0);
   if (!name) {
@@ -124,7 +123,9 @@ export const RecipeCard = ({
 
         // the object may not exist, if the user did not navigate to the given RecordScreen
         // may change during the form refactor
-        const oldRecordValues = watch(`product_records.${stringifiedRecordId}`) || {
+        const oldRecordValues = watch(
+          `product_records.${stringifiedRecordId}`
+        ) || {
           price_per_unit: null,
           product_id: ram.product_id,
           quantity: ram.record_quantity_backup,
@@ -135,10 +136,14 @@ export const RecipeCard = ({
           oldRecordValues.quantity - dMultiplied
         );
 
-        setValue(`product_records.${stringifiedRecordId}.quantity`, newRecordQuantity, {
-          shouldDirty: true,
-          shouldTouch: true,
-        });
+        setValue(
+          `product_records.${stringifiedRecordId}.quantity`,
+          newRecordQuantity,
+          {
+            shouldDirty: true,
+            shouldTouch: true,
+          }
+        );
       });
 
       setRecipeQuantity(value);
@@ -168,10 +173,14 @@ export const RecipeCard = ({
     const newRecordQuantity = roundFloat(
       oldRecordValues.quantity + dMultiplied
     );
-    setValue(`product_records.${stringifiedRecordId}.quantity`, newRecordQuantity, {
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+    setValue(
+      `product_records.${stringifiedRecordId}.quantity`,
+      newRecordQuantity,
+      {
+        shouldDirty: true,
+        shouldTouch: true,
+      }
+    );
 
     setRecipeQuantity(value);
     return void this;

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ScanDocResponse } from "../../db/types";
 import { documentScannerSelector } from "../../redux/documentScannerSlice";
 import { useAppSelector } from "../../redux/hooks";
-import { DeliveryForm } from "./deliveryForm.types";
+import { StockForm } from "./types";
 
 const getValuesForForm = (scanDocResponse: ScanDocResponse) => {
   if (scanDocResponse == null) {
@@ -20,7 +20,9 @@ export const DeliveryFormContextProvider = ({
   const processedInvoice = useAppSelector(
     documentScannerSelector.selectProcessedInvoice
   );
-  const methods = useForm<DeliveryForm>();
+  const methods = useForm<StockForm>({
+    defaultValues: { product_records: {}, recipe_records: {} },
+  });
 
   const dirtyFields = methods.formState.dirtyFields;
 

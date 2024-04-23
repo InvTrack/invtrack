@@ -6,7 +6,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { IDListCard } from "../components/IDListCard";
 import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
-import { InventoryForm } from "../components/InventoryFormContext/inventoryForm.types";
 import { Skeleton } from "../components/Skeleton";
 
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -15,6 +14,7 @@ import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { RecipeCard } from "../components/RecipeCard";
 import { useSnackbar } from "../components/Snackbar/hooks";
+import { StockForm } from "../components/StockFormContext/types";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListRecipes } from "../db/hooks/useListRecipes";
@@ -39,7 +39,7 @@ export default function InventoryTabScreen({
     useListCategorizedProductRecords(+inventoryId);
   const { data: recipeList, isSuccess: recipesIsSuccess } = useListRecipes();
 
-  const inventoryForm = useFormContext<InventoryForm>();
+  const inventoryForm = useFormContext<StockForm>();
   const inventoryFormValues = inventoryForm.watch();
 
   const {
@@ -160,8 +160,8 @@ export default function InventoryTabScreen({
                   id={+inventoryId}
                   quantity={
                     record.id
-                      ? inventoryFormValues[record.id]?.quantity ??
-                        record.quantity
+                      ? inventoryFormValues.product_records[record.id]
+                          ?.quantity ?? record.quantity
                       : null
                   }
                   unit={record.unit!}
@@ -185,8 +185,8 @@ export default function InventoryTabScreen({
                 id={+inventoryId}
                 quantity={
                   record.id
-                    ? inventoryFormValues[record.id]?.quantity ??
-                      record.quantity
+                    ? inventoryFormValues.product_records[record.id]
+                        ?.quantity ?? record.quantity
                     : null
                 }
                 unit={record.unit!}

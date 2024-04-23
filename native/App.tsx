@@ -20,7 +20,7 @@ import {
   useColorScheme,
 } from "react-native";
 
-import { SessionContext, useSessionState } from "./db";
+import { SessionContext, useMakeSessionState } from "./db";
 import { mainTheme } from "./theme";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -89,7 +89,7 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
   });
 
   const colorScheme = useColorScheme();
-  const sessionState = useSessionState();
+  const sessionState = useMakeSessionState();
   const [fontsLoaded] = useFonts({
     latoBold: require("./assets/fonts/Lato-Bold.ttf"),
     latoRegular: require("./assets/fonts/Lato-Regular.ttf"),

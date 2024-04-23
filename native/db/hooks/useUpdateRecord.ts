@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { DeliveryForm } from "../../components/DeliveryFormContext/deliveryForm.types";
+import { StockForm } from "../../components/StockFormContext/types";
 import { supabase } from "../supabase";
 
-const updateRecordsForm = async (form: DeliveryForm) => {
+const updateRecordsForm = async (form: StockForm) => {
   if (
     !Object.keys(form.product_records).length ||
     !Object.keys(form.recipe_records).length
@@ -39,7 +39,7 @@ export const useUpdateRecords = (inventoryId: number) => {
 
   return useMutation({
     mutationFn: async (form) => await updateRecordsForm(form),
-    onMutate: async (form: DeliveryForm) => {
+    onMutate: async (form: StockForm) => {
       const recordsIterable = Object.entries(form.product_records);
       // concurrency
       await Promise.all(

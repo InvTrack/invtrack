@@ -7,12 +7,12 @@ import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { Collapsible } from "../components/Collapsible/Collapsible";
-import { DeliveryForm } from "../components/DeliveryFormContext/deliveryForm.types";
 import { IDListCard } from "../components/IDListCard";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/hooks";
+import { StockForm } from "../components/StockFormContext/types";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
@@ -40,7 +40,7 @@ export default function DeliveryTabScreen({
   const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
     useListCategorizedProductRecords(+inventoryId);
 
-  const deliveryForm = useFormContext<DeliveryForm>();
+  const deliveryForm = useFormContext<StockForm>();
   const deliveryFormValues = deliveryForm.watch();
 
   const {
@@ -81,7 +81,7 @@ export default function DeliveryTabScreen({
           showError("Brak połączenia z internetem");
           return;
         }
-        console.log(data)
+        console.log(data);
         mutate(data);
       },
       (_errors) => {
@@ -159,8 +159,8 @@ export default function DeliveryTabScreen({
                   id={+inventoryId}
                   quantity={
                     record.id
-                      ? deliveryFormValues[record.id]?.quantity ??
-                        record.quantity
+                      ? deliveryFormValues.product_records[record.id]
+                          ?.quantity ?? record.quantity
                       : null
                   }
                   unit={record.unit!}
@@ -184,7 +184,8 @@ export default function DeliveryTabScreen({
                 id={+inventoryId}
                 quantity={
                   record.id
-                    ? deliveryFormValues[record.id]?.quantity ?? record.quantity
+                    ? deliveryFormValues.product_records[record.id]?.quantity ??
+                      record.quantity
                     : null
                 }
                 unit={record.unit!}
