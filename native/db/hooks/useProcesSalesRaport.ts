@@ -4,6 +4,7 @@ import { documentScannerSelector } from "../../redux/documentScannerSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { supabase } from "../supabase";
 import { ProcessSalesRaportResponse } from "../types";
+import { queryKeys } from "./queryKeys";
 
 export const useProcessSalesRaport = () => {
   const { showError } = useSnackbar();
@@ -46,6 +47,9 @@ export const useProcessSalesRaport = () => {
       }
 
       return data as ProcessSalesRaportResponse;
+    },
+    {
+      mutationKey: queryKeys.processSalesRaport(inventory_id),
     }
   );
 };
