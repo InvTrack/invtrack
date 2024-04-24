@@ -151,10 +151,9 @@ export const IdentifyAliasesScreen = ({
         </Button>
       </View>
       {aliases.map((alias, i) => (
-        <>
-          <Badge isShown={usedAliases?.includes(alias)} key={`b${i}`} />
+        <View key={i}>
+          <Badge isShown={usedAliases?.includes(alias)} />
           <DropdownButton
-            key={i}
             containerStyle={styles.dropdown}
             onPress={() =>
               openBottomSheet(() => (
@@ -175,7 +174,7 @@ export const IdentifyAliasesScreen = ({
               {alias}
             </Typography>
           </DropdownButton>
-        </>
+        </View>
       ))}
     </SafeLayout>
   );
