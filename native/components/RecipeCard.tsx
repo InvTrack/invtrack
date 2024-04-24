@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { useFormContext } from "react-hook-form";
 import { useListRecipes } from "../db/hooks/useListRecipes";
 import { useListRecords } from "../db/hooks/useListRecords";
+// import { useProcessSalesRaport } from "../db/hooks/useProcesSalesRaport";
 import { createStyles } from "../theme/useStyles";
 import { roundFloat } from "../utils";
 import { useBottomSheet } from "./BottomSheet";
@@ -94,21 +95,25 @@ export const RecipeCard = ({
 }: RecipeCardProps) => {
   const styles = useStyles();
   const { closeBottomSheet, openBottomSheet } = useBottomSheet();
+  // const { data: processedSalesRaportData, isSuccess: _ } =
+  //   useProcessSalesRaport();
+
   const { watch, setValue } = useFormContext<InventoryForm | DeliveryForm>();
   const { data: recordsList } = useListRecords(inventoryId);
   const [recipeQuantity, setRecipeQuantity] = useState(0);
-  if (!name) {
-    return null;
-  }
 
   const recordAndMultiplier = useMemo(
     () => getRecordAndMultiplier(recipePart, recordsList),
     [inventoryId, recipePart, recordsList]
   );
 
+  if (!name) {
+    return null;
+  }
+
   // value is an integer, see InputBottomSheetContent props
   const setQuantity = (value: number) => {
-    if (value === recipeQuantity) return void this;
+    if (value === recipeQuantity || recipeQuantity == null) return void this;
     const delta = value - recipeQuantity;
 
     if (delta === 0) return void this;
@@ -134,6 +139,8 @@ export const RecipeCard = ({
         const newRecordQuantity = roundFloat(
           oldRecordValues.quantity - dMultiplied
         );
+
+        if (newRecordQuantity < 0) return void this;
 
         setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
           shouldDirty: true,
@@ -168,6 +175,9 @@ export const RecipeCard = ({
     const newRecordQuantity = roundFloat(
       oldRecordValues.quantity + dMultiplied
     );
+
+    if (newRecordQuantity < 0) return void this;
+
     setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
       shouldDirty: true,
       shouldTouch: true,
