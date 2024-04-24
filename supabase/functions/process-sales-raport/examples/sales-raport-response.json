@@ -1,0 +1,5430 @@
+{
+  "status": "succeeded",
+  "createdDateTime": "2024-04-21T10:13:34Z",
+  "lastUpdatedDateTime": "2024-04-21T10:13:36Z",
+  "analyzeResult": {
+    "apiVersion": "2024-02-29-preview",
+    "modelId": "prebuilt-invoice",
+    "stringIndexType": "textElements",
+    "content": "IGotówka\nIndeks\nProdukt\nIlość\n181\nDORSZ ZESTAW\nWartość\n19\n793.79\n4\nFILET z DORSZA\n3.28\n482.10\n79\nFILET Z KURCZAKA\n2\n66.50\n23\nFRYTKI\n23\n204.31\n66\nGOLONKA PO BAWARSKU\n2.19\n164.25\n73\nGULASZ WIEPRZOWY\n10\n358.90\n9\nHALIBUT\n0.69\n96.60\n76\nKOTLET CHŁOP\n46\n1 729.00\n77\nKOTLET DE VOLAILLE\n41\n1 550.40\n32\nKAPUSTA ZASMAZANA\n5\n45.00\n41\nMASŁO CZOSNKOWE\n2\n3.80\n78\nPIERŚ Z KURCZAKA\n9\n324.00\n71\nPLACEK PO CYGAŃSKU\n25\n963.34\n6\nSANDACZ Z MASŁEM CZOSNKOWYM\n2.04\n346.80\nVI\nSCHAB PANIEROWANY\n0.Vo\n35\nSOS CHRZANOWY\n1\n1.80\n34\nSOS CZOSNKOWY\n5\n10.00\n11\nTURBOT Z MASŁEM CZOSNKOWYM\n2.63\n552.30\n27\nZUPA FLAKI WOŁOWE\n10\n200.00\n.24\nZUPA KAPUŚNIAK\n4\n84.00\n1\nZUPA ROSÓŁ\n19\n280.54\n26\nZUPA ŻUREK W MISCE\n21\n416.00\n30\nZESTAW SURÓWEK\n30\n239.20\n29\nZIEMNIAKI Z PIECA\n6\n54.00\n12\nZIEMNIAKI Z WODY\n6\n54.00\n7\nŁOSOŚ Z MASŁEM CZOSNKOWYM\n0.61\n91.50\n370\nPIECZEŃ ZKARKÓWKI\n7\n266.00\n3 1\n.7up 0,2l\n1\n9.00\n362\nAPA PALE ALE\n1\n16.00\n100_1\n.DESPERADOS 0% VIRGIN\n2\n28.00\nHEINEKEN 0%\n42.001\n.HERBATA\n4\n48.00\n83 :selected: :selected: :selected: :selected: :selected: :selected:",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "angle": 89.78215026855469,
+        "width": 1080,
+        "height": 1920,
+        "unit": "pixel",
+        "words": [
+          {
+            "content": "IGotówka",
+            "polygon": [1079, 320, 1077, 422, 1061, 422, 1061, 321],
+            "confidence": 0.579,
+            "span": { "offset": 0, "length": 8 }
+          },
+          {
+            "content": "Indeks",
+            "polygon": [1035, 426, 1034, 486, 1017, 486, 1017, 426],
+            "confidence": 0.937,
+            "span": { "offset": 9, "length": 6 }
+          },
+          {
+            "content": "Produkt",
+            "polygon": [1035, 896, 1035, 968, 1017, 969, 1017, 896],
+            "confidence": 0.993,
+            "span": { "offset": 16, "length": 7 }
+          },
+          {
+            "content": "Ilość",
+            "polygon": [1032, 1330, 1031, 1372, 1014, 1372, 1015, 1330],
+            "confidence": 0.961,
+            "span": { "offset": 24, "length": 5 }
+          },
+          {
+            "content": "181",
+            "polygon": [1007, 337, 1007, 365, 991, 365, 991, 337],
+            "confidence": 0.99,
+            "span": { "offset": 30, "length": 3 }
+          },
+          {
+            "content": "DORSZ",
+            "polygon": [1010, 591, 1011, 677, 991, 677, 990, 591],
+            "confidence": 0.994,
+            "span": { "offset": 34, "length": 5 }
+          },
+          {
+            "content": "ZESTAW",
+            "polygon": [1011, 693, 1010, 763, 990, 763, 991, 693],
+            "confidence": 0.995,
+            "span": { "offset": 40, "length": 6 }
+          },
+          {
+            "content": "Wartość",
+            "polygon": [1031, 1465, 1030, 1537, 1012, 1538, 1013, 1465],
+            "confidence": 0.993,
+            "span": { "offset": 47, "length": 7 }
+          },
+          {
+            "content": "19",
+            "polygon": [1004, 1406, 1004, 1422, 988, 1422, 988, 1406],
+            "confidence": 0.995,
+            "span": { "offset": 55, "length": 2 }
+          },
+          {
+            "content": "793.79",
+            "polygon": [1004, 1525, 1004, 1579, 988, 1579, 987, 1526],
+            "confidence": 0.995,
+            "span": { "offset": 58, "length": 6 }
+          },
+          {
+            "content": "4",
+            "polygon": [976, 335, 976, 343, 961, 342, 962, 334],
+            "confidence": 0.995,
+            "span": { "offset": 65, "length": 1 }
+          },
+          {
+            "content": "FILET",
+            "polygon": [980, 590, 981, 663, 961, 664, 962, 590],
+            "confidence": 0.993,
+            "span": { "offset": 67, "length": 5 }
+          },
+          {
+            "content": "z",
+            "polygon": [981, 678, 981, 689, 961, 689, 961, 678],
+            "confidence": 0.99,
+            "span": { "offset": 73, "length": 1 }
+          },
+          {
+            "content": "DORSZA",
+            "polygon": [981, 702, 982, 806, 961, 807, 961, 702],
+            "confidence": 0.993,
+            "span": { "offset": 75, "length": 6 }
+          },
+          {
+            "content": "3.28",
+            "polygon": [976, 1393, 976, 1425, 960, 1425, 960, 1393],
+            "confidence": 0.986,
+            "span": { "offset": 82, "length": 4 }
+          },
+          {
+            "content": "482.10",
+            "polygon": [976, 1528, 976, 1582, 960, 1582, 959, 1528],
+            "confidence": 0.995,
+            "span": { "offset": 87, "length": 6 }
+          },
+          {
+            "content": "79",
+            "polygon": [949, 333, 948, 352, 931, 352, 932, 332],
+            "confidence": 0.996,
+            "span": { "offset": 94, "length": 2 }
+          },
+          {
+            "content": "FILET",
+            "polygon": [951, 590, 952, 661, 932, 662, 932, 591],
+            "confidence": 0.994,
+            "span": { "offset": 97, "length": 5 }
+          },
+          {
+            "content": "Z",
+            "polygon": [952, 678, 952, 689, 932, 689, 932, 679],
+            "confidence": 0.995,
+            "span": { "offset": 103, "length": 1 }
+          },
+          {
+            "content": "KURCZAKA",
+            "polygon": [952, 703, 952, 842, 931, 842, 932, 703],
+            "confidence": 0.995,
+            "span": { "offset": 105, "length": 8 }
+          },
+          {
+            "content": "2",
+            "polygon": [946, 1421, 946, 1429, 931, 1429, 931, 1421],
+            "confidence": 0.995,
+            "span": { "offset": 114, "length": 1 }
+          },
+          {
+            "content": "66.50",
+            "polygon": [948, 1540, 949, 1585, 932, 1585, 931, 1540],
+            "confidence": 0.994,
+            "span": { "offset": 116, "length": 5 }
+          },
+          {
+            "content": "23",
+            "polygon": [918, 331, 918, 350, 901, 351, 901, 331],
+            "confidence": 0.995,
+            "span": { "offset": 122, "length": 2 }
+          },
+          {
+            "content": "FRYTKI",
+            "polygon": [921, 589, 921, 655, 903, 656, 902, 589],
+            "confidence": 0.541,
+            "span": { "offset": 125, "length": 6 }
+          },
+          {
+            "content": "23",
+            "polygon": [919, 1412, 919, 1432, 901, 1432, 901, 1412],
+            "confidence": 0.997,
+            "span": { "offset": 132, "length": 2 }
+          },
+          {
+            "content": "204.31",
+            "polygon": [919, 1533, 919, 1589, 902, 1590, 901, 1533],
+            "confidence": 0.881,
+            "span": { "offset": 135, "length": 6 }
+          },
+          {
+            "content": "66",
+            "polygon": [886, 329, 886, 348, 870, 348, 870, 329],
+            "confidence": 0.996,
+            "span": { "offset": 142, "length": 2 }
+          },
+          {
+            "content": "GOLONKA",
+            "polygon": [891, 589, 891, 712, 871, 712, 870, 589],
+            "confidence": 0.993,
+            "span": { "offset": 145, "length": 7 }
+          },
+          {
+            "content": "PO",
+            "polygon": [891, 722, 891, 747, 871, 747, 871, 723],
+            "confidence": 0.996,
+            "span": { "offset": 153, "length": 2 }
+          },
+          {
+            "content": "BAWARSKU",
+            "polygon": [891, 762, 891, 866, 871, 866, 871, 762],
+            "confidence": 0.995,
+            "span": { "offset": 156, "length": 8 }
+          },
+          {
+            "content": "2.19",
+            "polygon": [890, 1399, 890, 1434, 872, 1434, 872, 1399],
+            "confidence": 0.993,
+            "span": { "offset": 165, "length": 4 }
+          },
+          {
+            "content": "164.25",
+            "polygon": [890, 1538, 890, 1591, 873, 1591, 872, 1538],
+            "confidence": 0.994,
+            "span": { "offset": 170, "length": 6 }
+          },
+          {
+            "content": "73",
+            "polygon": [854, 331, 854, 349, 839, 349, 839, 331],
+            "confidence": 0.994,
+            "span": { "offset": 177, "length": 2 }
+          },
+          {
+            "content": "GULASZ",
+            "polygon": [859, 587, 859, 690, 839, 690, 839, 588],
+            "confidence": 0.995,
+            "span": { "offset": 180, "length": 6 }
+          },
+          {
+            "content": "WIEPRZOWY",
+            "polygon": [859, 710, 858, 830, 839, 831, 839, 711],
+            "confidence": 0.947,
+            "span": { "offset": 187, "length": 9 }
+          },
+          {
+            "content": "10",
+            "polygon": [858, 1417, 858, 1434, 841, 1435, 841, 1418],
+            "confidence": 0.995,
+            "span": { "offset": 197, "length": 2 }
+          },
+          {
+            "content": "358.90",
+            "polygon": [859, 1539, 859, 1593, 842, 1594, 841, 1539],
+            "confidence": 0.994,
+            "span": { "offset": 200, "length": 6 }
+          },
+          {
+            "content": "9",
+            "polygon": [823, 329, 823, 337, 807, 337, 807, 329],
+            "confidence": 0.995,
+            "span": { "offset": 207, "length": 1 }
+          },
+          {
+            "content": "HALIBUT",
+            "polygon": [828, 588, 828, 700, 809, 701, 808, 588],
+            "confidence": 0.99,
+            "span": { "offset": 209, "length": 7 }
+          },
+          {
+            "content": "0.69",
+            "polygon": [829, 1402, 830, 1437, 812, 1438, 811, 1402],
+            "confidence": 0.986,
+            "span": { "offset": 217, "length": 4 }
+          },
+          {
+            "content": "96.60",
+            "polygon": [828, 1550, 829, 1595, 812, 1595, 811, 1551],
+            "confidence": 0.995,
+            "span": { "offset": 222, "length": 5 }
+          },
+          {
+            "content": "76",
+            "polygon": [792, 328, 792, 347, 775, 347, 775, 328],
+            "confidence": 0.994,
+            "span": { "offset": 228, "length": 2 }
+          },
+          {
+            "content": "KOTLET",
+            "polygon": [796, 587, 796, 689, 776, 689, 776, 587],
+            "confidence": 0.994,
+            "span": { "offset": 231, "length": 6 }
+          },
+          {
+            "content": "CHŁOP",
+            "polygon": [796, 715, 796, 799, 775, 799, 776, 715],
+            "confidence": 0.993,
+            "span": { "offset": 238, "length": 5 }
+          },
+          {
+            "content": "46",
+            "polygon": [796, 1419, 795, 1437, 779, 1436, 780, 1418],
+            "confidence": 0.995,
+            "span": { "offset": 244, "length": 2 }
+          },
+          {
+            "content": "1",
+            "polygon": [797, 1526, 798, 1536, 779, 1537, 779, 1527],
+            "confidence": 0.995,
+            "span": { "offset": 247, "length": 1 }
+          },
+          {
+            "content": "729.00",
+            "polygon": [798, 1541, 798, 1596, 779, 1596, 779, 1542],
+            "confidence": 0.993,
+            "span": { "offset": 249, "length": 6 }
+          },
+          {
+            "content": "77",
+            "polygon": [761, 328, 761, 348, 742, 349, 742, 328],
+            "confidence": 0.997,
+            "span": { "offset": 256, "length": 2 }
+          },
+          {
+            "content": "KOTLET",
+            "polygon": [765, 588, 765, 690, 744, 690, 744, 588],
+            "confidence": 0.992,
+            "span": { "offset": 259, "length": 6 }
+          },
+          {
+            "content": "DE",
+            "polygon": [765, 709, 766, 735, 744, 735, 744, 709],
+            "confidence": 0.997,
+            "span": { "offset": 266, "length": 2 }
+          },
+          {
+            "content": "VOLAILLE",
+            "polygon": [766, 747, 765, 872, 743, 872, 744, 747],
+            "confidence": 0.993,
+            "span": { "offset": 269, "length": 8 }
+          },
+          {
+            "content": "41",
+            "polygon": [766, 1418, 765, 1436, 748, 1436, 749, 1418],
+            "confidence": 0.996,
+            "span": { "offset": 278, "length": 2 }
+          },
+          {
+            "content": "1",
+            "polygon": [767, 1526, 767, 1536, 748, 1537, 748, 1527],
+            "confidence": 0.995,
+            "span": { "offset": 281, "length": 1 }
+          },
+          {
+            "content": "550.40",
+            "polygon": [767, 1540, 767, 1596, 749, 1597, 748, 1541],
+            "confidence": 0.995,
+            "span": { "offset": 283, "length": 6 }
+          },
+          {
+            "content": "32",
+            "polygon": [729, 327, 730, 349, 712, 350, 711, 328],
+            "confidence": 0.995,
+            "span": { "offset": 290, "length": 2 }
+          },
+          {
+            "content": "KAPUSTA",
+            "polygon": [734, 587, 734, 676, 712, 676, 712, 588],
+            "confidence": 0.994,
+            "span": { "offset": 293, "length": 7 }
+          },
+          {
+            "content": "ZASMAZANA",
+            "polygon": [734, 689, 734, 803, 712, 803, 712, 689],
+            "confidence": 0.721,
+            "span": { "offset": 301, "length": 9 }
+          },
+          {
+            "content": "5",
+            "polygon": [734, 1428, 733, 1437, 716, 1436, 717, 1427],
+            "confidence": 0.995,
+            "span": { "offset": 311, "length": 1 }
+          },
+          {
+            "content": "45.00",
+            "polygon": [734, 1550, 735, 1596, 717, 1596, 716, 1551],
+            "confidence": 0.995,
+            "span": { "offset": 313, "length": 5 }
+          },
+          {
+            "content": "41",
+            "polygon": [697, 329, 697, 349, 680, 349, 680, 329],
+            "confidence": 0.995,
+            "span": { "offset": 319, "length": 2 }
+          },
+          {
+            "content": "MASŁO",
+            "polygon": [702, 589, 702, 652, 681, 653, 680, 590],
+            "confidence": 0.958,
+            "span": { "offset": 322, "length": 5 }
+          },
+          {
+            "content": "CZOSNKOWE",
+            "polygon": [702, 672, 702, 795, 679, 796, 681, 673],
+            "confidence": 0.982,
+            "span": { "offset": 328, "length": 9 }
+          },
+          {
+            "content": "2",
+            "polygon": [701, 1428, 701, 1437, 686, 1436, 687, 1427],
+            "confidence": 0.982,
+            "span": { "offset": 338, "length": 1 }
+          },
+          {
+            "content": "3.80",
+            "polygon": [703, 1560, 703, 1594, 684, 1594, 684, 1560],
+            "confidence": 0.982,
+            "span": { "offset": 340, "length": 4 }
+          },
+          {
+            "content": "78",
+            "polygon": [666, 331, 666, 352, 648, 352, 648, 331],
+            "confidence": 0.997,
+            "span": { "offset": 345, "length": 2 }
+          },
+          {
+            "content": "PIERŚ",
+            "polygon": [670, 590, 670, 670, 648, 670, 647, 591],
+            "confidence": 0.963,
+            "span": { "offset": 348, "length": 5 }
+          },
+          {
+            "content": "Z",
+            "polygon": [670, 680, 670, 692, 648, 692, 648, 681],
+            "confidence": 0.995,
+            "span": { "offset": 354, "length": 1 }
+          },
+          {
+            "content": "KURCZAKA",
+            "polygon": [670, 701, 671, 841, 647, 842, 648, 701],
+            "confidence": 0.992,
+            "span": { "offset": 356, "length": 8 }
+          },
+          {
+            "content": "9",
+            "polygon": [669, 1426, 669, 1432, 654, 1432, 654, 1426],
+            "confidence": 0.603,
+            "span": { "offset": 365, "length": 1 }
+          },
+          {
+            "content": "324.00",
+            "polygon": [672, 1537, 672, 1591, 654, 1591, 654, 1537],
+            "confidence": 0.995,
+            "span": { "offset": 367, "length": 6 }
+          },
+          {
+            "content": "71",
+            "polygon": [634, 332, 635, 350, 618, 350, 617, 333],
+            "confidence": 0.528,
+            "span": { "offset": 374, "length": 2 }
+          },
+          {
+            "content": "PLACEK",
+            "polygon": [638, 592, 639, 691, 617, 691, 616, 592],
+            "confidence": 0.993,
+            "span": { "offset": 377, "length": 6 }
+          },
+          {
+            "content": "PO",
+            "polygon": [639, 708, 639, 733, 617, 733, 617, 708],
+            "confidence": 0.995,
+            "span": { "offset": 384, "length": 2 }
+          },
+          {
+            "content": "CYGAŃSKU",
+            "polygon": [639, 746, 639, 849, 617, 849, 617, 746],
+            "confidence": 0.962,
+            "span": { "offset": 387, "length": 8 }
+          },
+          {
+            "content": "25",
+            "polygon": [641, 1413, 641, 1432, 622, 1432, 622, 1413],
+            "confidence": 0.996,
+            "span": { "offset": 396, "length": 2 }
+          },
+          {
+            "content": "963.34",
+            "polygon": [642, 1534, 642, 1590, 625, 1590, 623, 1534],
+            "confidence": 0.961,
+            "span": { "offset": 399, "length": 6 }
+          },
+          {
+            "content": "6",
+            "polygon": [599, 332, 600, 339, 586, 340, 585, 333],
+            "confidence": 0.996,
+            "span": { "offset": 406, "length": 1 }
+          },
+          {
+            "content": "SANDACZ",
+            "polygon": [606, 594, 607, 715, 585, 715, 585, 594],
+            "confidence": 0.994,
+            "span": { "offset": 408, "length": 7 }
+          },
+          {
+            "content": "Z",
+            "polygon": [607, 736, 607, 747, 586, 747, 586, 736],
+            "confidence": 0.951,
+            "span": { "offset": 416, "length": 1 }
+          },
+          {
+            "content": "MASŁEM",
+            "polygon": [607, 751, 607, 826, 586, 827, 586, 752],
+            "confidence": 0.995,
+            "span": { "offset": 418, "length": 6 }
+          },
+          {
+            "content": "CZOSNKOWYM",
+            "polygon": [607, 837, 608, 968, 587, 969, 586, 838],
+            "confidence": 0.993,
+            "span": { "offset": 425, "length": 10 }
+          },
+          {
+            "content": "2.04",
+            "polygon": [609, 1396, 610, 1428, 592, 1429, 591, 1396],
+            "confidence": 0.993,
+            "span": { "offset": 436, "length": 4 }
+          },
+          {
+            "content": "346.80",
+            "polygon": [610, 1532, 611, 1586, 593, 1586, 593, 1532],
+            "confidence": 0.995,
+            "span": { "offset": 441, "length": 6 }
+          },
+          {
+            "content": "VI",
+            "polygon": [564, 332, 564, 349, 551, 349, 551, 332],
+            "confidence": 0.426,
+            "span": { "offset": 448, "length": 2 }
+          },
+          {
+            "content": "SCHAB",
+            "polygon": [574, 595, 573, 677, 554, 677, 554, 595],
+            "confidence": 0.544,
+            "span": { "offset": 451, "length": 5 }
+          },
+          {
+            "content": "PANIEROWANY",
+            "polygon": [573, 693, 576, 888, 557, 888, 554, 693],
+            "confidence": 0.547,
+            "span": { "offset": 457, "length": 11 }
+          },
+          {
+            "content": "0.Vo",
+            "polygon": [575, 1551, 575, 1584, 560, 1584, 560, 1551],
+            "confidence": 0.592,
+            "span": { "offset": 469, "length": 4 }
+          },
+          {
+            "content": "35",
+            "polygon": [539, 332, 539, 353, 521, 352, 521, 332],
+            "confidence": 0.997,
+            "span": { "offset": 474, "length": 2 }
+          },
+          {
+            "content": "SOS",
+            "polygon": [545, 595, 545, 632, 523, 632, 523, 595],
+            "confidence": 0.995,
+            "span": { "offset": 477, "length": 3 }
+          },
+          {
+            "content": "CHRZANOWY",
+            "polygon": [545, 643, 547, 768, 525, 769, 524, 644],
+            "confidence": 0.993,
+            "span": { "offset": 481, "length": 9 }
+          },
+          {
+            "content": "1",
+            "polygon": [546, 1424, 546, 1431, 532, 1431, 532, 1424],
+            "confidence": 0.995,
+            "span": { "offset": 491, "length": 1 }
+          },
+          {
+            "content": "1.80",
+            "polygon": [549, 1552, 550, 1587, 532, 1588, 531, 1553],
+            "confidence": 0.983,
+            "span": { "offset": 493, "length": 4 }
+          },
+          {
+            "content": "34",
+            "polygon": [509, 330, 509, 350, 491, 350, 491, 330],
+            "confidence": 0.997,
+            "span": { "offset": 498, "length": 2 }
+          },
+          {
+            "content": "SOS",
+            "polygon": [513, 593, 514, 631, 494, 632, 493, 593],
+            "confidence": 0.995,
+            "span": { "offset": 501, "length": 3 }
+          },
+          {
+            "content": "CZOSNKOWY",
+            "polygon": [514, 643, 516, 767, 495, 768, 494, 643],
+            "confidence": 0.962,
+            "span": { "offset": 505, "length": 9 }
+          },
+          {
+            "content": "5",
+            "polygon": [518, 1425, 518, 1434, 502, 1434, 502, 1425],
+            "confidence": 0.936,
+            "span": { "offset": 515, "length": 1 }
+          },
+          {
+            "content": "10.00",
+            "polygon": [520, 1547, 521, 1590, 503, 1591, 502, 1548],
+            "confidence": 0.995,
+            "span": { "offset": 517, "length": 5 }
+          },
+          {
+            "content": "11",
+            "polygon": [476, 329, 476, 345, 458, 345, 458, 329],
+            "confidence": 0.995,
+            "span": { "offset": 523, "length": 2 }
+          },
+          {
+            "content": "TURBOT",
+            "polygon": [482, 591, 485, 697, 463, 697, 462, 591],
+            "confidence": 0.993,
+            "span": { "offset": 526, "length": 6 }
+          },
+          {
+            "content": "Z",
+            "polygon": [485, 717, 485, 728, 463, 728, 463, 717],
+            "confidence": 0.961,
+            "span": { "offset": 533, "length": 1 }
+          },
+          {
+            "content": "MASŁEM",
+            "polygon": [485, 732, 487, 807, 465, 808, 464, 732],
+            "confidence": 0.995,
+            "span": { "offset": 535, "length": 6 }
+          },
+          {
+            "content": "CZOSNKOWYM",
+            "polygon": [487, 819, 488, 953, 468, 953, 465, 819],
+            "confidence": 0.974,
+            "span": { "offset": 542, "length": 10 }
+          },
+          {
+            "content": "2.63",
+            "polygon": [489, 1404, 490, 1439, 472, 1439, 471, 1404],
+            "confidence": 0.993,
+            "span": { "offset": 553, "length": 4 }
+          },
+          {
+            "content": "552.30",
+            "polygon": [490, 1541, 491, 1596, 473, 1596, 473, 1542],
+            "confidence": 0.995,
+            "span": { "offset": 558, "length": 6 }
+          },
+          {
+            "content": "27",
+            "polygon": [445, 326, 445, 347, 427, 347, 427, 326],
+            "confidence": 0.991,
+            "span": { "offset": 565, "length": 2 }
+          },
+          {
+            "content": "ZUPA",
+            "polygon": [452, 589, 453, 654, 431, 655, 430, 589],
+            "confidence": 0.991,
+            "span": { "offset": 568, "length": 4 }
+          },
+          {
+            "content": "FLAKI",
+            "polygon": [454, 676, 454, 730, 433, 730, 432, 676],
+            "confidence": 0.994,
+            "span": { "offset": 573, "length": 5 }
+          },
+          {
+            "content": "WOŁOWE",
+            "polygon": [455, 734, 456, 824, 434, 825, 433, 735],
+            "confidence": 0.993,
+            "span": { "offset": 579, "length": 6 }
+          },
+          {
+            "content": "10",
+            "polygon": [458, 1425, 458, 1442, 441, 1442, 441, 1425],
+            "confidence": 0.997,
+            "span": { "offset": 586, "length": 2 }
+          },
+          {
+            "content": "200.00",
+            "polygon": [459, 1546, 460, 1600, 444, 1600, 441, 1546],
+            "confidence": 0.995,
+            "span": { "offset": 589, "length": 6 }
+          },
+          {
+            "content": ".24",
+            "polygon": [413, 317, 413, 345, 394, 345, 394, 317],
+            "confidence": 0.547,
+            "span": { "offset": 596, "length": 3 }
+          },
+          {
+            "content": "ZUPA",
+            "polygon": [420, 587, 421, 654, 399, 654, 398, 587],
+            "confidence": 0.725,
+            "span": { "offset": 600, "length": 4 }
+          },
+          {
+            "content": "KAPUŚNIAK",
+            "polygon": [421, 674, 423, 784, 402, 785, 400, 675],
+            "confidence": 0.993,
+            "span": { "offset": 605, "length": 9 }
+          },
+          {
+            "content": "4",
+            "polygon": [425, 1437, 426, 1446, 411, 1447, 410, 1438],
+            "confidence": 0.559,
+            "span": { "offset": 615, "length": 1 }
+          },
+          {
+            "content": "84.00",
+            "polygon": [429, 1560, 429, 1605, 411, 1605, 411, 1560],
+            "confidence": 0.844,
+            "span": { "offset": 617, "length": 5 }
+          },
+          {
+            "content": "1",
+            "polygon": [378, 324, 378, 331, 363, 330, 363, 323],
+            "confidence": 0.995,
+            "span": { "offset": 623, "length": 1 }
+          },
+          {
+            "content": "ZUPA",
+            "polygon": [389, 586, 391, 655, 365, 655, 362, 587],
+            "confidence": 0.989,
+            "span": { "offset": 625, "length": 4 }
+          },
+          {
+            "content": "ROSÓŁ",
+            "polygon": [391, 675, 392, 746, 367, 746, 365, 675],
+            "confidence": 0.994,
+            "span": { "offset": 630, "length": 5 }
+          },
+          {
+            "content": "19",
+            "polygon": [396, 1432, 396, 1447, 379, 1448, 378, 1432],
+            "confidence": 0.995,
+            "span": { "offset": 636, "length": 2 }
+          },
+          {
+            "content": "280.54",
+            "polygon": [398, 1554, 398, 1610, 381, 1610, 380, 1555],
+            "confidence": 0.994,
+            "span": { "offset": 639, "length": 6 }
+          },
+          {
+            "content": "26",
+            "polygon": [347, 320, 347, 340, 329, 340, 329, 320],
+            "confidence": 0.997,
+            "span": { "offset": 646, "length": 2 }
+          },
+          {
+            "content": "ZUPA",
+            "polygon": [355, 586, 356, 652, 334, 652, 332, 586],
+            "confidence": 0.992,
+            "span": { "offset": 649, "length": 4 }
+          },
+          {
+            "content": "ŻUREK",
+            "polygon": [356, 676, 357, 739, 336, 740, 335, 677],
+            "confidence": 0.842,
+            "span": { "offset": 654, "length": 5 }
+          },
+          {
+            "content": "W",
+            "polygon": [357, 745, 357, 757, 336, 757, 336, 746],
+            "confidence": 0.995,
+            "span": { "offset": 660, "length": 1 }
+          },
+          {
+            "content": "MISCE",
+            "polygon": [358, 770, 360, 830, 337, 831, 336, 770],
+            "confidence": 0.995,
+            "span": { "offset": 662, "length": 5 }
+          },
+          {
+            "content": "21",
+            "polygon": [363, 1434, 364, 1455, 346, 1456, 345, 1434],
+            "confidence": 0.995,
+            "span": { "offset": 668, "length": 2 }
+          },
+          {
+            "content": "416.00",
+            "polygon": [366, 1558, 366, 1614, 349, 1615, 347, 1559],
+            "confidence": 0.995,
+            "span": { "offset": 671, "length": 6 }
+          },
+          {
+            "content": "30",
+            "polygon": [314, 318, 314, 339, 295, 339, 295, 318],
+            "confidence": 0.98,
+            "span": { "offset": 678, "length": 2 }
+          },
+          {
+            "content": "ZESTAW",
+            "polygon": [323, 585, 323, 659, 301, 659, 299, 585],
+            "confidence": 0.985,
+            "span": { "offset": 681, "length": 6 }
+          },
+          {
+            "content": "SURÓWEK",
+            "polygon": [323, 678, 325, 776, 303, 777, 301, 678],
+            "confidence": 0.994,
+            "span": { "offset": 688, "length": 7 }
+          },
+          {
+            "content": "30",
+            "polygon": [332, 1437, 331, 1455, 313, 1455, 314, 1436],
+            "confidence": 0.995,
+            "span": { "offset": 696, "length": 2 }
+          },
+          {
+            "content": "239.20",
+            "polygon": [334, 1562, 335, 1618, 316, 1619, 314, 1563],
+            "confidence": 0.995,
+            "span": { "offset": 699, "length": 6 }
+          },
+          {
+            "content": "29",
+            "polygon": [281, 316, 282, 338, 263, 339, 262, 317],
+            "confidence": 0.997,
+            "span": { "offset": 706, "length": 2 }
+          },
+          {
+            "content": "ZIEMNIAKI",
+            "polygon": [288, 584, 290, 685, 269, 686, 266, 584],
+            "confidence": 0.984,
+            "span": { "offset": 709, "length": 9 }
+          },
+          {
+            "content": "Z",
+            "polygon": [290, 694, 290, 705, 269, 706, 269, 694],
+            "confidence": 0.995,
+            "span": { "offset": 719, "length": 1 }
+          },
+          {
+            "content": "PIECA",
+            "polygon": [290, 715, 291, 773, 270, 773, 269, 715],
+            "confidence": 0.993,
+            "span": { "offset": 721, "length": 5 }
+          },
+          {
+            "content": "6",
+            "polygon": [298, 1449, 298, 1457, 283, 1458, 282, 1450],
+            "confidence": 0.995,
+            "span": { "offset": 727, "length": 1 }
+          },
+          {
+            "content": "54.00",
+            "polygon": [301, 1576, 302, 1623, 283, 1624, 282, 1576],
+            "confidence": 0.994,
+            "span": { "offset": 729, "length": 5 }
+          },
+          {
+            "content": "12",
+            "polygon": [248, 318, 248, 338, 230, 338, 230, 318],
+            "confidence": 0.997,
+            "span": { "offset": 735, "length": 2 }
+          },
+          {
+            "content": "ZIEMNIAKI",
+            "polygon": [254, 583, 257, 685, 235, 686, 232, 584],
+            "confidence": 0.993,
+            "span": { "offset": 738, "length": 9 }
+          },
+          {
+            "content": "Z",
+            "polygon": [257, 694, 257, 705, 235, 706, 235, 694],
+            "confidence": 0.995,
+            "span": { "offset": 748, "length": 1 }
+          },
+          {
+            "content": "WODY",
+            "polygon": [257, 714, 258, 777, 236, 777, 235, 714],
+            "confidence": 0.993,
+            "span": { "offset": 750, "length": 4 }
+          },
+          {
+            "content": "6",
+            "polygon": [264, 1451, 264, 1460, 247, 1461, 247, 1452],
+            "confidence": 0.995,
+            "span": { "offset": 755, "length": 1 }
+          },
+          {
+            "content": "54.00",
+            "polygon": [269, 1579, 269, 1626, 249, 1626, 249, 1579],
+            "confidence": 0.995,
+            "span": { "offset": 757, "length": 5 }
+          },
+          {
+            "content": "7",
+            "polygon": [215, 317, 215, 325, 195, 324, 195, 316],
+            "confidence": 0.948,
+            "span": { "offset": 763, "length": 1 }
+          },
+          {
+            "content": "ŁOSOŚ",
+            "polygon": [221, 581, 224, 674, 201, 675, 200, 581],
+            "confidence": 0.934,
+            "span": { "offset": 765, "length": 5 }
+          },
+          {
+            "content": "Z",
+            "polygon": [225, 694, 225, 705, 201, 705, 201, 695],
+            "confidence": 0.933,
+            "span": { "offset": 771, "length": 1 }
+          },
+          {
+            "content": "MASŁEM",
+            "polygon": [225, 709, 227, 789, 203, 789, 201, 710],
+            "confidence": 0.748,
+            "span": { "offset": 773, "length": 6 }
+          },
+          {
+            "content": "CZOSNKOWYM",
+            "polygon": [227, 799, 229, 940, 206, 941, 203, 800],
+            "confidence": 0.951,
+            "span": { "offset": 780, "length": 10 }
+          },
+          {
+            "content": "0.61",
+            "polygon": [232, 1427, 233, 1465, 214, 1465, 213, 1427],
+            "confidence": 0.993,
+            "span": { "offset": 791, "length": 4 }
+          },
+          {
+            "content": "91.50",
+            "polygon": [236, 1582, 237, 1630, 217, 1630, 216, 1582],
+            "confidence": 0.995,
+            "span": { "offset": 796, "length": 5 }
+          },
+          {
+            "content": "370",
+            "polygon": [183, 316, 183, 348, 163, 348, 163, 316],
+            "confidence": 0.995,
+            "span": { "offset": 802, "length": 3 }
+          },
+          {
+            "content": "PIECZEŃ",
+            "polygon": [188, 576, 190, 693, 167, 693, 165, 576],
+            "confidence": 0.961,
+            "span": { "offset": 806, "length": 7 }
+          },
+          {
+            "content": "ZKARKÓWKI",
+            "polygon": [190, 707, 193, 838, 170, 838, 167, 707],
+            "confidence": 0.879,
+            "span": { "offset": 814, "length": 9 }
+          },
+          {
+            "content": "7",
+            "polygon": [198, 1458, 197, 1468, 179, 1467, 180, 1458],
+            "confidence": 0.697,
+            "span": { "offset": 824, "length": 1 }
+          },
+          {
+            "content": "266.00",
+            "polygon": [202, 1574, 204, 1633, 183, 1634, 182, 1575],
+            "confidence": 0.915,
+            "span": { "offset": 826, "length": 6 }
+          },
+          {
+            "content": "3",
+            "polygon": [149, 315, 149, 326, 129, 326, 129, 315],
+            "confidence": 0.995,
+            "span": { "offset": 833, "length": 1 }
+          },
+          {
+            "content": "1",
+            "polygon": [149, 338, 149, 346, 129, 346, 129, 338],
+            "confidence": 0.995,
+            "span": { "offset": 835, "length": 1 }
+          },
+          {
+            "content": ".7up",
+            "polygon": [156, 572, 156, 609, 128, 609, 128, 572],
+            "confidence": 0.948,
+            "span": { "offset": 837, "length": 4 }
+          },
+          {
+            "content": "0,2l",
+            "polygon": [156, 614, 156, 647, 128, 647, 128, 614],
+            "confidence": 0.592,
+            "span": { "offset": 842, "length": 4 }
+          },
+          {
+            "content": "1",
+            "polygon": [164, 1460, 164, 1468, 147, 1468, 147, 1460],
+            "confidence": 0.972,
+            "span": { "offset": 847, "length": 1 }
+          },
+          {
+            "content": "9.00",
+            "polygon": [168, 1598, 169, 1635, 149, 1636, 148, 1598],
+            "confidence": 0.993,
+            "span": { "offset": 849, "length": 4 }
+          },
+          {
+            "content": "362",
+            "polygon": [115, 314, 115, 347, 96, 347, 96, 314],
+            "confidence": 0.994,
+            "span": { "offset": 854, "length": 3 }
+          },
+          {
+            "content": "APA",
+            "polygon": [122, 575, 123, 615, 97, 615, 97, 576],
+            "confidence": 0.961,
+            "span": { "offset": 858, "length": 3 }
+          },
+          {
+            "content": "PALE",
+            "polygon": [123, 620, 124, 671, 97, 671, 97, 620],
+            "confidence": 0.587,
+            "span": { "offset": 862, "length": 4 }
+          },
+          {
+            "content": "ALE",
+            "polygon": [124, 678, 124, 714, 97, 714, 97, 677],
+            "confidence": 0.577,
+            "span": { "offset": 867, "length": 3 }
+          },
+          {
+            "content": "1",
+            "polygon": [129, 1461, 128, 1469, 112, 1469, 113, 1461],
+            "confidence": 0.756,
+            "span": { "offset": 871, "length": 1 }
+          },
+          {
+            "content": "16.00",
+            "polygon": [135, 1591, 136, 1638, 115, 1639, 114, 1591],
+            "confidence": 0.844,
+            "span": { "offset": 873, "length": 5 }
+          },
+          {
+            "content": "100_1",
+            "polygon": [82, 314, 82, 368, 61, 368, 61, 314],
+            "confidence": 0.964,
+            "span": { "offset": 879, "length": 5 }
+          },
+          {
+            "content": ".DESPERADOS",
+            "polygon": [86, 572, 89, 714, 66, 715, 65, 573],
+            "confidence": 0.989,
+            "span": { "offset": 885, "length": 11 }
+          },
+          {
+            "content": "0%",
+            "polygon": [89, 719, 90, 750, 66, 750, 66, 719],
+            "confidence": 0.961,
+            "span": { "offset": 897, "length": 2 }
+          },
+          {
+            "content": "VIRGIN",
+            "polygon": [90, 754, 90, 818, 67, 819, 67, 755],
+            "confidence": 0.992,
+            "span": { "offset": 900, "length": 6 }
+          },
+          {
+            "content": "2",
+            "polygon": [96, 1463, 96, 1472, 79, 1472, 79, 1463],
+            "confidence": 0.996,
+            "span": { "offset": 907, "length": 1 }
+          },
+          {
+            "content": "28.00",
+            "polygon": [100, 1592, 101, 1639, 82, 1639, 81, 1592],
+            "confidence": 0.995,
+            "span": { "offset": 909, "length": 5 }
+          },
+          {
+            "content": "HEINEKEN",
+            "polygon": [55, 575, 54, 675, 29, 675, 28, 575],
+            "confidence": 0.708,
+            "span": { "offset": 915, "length": 8 }
+          },
+          {
+            "content": "0%",
+            "polygon": [54, 684, 55, 723, 31, 723, 30, 684],
+            "confidence": 0.882,
+            "span": { "offset": 924, "length": 2 }
+          },
+          {
+            "content": "42.001",
+            "polygon": [64, 1593, 68, 1647, 49, 1647, 46, 1593],
+            "confidence": 0.572,
+            "span": { "offset": 927, "length": 6 }
+          },
+          {
+            "content": ".HERBATA",
+            "polygon": [18, 570, 20, 669, 0, 670, 0, 571],
+            "confidence": 0.945,
+            "span": { "offset": 934, "length": 8 }
+          },
+          {
+            "content": "4",
+            "polygon": [28, 1465, 28, 1474, 11, 1475, 11, 1466],
+            "confidence": 0.996,
+            "span": { "offset": 943, "length": 1 }
+          },
+          {
+            "content": "48.00",
+            "polygon": [33, 1594, 34, 1643, 14, 1644, 12, 1595],
+            "confidence": 0.995,
+            "span": { "offset": 945, "length": 5 }
+          },
+          {
+            "content": "83",
+            "polygon": [12, 313, 12, 333, 0, 333, 0, 314],
+            "confidence": 0.661,
+            "span": { "offset": 951, "length": 2 }
+          }
+        ],
+        "selectionMarks": [
+          {
+            "state": "selected",
+            "polygon": [401, 586, 416, 586, 416, 601, 401, 601],
+            "confidence": 0.1,
+            "span": { "offset": 954, "length": 10 }
+          },
+          {
+            "state": "selected",
+            "polygon": [368, 585, 384, 585, 384, 600, 368, 600],
+            "confidence": 0.1,
+            "span": { "offset": 965, "length": 10 }
+          },
+          {
+            "state": "selected",
+            "polygon": [334, 584, 351, 584, 351, 599, 334, 599],
+            "confidence": 0.1,
+            "span": { "offset": 976, "length": 10 }
+          },
+          {
+            "state": "selected",
+            "polygon": [301, 583, 318, 583, 318, 600, 301, 600],
+            "confidence": 0.1,
+            "span": { "offset": 987, "length": 10 }
+          },
+          {
+            "state": "selected",
+            "polygon": [268, 584, 284, 584, 284, 600, 268, 600],
+            "confidence": 0.1,
+            "span": { "offset": 998, "length": 10 }
+          },
+          {
+            "state": "selected",
+            "polygon": [235, 583, 252, 583, 252, 600, 235, 600],
+            "confidence": 0.1,
+            "span": { "offset": 1009, "length": 10 }
+          }
+        ],
+        "lines": [
+          {
+            "content": "IGotówka",
+            "polygon": [1078, 320, 1077, 427, 1060, 427, 1061, 320],
+            "spans": [{ "offset": 0, "length": 8 }]
+          },
+          {
+            "content": "Indeks",
+            "polygon": [1035, 425, 1034, 488, 1017, 487, 1017, 425],
+            "spans": [{ "offset": 9, "length": 6 }]
+          },
+          {
+            "content": "Produkt",
+            "polygon": [1035, 895, 1035, 969, 1017, 969, 1017, 895],
+            "spans": [{ "offset": 16, "length": 7 }]
+          },
+          {
+            "content": "Ilość",
+            "polygon": [1031, 1330, 1031, 1373, 1014, 1373, 1015, 1329],
+            "spans": [{ "offset": 24, "length": 5 }]
+          },
+          {
+            "content": "181",
+            "polygon": [1007, 333, 1007, 365, 991, 365, 991, 333],
+            "spans": [{ "offset": 30, "length": 3 }]
+          },
+          {
+            "content": "DORSZ ZESTAW",
+            "polygon": [1011, 589, 1011, 774, 990, 774, 990, 589],
+            "spans": [{ "offset": 34, "length": 12 }]
+          },
+          {
+            "content": "Wartość",
+            "polygon": [1031, 1464, 1030, 1539, 1012, 1539, 1013, 1463],
+            "spans": [{ "offset": 47, "length": 7 }]
+          },
+          {
+            "content": "19",
+            "polygon": [1004, 1403, 1004, 1422, 988, 1423, 988, 1403],
+            "spans": [{ "offset": 55, "length": 2 }]
+          },
+          {
+            "content": "793.79",
+            "polygon": [1004, 1523, 1005, 1581, 987, 1581, 986, 1523],
+            "spans": [{ "offset": 58, "length": 6 }]
+          },
+          {
+            "content": "4",
+            "polygon": [976, 333, 976, 343, 961, 343, 962, 333],
+            "spans": [{ "offset": 65, "length": 1 }]
+          },
+          {
+            "content": "FILET z DORSZA",
+            "polygon": [981, 589, 982, 810, 961, 810, 961, 589],
+            "spans": [{ "offset": 67, "length": 14 }]
+          },
+          {
+            "content": "3.28",
+            "polygon": [976, 1391, 976, 1426, 960, 1426, 960, 1392],
+            "spans": [{ "offset": 82, "length": 4 }]
+          },
+          {
+            "content": "482.10",
+            "polygon": [975, 1527, 976, 1584, 959, 1584, 959, 1527],
+            "spans": [{ "offset": 87, "length": 6 }]
+          },
+          {
+            "content": "79",
+            "polygon": [949, 329, 948, 353, 931, 353, 932, 329],
+            "spans": [{ "offset": 94, "length": 2 }]
+          },
+          {
+            "content": "FILET Z KURCZAKA",
+            "polygon": [952, 590, 952, 846, 931, 846, 931, 590],
+            "spans": [{ "offset": 97, "length": 16 }]
+          },
+          {
+            "content": "2",
+            "polygon": [946, 1417, 946, 1430, 931, 1430, 931, 1417],
+            "spans": [{ "offset": 114, "length": 1 }]
+          },
+          {
+            "content": "66.50",
+            "polygon": [947, 1540, 948, 1585, 931, 1586, 931, 1540],
+            "spans": [{ "offset": 116, "length": 5 }]
+          },
+          {
+            "content": "23",
+            "polygon": [917, 327, 918, 355, 901, 355, 901, 327],
+            "spans": [{ "offset": 122, "length": 2 }]
+          },
+          {
+            "content": "FRYTKI",
+            "polygon": [921, 585, 921, 656, 902, 656, 902, 585],
+            "spans": [{ "offset": 125, "length": 6 }]
+          },
+          {
+            "content": "23",
+            "polygon": [919, 1409, 919, 1434, 901, 1434, 901, 1409],
+            "spans": [{ "offset": 132, "length": 2 }]
+          },
+          {
+            "content": "204.31",
+            "polygon": [919, 1530, 919, 1589, 901, 1589, 901, 1530],
+            "spans": [{ "offset": 135, "length": 6 }]
+          },
+          {
+            "content": "66",
+            "polygon": [886, 327, 886, 350, 870, 351, 870, 327],
+            "spans": [{ "offset": 142, "length": 2 }]
+          },
+          {
+            "content": "GOLONKA PO BAWARSKU",
+            "polygon": [891, 587, 891, 873, 870, 873, 870, 587],
+            "spans": [{ "offset": 145, "length": 19 }]
+          },
+          {
+            "content": "2.19",
+            "polygon": [890, 1396, 890, 1434, 873, 1435, 872, 1396],
+            "spans": [{ "offset": 165, "length": 4 }]
+          },
+          {
+            "content": "164.25",
+            "polygon": [890, 1536, 890, 1591, 872, 1591, 872, 1536],
+            "spans": [{ "offset": 170, "length": 6 }]
+          },
+          {
+            "content": "73",
+            "polygon": [854, 328, 854, 348, 839, 349, 839, 328],
+            "spans": [{ "offset": 177, "length": 2 }]
+          },
+          {
+            "content": "GULASZ WIEPRZOWY",
+            "polygon": [858, 586, 858, 831, 838, 831, 838, 586],
+            "spans": [{ "offset": 180, "length": 16 }]
+          },
+          {
+            "content": "10",
+            "polygon": [858, 1417, 858, 1439, 842, 1439, 841, 1417],
+            "spans": [{ "offset": 197, "length": 2 }]
+          },
+          {
+            "content": "358.90",
+            "polygon": [859, 1537, 859, 1596, 841, 1596, 841, 1537],
+            "spans": [{ "offset": 200, "length": 6 }]
+          },
+          {
+            "content": "9",
+            "polygon": [823, 329, 823, 338, 807, 339, 807, 329],
+            "spans": [{ "offset": 207, "length": 1 }]
+          },
+          {
+            "content": "HALIBUT",
+            "polygon": [828, 587, 828, 703, 808, 703, 808, 587],
+            "spans": [{ "offset": 209, "length": 7 }]
+          },
+          {
+            "content": "0.69",
+            "polygon": [829, 1402, 829, 1438, 812, 1438, 811, 1403],
+            "spans": [{ "offset": 217, "length": 4 }]
+          },
+          {
+            "content": "96.60",
+            "polygon": [828, 1550, 829, 1596, 812, 1597, 811, 1551],
+            "spans": [{ "offset": 222, "length": 5 }]
+          },
+          {
+            "content": "76",
+            "polygon": [791, 325, 792, 350, 775, 350, 775, 325],
+            "spans": [{ "offset": 228, "length": 2 }]
+          },
+          {
+            "content": "KOTLET CHŁOP",
+            "polygon": [796, 586, 795, 805, 775, 805, 776, 586],
+            "spans": [{ "offset": 231, "length": 12 }]
+          },
+          {
+            "content": "46",
+            "polygon": [796, 1418, 795, 1441, 779, 1441, 780, 1418],
+            "spans": [{ "offset": 244, "length": 2 }]
+          },
+          {
+            "content": "1 729.00",
+            "polygon": [797, 1526, 798, 1598, 779, 1598, 778, 1526],
+            "spans": [{ "offset": 247, "length": 8 }]
+          },
+          {
+            "content": "77",
+            "polygon": [761, 325, 761, 351, 743, 351, 742, 325],
+            "spans": [{ "offset": 256, "length": 2 }]
+          },
+          {
+            "content": "KOTLET DE VOLAILLE",
+            "polygon": [765, 588, 765, 876, 743, 876, 743, 588],
+            "spans": [{ "offset": 259, "length": 18 }]
+          },
+          {
+            "content": "41",
+            "polygon": [765, 1418, 765, 1437, 748, 1437, 749, 1418],
+            "spans": [{ "offset": 278, "length": 2 }]
+          },
+          {
+            "content": "1 550.40",
+            "polygon": [767, 1526, 768, 1599, 748, 1599, 748, 1526],
+            "spans": [{ "offset": 281, "length": 8 }]
+          },
+          {
+            "content": "32",
+            "polygon": [728, 326, 729, 349, 712, 350, 711, 326],
+            "spans": [{ "offset": 290, "length": 2 }]
+          },
+          {
+            "content": "KAPUSTA ZASMAZANA",
+            "polygon": [733, 587, 733, 809, 712, 809, 711, 587],
+            "spans": [{ "offset": 293, "length": 17 }]
+          },
+          {
+            "content": "5",
+            "polygon": [733, 1427, 733, 1438, 716, 1439, 717, 1428],
+            "spans": [{ "offset": 311, "length": 1 }]
+          },
+          {
+            "content": "45.00",
+            "polygon": [734, 1550, 735, 1599, 718, 1600, 716, 1551],
+            "spans": [{ "offset": 313, "length": 5 }]
+          },
+          {
+            "content": "41",
+            "polygon": [697, 326, 697, 349, 680, 349, 680, 326],
+            "spans": [{ "offset": 319, "length": 2 }]
+          },
+          {
+            "content": "MASŁO CZOSNKOWE",
+            "polygon": [702, 589, 701, 800, 679, 800, 680, 589],
+            "spans": [{ "offset": 322, "length": 15 }]
+          },
+          {
+            "content": "2",
+            "polygon": [701, 1426, 701, 1437, 686, 1437, 687, 1426],
+            "spans": [{ "offset": 338, "length": 1 }]
+          },
+          {
+            "content": "3.80",
+            "polygon": [703, 1558, 703, 1597, 684, 1597, 684, 1559],
+            "spans": [{ "offset": 340, "length": 4 }]
+          },
+          {
+            "content": "78",
+            "polygon": [665, 329, 666, 352, 648, 352, 649, 328],
+            "spans": [{ "offset": 345, "length": 2 }]
+          },
+          {
+            "content": "PIERŚ Z KURCZAKA",
+            "polygon": [670, 590, 670, 844, 647, 844, 647, 590],
+            "spans": [{ "offset": 348, "length": 16 }]
+          },
+          {
+            "content": "9",
+            "polygon": [669, 1425, 669, 1432, 654, 1432, 654, 1426],
+            "spans": [{ "offset": 365, "length": 1 }]
+          },
+          {
+            "content": "324.00",
+            "polygon": [672, 1535, 672, 1593, 654, 1593, 654, 1535],
+            "spans": [{ "offset": 367, "length": 6 }]
+          },
+          {
+            "content": "71",
+            "polygon": [633, 326, 634, 350, 617, 350, 617, 325],
+            "spans": [{ "offset": 374, "length": 2 }]
+          },
+          {
+            "content": "PLACEK PO CYGAŃSKU",
+            "polygon": [638, 592, 639, 855, 617, 855, 616, 592],
+            "spans": [{ "offset": 377, "length": 18 }]
+          },
+          {
+            "content": "25",
+            "polygon": [641, 1411, 640, 1433, 623, 1433, 622, 1411],
+            "spans": [{ "offset": 396, "length": 2 }]
+          },
+          {
+            "content": "963.34",
+            "polygon": [641, 1533, 643, 1594, 624, 1595, 623, 1533],
+            "spans": [{ "offset": 399, "length": 6 }]
+          },
+          {
+            "content": "6",
+            "polygon": [599, 332, 600, 343, 586, 344, 585, 333],
+            "spans": [{ "offset": 406, "length": 1 }]
+          },
+          {
+            "content": "SANDACZ Z MASŁEM CZOSNKOWYM",
+            "polygon": [606, 592, 608, 977, 586, 977, 585, 592],
+            "spans": [{ "offset": 408, "length": 27 }]
+          },
+          {
+            "content": "2.04",
+            "polygon": [609, 1393, 609, 1429, 593, 1430, 591, 1394],
+            "spans": [{ "offset": 436, "length": 4 }]
+          },
+          {
+            "content": "346.80",
+            "polygon": [610, 1530, 611, 1586, 593, 1587, 592, 1530],
+            "spans": [{ "offset": 441, "length": 6 }]
+          },
+          {
+            "content": "VI",
+            "polygon": [563, 330, 564, 350, 551, 350, 551, 330],
+            "spans": [{ "offset": 448, "length": 2 }]
+          },
+          {
+            "content": "SCHAB PANIEROWANY",
+            "polygon": [573, 593, 576, 889, 555, 889, 553, 593],
+            "spans": [{ "offset": 451, "length": 17 }]
+          },
+          {
+            "content": "0.Vo",
+            "polygon": [575, 1551, 575, 1586, 560, 1586, 560, 1551],
+            "spans": [{ "offset": 469, "length": 4 }]
+          },
+          {
+            "content": "35",
+            "polygon": [539, 330, 539, 353, 521, 353, 522, 329],
+            "spans": [{ "offset": 474, "length": 2 }]
+          },
+          {
+            "content": "SOS CHRZANOWY",
+            "polygon": [544, 593, 546, 770, 525, 770, 522, 593],
+            "spans": [{ "offset": 477, "length": 13 }]
+          },
+          {
+            "content": "1",
+            "polygon": [546, 1424, 546, 1430, 532, 1431, 532, 1425],
+            "spans": [{ "offset": 491, "length": 1 }]
+          },
+          {
+            "content": "1.80",
+            "polygon": [549, 1552, 549, 1587, 533, 1588, 531, 1553],
+            "spans": [{ "offset": 493, "length": 4 }]
+          },
+          {
+            "content": "34",
+            "polygon": [509, 328, 509, 350, 491, 350, 491, 328],
+            "spans": [{ "offset": 498, "length": 2 }]
+          },
+          {
+            "content": "SOS CZOSNKOWY",
+            "polygon": [513, 590, 515, 769, 495, 770, 493, 590],
+            "spans": [{ "offset": 501, "length": 13 }]
+          },
+          {
+            "content": "5",
+            "polygon": [518, 1424, 518, 1436, 502, 1436, 502, 1425],
+            "spans": [{ "offset": 515, "length": 1 }]
+          },
+          {
+            "content": "10.00",
+            "polygon": [519, 1547, 521, 1592, 503, 1592, 502, 1547],
+            "spans": [{ "offset": 517, "length": 5 }]
+          },
+          {
+            "content": "11",
+            "polygon": [476, 327, 476, 346, 458, 346, 458, 327],
+            "spans": [{ "offset": 523, "length": 2 }]
+          },
+          {
+            "content": "TURBOT Z MASŁEM CZOSNKOWYM",
+            "polygon": [483, 590, 488, 960, 467, 961, 461, 590],
+            "spans": [{ "offset": 526, "length": 26 }]
+          },
+          {
+            "content": "2.63",
+            "polygon": [489, 1402, 489, 1439, 472, 1440, 471, 1403],
+            "spans": [{ "offset": 553, "length": 4 }]
+          },
+          {
+            "content": "552.30",
+            "polygon": [490, 1541, 491, 1597, 473, 1597, 473, 1541],
+            "spans": [{ "offset": 558, "length": 6 }]
+          },
+          {
+            "content": "27",
+            "polygon": [445, 324, 445, 347, 427, 347, 427, 324],
+            "spans": [{ "offset": 565, "length": 2 }]
+          },
+          {
+            "content": "ZUPA FLAKI WOŁOWE",
+            "polygon": [452, 586, 456, 829, 434, 829, 430, 586],
+            "spans": [{ "offset": 568, "length": 17 }]
+          },
+          {
+            "content": "10",
+            "polygon": [458, 1423, 458, 1443, 442, 1444, 441, 1423],
+            "spans": [{ "offset": 586, "length": 2 }]
+          },
+          {
+            "content": "200.00",
+            "polygon": [459, 1543, 460, 1601, 443, 1602, 441, 1544],
+            "spans": [{ "offset": 589, "length": 6 }]
+          },
+          {
+            "content": ".24",
+            "polygon": [412, 317, 413, 350, 394, 350, 395, 317],
+            "spans": [{ "offset": 596, "length": 3 }]
+          },
+          {
+            "content": "ZUPA KAPUŚNIAK",
+            "polygon": [420, 583, 424, 789, 401, 789, 397, 583],
+            "spans": [{ "offset": 600, "length": 14 }]
+          },
+          {
+            "content": "4",
+            "polygon": [425, 1433, 426, 1448, 411, 1449, 410, 1434],
+            "spans": [{ "offset": 615, "length": 1 }]
+          },
+          {
+            "content": "84.00",
+            "polygon": [429, 1556, 429, 1606, 412, 1607, 411, 1557],
+            "spans": [{ "offset": 617, "length": 5 }]
+          },
+          {
+            "content": "1",
+            "polygon": [378, 321, 378, 331, 363, 331, 364, 321],
+            "spans": [{ "offset": 623, "length": 1 }]
+          },
+          {
+            "content": "ZUPA ROSÓŁ",
+            "polygon": [389, 584, 392, 745, 366, 745, 362, 585],
+            "spans": [{ "offset": 625, "length": 10 }]
+          },
+          {
+            "content": "19",
+            "polygon": [396, 1430, 396, 1449, 379, 1449, 378, 1431],
+            "spans": [{ "offset": 636, "length": 2 }]
+          },
+          {
+            "content": "280.54",
+            "polygon": [398, 1553, 399, 1610, 380, 1611, 379, 1553],
+            "spans": [{ "offset": 639, "length": 6 }]
+          },
+          {
+            "content": "26",
+            "polygon": [347, 317, 347, 342, 329, 342, 329, 317],
+            "spans": [{ "offset": 646, "length": 2 }]
+          },
+          {
+            "content": "ZUPA ŻUREK W MISCE",
+            "polygon": [355, 581, 359, 834, 337, 835, 332, 581],
+            "spans": [{ "offset": 649, "length": 18 }]
+          },
+          {
+            "content": "21",
+            "polygon": [363, 1432, 363, 1455, 346, 1456, 345, 1433],
+            "spans": [{ "offset": 668, "length": 2 }]
+          },
+          {
+            "content": "416.00",
+            "polygon": [365, 1558, 366, 1617, 348, 1617, 347, 1558],
+            "spans": [{ "offset": 671, "length": 6 }]
+          },
+          {
+            "content": "30",
+            "polygon": [314, 317, 314, 342, 296, 342, 295, 317],
+            "spans": [{ "offset": 678, "length": 2 }]
+          },
+          {
+            "content": "ZESTAW SURÓWEK",
+            "polygon": [322, 583, 326, 780, 302, 780, 298, 583],
+            "spans": [{ "offset": 681, "length": 14 }]
+          },
+          {
+            "content": "30",
+            "polygon": [331, 1436, 330, 1456, 313, 1456, 313, 1437],
+            "spans": [{ "offset": 696, "length": 2 }]
+          },
+          {
+            "content": "239.20",
+            "polygon": [334, 1560, 335, 1619, 315, 1620, 314, 1560],
+            "spans": [{ "offset": 699, "length": 6 }]
+          },
+          {
+            "content": "29",
+            "polygon": [281, 315, 282, 340, 263, 340, 262, 316],
+            "spans": [{ "offset": 706, "length": 2 }]
+          },
+          {
+            "content": "ZIEMNIAKI Z PIECA",
+            "polygon": [287, 582, 291, 776, 269, 776, 265, 583],
+            "spans": [{ "offset": 709, "length": 17 }]
+          },
+          {
+            "content": "6",
+            "polygon": [297, 1449, 298, 1458, 282, 1459, 282, 1450],
+            "spans": [{ "offset": 727, "length": 1 }]
+          },
+          {
+            "content": "54.00",
+            "polygon": [301, 1576, 302, 1624, 284, 1626, 282, 1576],
+            "spans": [{ "offset": 729, "length": 5 }]
+          },
+          {
+            "content": "12",
+            "polygon": [248, 317, 248, 339, 230, 339, 230, 318],
+            "spans": [{ "offset": 735, "length": 2 }]
+          },
+          {
+            "content": "ZIEMNIAKI Z WODY",
+            "polygon": [254, 580, 258, 779, 236, 779, 232, 581],
+            "spans": [{ "offset": 738, "length": 16 }]
+          },
+          {
+            "content": "6",
+            "polygon": [264, 1451, 264, 1462, 248, 1463, 247, 1452],
+            "spans": [{ "offset": 755, "length": 1 }]
+          },
+          {
+            "content": "54.00",
+            "polygon": [268, 1578, 269, 1627, 249, 1627, 249, 1579],
+            "spans": [{ "offset": 757, "length": 5 }]
+          },
+          {
+            "content": "7",
+            "polygon": [215, 313, 214, 325, 195, 325, 195, 313],
+            "spans": [{ "offset": 763, "length": 1 }]
+          },
+          {
+            "content": "ŁOSOŚ Z MASŁEM CZOSNKOWYM",
+            "polygon": [222, 579, 229, 949, 206, 949, 200, 580],
+            "spans": [{ "offset": 765, "length": 25 }]
+          },
+          {
+            "content": "0.61",
+            "polygon": [231, 1427, 232, 1465, 213, 1466, 213, 1427],
+            "spans": [{ "offset": 791, "length": 4 }]
+          },
+          {
+            "content": "91.50",
+            "polygon": [236, 1580, 236, 1634, 218, 1635, 216, 1581],
+            "spans": [{ "offset": 796, "length": 5 }]
+          },
+          {
+            "content": "370",
+            "polygon": [183, 312, 182, 350, 163, 350, 163, 311],
+            "spans": [{ "offset": 802, "length": 3 }]
+          },
+          {
+            "content": "PIECZEŃ ZKARKÓWKI",
+            "polygon": [187, 573, 192, 838, 169, 839, 165, 573],
+            "spans": [{ "offset": 806, "length": 17 }]
+          },
+          {
+            "content": "7",
+            "polygon": [197, 1456, 197, 1474, 179, 1474, 180, 1457],
+            "spans": [{ "offset": 824, "length": 1 }]
+          },
+          {
+            "content": "266.00",
+            "polygon": [202, 1573, 204, 1635, 183, 1636, 182, 1573],
+            "spans": [{ "offset": 826, "length": 6 }]
+          },
+          {
+            "content": "3 1",
+            "polygon": [149, 313, 148, 347, 129, 347, 129, 313],
+            "spans": [{ "offset": 833, "length": 3 }]
+          },
+          {
+            "content": ".7up 0,2l",
+            "polygon": [155, 572, 156, 648, 128, 648, 129, 572],
+            "spans": [{ "offset": 837, "length": 9 }]
+          },
+          {
+            "content": "1",
+            "polygon": [164, 1459, 164, 1469, 147, 1469, 147, 1460],
+            "spans": [{ "offset": 847, "length": 1 }]
+          },
+          {
+            "content": "9.00",
+            "polygon": [168, 1596, 168, 1636, 150, 1637, 148, 1597],
+            "spans": [{ "offset": 849, "length": 4 }]
+          },
+          {
+            "content": "362",
+            "polygon": [115, 310, 115, 348, 96, 349, 96, 309],
+            "spans": [{ "offset": 854, "length": 3 }]
+          },
+          {
+            "content": "APA PALE ALE",
+            "polygon": [123, 571, 124, 719, 97, 719, 97, 571],
+            "spans": [{ "offset": 858, "length": 12 }]
+          },
+          {
+            "content": "1",
+            "polygon": [128, 1461, 128, 1471, 112, 1471, 113, 1461],
+            "spans": [{ "offset": 871, "length": 1 }]
+          },
+          {
+            "content": "16.00",
+            "polygon": [135, 1590, 135, 1639, 116, 1640, 114, 1590],
+            "spans": [{ "offset": 873, "length": 5 }]
+          },
+          {
+            "content": "100_1",
+            "polygon": [82, 312, 82, 368, 61, 369, 61, 312],
+            "spans": [{ "offset": 879, "length": 5 }]
+          },
+          {
+            "content": ".DESPERADOS 0% VIRGIN",
+            "polygon": [87, 572, 90, 825, 67, 825, 65, 572],
+            "spans": [{ "offset": 885, "length": 21 }]
+          },
+          {
+            "content": "2",
+            "polygon": [96, 1459, 96, 1473, 79, 1473, 79, 1460],
+            "spans": [{ "offset": 907, "length": 1 }]
+          },
+          {
+            "content": "28.00",
+            "polygon": [100, 1589, 101, 1639, 82, 1640, 81, 1590],
+            "spans": [{ "offset": 909, "length": 5 }]
+          },
+          {
+            "content": "HEINEKEN 0%",
+            "polygon": [55, 570, 56, 723, 29, 723, 27, 570],
+            "spans": [{ "offset": 915, "length": 11 }]
+          },
+          {
+            "content": "42.001",
+            "polygon": [64, 1592, 68, 1647, 49, 1648, 46, 1593],
+            "spans": [{ "offset": 927, "length": 6 }]
+          },
+          {
+            "content": ".HERBATA",
+            "polygon": [19, 569, 19, 674, 0, 674, 0, 569],
+            "spans": [{ "offset": 934, "length": 8 }]
+          },
+          {
+            "content": "4",
+            "polygon": [27, 1464, 28, 1477, 11, 1477, 11, 1464],
+            "spans": [{ "offset": 943, "length": 1 }]
+          },
+          {
+            "content": "48.00",
+            "polygon": [32, 1594, 34, 1644, 13, 1645, 12, 1595],
+            "spans": [{ "offset": 945, "length": 5 }]
+          },
+          {
+            "content": "83",
+            "polygon": [11, 310, 12, 334, 0, 335, 0, 310],
+            "spans": [{ "offset": 951, "length": 2 }]
+          }
+        ],
+        "spans": [{ "offset": 0, "length": 1019 }]
+      }
+    ],
+    "tables": [
+      {
+        "rowCount": 32,
+        "columnCount": 4,
+        "cells": [
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 0,
+            "content": "Indeks",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1038, 331, 1037, 579, 1011, 579, 1012, 331]
+              }
+            ],
+            "spans": [{ "offset": 9, "length": 6 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 1,
+            "content": "Produkt",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1037, 579, 1037, 1275, 1010, 1277, 1011, 579]
+              }
+            ],
+            "spans": [{ "offset": 16, "length": 7 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 2,
+            "content": "Ilość",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1037, 1275, 1036, 1424, 1010, 1425, 1010, 1277]
+              }
+            ],
+            "spans": [{ "offset": 24, "length": 5 }]
+          },
+          {
+            "kind": "columnHeader",
+            "rowIndex": 0,
+            "columnIndex": 3,
+            "content": "Wartość",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1036, 1424, 1036, 1576, 1009, 1578, 1010, 1425]
+              }
+            ],
+            "spans": [{ "offset": 47, "length": 7 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 0,
+            "content": "181",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1012, 331, 1011, 579, 981, 579, 980, 330]
+              }
+            ],
+            "spans": [{ "offset": 30, "length": 3 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 1,
+            "content": "DORSZ ZESTAW",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1011, 579, 1010, 1277, 981, 1278, 981, 579]
+              }
+            ],
+            "spans": [{ "offset": 34, "length": 12 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 2,
+            "content": "19",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1010, 1277, 1010, 1425, 981, 1427, 981, 1278]
+              }
+            ],
+            "spans": [{ "offset": 55, "length": 2 }]
+          },
+          {
+            "rowIndex": 1,
+            "columnIndex": 3,
+            "content": "793.79",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [1010, 1425, 1009, 1578, 980, 1580, 981, 1427]
+              }
+            ],
+            "spans": [{ "offset": 58, "length": 6 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 0,
+            "content": "4",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [980, 330, 981, 579, 952, 578, 951, 330]
+              }
+            ],
+            "spans": [{ "offset": 65, "length": 1 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 1,
+            "content": "FILET z DORSZA",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [981, 579, 981, 1278, 953, 1280, 952, 578]
+              }
+            ],
+            "spans": [{ "offset": 67, "length": 14 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 2,
+            "content": "3.28",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [981, 1278, 981, 1427, 952, 1428, 953, 1280]
+              }
+            ],
+            "spans": [{ "offset": 82, "length": 4 }]
+          },
+          {
+            "rowIndex": 2,
+            "columnIndex": 3,
+            "content": "482.10",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [981, 1427, 980, 1580, 953, 1581, 952, 1428]
+              }
+            ],
+            "spans": [{ "offset": 87, "length": 6 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 0,
+            "content": "79",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [951, 330, 952, 578, 924, 578, 923, 329]
+              }
+            ],
+            "spans": [{ "offset": 94, "length": 2 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 1,
+            "content": "FILET Z KURCZAKA",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [952, 578, 953, 1280, 924, 1280, 924, 578]
+              }
+            ],
+            "spans": [{ "offset": 97, "length": 16 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 2,
+            "content": "2",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [953, 1280, 952, 1428, 925, 1430, 924, 1280]
+              }
+            ],
+            "spans": [{ "offset": 114, "length": 1 }]
+          },
+          {
+            "rowIndex": 3,
+            "columnIndex": 3,
+            "content": "66.50",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [952, 1428, 953, 1581, 925, 1583, 925, 1430]
+              }
+            ],
+            "spans": [{ "offset": 116, "length": 5 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 0,
+            "content": "23",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [923, 329, 924, 578, 893, 578, 893, 329]
+              }
+            ],
+            "spans": [{ "offset": 122, "length": 2 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 1,
+            "content": "FRYTKI",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [924, 578, 924, 1280, 894, 1281, 893, 578]
+              }
+            ],
+            "spans": [{ "offset": 125, "length": 6 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 2,
+            "content": "23",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [924, 1280, 925, 1430, 895, 1431, 894, 1281]
+              }
+            ],
+            "spans": [{ "offset": 132, "length": 2 }]
+          },
+          {
+            "rowIndex": 4,
+            "columnIndex": 3,
+            "content": "204.31",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [925, 1430, 925, 1583, 895, 1586, 895, 1431]
+              }
+            ],
+            "spans": [{ "offset": 135, "length": 6 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 0,
+            "content": "66",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [893, 329, 893, 578, 861, 577, 860, 328]
+              }
+            ],
+            "spans": [{ "offset": 142, "length": 2 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 1,
+            "content": "GOLONKA PO BAWARSKU",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [893, 578, 894, 1281, 862, 1283, 861, 577]
+              }
+            ],
+            "spans": [{ "offset": 145, "length": 19 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 2,
+            "content": "2.19",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [894, 1281, 895, 1431, 863, 1433, 862, 1283]
+              }
+            ],
+            "spans": [{ "offset": 165, "length": 4 }]
+          },
+          {
+            "rowIndex": 5,
+            "columnIndex": 3,
+            "content": "164.25",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [895, 1431, 895, 1586, 863, 1587, 863, 1433]
+              }
+            ],
+            "spans": [{ "offset": 170, "length": 6 }]
+          },
+          {
+            "rowIndex": 6,
+            "columnIndex": 0,
+            "content": "73",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [860, 328, 861, 577, 832, 577, 831, 326]
+              }
+            ],
+            "spans": [{ "offset": 177, "length": 2 }]
+          },
+          {
+            "rowIndex": 6,
+            "columnIndex": 1,
+            "content": "GULASZ WIEPRZOWY",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [861, 577, 862, 1283, 833, 1284, 832, 577]
+              }
+            ],
+            "spans": [{ "offset": 180, "length": 16 }]
+          },
+          {
+            "rowIndex": 6,
+            "columnIndex": 2,
+            "content": "10",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [862, 1283, 863, 1433, 834, 1434, 833, 1284]
+              }
+            ],
+            "spans": [{ "offset": 197, "length": 2 }]
+          },
+          {
+            "rowIndex": 6,
+            "columnIndex": 3,
+            "content": "358.90",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [863, 1433, 863, 1587, 835, 1590, 834, 1434]
+              }
+            ],
+            "spans": [{ "offset": 200, "length": 6 }]
+          },
+          {
+            "rowIndex": 7,
+            "columnIndex": 0,
+            "content": "9",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [831, 326, 832, 577, 800, 577, 799, 327]
+              }
+            ],
+            "spans": [{ "offset": 207, "length": 1 }]
+          },
+          {
+            "rowIndex": 7,
+            "columnIndex": 1,
+            "content": "HALIBUT",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [832, 577, 833, 1284, 803, 1286, 800, 577]
+              }
+            ],
+            "spans": [{ "offset": 209, "length": 7 }]
+          },
+          {
+            "rowIndex": 7,
+            "columnIndex": 2,
+            "content": "0.69",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [833, 1284, 834, 1434, 802, 1436, 803, 1286]
+              }
+            ],
+            "spans": [{ "offset": 217, "length": 4 }]
+          },
+          {
+            "rowIndex": 7,
+            "columnIndex": 3,
+            "content": "96.60",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [834, 1434, 835, 1590, 803, 1592, 802, 1436]
+              }
+            ],
+            "spans": [{ "offset": 222, "length": 5 }]
+          },
+          {
+            "rowIndex": 8,
+            "columnIndex": 0,
+            "content": "76",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [799, 327, 800, 577, 769, 576, 768, 325]
+              }
+            ],
+            "spans": [{ "offset": 228, "length": 2 }]
+          },
+          {
+            "rowIndex": 8,
+            "columnIndex": 1,
+            "content": "KOTLET CHŁOP",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [800, 577, 803, 1286, 771, 1287, 769, 576]
+              }
+            ],
+            "spans": [{ "offset": 231, "length": 12 }]
+          },
+          {
+            "rowIndex": 8,
+            "columnIndex": 2,
+            "content": "46",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [803, 1286, 802, 1436, 772, 1437, 771, 1287]
+              }
+            ],
+            "spans": [{ "offset": 244, "length": 2 }]
+          },
+          {
+            "rowIndex": 8,
+            "columnIndex": 3,
+            "content": "1 729.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [802, 1436, 803, 1592, 771, 1593, 772, 1437]
+              }
+            ],
+            "spans": [{ "offset": 247, "length": 8 }]
+          },
+          {
+            "rowIndex": 9,
+            "columnIndex": 0,
+            "content": "77",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [768, 325, 769, 576, 737, 576, 736, 325]
+              }
+            ],
+            "spans": [{ "offset": 256, "length": 2 }]
+          },
+          {
+            "rowIndex": 9,
+            "columnIndex": 1,
+            "content": "KOTLET DE VOLAILLE",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [769, 576, 771, 1287, 740, 1287, 737, 576]
+              }
+            ],
+            "spans": [{ "offset": 259, "length": 18 }]
+          },
+          {
+            "rowIndex": 9,
+            "columnIndex": 2,
+            "content": "41",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [771, 1287, 772, 1437, 740, 1439, 740, 1287]
+              }
+            ],
+            "spans": [{ "offset": 278, "length": 2 }]
+          },
+          {
+            "rowIndex": 9,
+            "columnIndex": 3,
+            "content": "1 550.40",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [772, 1437, 771, 1593, 741, 1596, 740, 1439]
+              }
+            ],
+            "spans": [{ "offset": 281, "length": 8 }]
+          },
+          {
+            "rowIndex": 10,
+            "columnIndex": 0,
+            "content": "32",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [736, 325, 737, 576, 704, 576, 703, 324]
+              }
+            ],
+            "spans": [{ "offset": 290, "length": 2 }]
+          },
+          {
+            "rowIndex": 10,
+            "columnIndex": 1,
+            "content": "KAPUSTA ZASMAZANA",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [737, 576, 740, 1287, 708, 1289, 704, 576]
+              }
+            ],
+            "spans": [{ "offset": 293, "length": 17 }]
+          },
+          {
+            "rowIndex": 10,
+            "columnIndex": 2,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [740, 1287, 740, 1439, 709, 1442, 708, 1289]
+              }
+            ],
+            "spans": [{ "offset": 311, "length": 1 }]
+          },
+          {
+            "rowIndex": 10,
+            "columnIndex": 3,
+            "content": "45.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [740, 1439, 741, 1596, 709, 1597, 709, 1442]
+              }
+            ],
+            "spans": [{ "offset": 313, "length": 5 }]
+          },
+          {
+            "rowIndex": 11,
+            "columnIndex": 0,
+            "content": "41",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [703, 324, 704, 576, 672, 575, 671, 323]
+              }
+            ],
+            "spans": [{ "offset": 319, "length": 2 }]
+          },
+          {
+            "rowIndex": 11,
+            "columnIndex": 1,
+            "content": "MASŁO CZOSNKOWE",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [704, 576, 708, 1289, 678, 1290, 672, 575]
+              }
+            ],
+            "spans": [{ "offset": 322, "length": 15 }]
+          },
+          {
+            "rowIndex": 11,
+            "columnIndex": 2,
+            "content": "2",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [708, 1289, 709, 1442, 678, 1443, 678, 1290]
+              }
+            ],
+            "spans": [{ "offset": 338, "length": 1 }]
+          },
+          {
+            "rowIndex": 11,
+            "columnIndex": 3,
+            "content": "3.80",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [709, 1442, 709, 1597, 679, 1600, 678, 1443]
+              }
+            ],
+            "spans": [{ "offset": 340, "length": 4 }]
+          },
+          {
+            "rowIndex": 12,
+            "columnIndex": 0,
+            "content": "78",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [671, 323, 672, 575, 641, 575, 640, 323]
+              }
+            ],
+            "spans": [{ "offset": 345, "length": 2 }]
+          },
+          {
+            "rowIndex": 12,
+            "columnIndex": 1,
+            "content": "PIERŚ Z KURCZAKA",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [672, 575, 678, 1290, 646, 1292, 641, 575]
+              }
+            ],
+            "spans": [{ "offset": 348, "length": 16 }]
+          },
+          {
+            "rowIndex": 12,
+            "columnIndex": 2,
+            "content": "9",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [678, 1290, 678, 1443, 647, 1445, 646, 1292]
+              }
+            ],
+            "spans": [{ "offset": 365, "length": 1 }]
+          },
+          {
+            "rowIndex": 12,
+            "columnIndex": 3,
+            "content": "324.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [678, 1443, 679, 1600, 647, 1602, 647, 1445]
+              }
+            ],
+            "spans": [{ "offset": 367, "length": 6 }]
+          },
+          {
+            "rowIndex": 13,
+            "columnIndex": 0,
+            "content": "71",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [640, 323, 641, 575, 610, 575, 608, 322]
+              }
+            ],
+            "spans": [{ "offset": 374, "length": 2 }]
+          },
+          {
+            "rowIndex": 13,
+            "columnIndex": 1,
+            "content": "PLACEK PO CYGAŃSKU",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [641, 575, 646, 1292, 614, 1293, 610, 575]
+              }
+            ],
+            "spans": [{ "offset": 377, "length": 18 }]
+          },
+          {
+            "rowIndex": 13,
+            "columnIndex": 2,
+            "content": "25",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [646, 1292, 647, 1445, 616, 1446, 614, 1293]
+              }
+            ],
+            "spans": [{ "offset": 396, "length": 2 }]
+          },
+          {
+            "rowIndex": 13,
+            "columnIndex": 3,
+            "content": "963.34",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [647, 1445, 647, 1602, 617, 1603, 616, 1446]
+              }
+            ],
+            "spans": [{ "offset": 399, "length": 6 }]
+          },
+          {
+            "rowIndex": 14,
+            "columnIndex": 0,
+            "content": "6",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [608, 322, 610, 575, 579, 574, 576, 322]
+              }
+            ],
+            "spans": [{ "offset": 406, "length": 1 }]
+          },
+          {
+            "rowIndex": 14,
+            "columnIndex": 1,
+            "content": "SANDACZ Z MASŁEM CZOSNKOWYM",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [610, 575, 614, 1293, 584, 1295, 579, 574]
+              }
+            ],
+            "spans": [{ "offset": 408, "length": 27 }]
+          },
+          {
+            "rowIndex": 14,
+            "columnIndex": 2,
+            "content": "2.04",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [614, 1293, 616, 1446, 586, 1448, 584, 1295]
+              }
+            ],
+            "spans": [{ "offset": 436, "length": 4 }]
+          },
+          {
+            "rowIndex": 14,
+            "columnIndex": 3,
+            "content": "346.80",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [616, 1446, 617, 1603, 587, 1606, 586, 1448]
+              }
+            ],
+            "spans": [{ "offset": 441, "length": 6 }]
+          },
+          {
+            "rowIndex": 15,
+            "columnIndex": 0,
+            "content": "VI",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [576, 322, 579, 574, 548, 574, 546, 321]
+              }
+            ],
+            "spans": [{ "offset": 448, "length": 2 }]
+          },
+          {
+            "rowIndex": 15,
+            "columnIndex": 1,
+            "content": "SCHAB PANIEROWANY",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [579, 574, 584, 1295, 555, 1296, 548, 574]
+              }
+            ],
+            "spans": [{ "offset": 451, "length": 17 }]
+          },
+          {
+            "rowIndex": 15,
+            "columnIndex": 2,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [584, 1295, 586, 1448, 556, 1449, 555, 1296]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 15,
+            "columnIndex": 3,
+            "content": "0.Vo",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [586, 1448, 587, 1606, 558, 1608, 556, 1449]
+              }
+            ],
+            "spans": [{ "offset": 469, "length": 4 }]
+          },
+          {
+            "rowIndex": 16,
+            "columnIndex": 0,
+            "content": "35",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [546, 321, 548, 574, 517, 574, 514, 321]
+              }
+            ],
+            "spans": [{ "offset": 474, "length": 2 }]
+          },
+          {
+            "rowIndex": 16,
+            "columnIndex": 1,
+            "content": "SOS CHRZANOWY",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [548, 574, 555, 1296, 525, 1296, 517, 574]
+              }
+            ],
+            "spans": [{ "offset": 477, "length": 13 }]
+          },
+          {
+            "rowIndex": 16,
+            "columnIndex": 2,
+            "content": "1",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [555, 1296, 556, 1449, 525, 1451, 525, 1296]
+              }
+            ],
+            "spans": [{ "offset": 491, "length": 1 }]
+          },
+          {
+            "rowIndex": 16,
+            "columnIndex": 3,
+            "content": "1.80",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [556, 1449, 558, 1608, 526, 1611, 525, 1451]
+              }
+            ],
+            "spans": [{ "offset": 493, "length": 4 }]
+          },
+          {
+            "rowIndex": 17,
+            "columnIndex": 0,
+            "content": "34",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [514, 321, 517, 574, 485, 573, 484, 320]
+              }
+            ],
+            "spans": [{ "offset": 498, "length": 2 }]
+          },
+          {
+            "rowIndex": 17,
+            "columnIndex": 1,
+            "content": "SOS CZOSNKOWY",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [517, 574, 525, 1296, 493, 1298, 485, 573]
+              }
+            ],
+            "spans": [{ "offset": 501, "length": 13 }]
+          },
+          {
+            "rowIndex": 17,
+            "columnIndex": 2,
+            "content": "5",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [525, 1296, 525, 1451, 495, 1454, 493, 1298]
+              }
+            ],
+            "spans": [{ "offset": 515, "length": 1 }]
+          },
+          {
+            "rowIndex": 17,
+            "columnIndex": 3,
+            "content": "10.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [525, 1451, 526, 1611, 497, 1612, 495, 1454]
+              }
+            ],
+            "spans": [{ "offset": 517, "length": 5 }]
+          },
+          {
+            "rowIndex": 18,
+            "columnIndex": 0,
+            "content": "11",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [484, 320, 485, 573, 453, 573, 451, 318]
+              }
+            ],
+            "spans": [{ "offset": 523, "length": 2 }]
+          },
+          {
+            "rowIndex": 18,
+            "columnIndex": 1,
+            "content": "TURBOT Z MASŁEM CZOSNKOWYM",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [485, 573, 493, 1298, 463, 1299, 453, 573]
+              }
+            ],
+            "spans": [{ "offset": 526, "length": 26 }]
+          },
+          {
+            "rowIndex": 18,
+            "columnIndex": 2,
+            "content": "2.63",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [493, 1298, 495, 1454, 464, 1455, 463, 1299]
+              }
+            ],
+            "spans": [{ "offset": 553, "length": 4 }]
+          },
+          {
+            "rowIndex": 18,
+            "columnIndex": 3,
+            "content": "552.30",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [495, 1454, 497, 1612, 464, 1614, 464, 1455]
+              }
+            ],
+            "spans": [{ "offset": 558, "length": 6 }]
+          },
+          {
+            "rowIndex": 19,
+            "columnIndex": 0,
+            "content": "27",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [451, 318, 453, 573, 423, 573, 421, 318]
+              }
+            ],
+            "spans": [{ "offset": 565, "length": 2 }]
+          },
+          {
+            "rowIndex": 19,
+            "columnIndex": 1,
+            "content": "ZUPA FLAKI WOŁOWE",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [453, 573, 463, 1299, 431, 1301, 423, 573]
+              }
+            ],
+            "spans": [{ "offset": 568, "length": 17 }]
+          },
+          {
+            "rowIndex": 19,
+            "columnIndex": 2,
+            "content": "10",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [463, 1299, 464, 1455, 433, 1457, 431, 1301]
+              }
+            ],
+            "spans": [{ "offset": 586, "length": 2 }]
+          },
+          {
+            "rowIndex": 19,
+            "columnIndex": 3,
+            "content": "200.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [464, 1455, 464, 1614, 435, 1616, 433, 1457]
+              }
+            ],
+            "spans": [{ "offset": 589, "length": 6 }]
+          },
+          {
+            "rowIndex": 20,
+            "columnIndex": 0,
+            "content": ".24",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [421, 318, 423, 573, 391, 572, 388, 317]
+              }
+            ],
+            "spans": [{ "offset": 596, "length": 3 }]
+          },
+          {
+            "rowIndex": 20,
+            "columnIndex": 1,
+            "content": "ZUPA KAPUŚNIAK\n:selected:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [423, 573, 431, 1301, 400, 1302, 391, 572]
+              }
+            ],
+            "spans": [
+              { "offset": 600, "length": 14 },
+              { "offset": 954, "length": 10 }
+            ]
+          },
+          {
+            "rowIndex": 20,
+            "columnIndex": 2,
+            "content": "4",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [431, 1301, 433, 1457, 402, 1458, 400, 1302]
+              }
+            ],
+            "spans": [{ "offset": 615, "length": 1 }]
+          },
+          {
+            "rowIndex": 20,
+            "columnIndex": 3,
+            "content": "84.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [433, 1457, 435, 1616, 404, 1618, 402, 1458]
+              }
+            ],
+            "spans": [{ "offset": 617, "length": 5 }]
+          },
+          {
+            "rowIndex": 21,
+            "columnIndex": 0,
+            "content": "1",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [388, 317, 391, 572, 360, 572, 356, 317]
+              }
+            ],
+            "spans": [{ "offset": 623, "length": 1 }]
+          },
+          {
+            "rowIndex": 21,
+            "columnIndex": 1,
+            "content": "ZUPA ROSÓŁ\n:selected:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [391, 572, 400, 1302, 369, 1304, 360, 572]
+              }
+            ],
+            "spans": [
+              { "offset": 625, "length": 10 },
+              { "offset": 965, "length": 10 }
+            ]
+          },
+          {
+            "rowIndex": 21,
+            "columnIndex": 2,
+            "content": "19",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [400, 1302, 402, 1458, 371, 1460, 369, 1304]
+              }
+            ],
+            "spans": [{ "offset": 636, "length": 2 }]
+          },
+          {
+            "rowIndex": 21,
+            "columnIndex": 3,
+            "content": "280.54",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [402, 1458, 404, 1618, 373, 1621, 371, 1460]
+              }
+            ],
+            "spans": [{ "offset": 639, "length": 6 }]
+          },
+          {
+            "rowIndex": 22,
+            "columnIndex": 0,
+            "content": "26",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [356, 317, 360, 572, 328, 572, 323, 316]
+              }
+            ],
+            "spans": [{ "offset": 646, "length": 2 }]
+          },
+          {
+            "rowIndex": 22,
+            "columnIndex": 1,
+            "content": "ZUPA ŻUREK W MISCE\n:selected:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [360, 572, 369, 1304, 338, 1305, 328, 572]
+              }
+            ],
+            "spans": [
+              { "offset": 649, "length": 18 },
+              { "offset": 976, "length": 10 }
+            ]
+          },
+          {
+            "rowIndex": 22,
+            "columnIndex": 2,
+            "content": "21",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [369, 1304, 371, 1460, 340, 1461, 338, 1305]
+              }
+            ],
+            "spans": [{ "offset": 668, "length": 2 }]
+          },
+          {
+            "rowIndex": 22,
+            "columnIndex": 3,
+            "content": "416.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [371, 1460, 373, 1621, 340, 1622, 340, 1461]
+              }
+            ],
+            "spans": [{ "offset": 671, "length": 6 }]
+          },
+          {
+            "rowIndex": 23,
+            "columnIndex": 0,
+            "content": "30",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [323, 316, 328, 572, 294, 571, 290, 315]
+              }
+            ],
+            "spans": [{ "offset": 678, "length": 2 }]
+          },
+          {
+            "rowIndex": 23,
+            "columnIndex": 1,
+            "content": "ZESTAW SURÓWEK\n:selected:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [328, 572, 338, 1305, 305, 1307, 294, 571]
+              }
+            ],
+            "spans": [
+              { "offset": 681, "length": 14 },
+              { "offset": 987, "length": 10 }
+            ]
+          },
+          {
+            "rowIndex": 23,
+            "columnIndex": 2,
+            "content": "30",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [338, 1305, 340, 1461, 307, 1463, 305, 1307]
+              }
+            ],
+            "spans": [{ "offset": 696, "length": 2 }]
+          },
+          {
+            "rowIndex": 23,
+            "columnIndex": 3,
+            "content": "239.20",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [340, 1461, 340, 1622, 307, 1625, 307, 1463]
+              }
+            ],
+            "spans": [{ "offset": 699, "length": 6 }]
+          },
+          {
+            "rowIndex": 24,
+            "columnIndex": 0,
+            "content": "29",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [290, 315, 294, 571, 259, 571, 257, 315]
+              }
+            ],
+            "spans": [{ "offset": 706, "length": 2 }]
+          },
+          {
+            "rowIndex": 24,
+            "columnIndex": 1,
+            "content": "ZIEMNIAKI Z PIECA\n:selected:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [294, 571, 305, 1307, 272, 1308, 259, 571]
+              }
+            ],
+            "spans": [
+              { "offset": 709, "length": 17 },
+              { "offset": 998, "length": 10 }
+            ]
+          },
+          {
+            "rowIndex": 24,
+            "columnIndex": 2,
+            "content": "6",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [305, 1307, 307, 1463, 274, 1465, 272, 1308]
+              }
+            ],
+            "spans": [{ "offset": 727, "length": 1 }]
+          },
+          {
+            "rowIndex": 24,
+            "columnIndex": 3,
+            "content": "54.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [307, 1463, 307, 1625, 276, 1627, 274, 1465]
+              }
+            ],
+            "spans": [{ "offset": 729, "length": 5 }]
+          },
+          {
+            "rowIndex": 25,
+            "columnIndex": 0,
+            "content": "12",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [257, 315, 259, 571, 227, 570, 222, 314]
+              }
+            ],
+            "spans": [{ "offset": 735, "length": 2 }]
+          },
+          {
+            "rowIndex": 25,
+            "columnIndex": 1,
+            "content": "ZIEMNIAKI Z WODY\n:selected:",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [259, 571, 272, 1308, 238, 1308, 227, 570]
+              }
+            ],
+            "spans": [
+              { "offset": 738, "length": 16 },
+              { "offset": 1009, "length": 10 }
+            ]
+          },
+          {
+            "rowIndex": 25,
+            "columnIndex": 2,
+            "content": "6",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [272, 1308, 274, 1465, 240, 1467, 238, 1308]
+              }
+            ],
+            "spans": [{ "offset": 755, "length": 1 }]
+          },
+          {
+            "rowIndex": 25,
+            "columnIndex": 3,
+            "content": "54.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [274, 1465, 276, 1627, 242, 1630, 240, 1467]
+              }
+            ],
+            "spans": [{ "offset": 757, "length": 5 }]
+          },
+          {
+            "rowIndex": 26,
+            "columnIndex": 0,
+            "content": "7",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [222, 314, 227, 570, 193, 570, 189, 314]
+              }
+            ],
+            "spans": [{ "offset": 763, "length": 1 }]
+          },
+          {
+            "rowIndex": 26,
+            "columnIndex": 1,
+            "content": "ŁOSOŚ Z MASŁEM CZOSNKOWYM",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [227, 570, 238, 1308, 205, 1310, 193, 570]
+              }
+            ],
+            "spans": [{ "offset": 765, "length": 25 }]
+          },
+          {
+            "rowIndex": 26,
+            "columnIndex": 2,
+            "content": "0.61",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [238, 1308, 240, 1467, 207, 1468, 205, 1310]
+              }
+            ],
+            "spans": [{ "offset": 791, "length": 4 }]
+          },
+          {
+            "rowIndex": 26,
+            "columnIndex": 3,
+            "content": "91.50",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [240, 1467, 242, 1630, 209, 1631, 207, 1468]
+              }
+            ],
+            "spans": [{ "offset": 796, "length": 5 }]
+          },
+          {
+            "rowIndex": 27,
+            "columnIndex": 0,
+            "content": "370",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [189, 314, 193, 570, 160, 570, 156, 313]
+              }
+            ],
+            "spans": [{ "offset": 802, "length": 3 }]
+          },
+          {
+            "rowIndex": 27,
+            "columnIndex": 1,
+            "content": "PIECZEŃ ZKARKÓWKI",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [193, 570, 205, 1310, 172, 1311, 160, 570]
+              }
+            ],
+            "spans": [{ "offset": 806, "length": 17 }]
+          },
+          {
+            "rowIndex": 27,
+            "columnIndex": 2,
+            "content": "7",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [205, 1310, 207, 1468, 174, 1470, 172, 1311]
+              }
+            ],
+            "spans": [{ "offset": 824, "length": 1 }]
+          },
+          {
+            "rowIndex": 27,
+            "columnIndex": 3,
+            "content": "266.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [207, 1468, 209, 1631, 176, 1634, 174, 1470]
+              }
+            ],
+            "spans": [{ "offset": 826, "length": 6 }]
+          },
+          {
+            "rowIndex": 28,
+            "columnIndex": 0,
+            "content": "3 1",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [156, 313, 160, 570, 126, 569, 122, 311]
+              }
+            ],
+            "spans": [{ "offset": 833, "length": 3 }]
+          },
+          {
+            "rowIndex": 28,
+            "columnIndex": 1,
+            "content": ".7up 0,2l",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [160, 570, 172, 1311, 138, 1313, 126, 569]
+              }
+            ],
+            "spans": [{ "offset": 837, "length": 9 }]
+          },
+          {
+            "rowIndex": 28,
+            "columnIndex": 2,
+            "content": "1",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [172, 1311, 174, 1470, 140, 1473, 138, 1313]
+              }
+            ],
+            "spans": [{ "offset": 847, "length": 1 }]
+          },
+          {
+            "rowIndex": 28,
+            "columnIndex": 3,
+            "content": "9.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [174, 1470, 176, 1634, 143, 1635, 140, 1473]
+              }
+            ],
+            "spans": [{ "offset": 849, "length": 4 }]
+          },
+          {
+            "rowIndex": 29,
+            "columnIndex": 0,
+            "content": "362",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [122, 311, 126, 569, 91, 569, 87, 311]
+              }
+            ],
+            "spans": [{ "offset": 854, "length": 3 }]
+          },
+          {
+            "rowIndex": 29,
+            "columnIndex": 1,
+            "content": "APA PALE ALE",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [126, 569, 138, 1313, 104, 1314, 91, 569]
+              }
+            ],
+            "spans": [{ "offset": 858, "length": 12 }]
+          },
+          {
+            "rowIndex": 29,
+            "columnIndex": 2,
+            "content": "1",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [138, 1313, 140, 1473, 107, 1474, 104, 1314]
+              }
+            ],
+            "spans": [{ "offset": 871, "length": 1 }]
+          },
+          {
+            "rowIndex": 29,
+            "columnIndex": 3,
+            "content": "16.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [140, 1473, 143, 1635, 109, 1638, 107, 1474]
+              }
+            ],
+            "spans": [{ "offset": 873, "length": 5 }]
+          },
+          {
+            "rowIndex": 30,
+            "columnIndex": 0,
+            "content": "100_1",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [87, 311, 91, 569, 55, 569, 52, 310]
+              }
+            ],
+            "spans": [{ "offset": 879, "length": 5 }]
+          },
+          {
+            "rowIndex": 30,
+            "columnIndex": 1,
+            "content": ".DESPERADOS 0% VIRGIN",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [91, 569, 104, 1314, 69, 1316, 55, 569]
+              }
+            ],
+            "spans": [{ "offset": 885, "length": 21 }]
+          },
+          {
+            "rowIndex": 30,
+            "columnIndex": 2,
+            "content": "2",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [104, 1314, 107, 1474, 71, 1476, 69, 1316]
+              }
+            ],
+            "spans": [{ "offset": 907, "length": 1 }]
+          },
+          {
+            "rowIndex": 30,
+            "columnIndex": 3,
+            "content": "28.00",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [107, 1474, 109, 1638, 74, 1640, 71, 1476]
+              }
+            ],
+            "spans": [{ "offset": 909, "length": 5 }]
+          },
+          {
+            "rowIndex": 31,
+            "columnIndex": 0,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [52, 310, 55, 569, 22, 568, 17, 309]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 31,
+            "columnIndex": 1,
+            "content": "HEINEKEN 0%",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [55, 569, 69, 1316, 36, 1317, 22, 568]
+              }
+            ],
+            "spans": [{ "offset": 915, "length": 11 }]
+          },
+          {
+            "rowIndex": 31,
+            "columnIndex": 2,
+            "content": "",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [69, 1316, 71, 1476, 38, 1477, 36, 1317]
+              }
+            ],
+            "spans": []
+          },
+          {
+            "rowIndex": 31,
+            "columnIndex": 3,
+            "content": "42.001",
+            "boundingRegions": [
+              {
+                "pageNumber": 1,
+                "polygon": [71, 1476, 74, 1640, 41, 1643, 38, 1477]
+              }
+            ],
+            "spans": [{ "offset": 927, "length": 6 }]
+          }
+        ],
+        "boundingRegions": [
+          {
+            "pageNumber": 1,
+            "polygon": [1038, 299, 1049, 1637, 20, 1647, 9, 308]
+          }
+        ],
+        "spans": [
+          { "offset": 9, "length": 20 },
+          { "offset": 47, "length": 7 },
+          { "offset": 30, "length": 16 },
+          { "offset": 55, "length": 559 },
+          { "offset": 954, "length": 10 },
+          { "offset": 615, "length": 20 },
+          { "offset": 965, "length": 10 },
+          { "offset": 636, "length": 31 },
+          { "offset": 976, "length": 10 },
+          { "offset": 668, "length": 27 },
+          { "offset": 987, "length": 10 },
+          { "offset": 696, "length": 30 },
+          { "offset": 998, "length": 10 },
+          { "offset": 727, "length": 27 },
+          { "offset": 1009, "length": 10 },
+          { "offset": 755, "length": 178 }
+        ]
+      }
+    ],
+    "styles": [
+      {
+        "confidence": 0.3,
+        "spans": [{ "offset": 448, "length": 2 }],
+        "isHandwritten": true
+      },
+      {
+        "confidence": 0.6,
+        "spans": [{ "offset": 469, "length": 4 }],
+        "isHandwritten": true
+      },
+      {
+        "confidence": 0.8,
+        "spans": [{ "offset": 615, "length": 1 }],
+        "isHandwritten": true
+      },
+      {
+        "confidence": 0.1,
+        "spans": [{ "offset": 871, "length": 1 }],
+        "isHandwritten": true
+      },
+      {
+        "confidence": 0.4,
+        "spans": [{ "offset": 951, "length": 2 }],
+        "isHandwritten": true
+      }
+    ],
+    "documents": [
+      {
+        "docType": "invoice",
+        "boundingRegions": [
+          { "pageNumber": 1, "polygon": [0, 0, 1080, 0, 1080, 1920, 0, 1920] }
+        ],
+        "fields": {
+          "Items": {
+            "type": "array",
+            "valueArray": [
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 793.79,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "793.79",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [
+                          1004, 1525, 1004, 1579, 988, 1579, 987, 1526
+                        ]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 58, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "DORSZ ZESTAW",
+                    "content": "DORSZ ZESTAW",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [1012, 591, 1010, 763, 988, 763, 990, 591]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 34, "length": 12 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "181",
+                    "content": "181",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [1007, 337, 1007, 365, 991, 365, 991, 337]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 30, "length": 3 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 19,
+                    "content": "19",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [
+                          1004, 1406, 1004, 1422, 988, 1422, 988, 1406
+                        ]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 55, "length": 2 }]
+                  }
+                },
+                "content": "181\nDORSZ ZESTAW\n19\n793.79",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [1011, 337, 1011, 1579, 987, 1579, 987, 337]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [
+                  { "offset": 30, "length": 16 },
+                  { "offset": 55, "length": 9 }
+                ]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 482.1, "currencyCode": "PLN" },
+                    "content": "482.10",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [976, 1528, 976, 1582, 960, 1582, 959, 1528]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 87, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "FILET z DORSZA",
+                    "content": "FILET z DORSZA",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [982, 590, 982, 807, 961, 807, 961, 590]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 67, "length": 14 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "4",
+                    "content": "4",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [976, 335, 976, 343, 961, 342, 962, 334]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 65, "length": 1 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 3.28,
+                    "content": "3.28",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [976, 1393, 976, 1425, 960, 1425, 960, 1393]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 82, "length": 4 }]
+                  }
+                },
+                "content": "4\nFILET z DORSZA\n3.28\n482.10",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [982, 334, 982, 1582, 959, 1582, 959, 334]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 65, "length": 28 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 66.5, "currencyCode": "PLN" },
+                    "content": "66.50",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [948, 1540, 949, 1585, 932, 1585, 931, 1540]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 116, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "FILET Z KURCZAKA",
+                    "content": "FILET Z KURCZAKA",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [952, 590, 952, 842, 931, 842, 931, 590]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 97, "length": 16 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "79",
+                    "content": "79",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [949, 333, 948, 352, 931, 352, 932, 332]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 94, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 2,
+                    "content": "2",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [946, 1421, 946, 1429, 931, 1429, 931, 1421]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 114, "length": 1 }]
+                  }
+                },
+                "content": "79\nFILET Z KURCZAKA\n2\n66.50",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [952, 332, 952, 1585, 931, 1585, 931, 332]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 94, "length": 27 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 204.31,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "204.31",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [919, 1533, 919, 1589, 902, 1590, 901, 1533]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 135, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "FRYTKI",
+                    "content": "FRYTKI",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [921, 589, 921, 655, 903, 656, 902, 589]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 125, "length": 6 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "23",
+                    "content": "23",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [918, 331, 918, 350, 901, 351, 901, 331]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 122, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 23,
+                    "content": "23",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [919, 1412, 919, 1432, 901, 1432, 901, 1412]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 132, "length": 2 }]
+                  }
+                },
+                "content": "23\nFRYTKI\n23\n204.31",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [921, 331, 921, 1590, 901, 1590, 901, 331]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 122, "length": 19 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 164.25,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "164.25",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [890, 1538, 890, 1591, 873, 1591, 872, 1538]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 170, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "GOLONKA PO BAWARSKU",
+                    "content": "GOLONKA PO BAWARSKU",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [891, 589, 891, 866, 870, 866, 870, 589]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 145, "length": 19 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "66",
+                    "content": "66",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [886, 329, 886, 348, 870, 348, 870, 329]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 142, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 2.19,
+                    "content": "2.19",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [890, 1399, 890, 1434, 872, 1434, 872, 1399]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 165, "length": 4 }]
+                  }
+                },
+                "content": "66\nGOLONKA PO BAWARSKU\n2.19\n164.25",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [891, 329, 891, 1591, 870, 1591, 870, 329]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 142, "length": 34 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 358.9, "currencyCode": "PLN" },
+                    "content": "358.90",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [859, 1539, 859, 1593, 842, 1594, 841, 1539]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 200, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "GULASZ WIEPRZOWY",
+                    "content": "GULASZ WIEPRZOWY",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [860, 587, 858, 831, 838, 831, 839, 587]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 180, "length": 16 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "73",
+                    "content": "73",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [854, 331, 854, 349, 839, 349, 839, 331]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 177, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 10,
+                    "content": "10",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [858, 1417, 858, 1434, 841, 1435, 841, 1418]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 197, "length": 2 }]
+                  }
+                },
+                "content": "73\nGULASZ WIEPRZOWY\n10\n358.90",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [859, 331, 859, 1594, 839, 1594, 839, 331]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 177, "length": 29 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 96.6, "currencyCode": "PLN" },
+                    "content": "96.60",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [828, 1550, 829, 1595, 812, 1595, 811, 1551]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 222, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "HALIBUT",
+                    "content": "HALIBUT",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [828, 588, 828, 700, 809, 701, 808, 588]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 209, "length": 7 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "9",
+                    "content": "9",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [823, 329, 823, 337, 807, 337, 807, 329]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 207, "length": 1 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 0.69,
+                    "content": "0.69",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [829, 1402, 830, 1437, 812, 1438, 811, 1402]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 217, "length": 4 }]
+                  }
+                },
+                "content": "9\nHALIBUT\n0.69\n96.60",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [827, 329, 832, 1595, 811, 1595, 806, 329]
+                  }
+                ],
+                "confidence": 0,
+                "spans": [{ "offset": 207, "length": 20 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 1729, "currencyCode": "PLN" },
+                    "content": "1 729.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [798, 1526, 798, 1596, 779, 1596, 779, 1526]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 247, "length": 8 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "KOTLET CHŁOP",
+                    "content": "KOTLET CHŁOP",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [797, 587, 796, 799, 775, 799, 776, 587]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 231, "length": 12 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "76",
+                    "content": "76",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [792, 328, 792, 347, 775, 347, 775, 328]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 228, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 46,
+                    "content": "46",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [796, 1419, 795, 1437, 779, 1436, 780, 1418]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 244, "length": 2 }]
+                  }
+                },
+                "content": "76\nKOTLET CHŁOP\n46\n1 729.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [798, 328, 798, 1596, 775, 1596, 775, 328]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 228, "length": 27 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 1550.4,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "1 550.40",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [767, 1526, 767, 1597, 748, 1597, 748, 1526]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 281, "length": 8 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "KOTLET DE VOLAILLE",
+                    "content": "KOTLET DE VOLAILLE",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [766, 588, 766, 872, 743, 872, 743, 588]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 259, "length": 18 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "77",
+                    "content": "77",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [761, 328, 761, 348, 742, 349, 742, 328]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 256, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 41,
+                    "content": "41",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [766, 1418, 765, 1436, 748, 1436, 749, 1418]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 278, "length": 2 }]
+                  }
+                },
+                "content": "77\nKOTLET DE VOLAILLE\n41\n1 550.40",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [767, 328, 767, 1597, 742, 1597, 742, 328]
+                  }
+                ],
+                "confidence": 0.005,
+                "spans": [{ "offset": 256, "length": 33 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 45, "currencyCode": "PLN" },
+                    "content": "45.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [734, 1550, 735, 1596, 717, 1596, 716, 1551]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 313, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "KAPUSTA ZASMAZANA",
+                    "content": "KAPUSTA ZASMAZANA",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [734, 587, 734, 803, 712, 803, 712, 587]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 293, "length": 17 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "32",
+                    "content": "32",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [729, 327, 730, 349, 712, 350, 711, 328]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 290, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 5,
+                    "content": "5",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [734, 1428, 733, 1437, 716, 1436, 717, 1427]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 311, "length": 1 }]
+                  }
+                },
+                "content": "32\nKAPUSTA ZASMAZANA\n5\n45.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [735, 327, 735, 1596, 711, 1596, 711, 327]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 290, "length": 28 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 3.8, "currencyCode": "PLN" },
+                    "content": "3.80",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [703, 1560, 703, 1594, 684, 1594, 684, 1560]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 340, "length": 4 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "MASŁO CZOSNKOWE",
+                    "content": "MASŁO CZOSNKOWE",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [704, 589, 702, 796, 678, 796, 680, 589]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 322, "length": 15 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "41",
+                    "content": "41",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [697, 329, 697, 349, 680, 349, 680, 329]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 319, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 2,
+                    "content": "2",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [701, 1428, 701, 1437, 686, 1436, 687, 1427]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 338, "length": 1 }]
+                  }
+                },
+                "content": "41\nMASŁO CZOSNKOWE\n2\n3.80",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [703, 329, 703, 1594, 679, 1594, 679, 329]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 319, "length": 25 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 324, "currencyCode": "PLN" },
+                    "content": "324.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [672, 1537, 672, 1591, 654, 1591, 654, 1537]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 367, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "PIERŚ Z KURCZAKA",
+                    "content": "PIERŚ Z KURCZAKA",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [671, 590, 671, 842, 647, 842, 647, 590]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 348, "length": 16 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "78",
+                    "content": "78",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [666, 331, 666, 352, 648, 352, 648, 331]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 345, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 9,
+                    "content": "9",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [669, 1426, 669, 1432, 654, 1432, 654, 1426]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 365, "length": 1 }]
+                  }
+                },
+                "content": "78\nPIERŚ Z KURCZAKA\n9\n324.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [672, 331, 672, 1591, 647, 1591, 647, 331]
+                  }
+                ],
+                "confidence": 0.004,
+                "spans": [{ "offset": 345, "length": 28 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 963.34,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "963.34",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [642, 1534, 642, 1590, 625, 1590, 623, 1534]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 399, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "PLACEK PO CYGAŃSKU",
+                    "content": "PLACEK PO CYGAŃSKU",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [639, 592, 639, 849, 616, 849, 616, 592]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 377, "length": 18 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "71",
+                    "content": "71",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [634, 332, 635, 350, 618, 350, 617, 333]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 374, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 25,
+                    "content": "25",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [641, 1413, 641, 1432, 622, 1432, 622, 1413]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 396, "length": 2 }]
+                  }
+                },
+                "content": "71\nPLACEK PO CYGAŃSKU\n25\n963.34",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [642, 332, 642, 1590, 616, 1590, 616, 332]
+                  }
+                ],
+                "confidence": 0.005,
+                "spans": [{ "offset": 374, "length": 31 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 346.8, "currencyCode": "PLN" },
+                    "content": "346.80",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [610, 1532, 611, 1586, 593, 1586, 593, 1532]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 441, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "SANDACZ Z MASŁEM CZOSNKOWYM",
+                    "content": "SANDACZ Z MASŁEM CZOSNKOWYM",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [608, 594, 608, 969, 585, 969, 585, 594]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 408, "length": 27 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "6",
+                    "content": "6",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [599, 332, 600, 339, 586, 340, 585, 333]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 406, "length": 1 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 2.04,
+                    "content": "2.04",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [609, 1396, 610, 1428, 592, 1429, 591, 1396]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 436, "length": 4 }]
+                  }
+                },
+                "content": "6\nSANDACZ Z MASŁEM CZOSNKOWYM\n2.04\n346.80",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [604, 332, 614, 1586, 592, 1586, 582, 332]
+                  }
+                ],
+                "confidence": 0.005,
+                "spans": [{ "offset": 406, "length": 41 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 0, "currencyCode": "PLN" },
+                    "content": "0.Vo",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [575, 1551, 575, 1584, 560, 1584, 560, 1551]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 469, "length": 4 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "SCHAB PANIEROWANY",
+                    "content": "SCHAB PANIEROWANY",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [578, 595, 576, 888, 552, 888, 554, 595]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 451, "length": 17 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "VI",
+                    "content": "VI",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [564, 332, 564, 349, 551, 349, 551, 332]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 448, "length": 2 }]
+                  }
+                },
+                "content": "VI\nSCHAB PANIEROWANY\n0.Vo",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [576, 332, 576, 1584, 551, 1584, 551, 332]
+                  }
+                ],
+                "confidence": 0.005,
+                "spans": [{ "offset": 448, "length": 25 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 1.8, "currencyCode": "PLN" },
+                    "content": "1.80",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [549, 1552, 550, 1587, 532, 1588, 531, 1553]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 493, "length": 4 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "SOS CHRZANOWY",
+                    "content": "SOS CHRZANOWY",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [547, 595, 547, 769, 523, 769, 523, 595]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 477, "length": 13 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "35",
+                    "content": "35",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [539, 332, 539, 353, 521, 352, 521, 332]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 474, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 1,
+                    "content": "1",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [546, 1424, 546, 1431, 532, 1431, 532, 1424]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 491, "length": 1 }]
+                  }
+                },
+                "content": "35\nSOS CHRZANOWY\n1\n1.80",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [550, 332, 550, 1588, 521, 1588, 521, 332]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 474, "length": 23 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 10, "currencyCode": "PLN" },
+                    "content": "10.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [520, 1547, 521, 1590, 503, 1591, 502, 1548]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 517, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "SOS CZOSNKOWY",
+                    "content": "SOS CZOSNKOWY",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [514, 593, 516, 768, 495, 768, 493, 593]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 501, "length": 13 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "34",
+                    "content": "34",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [509, 330, 509, 350, 491, 350, 491, 330]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 498, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 5,
+                    "content": "5",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [518, 1425, 518, 1434, 502, 1434, 502, 1425]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 515, "length": 1 }]
+                  }
+                },
+                "content": "34\nSOS CZOSNKOWY\n5\n10.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [511, 330, 526, 1591, 503, 1591, 487, 330]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 498, "length": 24 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 552.3, "currencyCode": "PLN" },
+                    "content": "552.30",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [490, 1541, 491, 1596, 473, 1596, 473, 1542]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 558, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "TURBOT Z MASŁEM CZOSNKOWYM",
+                    "content": "TURBOT Z MASŁEM CZOSNKOWYM",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [484, 591, 489, 953, 466, 953, 461, 591]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 526, "length": 26 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "11",
+                    "content": "11",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [476, 329, 476, 345, 458, 345, 458, 329]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 523, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 2.63,
+                    "content": "2.63",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [489, 1404, 490, 1439, 472, 1439, 471, 1404]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 553, "length": 4 }]
+                  }
+                },
+                "content": "11\nTURBOT Z MASŁEM CZOSNKOWYM\n2.63\n552.30",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [480, 329, 499, 1596, 473, 1596, 454, 329]
+                  }
+                ],
+                "confidence": 0.005,
+                "spans": [{ "offset": 523, "length": 41 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 200, "currencyCode": "PLN" },
+                    "content": "200.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [459, 1546, 460, 1600, 444, 1600, 441, 1546]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 589, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZUPA FLAKI WOŁOWE",
+                    "content": "ZUPA FLAKI WOŁOWE",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [453, 589, 456, 825, 433, 825, 430, 589]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 568, "length": 17 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "27",
+                    "content": "27",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [445, 326, 445, 347, 427, 347, 427, 326]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 565, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 10,
+                    "content": "10",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [458, 1425, 458, 1442, 441, 1442, 441, 1425]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 586, "length": 2 }]
+                  }
+                },
+                "content": "27\nZUPA FLAKI WOŁOWE\n10\n200.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [451, 326, 463, 1600, 439, 1600, 427, 326]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 565, "length": 30 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 84, "currencyCode": "PLN" },
+                    "content": "84.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [429, 1560, 429, 1605, 411, 1605, 411, 1560]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 617, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZUPA KAPUŚNIAK",
+                    "content": "ZUPA KAPUŚNIAK",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [420, 587, 423, 785, 401, 785, 398, 587]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 600, "length": 14 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": ".24",
+                    "content": ".24",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [413, 317, 413, 345, 394, 345, 394, 317]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 596, "length": 3 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 4,
+                    "content": "4",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [425, 1437, 426, 1446, 411, 1447, 410, 1438]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 615, "length": 1 }]
+                  }
+                },
+                "content": ".24\nZUPA KAPUŚNIAK\n4\n84.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [416, 317, 435, 1605, 411, 1605, 392, 317]
+                  }
+                ],
+                "confidence": 0.003,
+                "spans": [{ "offset": 596, "length": 26 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": {
+                      "amount": 280.54,
+                      "currencyCode": "PLN"
+                    },
+                    "content": "280.54",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [398, 1554, 398, 1610, 381, 1610, 380, 1555]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 639, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZUPA ROSÓŁ",
+                    "content": "ZUPA ROSÓŁ",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [390, 586, 393, 746, 365, 747, 362, 587]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 625, "length": 10 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "1",
+                    "content": "1",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [378, 324, 378, 331, 363, 330, 363, 323]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 623, "length": 1 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 19,
+                    "content": "19",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [396, 1432, 396, 1447, 379, 1448, 378, 1432]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 636, "length": 2 }]
+                  }
+                },
+                "content": "1\nZUPA ROSÓŁ\n19\n280.54",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [384, 323, 411, 1610, 381, 1610, 354, 323]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 623, "length": 22 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 416, "currencyCode": "PLN" },
+                    "content": "416.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [366, 1558, 366, 1614, 349, 1615, 347, 1559]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 671, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZUPA ŻUREK W MISCE",
+                    "content": "ZUPA ŻUREK W MISCE",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [356, 586, 360, 831, 336, 831, 332, 586]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 649, "length": 18 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "26",
+                    "content": "26",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [347, 320, 347, 340, 329, 340, 329, 320]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 646, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 21,
+                    "content": "21",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [363, 1434, 364, 1455, 346, 1456, 345, 1434]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 668, "length": 2 }]
+                  }
+                },
+                "content": "26\nZUPA ŻUREK W MISCE\n21\n416.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [351, 320, 374, 1615, 348, 1615, 325, 320]
+                  }
+                ],
+                "confidence": 0.007,
+                "spans": [{ "offset": 646, "length": 31 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 239.2, "currencyCode": "PLN" },
+                    "content": "239.20",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [334, 1562, 335, 1618, 316, 1619, 314, 1563]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 699, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZESTAW SURÓWEK",
+                    "content": "ZESTAW SURÓWEK",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [323, 585, 326, 777, 302, 777, 299, 585]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 681, "length": 14 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "30",
+                    "content": "30",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [314, 318, 314, 339, 295, 339, 295, 318]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 678, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 30,
+                    "content": "30",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [332, 1437, 331, 1455, 313, 1455, 314, 1436]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 696, "length": 2 }]
+                  }
+                },
+                "content": "30\nZESTAW SURÓWEK\n30\n239.20",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [319, 318, 337, 1619, 312, 1619, 295, 318]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 678, "length": 27 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 54, "currencyCode": "PLN" },
+                    "content": "54.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [301, 1576, 302, 1623, 283, 1624, 282, 1576]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 729, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZIEMNIAKI Z PIECA",
+                    "content": "ZIEMNIAKI Z PIECA",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [288, 584, 292, 773, 269, 773, 266, 584]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 709, "length": 17 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "29",
+                    "content": "29",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [281, 316, 282, 338, 263, 339, 262, 317]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 706, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 6,
+                    "content": "6",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [298, 1449, 298, 1457, 283, 1458, 282, 1450]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 727, "length": 1 }]
+                  }
+                },
+                "content": "29\nZIEMNIAKI Z PIECA\n6\n54.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [282, 316, 310, 1623, 283, 1624, 255, 317]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 706, "length": 28 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 54, "currencyCode": "PLN" },
+                    "content": "54.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [269, 1579, 269, 1626, 249, 1626, 249, 1579]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 757, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ZIEMNIAKI Z WODY",
+                    "content": "ZIEMNIAKI Z WODY",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [255, 583, 258, 777, 235, 777, 232, 583]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 738, "length": 16 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "12",
+                    "content": "12",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [248, 318, 248, 338, 230, 338, 230, 318]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 735, "length": 2 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 6,
+                    "content": "6",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [264, 1451, 264, 1460, 247, 1461, 247, 1452]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 755, "length": 1 }]
+                  }
+                },
+                "content": "12\nZIEMNIAKI Z WODY\n6\n54.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [269, 318, 269, 1626, 230, 1626, 230, 318]
+                  }
+                ],
+                "confidence": 0.002,
+                "spans": [{ "offset": 735, "length": 27 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 91.5, "currencyCode": "PLN" },
+                    "content": "91.50",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [236, 1582, 237, 1630, 217, 1630, 216, 1582]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 796, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "ŁOSOŚ Z MASŁEM CZOSNKOWYM",
+                    "content": "ŁOSOŚ Z MASŁEM CZOSNKOWYM",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [223, 581, 230, 941, 205, 941, 199, 581]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 765, "length": 25 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "7",
+                    "content": "7",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [215, 317, 215, 325, 195, 324, 195, 316]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 763, "length": 1 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 0.61,
+                    "content": "0.61",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [232, 1427, 233, 1465, 214, 1465, 213, 1427]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 791, "length": 4 }]
+                  }
+                },
+                "content": "7\nŁOSOŚ Z MASŁEM CZOSNKOWYM\n0.61\n91.50",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [217, 316, 245, 1630, 217, 1630, 190, 316]
+                  }
+                ],
+                "confidence": 0.01,
+                "spans": [{ "offset": 763, "length": 38 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 266, "currencyCode": "PLN" },
+                    "content": "266.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [202, 1574, 204, 1633, 183, 1634, 182, 1575]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 826, "length": 6 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "PIECZEŃ ZKARKÓWKI",
+                    "content": "PIECZEŃ ZKARKÓWKI",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [189, 576, 193, 838, 169, 838, 165, 576]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 806, "length": 17 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "370",
+                    "content": "370",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [183, 316, 183, 348, 163, 348, 163, 316]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 802, "length": 3 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 7,
+                    "content": "7",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [198, 1458, 197, 1468, 179, 1467, 180, 1458]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 824, "length": 1 }]
+                  }
+                },
+                "content": "370\nPIECZEŃ ZKARKÓWKI\n7\n266.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [184, 316, 207, 1634, 182, 1634, 159, 316]
+                  }
+                ],
+                "confidence": 0.001,
+                "spans": [{ "offset": 802, "length": 30 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 9, "currencyCode": "PLN" },
+                    "content": "9.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [168, 1598, 169, 1635, 149, 1636, 148, 1598]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 849, "length": 4 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": ".7up 0,2l",
+                    "content": ".7up 0,2l",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [156, 572, 156, 647, 128, 647, 128, 572]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 837, "length": 9 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "3 1",
+                    "content": "3 1",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [149, 315, 149, 346, 129, 346, 129, 315]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 833, "length": 3 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 1,
+                    "content": "1",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [164, 1460, 164, 1468, 147, 1468, 147, 1460]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 847, "length": 1 }]
+                  }
+                },
+                "content": "3 1\n.7up 0,2l\n1\n9.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [169, 315, 169, 1636, 128, 1636, 128, 315]
+                  }
+                ],
+                "confidence": 0,
+                "spans": [{ "offset": 833, "length": 20 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 16, "currencyCode": "PLN" },
+                    "content": "16.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [135, 1591, 136, 1638, 115, 1639, 114, 1591]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 873, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": "APA PALE ALE",
+                    "content": "APA PALE ALE",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [123, 575, 124, 714, 97, 714, 96, 575]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 858, "length": 12 }]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "362",
+                    "content": "362",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [115, 314, 115, 347, 96, 347, 96, 314]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 854, "length": 3 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 1,
+                    "content": "1",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [129, 1461, 128, 1469, 112, 1469, 113, 1461]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 871, "length": 1 }]
+                  }
+                },
+                "content": "362\nAPA PALE ALE\n1\n16.00",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [136, 314, 136, 1639, 96, 1639, 96, 314]
+                  }
+                ],
+                "confidence": 0.006,
+                "spans": [{ "offset": 854, "length": 24 }]
+              },
+              {
+                "type": "object",
+                "valueObject": {
+                  "Amount": {
+                    "type": "currency",
+                    "valueCurrency": { "amount": 28, "currencyCode": "PLN" },
+                    "content": "28.00",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [100, 1592, 101, 1639, 82, 1639, 81, 1592]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 909, "length": 5 }]
+                  },
+                  "Description": {
+                    "type": "string",
+                    "valueString": ".DESPERADOS 0% VIRGIN\nHEINEKEN 0%\n.HERBATA",
+                    "content": ".DESPERADOS 0% VIRGIN\nHEINEKEN 0%\n.HERBATA",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [88, 569, 91, 819, 2, 820, -1, 570]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [
+                      { "offset": 885, "length": 21 },
+                      { "offset": 915, "length": 11 },
+                      { "offset": 934, "length": 8 }
+                    ]
+                  },
+                  "ProductCode": {
+                    "type": "string",
+                    "valueString": "100_1",
+                    "content": "100_1",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [82, 314, 82, 368, 61, 368, 61, 314]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 879, "length": 5 }]
+                  },
+                  "Quantity": {
+                    "type": "number",
+                    "valueNumber": 2,
+                    "content": "2",
+                    "boundingRegions": [
+                      {
+                        "pageNumber": 1,
+                        "polygon": [96, 1463, 96, 1472, 79, 1472, 79, 1463]
+                      }
+                    ],
+                    "confidence": 0,
+                    "spans": [{ "offset": 907, "length": 1 }]
+                  }
+                },
+                "content": "100_1\n.DESPERADOS 0% VIRGIN\n2\n28.00\nHEINEKEN 0%\n42.001\n.HERBATA\n4\n48.00\n83",
+                "boundingRegions": [
+                  {
+                    "pageNumber": 1,
+                    "polygon": [88, 312, 101, 1647, 10, 1648, -4, 313]
+                  }
+                ],
+                "confidence": 0.007,
+                "spans": [{ "offset": 879, "length": 74 }]
+              }
+            ]
+          }
+        },
+        "confidence": 1,
+        "spans": [{ "offset": 0, "length": 1019 }]
+      }
+    ],
+    "contentFormat": "text"
+  }
+}
