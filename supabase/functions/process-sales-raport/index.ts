@@ -155,7 +155,6 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     { global: { headers: { Authorization: authHeader } } }
   );
-
   const { data: productAliasData, error: productAliasError } = await supabase
     .from("product_name_alias")
     .select("alias, product_id");
@@ -164,23 +163,46 @@ Deno.serve(async (req) => {
     console.error("Error fetching table data");
     return new Response("Error fetching table data", { status: 500 });
   }
-
+  /** ids of products that have aliases */
   const productIds = productAliasData?.map((item) => item.product_id);
-  const { data: productRecordData, error: productRecordError } = await supabase
-    .from("product_record")
-    .select("id, product_id, quantity, price_per_unit")
-    .eq("inventory_id", requestBody.inventory_id)
-    .in("product_id", productIds);
+
+  const { data: productRecordDataRaw, error: productRecordError } =
+    await supabase
+      .from("product_record")
+      .select("id, product_id, quantity, price_per_unit")
+      .eq("inventory_id", requestBody.inventory_id);
 
   if (productRecordError) {
     console.error("Error fetching table data");
     return new Response("Error fetching table data", { status: 500 });
   }
 
+  // filter out records that don't have aliases
+  const productRecordData = productRecordDataRaw.filter((pr) =>
+    productIds.includes(pr.product_id)
+  );
+
+  // fetches possibly incomplete recipes, we don't need products that do not occurr in the current inventory
+  const { data: recipeDataRaw, error: recipeError } = await supabase
+    .from("recipe")
+    .select(
+      "id, name, recipe_part(quantity, product_id), recipe_name_alias(alias)"
+    )
+    .in(
+      "recipe_part.product_id",
+      productRecordDataRaw.map((pr) => pr.product_id)
+    )
+    .order("name", { ascending: true });
+
+  if (recipeError) {
+    console.error("Error fetching table data");
+    return new Response("Error fetching table data", { status: 500 });
+  }
+  const recipeData = recipeDataRaw.filter((r) => r.recipe_part.length !== 0);
+
   let documentAnalysisResult:
     | ({
         sanitizedName: string | null;
-        price_per_unit: number | null;
         quantity: number | null;
       } | null)[]
     | null = null;
@@ -254,12 +276,10 @@ Deno.serve(async (req) => {
     const sanitizedName = parseStringForResponse(
       getName(itemValue?.Description)
     );
-    const price_per_unit = parseFloatForResponse(getPricePerUnit(itemValue));
     const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
     documentAnalysisResult = [
       {
         sanitizedName,
-        price_per_unit,
         quantity,
       },
     ];
@@ -274,84 +294,57 @@ Deno.serve(async (req) => {
         const sanitizedName = parseStringForResponse(
           getName(itemValue?.Description)
         );
-        const price_per_unit = parseFloatForResponse(
-          getPricePerUnit(itemValue)
-        );
         const quantity = parseFloatForResponse(
           getQuantity(itemValue?.Quantity)
         );
         return {
           sanitizedName,
-          price_per_unit,
           quantity,
         };
       }) ?? null;
   }
-
-  // this is extremely inefficient and we should find a better solution
-  const matchAliasesToRecognizedData = productRecordData.reduce(
-    (acc, productRecord) => {
-      const product_id = productRecord.product_id;
-      const record_id = productRecord.id;
-
-      const matchedAliases = productAliasData.filter(
-        (alias) => alias.product_id === product_id
-      );
-
-      if (isEmpty(matchedAliases)) {
-        return { ...acc };
-      }
-
-      const matchedDocumentData = documentAnalysisResult?.filter(
-        (documentItem) =>
-          matchedAliases.some(
-            (matchedAlias) => documentItem?.sanitizedName === matchedAlias.alias
-          )
-      );
-
-      if (matchedDocumentData == null) {
-        return { ...acc };
-      }
-
-      const price_per_unit = Math.max(
-        ...matchedDocumentData.map(
-          (item) => item?.price_per_unit ?? productRecord?.price_per_unit ?? 0
-        )
-      );
+  const recipeResponsePart = recipeData.reduce(
+    (acc, recipe) => {
+      const recognizedDataMatchedToRecipeAliases =
+        documentAnalysisResult?.filter(
+          (dar) =>
+            dar != null &&
+            dar.sanitizedName != null &&
+            dar.quantity != null &&
+            recipe.recipe_name_alias.includes({
+              alias: dar.sanitizedName,
+            })
+        ) as { sanitizedName: string; quantity: number }[];
 
       const quantity =
-        matchedDocumentData.reduce(
-          (sum, item) => sum + (item?.quantity ?? 0),
+        recognizedDataMatchedToRecipeAliases?.reduce(
+          (sum, it) => sum + (it.quantity ?? 0),
           0
-        ) + productRecord.quantity;
+        ) ?? 0;
 
       return {
+        ...acc,
         recognized: {
           ...acc.recognized,
-          [String(record_id)]: {
-            product_id,
-            price_per_unit: price_per_unit
-              ? parseFloatForResponse(price_per_unit)
-              : // temporary until null handling/merging is figured out in the app
-                0,
-            quantity: quantity
-              ? parseFloatForResponse(quantity)
-              : // temporary until null handling/merging is figured out in the app
-                0,
+          [String(recipe.id)]: {
+            quantity: parseFloatForResponse(quantity),
           },
         },
         recognizedAliases: [
           ...acc.recognizedAliases,
-          ...matchedAliases.map((a) => a.alias),
+          ...recognizedDataMatchedToRecipeAliases?.map(
+            (it) => it?.sanitizedName
+          ),
         ],
       };
     },
-    { recognized: {}, recognizedAliases: [] } as {
+    {
+      recognized: {},
+      recognizedAliases: [],
+    } as {
       recognized: Record<
         string,
         {
-          product_id: number;
-          price_per_unit: number | null;
           quantity: number | null;
         }
       >;
@@ -360,12 +353,12 @@ Deno.serve(async (req) => {
   );
 
   // we want them unique
-  const unmatchedAliases = [
+  const unmatchedAliasesProduct = [
     ...new Set(
       documentAnalysisResult
         ?.filter(
           (analysis) =>
-            !matchAliasesToRecognizedData.recognizedAliases.some(
+            !recipeResponsePart.recognizedAliases.some(
               (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
             )
         )
@@ -375,8 +368,8 @@ Deno.serve(async (req) => {
 
   return new Response(
     JSON.stringify({
-      form: matchAliasesToRecognizedData.recognized,
-      unmatchedAliases,
+      form: recipeResponsePart.recognized,
+      unmatchedAliases: { products: unmatchedAliasesProduct },
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
