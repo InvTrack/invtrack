@@ -3,16 +3,14 @@ import isEmpty from "lodash/isEmpty";
 import { useSnackbar } from "../../components/Snackbar/hooks";
 import { AliasForm } from "../../screens/IdentifyAliasesScreen";
 import { supabase } from "../supabase";
-import { ProductNameAliasInsert, ProductNameAliasTable } from "../types";
+import { NameAliasInsert, NameAliasTable } from "../types";
 import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
 
 export const useCreateProductNameAlias = () => {
   const { showError, showSuccess } = useSnackbar();
   const { data: currentCompanyId } = useGetCurrentCompanyId();
   return useMutation(
-    async (
-      productNameAliases: AliasForm
-    ): Promise<ProductNameAliasTable[] | []> => {
+    async (productNameAliases: AliasForm): Promise<NameAliasTable[] | []> => {
       if (isEmpty(productNameAliases)) {
         return [];
       }
@@ -36,11 +34,11 @@ export const useCreateProductNameAlias = () => {
             })) || []),
           ];
         },
-        [] as ProductNameAliasInsert[]
+        [] as NameAliasInsert[]
       );
 
       const { data, error } = await supabase
-        .from("product_name_alias")
+        .from("name_alias")
         .upsert(mapped, {
           ignoreDuplicates: true,
         })
