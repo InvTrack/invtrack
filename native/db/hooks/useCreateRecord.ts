@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { supabase } from "../supabase";
 import { ProductRecordInsert } from "../types";
-import { useSession } from "./sessionContext";
+import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
 
 export const useCreateRecord = () => {
-  const { companyId } = useSession();
+  const { data: companyId } = useGetCurrentCompanyId();
   const queryClient = useQueryClient();
   return useMutation(
     async (record: ProductRecordInsert) => {
