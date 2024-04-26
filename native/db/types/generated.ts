@@ -170,7 +170,21 @@ export type Database = {
             foreignKeyName: "name_alias_product_id_fkey";
             columns: ["product_id"];
             isOneToOne: false;
-            referencedRelation: "recipe";
+            referencedRelation: "deleted_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
             referencedColumns: ["id"];
           },
           {
