@@ -157,8 +157,9 @@ Deno.serve(async (req) => {
   );
 
   const { data: productAliasData, error: productAliasError } = await supabase
-    .from("product_name_alias")
-    .select("alias, product_id");
+    .from("name_alias")
+    .select("alias, product_id")
+    .is("recipe_id", null);
 
   if (productAliasError) {
     console.error("Error fetching table data");
