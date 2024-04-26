@@ -1,17 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { useSession } from "../auth";
 import { supabase } from "../supabase";
 import { InventoryInsert } from "../types";
-import { useSession } from "./sessionContext";
+import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
 
 export const useCreateInventory = () => {
-  const { companyId, session } = useSession();
+  const { session } = useSession();
+  const { data: companyId } = useGetCurrentCompanyId();
   const queryClient = useQueryClient();
   return useMutation(
     async (inventory: InventoryInsert) => {
       const { data, error } = await supabase
         .from("inventory")
-        .insert({ ...inventory, company_id: companyId })
+        .insert({ ...inventory, company_id: companyId?.id })
         .select()
         .single();
       if (error) throw new Error(error.message);
