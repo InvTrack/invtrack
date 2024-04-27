@@ -19,7 +19,7 @@ export const SalesRaportPhotoPreview = () => {
 
   const dispatch = useAppDispatch();
 
-  const { mutate, isLoading, data: _data } = useProcessSalesRaport();
+  const { mutate, isLoading } = useProcessSalesRaport(inventory_id);
 
   return (
     <ImageBackground
@@ -64,7 +64,7 @@ export const SalesRaportPhotoPreview = () => {
               isLoading
                 ? () => null
                 : () => {
-                    mutate({ inventory_id, base64Photo: photo?.base64! });
+                    mutate({ base64Photo: photo?.base64! });
                   }
             }
             size="s"

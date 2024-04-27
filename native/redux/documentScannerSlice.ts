@@ -1,23 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CameraCapturedPicture } from "expo-camera";
-import { ProcessInvoiceResponse } from "../db/types";
+import {
+  ProcessInvoiceResponse,
+  ProcessSalesRaportResponse,
+} from "../db/types";
 import { RootState } from "./store";
 
 interface DocumentScannerSlice {
   isPreviewShown: boolean;
-  isProcessingPhotoData: boolean;
+  isTakingPhoto: boolean;
   isCameraReady: boolean | null;
   photo: CameraCapturedPicture | null;
   processedInvoice: ProcessInvoiceResponse;
+  processedSalesRaport: ProcessSalesRaportResponse;
   inventory_id: number | null;
 }
 
 const initialState: DocumentScannerSlice = {
-  isProcessingPhotoData: false,
+  isTakingPhoto: false,
   isPreviewShown: false,
   isCameraReady: null,
   photo: null,
   processedInvoice: null,
+  processedSalesRaport: null,
   inventory_id: null,
 } as DocumentScannerSlice;
 
@@ -41,15 +46,15 @@ export const documentScannerSlice = createSlice({
       photo: null,
       isPreviewShown: false,
     }),
-    PHOTO_START: (state) => ({ ...state, isProcessingPhotoData: true }),
-    PHOTO_END: (state) => ({ ...state, isProcessingPhotoData: false }),
+    PHOTO_START: (state) => ({ ...state, isTakingPhoto: true }),
+    PHOTO_END: (state) => ({ ...state, isTakingPhoto: false }),
     PHOTO_RESET_DATA: (state) => ({
       ...state,
       photo: null,
       isPreviewShown: false,
-      isProcessingPhotoData: false,
+      isTakingPhoto: false,
     }),
-    INVOICE_PROCESSING_RESULT: (
+    SET_PROCESSED_INVOICE: (
       state,
       {
         payload,
@@ -57,9 +62,21 @@ export const documentScannerSlice = createSlice({
         processedInvoice: DocumentScannerSlice["processedInvoice"];
       }>
     ) => ({ ...state, processedInvoice: payload.processedInvoice }),
-    RESET_INVOICE_PROCESSING_RESULT: (state) => ({
+    SET_PROCESSED_SALES_RAPORT: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        processedSalesRaport: DocumentScannerSlice["processedSalesRaport"];
+      }>
+    ) => ({ ...state, processedSalesRaport: payload.processedSalesRaport }),
+    RESET_PROCESSED_INVOICE: (state) => ({
       ...state,
       processedInvoice: null,
+    }),
+    RESET_PROCESSED_SALES_RAPORT: (state) => ({
+      ...state,
+      processedSalesRaport: null,
     }),
     SET_INVENTORY_ID: (
       state,
@@ -71,10 +88,11 @@ export const documentScannerSlice = createSlice({
   },
   selectors: {
     selectIsPreviewShown: (state) => state.isPreviewShown,
-    selectIsProcessingPhotoData: (state) => state.isProcessingPhotoData,
+    selectisTakingPhoto: (state) => state.isTakingPhoto,
     selectPhoto: (state) => state.photo,
     selectInventoryId: (state) => state.inventory_id,
     selectProcessedInvoice: (state) => state.processedInvoice,
+    selectProcessedSalesRaport: (state) => state.processedSalesRaport,
     selectUnmatchedAliases: (state) => state.processedInvoice?.unmatchedAliases,
   },
 });

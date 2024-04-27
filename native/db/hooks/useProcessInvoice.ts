@@ -50,7 +50,7 @@ export const useProcessInvoice = () => {
       }
 
       dispatch(
-        documentScannerAction.INVOICE_PROCESSING_RESULT({
+        documentScannerAction.SET_PROCESSED_INVOICE({
           processedInvoice: data,
         })
       );
