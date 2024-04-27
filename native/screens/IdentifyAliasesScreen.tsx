@@ -108,7 +108,7 @@ export const IdentifyAliasesScreen = ({
   };
   const handleGoBackPress = () => {
     dispatch(documentScannerAction.PHOTO_RESET_DATA());
-    dispatch(documentScannerAction.RESET_INVOICE_PROCESSING_RESULT());
+    dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
     navigation.replace("DocumentScannerModal", {
       isScanningSalesRaport: false,
     });

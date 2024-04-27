@@ -1,30 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "../../components/Snackbar/hooks";
-import { documentScannerSelector } from "../../redux/documentScannerSlice";
-import { useAppSelector } from "../../redux/hooks";
+import { documentScannerAction } from "../../redux/documentScannerSlice";
+import { useAppDispatch } from "../../redux/hooks";
 import { supabase } from "../supabase";
 import { ProcessSalesRaportResponse } from "../types";
 import { queryKeys } from "./queryKeys";
 
-export const useProcessSalesRaport = () => {
+export const useProcessSalesRaport = (inventory_id: number | null) => {
   const { showError } = useSnackbar();
-
-  const inventory_id = useAppSelector(
-    documentScannerSelector.selectInventoryId
-  );
+  const dispatch = useAppDispatch();
 
   return useMutation(
     async ({
       base64Photo,
     }: {
       base64Photo: string;
-      inventory_id: number | null;
     }): Promise<ProcessSalesRaportResponse> => {
       if (inventory_id == null) {
-        showError("Nie udało się przetworzyć zdjęcia");
-        console.log(
+        console.error(
           "useProcessSalesRaport - no inventory_id, this should not happen"
         );
+        showError("Nie udało się przetworzyć zdjęcia - zrestartuj aplikację");
         return null;
       }
       const reqBody = {
@@ -45,6 +41,12 @@ export const useProcessSalesRaport = () => {
         console.log("useProcessSalesRaport", error);
         return null;
       }
+
+      dispatch(
+        documentScannerAction.SET_PROCESSED_INVOICE({
+          processedInvoice: data,
+        })
+      );
 
       return data as ProcessSalesRaportResponse;
     },
