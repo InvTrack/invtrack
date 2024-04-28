@@ -106,7 +106,7 @@ export const IdentifyAliasesScreenSalesRaport = () => {
     dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
     dispatch(documentScannerAction.PHOTO_RETAKE());
     navigation.replace("DocumentScannerModal", {
-      isScanningSalesRaport: false,
+      isScanningSalesRaport: true,
     });
   };
 
