@@ -50,6 +50,7 @@ export const DocumentScannerModalScreen = ({
       if (inventory_id && !isEmpty(processedSalesRaport?.unmatchedAliases)) {
         navigation.replace("IdentifyAliasesScreen", {
           inventoryId: inventory_id,
+          isScanningSalesRaport,
         });
       } else {
         navigation.goBack();
@@ -61,6 +62,7 @@ export const DocumentScannerModalScreen = ({
       if (inventory_id && !isEmpty(processedInvoice?.unmatchedAliases)) {
         navigation.replace("IdentifyAliasesScreen", {
           inventoryId: inventory_id,
+          isScanningSalesRaport,
         });
       } else {
         navigation.goBack();

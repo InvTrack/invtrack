@@ -1,31 +1,27 @@
 import { useNetInfo } from "@react-native-community/netinfo";
+import { useNavigation } from "@react-navigation/native";
 import isEmpty from "lodash/isEmpty";
 import { useEffect } from "react";
 import { UseFormGetValues, UseFormSetValue, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
-import { Badge } from "../components/Badge";
-import { useBottomSheet } from "../components/BottomSheet";
-import { ProductListBottomSheetContent } from "../components/BottomSheet/contents/ProductList";
-import { Button } from "../components/Button";
-import { DropdownButton } from "../components/DropdownButton";
-import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
-import SafeLayout from "../components/SafeLayout";
-import { useSnackbar } from "../components/Snackbar/hooks";
-import { Typography } from "../components/Typography";
-import { useCreateProductNameAlias } from "../db/hooks/useCreateProductNameAlias";
-import { useListExistingProducts } from "../db/hooks/useListProducts";
-import { IdentifyAliasesScreenProps } from "../navigation/types";
+import { Badge } from "../../components/Badge";
+import { useBottomSheet } from "../../components/BottomSheet";
+import { ProductListBottomSheetContent } from "../../components/BottomSheet/contents/ProductList";
+import { Button } from "../../components/Button";
+import { DropdownButton } from "../../components/DropdownButton";
+import { EmptyScreenTemplate } from "../../components/EmptyScreenTemplate";
+import { useSnackbar } from "../../components/Snackbar/hooks";
+import { Typography } from "../../components/Typography";
+import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
+import { useListExistingProducts } from "../../db/hooks/useListProducts";
+import { IdentifyAliasesScreenNavigationProp } from "../../navigation/types";
 import {
   documentScannerAction,
   documentScannerSelector,
-} from "../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { createStyles } from "../theme/useStyles";
-
-export type AliasForm = {
-  // stringified product_id
-  [product_id: string]: string[] | null; //alias
-} & { usedAliases: string[] };
+} from "../../redux/documentScannerSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { createStyles } from "../../theme/useStyles";
+import { AliasForm } from "./types";
 
 // unique
 const aliasSet = new Set<string>([]);
@@ -60,9 +56,8 @@ const setAlias =
     setValue("usedAliases", [...aliasSet]);
   };
 
-export const IdentifyAliasesScreen = ({
-  navigation,
-}: IdentifyAliasesScreenProps) => {
+export const IdentifyAliasesScreenInvoice = () => {
+  const navigation = useNavigation<IdentifyAliasesScreenNavigationProp>();
   const { isConnected } = useNetInfo();
   const styles = useStyles();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
@@ -72,7 +67,7 @@ export const IdentifyAliasesScreen = ({
   const { data: products } = useListExistingProducts();
   const { mutate, isSuccess } = useCreateProductNameAlias();
   const aliases = useAppSelector(
-    documentScannerSelector.selectUnmatchedAliases
+    documentScannerSelector.selectInvoiceUnmatchedAliases
   );
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
@@ -113,6 +108,7 @@ export const IdentifyAliasesScreen = ({
       isScanningSalesRaport: false,
     });
   };
+
   if (isEmpty(aliases) || !aliases) {
     // error
     return (
@@ -121,14 +117,8 @@ export const IdentifyAliasesScreen = ({
       </EmptyScreenTemplate>
     );
   }
-
   return (
-    <SafeLayout
-      style={[styles.container, styles.bg]}
-      containerStyle={styles.bg}
-      contentContainerStyle={styles.bg}
-      scrollable
-    >
+    <>
       <View style={{ flexDirection: "row" }}>
         <Button
           containerStyle={styles.saveButtonContainer}
@@ -176,7 +166,7 @@ export const IdentifyAliasesScreen = ({
           </DropdownButton>
         </View>
       ))}
-    </SafeLayout>
+    </>
   );
 };
 

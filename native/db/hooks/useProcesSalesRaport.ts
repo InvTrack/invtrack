@@ -43,8 +43,8 @@ export const useProcessSalesRaport = (inventory_id: number | null) => {
       }
 
       dispatch(
-        documentScannerAction.SET_PROCESSED_INVOICE({
-          processedInvoice: data,
+        documentScannerAction.SET_PROCESSED_SALES_RAPORT({
+          processedSalesRaport: data,
         })
       );
 
