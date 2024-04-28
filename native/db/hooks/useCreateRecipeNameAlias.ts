@@ -6,12 +6,12 @@ import { supabase } from "../supabase";
 import { NameAliasInsert, NameAliasTable } from "../types";
 import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
 
-export const useCreateProductNameAlias = () => {
+export const useCreateRecipeNameAlias = () => {
   const { showError, showSuccess } = useSnackbar();
   const { data: currentCompanyId } = useGetCurrentCompanyId();
   return useMutation(
-    async (productNameAliases: AliasForm): Promise<NameAliasTable[] | []> => {
-      if (isEmpty(productNameAliases)) {
+    async (recipeNameAliases: AliasForm): Promise<NameAliasTable[] | []> => {
+      if (isEmpty(recipeNameAliases)) {
         return [];
       }
       if (currentCompanyId?.id == null) {
@@ -20,16 +20,16 @@ export const useCreateProductNameAlias = () => {
       }
       const company_id = currentCompanyId?.id;
 
-      const mapped = Object.entries(productNameAliases).reduce(
-        (acc, [product_id, aliases]) => {
-          if (product_id === "usedAliases") {
+      const mapped = Object.entries(recipeNameAliases).reduce(
+        (acc, [recipe_id, aliases]) => {
+          if (recipe_id === "usedAliases") {
             return acc;
           }
           return [
             ...acc,
             ...(aliases?.map((alias) => ({
-              product_id: Number(product_id),
-              alias: alias ?? undefined,
+              recipe_id: Number(recipe_id),
+              alias: alias,
               company_id,
             })) || []),
           ];
@@ -45,15 +45,15 @@ export const useCreateProductNameAlias = () => {
         .select();
 
       if (error) {
-        console.log("Couldn't insert product aliases", error);
+        console.log("Couldn't insert recipe aliases", error);
         if (error.code === "23505") {
           showError("Niektóre aliasy już istnieją");
           return [];
         }
-        showError("Nie udało się dodać nowych aliasów produktów");
+        showError("Nie udało się dodać nowych aliasów receptur");
         return [];
       }
-      showSuccess("Dodano nowe aliasy produktów");
+      showSuccess("Dodano nowe aliasy receptur");
       return data as NonNullable<typeof data>;
     }
   );

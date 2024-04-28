@@ -93,7 +93,10 @@ export const documentScannerSlice = createSlice({
     selectInventoryId: (state) => state.inventory_id,
     selectProcessedInvoice: (state) => state.processedInvoice,
     selectProcessedSalesRaport: (state) => state.processedSalesRaport,
-    selectUnmatchedAliases: (state) => state.processedInvoice?.unmatchedAliases,
+    selectInvoiceUnmatchedAliases: (state) =>
+      state.processedInvoice?.unmatchedAliases,
+    selectSalesRaportUnmatchedAliases: (state) =>
+      state.processedSalesRaport?.unmatchedAliases,
   },
 });
 
