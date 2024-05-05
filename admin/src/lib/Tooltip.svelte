@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex items-center text-sm font-light text-gray-500 dark:text-gray-400">
-  <button {id}>
+  <button type="button" {id}>
     <QuestionCircleSolid class="w-4 h-4 ms-1.5" />
     <span class="sr-only">Pokaż więcej informacji</span>
   </button>
