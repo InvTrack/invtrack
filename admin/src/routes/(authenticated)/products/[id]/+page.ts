@@ -8,7 +8,7 @@ export const load = async ({ parent, params }) => {
       `
       *,
       barcode(*),
-      name_alias:product_name_alias(alias)
+      name_alias(alias)
     `
     )
     .eq("id", id)
