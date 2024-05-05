@@ -44,7 +44,7 @@
       newAliases.forEach((newAlias) => {
         genericUpdate(
           supabase
-            .from("product_name_alias")
+            .from("name_alias")
             .insert({ alias: newAlias, company_id, product_id: product_id }),
           {
             setLoading,
