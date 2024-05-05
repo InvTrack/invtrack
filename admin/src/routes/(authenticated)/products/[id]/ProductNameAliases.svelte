@@ -60,7 +60,7 @@
     if (deleteAliases) {
       deleteAliases.forEach((aliasToDelete) => {
         genericUpdate(
-          supabase.from("product_name_alias").delete().match({ company_id, alias: aliasToDelete }),
+          supabase.from("name_alias").delete().match({ company_id, alias: aliasToDelete }),
           {
             setLoading,
             onError: () => {
