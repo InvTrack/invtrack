@@ -16,7 +16,7 @@ import { StockForm } from "../components/StockFormContext/types";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
-import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
+import { useUpdateRecords } from "../db/hooks/useUpdateRecords";
 import { DeliveryTabScreenProps } from "../navigation/types";
 import { documentScannerAction } from "../redux/documentScannerSlice";
 import { useAppDispatch } from "../redux/hooks";
