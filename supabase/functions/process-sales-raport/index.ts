@@ -84,35 +84,6 @@ const getName = (item: DocumentFieldOutput | undefined) => {
   return item.valueString ?? null;
 };
 
-const getPricePerUnit = (
-  item: Record<string, DocumentFieldOutput> | undefined
-): number | null => {
-  if (
-    item == null ||
-    item?.Amount == null ||
-    item?.Quantity == null ||
-    item?.UnitPrice == null ||
-    item?.Tax == null
-  ) {
-    return null;
-  }
-
-  const unitPrice = getValueAsNumber(item.UnitPrice);
-  const quantity = getValueAsNumber(item.Quantity);
-  const amount = getValueAsNumber(item.Amount);
-  const tax = getValueAsNumber(item.Tax);
-
-  if (unitPrice == null || quantity == null || amount == null || tax == null) {
-    return null;
-  }
-
-  if (!isCloseEnough(quantity * unitPrice + tax, amount)) {
-    return parseFloat6Precision((amount - tax) / quantity);
-  }
-
-  return parseFloat6Precision(unitPrice);
-};
-
 const getQuantity = (item: DocumentFieldOutput | undefined): number | null => {
   if (item == null || item?.type !== "number" || item.valueNumber == null) {
     return null;
@@ -155,39 +126,22 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     { global: { headers: { Authorization: authHeader } } }
   );
-  const { data: productAliasData, error: productAliasError } = await supabase
-    .from("product_name_alias")
-    .select("alias, product_id");
-
-  if (productAliasError) {
-    console.error("Error fetching table data");
-    return new Response("Error fetching table data", { status: 500 });
-  }
-  /** ids of products that have aliases */
-  const productIds = productAliasData?.map((item) => item.product_id);
 
   const { data: productRecordDataRaw, error: productRecordError } =
     await supabase
       .from("product_record")
-      .select("id, product_id, quantity, price_per_unit")
+      .select("id, product_id, quantity, price_per_unit, name_alias(alias)")
       .eq("inventory_id", requestBody.inventory_id);
 
   if (productRecordError) {
-    console.error("Error fetching table data");
+    console.error("Error fetching table data - productRecordError");
     return new Response("Error fetching table data", { status: 500 });
   }
-
-  // filter out records that don't have aliases
-  const productRecordData = productRecordDataRaw.filter((pr) =>
-    productIds.includes(pr.product_id)
-  );
 
   // fetches possibly incomplete recipes, we don't need products that do not occurr in the current inventory
   const { data: recipeDataRaw, error: recipeError } = await supabase
     .from("recipe")
-    .select(
-      "id, name, recipe_part(quantity, product_id), recipe_name_alias(alias)"
-    )
+    .select("id, name, recipe_part(quantity, product_id), name_alias(alias)")
     .in(
       "recipe_part.product_id",
       productRecordDataRaw.map((pr) => pr.product_id)
@@ -195,7 +149,7 @@ Deno.serve(async (req) => {
     .order("name", { ascending: true });
 
   if (recipeError) {
-    console.error("Error fetching table data");
+    console.error("Error fetching table data - recipeError");
     return new Response("Error fetching table data", { status: 500 });
   }
   const recipeData = recipeDataRaw.filter((r) => r.recipe_part.length !== 0);
@@ -311,7 +265,7 @@ Deno.serve(async (req) => {
             dar != null &&
             dar.sanitizedName != null &&
             dar.quantity != null &&
-            recipe.recipe_name_alias.includes({
+            recipe.name_alias.includes({
               alias: dar.sanitizedName,
             })
         ) as { sanitizedName: string; quantity: number }[];
@@ -353,7 +307,7 @@ Deno.serve(async (req) => {
   );
 
   // we want them unique
-  const unmatchedAliasesProduct = [
+  const unmatchedAliases = [
     ...new Set(
       documentAnalysisResult
         ?.filter(
@@ -369,7 +323,7 @@ Deno.serve(async (req) => {
   return new Response(
     JSON.stringify({
       form: recipeResponsePart.recognized,
-      unmatchedAliases: { products: unmatchedAliasesProduct },
+      unmatchedAliases,
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
