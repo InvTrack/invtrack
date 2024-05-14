@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export interface Database {
+export type Database = {
   graphql_public: {
     Tables: {
       [_ in never]: never;
@@ -57,25 +57,29 @@ export interface Database {
           {
             foreignKeyName: "barcode_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "barcode_product_id_fkey";
             columns: ["product_id"];
-            referencedRelation: "product";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "barcode_product_id_fkey";
-            columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "deleted_products";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "barcode_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "barcode_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
             referencedColumns: ["id"];
           }
         ];
@@ -133,6 +137,7 @@ export interface Database {
           {
             foreignKeyName: "inventory_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -179,12 +184,14 @@ export interface Database {
           {
             foreignKeyName: "product_category_id_fkey";
             columns: ["category_id"];
+            isOneToOne: false;
             referencedRelation: "product_category";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -216,6 +223,7 @@ export interface Database {
           {
             foreignKeyName: "product_category_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -244,24 +252,28 @@ export interface Database {
           {
             foreignKeyName: "product_name_alias_product_id_fkey";
             columns: ["product_id"];
-            referencedRelation: "product";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "product_name_alias_product_id_fkey";
-            columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "deleted_products";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_name_alias_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "public_product_name_alias_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -296,31 +308,36 @@ export interface Database {
           {
             foreignKeyName: "product_record_inventory_id_fkey";
             columns: ["inventory_id"];
+            isOneToOne: false;
             referencedRelation: "inventory";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey";
             columns: ["inventory_id"];
+            isOneToOne: false;
             referencedRelation: "low_quantity_notifications_user_id_view";
             referencedColumns: ["inventory_id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
             columns: ["product_id"];
-            referencedRelation: "product";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "product_record_product_id_fkey";
-            columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "deleted_products";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_record_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
             referencedColumns: ["id"];
           }
         ];
@@ -348,6 +365,7 @@ export interface Database {
           {
             foreignKeyName: "recipe_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -379,24 +397,84 @@ export interface Database {
           {
             foreignKeyName: "recipe_part_product_id_fkey";
             columns: ["product_id"];
-            referencedRelation: "product";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "recipe_part_product_id_fkey";
-            columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "deleted_products";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "recipe_part_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recipe_part_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "recipe_part_recipe_id_fkey";
             columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipe";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      recipe_record: {
+        Row: {
+          company_id: number;
+          created_at: string;
+          id: number;
+          inventory_id: number;
+          quantity: number;
+          recipe_id: number;
+        };
+        Insert: {
+          company_id: number;
+          created_at?: string;
+          id?: number;
+          inventory_id: number;
+          quantity: number;
+          recipe_id: number;
+        };
+        Update: {
+          company_id?: number;
+          created_at?: string;
+          id?: number;
+          inventory_id?: number;
+          quantity?: number;
+          recipe_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "recipe_record_company_id_fkey";
+            columns: ["company_id"];
+            isOneToOne: false;
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recipe_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            isOneToOne: false;
+            referencedRelation: "inventory";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recipe_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            isOneToOne: false;
+            referencedRelation: "low_quantity_notifications_user_id_view";
+            referencedColumns: ["inventory_id"];
+          },
+          {
+            foreignKeyName: "recipe_record_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
             referencedRelation: "recipe";
             referencedColumns: ["id"];
           }
@@ -431,12 +509,14 @@ export interface Database {
           {
             foreignKeyName: "worker_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "worker_id_fkey";
             columns: ["id"];
+            isOneToOne: true;
             referencedRelation: "users";
             referencedColumns: ["id"];
           }
@@ -458,6 +538,7 @@ export interface Database {
           {
             foreignKeyName: "worker_company_id_fkey";
             columns: ["id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -504,12 +585,14 @@ export interface Database {
           {
             foreignKeyName: "product_category_id_fkey";
             columns: ["category_id"];
+            isOneToOne: false;
             referencedRelation: "product_category";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -556,12 +639,14 @@ export interface Database {
           {
             foreignKeyName: "product_category_id_fkey";
             columns: ["category_id"];
+            isOneToOne: false;
             referencedRelation: "product_category";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           }
@@ -576,6 +661,7 @@ export interface Database {
           {
             foreignKeyName: "worker_id_fkey";
             columns: ["user_id"];
+            isOneToOne: true;
             referencedRelation: "users";
             referencedColumns: ["id"];
           }
@@ -595,18 +681,21 @@ export interface Database {
           {
             foreignKeyName: "product_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey";
             columns: ["inventory_id"];
+            isOneToOne: false;
             referencedRelation: "inventory";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey";
             columns: ["inventory_id"];
+            isOneToOne: false;
             referencedRelation: "low_quantity_notifications_user_id_view";
             referencedColumns: ["inventory_id"];
           }
@@ -631,30 +720,35 @@ export interface Database {
           {
             foreignKeyName: "product_record_inventory_id_fkey";
             columns: ["inventory_id"];
+            isOneToOne: false;
             referencedRelation: "inventory";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_inventory_id_fkey";
             columns: ["inventory_id"];
+            isOneToOne: false;
             referencedRelation: "low_quantity_notifications_user_id_view";
             referencedColumns: ["inventory_id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "product";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "deleted_products";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "product_record_product_id_fkey";
             columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "existing_products";
             referencedColumns: ["id"];
           }
@@ -673,12 +767,14 @@ export interface Database {
           {
             foreignKeyName: "worker_company_id_fkey";
             columns: ["company_id"];
+            isOneToOne: false;
             referencedRelation: "company";
             referencedColumns: ["id"];
           },
           {
             foreignKeyName: "worker_id_fkey";
             columns: ["id"];
+            isOneToOne: true;
             referencedRelation: "users";
             referencedColumns: ["id"];
           }
@@ -847,6 +943,7 @@ export interface Database {
           {
             foreignKeyName: "objects_bucketId_fkey";
             columns: ["bucket_id"];
+            isOneToOne: false;
             referencedRelation: "buckets";
             referencedColumns: ["id"];
           }
@@ -882,7 +979,7 @@ export interface Database {
         Args: {
           name: string;
         };
-        Returns: unknown;
+        Returns: string[];
       };
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>;
@@ -919,4 +1016,86 @@ export interface Database {
       [_ in never]: never;
     };
   };
-}
+};
+
+type PublicSchema = Database[Extract<keyof Database, "public">];
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+      PublicSchema["Views"])
+  ? (PublicSchema["Tables"] &
+      PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : never;
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+  ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : never;
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+  ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : never;
+
+export type Enums<
+  PublicEnumNameOrOptions extends
+    | keyof PublicSchema["Enums"]
+    | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+  ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+  : never;

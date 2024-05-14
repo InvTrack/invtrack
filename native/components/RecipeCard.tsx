@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { useFormContext } from "react-hook-form";
+import { useGetRecipeRecord } from "../db/hooks/useGetRecipeRecord";
 import { useListRecipes } from "../db/hooks/useListRecipes";
 import { useListRecords } from "../db/hooks/useListRecords";
 import { createStyles } from "../theme/useStyles";
@@ -10,9 +11,9 @@ import { useBottomSheet } from "./BottomSheet";
 import { InputBottomSheetContent } from "./BottomSheet/contents";
 import { Button } from "./Button";
 import { Card } from "./Card";
-import { DeliveryForm } from "./DeliveryFormContext/deliveryForm.types";
 import { PencilIcon } from "./Icon";
-import { InventoryForm } from "./InventoryFormContext/inventoryForm.types";
+import { useSnackbar } from "./Snackbar/hooks";
+import { StockForm } from "./StockFormContext/types";
 import { Typography } from "./Typography";
 
 type RecipeCardProps = {
@@ -23,6 +24,7 @@ type RecipeCardProps = {
         ReturnType<typeof useListRecipes>["data"]
       >[number]["recipe_part"];
   inventoryId: number;
+  recipeRecordId: number;
   borderLeft?: boolean;
   borderRight?: boolean;
   borderBottom?: boolean;
@@ -87,6 +89,7 @@ const getRecordAndMultiplier = (
 export const RecipeCard = ({
   name,
   recipePart,
+  recipeRecordId,
   inventoryId,
   borderLeft = false,
   borderRight = false,
@@ -94,19 +97,33 @@ export const RecipeCard = ({
 }: RecipeCardProps) => {
   const styles = useStyles();
   const { closeBottomSheet, openBottomSheet } = useBottomSheet();
-  const { watch, setValue } = useFormContext<InventoryForm | DeliveryForm>();
+  const { showInfo } = useSnackbar();
+  const { watch, setValue } = useFormContext<StockForm>();
   const { data: recordsList } = useListRecords(inventoryId);
-  const [recipeQuantity, setRecipeQuantity] = useState(0);
-  if (!name) {
-    return null;
-  }
+  const { data: recipeRecord } = useGetRecipeRecord(
+    inventoryId,
+    recipeRecordId
+  );
 
   const recordAndMultiplier = useMemo(
     () => getRecordAndMultiplier(recipePart, recordsList),
     [inventoryId, recipePart, recordsList]
   );
 
-  // value is an integer, see InputBottomSheetContent props
+  if (!name) {
+    return null;
+  }
+
+  const recipeQuantity =
+    watch(`recipe_records.${recipeRecordId}.quantity`) ??
+    recipeRecord?.quantity ??
+    0;
+  const setRecipeQuantity = (v: number) =>
+    setValue(`recipe_records.${recipeRecordId}.quantity`, v, {
+      shouldDirty: true,
+    });
+
+  // in need of desparate refactoring hehe
   const setQuantity = (value: number) => {
     if (value === recipeQuantity) return void this;
     const delta = value - recipeQuantity;
@@ -124,7 +141,9 @@ export const RecipeCard = ({
 
         // the object may not exist, if the user did not navigate to the given RecordScreen
         // may change during the form refactor
-        const oldRecordValues = watch(`${stringifiedRecordId}`) || {
+        const oldRecordValues = watch(
+          `product_records.${stringifiedRecordId}`
+        ) || {
           price_per_unit: null,
           product_id: ram.product_id,
           quantity: ram.record_quantity_backup,
@@ -135,10 +154,21 @@ export const RecipeCard = ({
           oldRecordValues.quantity - dMultiplied
         );
 
-        setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
-          shouldDirty: true,
-          shouldTouch: true,
-        });
+        if (newRecordQuantity < 0) {
+          showInfo(
+            "Niektóre składniki receptury mają ilość równą 0, zostały pominięte"
+          );
+          return;
+        }
+
+        setValue(
+          `product_records.${stringifiedRecordId}.quantity`,
+          newRecordQuantity,
+          {
+            shouldDirty: true,
+            shouldTouch: true,
+          }
+        );
       });
 
       setRecipeQuantity(value);
@@ -158,7 +188,7 @@ export const RecipeCard = ({
 
     // the object may not exist, if the user did not navigate to the given RecordScreen
     // may change during the form refactor
-    const oldRecordValues = watch(stringifiedRecordId) || {
+    const oldRecordValues = watch(`product_records.${stringifiedRecordId}`) || {
       price_per_unit: null,
       product_id: recordAndMultiplier[0].product_id,
       quantity: recordAndMultiplier[0].record_quantity_backup,
@@ -168,10 +198,20 @@ export const RecipeCard = ({
     const newRecordQuantity = roundFloat(
       oldRecordValues.quantity + dMultiplied
     );
-    setValue(`${stringifiedRecordId}.quantity`, newRecordQuantity, {
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+
+    if (newRecordQuantity < 0) {
+      showInfo("Składnik receptury ma ilość równą 0, został pominięty");
+      return;
+    }
+
+    setValue(
+      `product_records.${stringifiedRecordId}.quantity`,
+      newRecordQuantity,
+      {
+        shouldDirty: true,
+        shouldTouch: true,
+      }
+    );
 
     setRecipeQuantity(value);
     return void this;

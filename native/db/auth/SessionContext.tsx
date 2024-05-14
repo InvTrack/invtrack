@@ -20,7 +20,8 @@ export const SessionContext = createContext<SessionContextType>({
   session: null,
 });
 
-export const useSessionState = () => {
+/** Hook for creating an managing the auth session state. */
+export const useMakeSessionState = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 

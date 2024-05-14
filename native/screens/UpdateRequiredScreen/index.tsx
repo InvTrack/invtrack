@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import * as Updates from "expo-updates";
 import { Linking, StyleSheet, View } from "react-native";
 import { Button } from "../../components/Button";
@@ -5,7 +6,6 @@ import { AppIcon } from "../../components/Icon";
 import SafeLayout from "../../components/SafeLayout";
 import { Typography } from "../../components/Typography";
 import { isIos } from "../../constants";
-import { supabase } from "../../db";
 import { useCheckIfNativeUpdateNeeded } from "../../db/hooks/useCheckIfNativeUpdateNeeded";
 import { createStyles } from "../../theme/useStyles";
 const runtimeUpdateMessage =
@@ -23,14 +23,16 @@ const playStoreLink =
   "https://play.google.com/store/apps/details?id=app.invtrack.invtrack";
 
 export const UpdateRequiredScreen = () => {
+  // TODO: remove on next+next (?) update
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ["recipeList"] });
+
   const styles = useStyles();
   const { data: isNativeUpdateNeeded } = useCheckIfNativeUpdateNeeded();
   const { isDownloading, isChecking, isUpdatePending } = Updates.useUpdates();
 
   const handleAppReloadSafely = async () => {
-    // TODO remove logout once the reload auth bug is fixed
     if (isUpdatePending) {
-      await supabase.auth.signOut();
       await Updates.reloadAsync();
     }
     return void this;
