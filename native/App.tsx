@@ -101,7 +101,8 @@ const ProvideProviders = ({ children }: { children: React.ReactNode }) => {
     //   console.log(
     //     await AsyncStorage.getAllKeys(),
     //     await AsyncStorage.getItem("query-cache"),
-    //     await AsyncStorage.clear()
+    //     await AsyncStorage.removeItem("query-cache")
+    // await AsyncStorage.clear()
     //   );
     // })();
 
