@@ -64,7 +64,8 @@ export const IdentifyAliasesScreenSalesRaport = () => {
   const { showInfo } = useSnackbar();
   const dispatch = useAppDispatch();
 
-  const { data: recipes } = useListRecipes();
+  const inventoryId = useAppSelector(documentScannerSelector.selectInventoryId);
+  const { data: recipes } = useListRecipes(inventoryId);
   const { mutate, isSuccess } = useCreateProductNameAlias();
   const aliases = useAppSelector(
     documentScannerSelector.selectSalesRaportUnmatchedAliases

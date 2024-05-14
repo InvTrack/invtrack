@@ -434,6 +434,62 @@ export type Database = {
           }
         ];
       };
+      recipe_record: {
+        Row: {
+          company_id: number;
+          created_at: string;
+          id: number;
+          inventory_id: number;
+          quantity: number;
+          recipe_id: number;
+        };
+        Insert: {
+          company_id: number;
+          created_at?: string;
+          id?: number;
+          inventory_id: number;
+          quantity: number;
+          recipe_id: number;
+        };
+        Update: {
+          company_id?: number;
+          created_at?: string;
+          id?: number;
+          inventory_id?: number;
+          quantity?: number;
+          recipe_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "recipe_record_company_id_fkey";
+            columns: ["company_id"];
+            isOneToOne: false;
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recipe_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            isOneToOne: false;
+            referencedRelation: "inventory";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "recipe_record_inventory_id_fkey";
+            columns: ["inventory_id"];
+            isOneToOne: false;
+            referencedRelation: "low_quantity_notifications_user_id_view";
+            referencedColumns: ["inventory_id"];
+          },
+          {
+            foreignKeyName: "recipe_record_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipe";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       worker: {
         Row: {
           company_id: number | null;

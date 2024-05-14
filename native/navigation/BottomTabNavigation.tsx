@@ -3,9 +3,9 @@ import { useTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { View } from "react-native";
-import { DeliveryFormContextProvider } from "../components/DeliveryFormContext/DeliveryFormContextProvider";
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
-import { InventoryFormContextProvider } from "../components/InventoryFormContext/InventoryFormContextProvider";
+import { DeliveryFormContextProvider } from "../components/StockFormContext/DeliveryFormContextProvider";
+import { InventoryFormContextProvider } from "../components/StockFormContext/InventoryFormContextProvider";
 
 import { isEmpty } from "lodash";
 import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
