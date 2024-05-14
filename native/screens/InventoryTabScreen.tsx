@@ -146,11 +146,11 @@ export default function InventoryTabScreen({
             </View>
             {recipeList?.map((recipe) => (
               <RecipeCard
-                key={recipe.id}
+                key={recipe?.id}
                 inventoryId={inventoryId}
                 name={recipe.name}
                 recipePart={recipe.recipe_part}
-                recipeRecordId={recipe.recipe_record?.[0].id}
+                recipeRecordId={recipe.recipe_record?.[0]?.id}
               />
             ))}
             {uncategorizedRecordList?.map((record) =>

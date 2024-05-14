@@ -16,5 +16,8 @@ const listRecipes = async (inventoryId: number | null) => {
   return data;
 };
 export const useListRecipes = (inventoryId: number | null) => {
-  return useQuery(["recipeList"], () => listRecipes(inventoryId));
+  return useQuery(
+    ["recipeList", inventoryId],
+    () => listRecipes(inventoryId) ?? null
+  );
 };
