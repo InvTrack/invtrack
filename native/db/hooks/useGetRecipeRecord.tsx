@@ -4,14 +4,20 @@ import { useListRecipeRecords } from "./useListRecipeRecords";
 
 export const useGetRecipeRecord = (
   inventoryId: number,
-  recipeRecordId: number
+  recipeRecordId: number | null | undefined
 ) => {
   const { data: recipeRecordList, isSuccess: isListRecipeRecordsSuccess } =
     useListRecipeRecords(inventoryId);
 
   return useQuery(
     ["recipeRecord", recipeRecordId],
-    () => recipeRecordList?.find((rr) => rr.id === recipeRecordId),
+    () => {
+      if (recipeRecordId == null)
+        throw new Error(
+          "useGetRecipeRecord - recipeRecordId should be defined"
+        );
+      return recipeRecordList?.find((rr) => rr.id === recipeRecordId);
+    },
     {
       enabled: isListRecipeRecordsSuccess,
       staleTime: 1000 * 10,

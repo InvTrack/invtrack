@@ -24,7 +24,7 @@ type RecipeCardProps = {
         ReturnType<typeof useListRecipes>["data"]
       >[number]["recipe_part"];
   inventoryId: number;
-  recipeRecordId: number;
+  recipeRecordId: number | null | undefined;
   borderLeft?: boolean;
   borderRight?: boolean;
   borderBottom?: boolean;
