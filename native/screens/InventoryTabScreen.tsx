@@ -6,7 +6,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { IDListCard } from "../components/IDListCard";
 import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
-import { InventoryForm } from "../components/InventoryFormContext/inventoryForm.types";
 import { Skeleton } from "../components/Skeleton";
 
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -15,11 +14,12 @@ import { Collapsible } from "../components/Collapsible/Collapsible";
 import { IDListCardAdd } from "../components/IDListCardAdd";
 import { RecipeCard } from "../components/RecipeCard";
 import { useSnackbar } from "../components/Snackbar/hooks";
+import { StockForm } from "../components/StockFormContext/types";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListRecipes } from "../db/hooks/useListRecipes";
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
-import { useUpdateRecords } from "../db/hooks/useUpdateRecord";
+import { useUpdateRecords } from "../db/hooks/useUpdateRecords";
 import { InventoryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
@@ -37,9 +37,10 @@ export default function InventoryTabScreen({
     useListUncategorizedProductRecords(+inventoryId);
   const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
     useListCategorizedProductRecords(+inventoryId);
-  const { data: recipeList, isSuccess: recipesIsSuccess } = useListRecipes();
-
-  const inventoryForm = useFormContext<InventoryForm>();
+  const { data: recipeList, isSuccess: recipesIsSuccess } =
+    useListRecipes(inventoryId);
+  console.log(recipeList);
+  const inventoryForm = useFormContext<StockForm>();
   const inventoryFormValues = inventoryForm.watch();
 
   const {
@@ -143,12 +144,13 @@ export default function InventoryTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
-            {recipeList.map((recipe) => (
+            {recipeList?.map((recipe) => (
               <RecipeCard
                 key={recipe.id}
                 inventoryId={inventoryId}
                 name={recipe.name}
                 recipePart={recipe.recipe_part}
+                recipeRecordId={recipe.recipe_record?.[0].id}
               />
             ))}
             {uncategorizedRecordList?.map((record) =>
@@ -159,8 +161,8 @@ export default function InventoryTabScreen({
                   id={+inventoryId}
                   quantity={
                     record.id
-                      ? inventoryFormValues[record.id]?.quantity ??
-                        record.quantity
+                      ? inventoryFormValues.product_records[record.id]
+                          ?.quantity ?? record.quantity
                       : null
                   }
                   unit={record.unit!}
@@ -184,8 +186,8 @@ export default function InventoryTabScreen({
                 id={+inventoryId}
                 quantity={
                   record.id
-                    ? inventoryFormValues[record.id]?.quantity ??
-                      record.quantity
+                    ? inventoryFormValues.product_records[record.id]
+                        ?.quantity ?? record.quantity
                     : null
                 }
                 unit={record.unit!}

@@ -1,11 +1,13 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { InventoryForm } from "./inventoryForm.types";
+import { StockForm } from "./types";
 
 export const InventoryFormContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const methods = useForm<InventoryForm>();
+  const methods = useForm<StockForm>({
+    defaultValues: { product_records: {}, recipe_records: {} },
+  });
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
