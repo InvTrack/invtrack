@@ -10,7 +10,7 @@ interface DocumentScannerSlice {
   isPreviewShown: boolean;
   isTakingPhoto: boolean;
   isCameraReady: boolean | null;
-  photo: CameraCapturedPicture | null;
+  photo: CameraCapturedPicture | undefined | null;
   processedInvoice: ProcessInvoiceResponse;
   processedSalesRaport: ProcessSalesRaportResponse;
   inventory_id: number | null;

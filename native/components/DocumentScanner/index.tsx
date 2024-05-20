@@ -1,4 +1,4 @@
-import { Camera as ExpoCamera, ImageType } from "expo-camera";
+import { CameraView as ExpoCamera } from "expo-camera";
 
 import React, { useRef } from "react";
 import {
@@ -32,8 +32,8 @@ export const DocumentScanner = ({
     const photo = await cameraRef.current.takePictureAsync({
       exif: false,
       base64: true,
-      quality: 0.8,
-      imageType: ImageType.jpg,
+      quality: 0.6,
+      imageType: "jpg",
     });
     dispatch(documentScannerAction.PHOTO_TAKE({ photo }));
     dispatch(documentScannerAction.SWITCH_PREVIEW());
