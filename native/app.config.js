@@ -18,7 +18,7 @@ const config = () => ({
     },
     assetBundlePatterns: ["**/*"],
     ios: {
-      buildNumber: "1.4.0",
+      buildNumber: "1.5.0",
       supportsTablet: false,
       bundleIdentifier: "app.invtrack.invtrack",
     },
@@ -28,7 +28,7 @@ const config = () => ({
         backgroundColor: "#212939",
       },
       package: "app.invtrack.invtrack",
-      versionCode: 10400,
+      versionCode: 10500,
     },
     plugins: [
       [
