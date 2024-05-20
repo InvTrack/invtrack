@@ -39,7 +39,7 @@ export default function InventoryTabScreen({
     useListCategorizedProductRecords(+inventoryId);
   const { data: recipeList, isSuccess: recipesIsSuccess } =
     useListRecipes(inventoryId);
-  console.log(recipeList);
+
   const inventoryForm = useFormContext<StockForm>();
   const inventoryFormValues = inventoryForm.watch();
 
