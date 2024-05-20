@@ -37,6 +37,7 @@ const config = () => ({
           cameraPermission: "Pozwól $(PRODUCT_NAME) na dostęp do kamery.",
         },
       ],
+      ["expo-font"],
     ],
     extra: {
       eas: {

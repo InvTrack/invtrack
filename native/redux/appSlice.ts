@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AppState {
-  cameraRatio: string | null;
   isCameraReady: boolean;
 }
 
 const initialState: AppState = {
-  cameraRatio: null,
   isCameraReady: false,
 };
 
@@ -17,15 +15,6 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    SET_CAMERA_RATIO: (
-      state,
-      {
-        payload,
-      }: PayloadAction<{ cameraRatio: NonNullable<AppState["cameraRatio"]> }>
-    ) => ({
-      ...state,
-      cameraRatio: payload.cameraRatio,
-    }),
     SET_IS_CAMERA_READY: (
       state,
       {
@@ -39,7 +28,6 @@ export const appSlice = createSlice({
     }),
   },
   selectors: {
-    selectCameraRatio: (state) => state.cameraRatio,
     selectIsCameraReady: (state) => state.isCameraReady,
   },
 });

@@ -1,4 +1,4 @@
-import { Camera } from "expo-camera";
+import { useCameraPermissions } from "expo-camera";
 import React from "react";
 import { Linking, StyleSheet } from "react-native";
 
@@ -23,7 +23,7 @@ export function BarcodeModalScreen({ route }: BarcodeModalScreenProps) {
   const styles = useStyles();
 
   const { inventoryId, navigateTo } = route.params;
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [permission, requestPermission] = useCameraPermissions();
 
   const awaitingPermission = !permission;
   const permissionDeniedCanAskAgain =

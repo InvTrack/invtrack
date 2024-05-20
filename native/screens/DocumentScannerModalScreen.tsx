@@ -1,4 +1,4 @@
-import { Camera } from "expo-camera";
+import { useCameraPermissions } from "expo-camera";
 import React, { useEffect } from "react";
 import { Linking, StyleSheet } from "react-native";
 
@@ -31,7 +31,7 @@ export const DocumentScannerModalScreen = ({
 }: DocumentScannerModalScreen) => {
   const styles = useStyles();
   const isScanningSalesRaport = route.params.isScanningSalesRaport;
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [permission, requestPermission] = useCameraPermissions();
 
   const inventory_id = useAppSelector(
     documentScannerSelector.selectInventoryId

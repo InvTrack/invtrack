@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { BarCodeScanningResult, Camera as ExpoCamera } from "expo-camera";
+import { BarcodeScanningResult, CameraView as ExpoCamera } from "expo-camera";
 import React, { useRef, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useListBarcodes } from "../../db/hooks/useListBarcodes";
@@ -30,7 +30,7 @@ export const BarcodeScanner = ({
     );
   }
 
-  const handleBarcodeScan = (event: BarCodeScanningResult) => {
+  const handleBarcodeScan = (event: BarcodeScanningResult) => {
     const { data } = event;
     const barcodeMappedToId = barcodeList?.[data];
     if (!barcodeMappedToId) {
@@ -71,7 +71,7 @@ export const BarcodeScanner = ({
   return (
     <Camera
       ref={cameraRef}
-      onBarCodeScanned={handleBarcodeScan}
+      onBarcodeScanned={handleBarcodeScan}
       shouldShowScannerOverlay
       shouldAllowCameraToggle
     />

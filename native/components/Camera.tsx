@@ -1,12 +1,6 @@
-import { AutoFocus, CameraType, Camera as ExpoCamera } from "expo-camera";
+import { CameraType, CameraView as ExpoCamera } from "expo-camera";
 
-import React, {
-  ComponentProps,
-  RefObject,
-  forwardRef,
-  useEffect,
-  useState,
-} from "react";
+import React, { ComponentProps, forwardRef, useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -21,12 +15,11 @@ import { isIos } from "../constants";
 import { appAction, appSelector } from "../redux/appSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
-import { getBestCameraRatio } from "../utils";
 import { CameraSwitchIcon, InfoIcon } from "./Icon";
 import { LoadingSpinner } from "./LoadingSpinner";
 
 type CameraProps = {
-  onBarCodeScanned?: ComponentProps<typeof ExpoCamera>["onBarCodeScanned"];
+  onBarcodeScanned?: ComponentProps<typeof ExpoCamera>["onBarcodeScanned"];
   onTakePhoto?: () => void | Promise<void>;
   shouldShowTakePhotoButton?: boolean;
   shouldAllowCameraToggle?: boolean;
@@ -58,7 +51,7 @@ const askToOpenInfoPage = () => {
 export const Camera = forwardRef<ExpoCamera, CameraProps>(
   (
     {
-      onBarCodeScanned,
+      onBarcodeScanned,
       onTakePhoto,
       shouldShowTakePhotoButton = false,
       shouldAllowCameraToggle = false,
@@ -70,21 +63,9 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
     const styles = useStyles();
 
     const isCameraReady = useAppSelector(appSelector.selectIsCameraReady);
-    const ratio = useAppSelector(appSelector.selectCameraRatio);
     const dispatch = useAppDispatch();
 
-    const [type, setType] = useState(CameraType.back);
-
-    // workaround to trigger refocuses on ios
-    const [autoFocus, setAutoFocus] = useState(AutoFocus.on);
-    const timeout = setTimeout(() => setAutoFocus(AutoFocus.on), 50);
-    const updateCameraFocus = () => {
-      setAutoFocus(() => AutoFocus.off);
-    };
-
-    useEffect(() => {
-      return () => clearTimeout(timeout);
-    }, []);
+    const [facing, setFacing] = useState<CameraType>("back");
 
     useEffect(() => {
       return () => {
@@ -92,65 +73,29 @@ export const Camera = forwardRef<ExpoCamera, CameraProps>(
       };
     }, []);
 
-    useEffect(() => {
-      // ratio needed on android only
-      if (cameraRef == null) {
-        console.error("Camera - cameraRef is missing! This should not happen.");
-        return;
-      }
-      if (ratio || !isCameraReady || isIos) {
-        return;
-      }
-      const getCameraRatio = async () => {
-        try {
-          const ratios = await (
-            cameraRef as RefObject<ExpoCamera>
-          ).current?.getSupportedRatiosAsync();
-          const ratio = getBestCameraRatio(ratios ?? null);
-          dispatch(appAction.SET_CAMERA_RATIO({ cameraRatio: ratio }));
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-      getCameraRatio();
-    }, [isCameraReady, ratio, cameraRef, dispatch]);
-
     const toggleCameraType = () => {
-      setType((current) =>
-        current === CameraType.back ? CameraType.front : CameraType.back
-      );
+      setFacing((current) => (current === "back" ? "front" : "back"));
     };
 
     const doubleTap = Gesture.Tap().numberOfTaps(2).onStart(toggleCameraType);
-    const singleTap = Gesture.Tap().onStart(updateCameraFocus);
-
-    const composedGestures = shouldAllowCameraToggle
-      ? Gesture.Exclusive(doubleTap, singleTap)
-      : singleTap;
 
     return (
-      <GestureDetector gesture={composedGestures}>
+      <GestureDetector gesture={doubleTap}>
         <View style={styles.container}>
-          {(isIos ? !isCameraReady : !isCameraReady || ratio == null) && (
-            <LoadingSpinner size="large" />
-          )}
+          {!isCameraReady && <LoadingSpinner size="large" />}
           <ExpoCamera
             ref={cameraRef}
             style={[
-              (isIos ? !isCameraReady : !isCameraReady || ratio == null) && {
+              (isIos ? !isCameraReady : !isCameraReady) && {
                 display: "none",
               },
               styles.camera,
             ]}
-            // not displayed if null, as specified above
-            ratio={ratio!}
             onCameraReady={() =>
               dispatch(appAction.SET_IS_CAMERA_READY({ isCameraReady: true }))
             }
-            type={type}
-            onBarCodeScanned={onBarCodeScanned}
-            autoFocus={autoFocus}
+            facing={facing}
+            onBarcodeScanned={onBarcodeScanned}
           >
             {shouldShowInfoPageIcon || shouldAllowCameraToggle ? (
               <View style={styles.cameraFloatersContainer}>
