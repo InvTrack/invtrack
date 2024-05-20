@@ -109,7 +109,6 @@ export default function InventoryTabScreen({
                 containerStyle={styles.barcodeIconContainer}
                 size="l"
                 type="primary"
-                disabled
                 onPress={() => {
                   // necessary hack, handled by parent navigator - be cautious
                   navigation.navigate("DocumentScannerModal" as any, {
@@ -147,11 +146,11 @@ export default function InventoryTabScreen({
             </View>
             {recipeList?.map((recipe) => (
               <RecipeCard
-                key={recipe.id}
+                key={recipe?.id}
                 inventoryId={inventoryId}
                 name={recipe.name}
                 recipePart={recipe.recipe_part}
-                recipeRecordId={recipe.recipe_record?.[0].id}
+                recipeRecordId={recipe.recipe_record?.[0]?.id}
               />
             ))}
             {uncategorizedRecordList?.map((record) =>

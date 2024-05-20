@@ -30,33 +30,51 @@ export const DocumentScannerModalScreen = ({
   route,
 }: DocumentScannerModalScreen) => {
   const styles = useStyles();
-
+  const isScanningSalesRaport = route.params.isScanningSalesRaport;
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
+  const inventory_id = useAppSelector(
+    documentScannerSelector.selectInventoryId
+  );
   const processedInvoice = useAppSelector(
     documentScannerSelector.selectProcessedInvoice
   );
-  const photo = useAppSelector(documentScannerSelector.selectPhoto);
-  const inventory_id = useAppSelector(
-    documentScannerSelector.selectInventoryId
+  const processedSalesRaport = useAppSelector(
+    documentScannerSelector.selectProcessedSalesRaport
   );
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (photo == null) {
+    if (isScanningSalesRaport && processedSalesRaport != null) {
+      if (inventory_id && !isEmpty(processedSalesRaport?.unmatchedAliases)) {
+        navigation.replace("IdentifyAliasesScreen", {
+          inventoryId: inventory_id,
+          isScanningSalesRaport,
+        });
+      } else {
+        navigation.goBack();
+      }
+      dispatch(documentScannerAction.PHOTO_RESET_DATA());
       return;
     }
-    if (inventory_id && !isEmpty(processedInvoice?.unmatchedAliases)) {
-      navigation.replace("IdentifyAliasesScreen", {
-        inventoryId: inventory_id,
-      });
-    } else {
-      navigation.goBack();
-    }
+    if (processedInvoice != null)
+      if (inventory_id && !isEmpty(processedInvoice?.unmatchedAliases)) {
+        navigation.replace("IdentifyAliasesScreen", {
+          inventoryId: inventory_id,
+          isScanningSalesRaport,
+        });
+      } else {
+        navigation.goBack();
+      }
     dispatch(documentScannerAction.PHOTO_RESET_DATA());
     return;
-  }, [processedInvoice]);
+  }, [
+    isScanningSalesRaport,
+    inventory_id,
+    processedInvoice,
+    processedSalesRaport,
+  ]);
 
   const awaitingPermission = !permission;
   const permissionDeniedCanAskAgain =
@@ -133,9 +151,7 @@ export const DocumentScannerModalScreen = ({
 
   return (
     <SafeLayout style={styles.container}>
-      <DocumentScanner
-        isScanningSalesRaport={route.params.isScanningSalesRaport}
-      />
+      <DocumentScanner isScanningSalesRaport={isScanningSalesRaport} />
     </SafeLayout>
   );
 };

@@ -4,16 +4,17 @@ export const load = async ({ parent, params }) => {
   const { supabase } = await parent();
   const { data: recipe, error: supabaseError } = await supabase
     .from("recipe")
-    .select(`
+    .select(
+      `
       *,
-      recipe_part(*)
-    `)
+      recipe_part(*),
+      name_alias(alias)
+    `
+    )
     .eq("id", id)
     .single();
 
-  const { data: products, error: supabaseError2 } = await supabase
-    .from("product")
-    .select();
+  const { data: products, error: supabaseError2 } = await supabase.from("product").select();
 
   if (supabaseError) {
     console.error(supabaseError);
@@ -25,6 +26,6 @@ export const load = async ({ parent, params }) => {
   }
   return {
     recipe,
-    products
+    products,
   };
 };

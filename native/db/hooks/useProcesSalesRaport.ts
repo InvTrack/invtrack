@@ -1,19 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "../../components/Snackbar/hooks";
-import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { documentScannerAction } from "../../redux/documentScannerSlice";
+import { useAppDispatch } from "../../redux/hooks";
 import { supabase } from "../supabase";
-import { ScanDocResponse } from "../types";
+import { ProcessSalesRaportResponse } from "../types";
+import { queryKeys } from "./queryKeys";
 
-export const useProcessSalesRaport = () => {
+export const useProcessSalesRaport = (inventory_id: number | null) => {
   const { showError } = useSnackbar();
-
-  const inventory_id = useAppSelector(
-    documentScannerSelector.selectInventoryId
-  );
   const dispatch = useAppDispatch();
 
   return useMutation(
@@ -21,13 +15,12 @@ export const useProcessSalesRaport = () => {
       base64Photo,
     }: {
       base64Photo: string;
-      inventory_id: number | null;
-    }): Promise<ScanDocResponse> => {
+    }): Promise<ProcessSalesRaportResponse> => {
       if (inventory_id == null) {
-        showError("Nie udało się przetworzyć zdjęcia");
-        console.log(
+        console.error(
           "useProcessSalesRaport - no inventory_id, this should not happen"
         );
+        showError("Nie udało się przetworzyć zdjęcia - zrestartuj aplikację");
         return null;
       }
       const reqBody = {
@@ -38,24 +31,27 @@ export const useProcessSalesRaport = () => {
       };
 
       const { data, error } = await supabase.functions.invoke(
-        "process-pos-raport",
+        "process-sales-raport",
         {
           body: reqBody,
         }
       );
       if (error) {
         showError("Nie udało się przetworzyć zdjęcia");
-        console.log(error);
+        console.log("useProcessSalesRaport", error);
         return null;
       }
 
       dispatch(
-        documentScannerAction.INVOICE_PROCESSING_RESULT({
-          processedInvoice: data,
+        documentScannerAction.SET_PROCESSED_SALES_RAPORT({
+          processedSalesRaport: data,
         })
       );
 
-      return data as ScanDocResponse;
+      return data as ProcessSalesRaportResponse;
+    },
+    {
+      mutationKey: queryKeys.processSalesRaport(inventory_id),
     }
   );
 };

@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ScanDocResponse } from "../../db/types";
+import { ProcessInvoiceResponse } from "../../db/types";
 import { documentScannerSelector } from "../../redux/documentScannerSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { StockForm } from "./types";
 
-const getValuesForForm = (scanDocResponse: ScanDocResponse) => {
-  if (scanDocResponse == null) {
+const getValuesForForm = (processInvoiceResponse: ProcessInvoiceResponse) => {
+  if (processInvoiceResponse == null) {
     return undefined;
   }
-  return scanDocResponse.form;
+  return processInvoiceResponse.form;
 };
 
 export const DeliveryFormContextProvider = ({

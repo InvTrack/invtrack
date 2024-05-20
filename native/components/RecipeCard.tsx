@@ -24,7 +24,7 @@ type RecipeCardProps = {
         ReturnType<typeof useListRecipes>["data"]
       >[number]["recipe_part"];
   inventoryId: number;
-  recipeRecordId: number;
+  recipeRecordId: number | null | undefined;
   borderLeft?: boolean;
   borderRight?: boolean;
   borderBottom?: boolean;
@@ -123,19 +123,20 @@ export const RecipeCard = ({
       shouldDirty: true,
     });
 
+  // value is an integer, see InputBottomSheetContent props
   // in need of desparate refactoring hehe
   const setQuantity = (value: number) => {
-    if (value === recipeQuantity) return void this;
+    if (value === recipeQuantity || recipeQuantity == null) return;
     const delta = value - recipeQuantity;
 
-    if (delta === 0) return void this;
+    if (delta === 0) return;
 
     // basically just value
-    if (recipeQuantity + delta < 0) return void this;
+    if (recipeQuantity + delta < 0) return;
 
     if (Array.isArray(recipePart)) {
       recordAndMultiplier.forEach((ram) => {
-        if (ram.record_id == null || ram.multiplier == null) return void this;
+        if (ram.record_id == null || ram.multiplier == null) return;
 
         const stringifiedRecordId = String(ram.record_id);
 
@@ -172,7 +173,7 @@ export const RecipeCard = ({
       });
 
       setRecipeQuantity(value);
-      return void this;
+      return;
     }
     /**
      * when a recipe contains only a single product
@@ -182,7 +183,7 @@ export const RecipeCard = ({
       recordAndMultiplier[0]?.record_id == null ||
       recordAndMultiplier[0]?.multiplier == null
     )
-      return void this;
+      return;
 
     const stringifiedRecordId = String(recordAndMultiplier[0].record_id);
 
@@ -214,7 +215,7 @@ export const RecipeCard = ({
     );
 
     setRecipeQuantity(value);
-    return void this;
+    return;
   };
 
   return (

@@ -6,7 +6,7 @@ import {
 } from "../../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { supabase } from "../supabase";
-import { ScanDocResponse } from "../types";
+import { ProcessInvoiceResponse } from "../types";
 
 export const useProcessInvoice = () => {
   const { showError } = useSnackbar();
@@ -22,7 +22,7 @@ export const useProcessInvoice = () => {
     }: {
       base64Photo: string;
       inventory_id: number | null;
-    }): Promise<ScanDocResponse> => {
+    }): Promise<ProcessInvoiceResponse> => {
       if (inventory_id == null) {
         showError("Nie udało się przetworzyć zdjęcia");
         console.log(
@@ -50,12 +50,12 @@ export const useProcessInvoice = () => {
       }
 
       dispatch(
-        documentScannerAction.INVOICE_PROCESSING_RESULT({
+        documentScannerAction.SET_PROCESSED_INVOICE({
           processedInvoice: data,
         })
       );
 
-      return data as ScanDocResponse;
+      return data as ProcessInvoiceResponse;
     }
   );
 };

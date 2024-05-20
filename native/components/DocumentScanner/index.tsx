@@ -20,13 +20,13 @@ export const DocumentScanner = ({
   const isPreviewShown = useAppSelector(
     documentScannerSelector.selectIsPreviewShown
   );
-  const isProcessingPhotoData = useAppSelector(
-    documentScannerSelector.selectIsProcessingPhotoData
+  const isTakingPhoto = useAppSelector(
+    documentScannerSelector.selectisTakingPhoto
   );
 
   const dispatch = useAppDispatch();
   const takePicture = async () => {
-    if (!cameraRef.current || isProcessingPhotoData) return;
+    if (!cameraRef.current || isTakingPhoto) return;
 
     dispatch(documentScannerAction.PHOTO_START());
     const photo = await cameraRef.current.takePictureAsync({
