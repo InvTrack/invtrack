@@ -2,7 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "../supabase";
 
-const listRecipes = async (inventoryId: number) => {
+const listRecipes = async (inventoryId: number | null) => {
+  if (inventoryId == null)
+    throw new Error("useListRecipes - inventoryId is null, should be defined");
   const { data, error } = await supabase
     .from("recipe")
     .select(
@@ -13,7 +15,9 @@ const listRecipes = async (inventoryId: number) => {
   if (error) throw new Error(error.message);
   return data;
 };
-export const useListRecipes = (inventoryId: number) => {
-  const query = useQuery(["recipeList"], () => listRecipes(inventoryId));
-  return query;
+export const useListRecipes = (inventoryId: number | null) => {
+  return useQuery(
+    ["recipeList", inventoryId],
+    () => listRecipes(inventoryId) ?? null
+  );
 };

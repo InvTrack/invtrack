@@ -38,14 +38,12 @@
     supabase: SupabaseClient<PatchedDatabase>,
     setLoading: (x: boolean) => void,
     company_id: number,
-    product_id: number
+    recipe_id: number
   ) => {
     if (newAliases) {
       newAliases.forEach((newAlias) => {
         genericUpdate(
-          supabase
-            .from("name_alias")
-            .insert({ alias: newAlias, company_id, product_id: product_id }),
+          supabase.from("name_alias").insert({ alias: newAlias, company_id, recipe_id: recipe_id }),
           {
             setLoading,
             onError: () => {
@@ -89,8 +87,9 @@
       >Aliasy nazw <Tooltip id="alias-ttip">
         <div class="p-3 space-y-2">
           <h3 class="font-semibold text-gray-900 dark:text-white">Aliasy nazw - co to?</h3>
-          Hurtownicy różnie nazywają ten sam produkt. Aby umożliwić łatwe rozpoznawanie produktów na
-          fakturach podczas skanowania, umożliwiamy dodawanie różnych nazw tego samego produktu - aliasów.
+          Nazwy receptur mogą się różnić między systemem InvTrack, a np. twoim systemem POS. Aby umożliwić
+          łatwe rozpoznawanie produktów na raportach podczas skanowania, umożliwiamy dodawanie różnych
+          nazw tej samej receptury - aliasów.
           <br />
           <strong class="text-gray-900 dark:text-white">
             Mimo tego, że można robić to tutaj, zalecamy wprowadzać kody w aplikacji.

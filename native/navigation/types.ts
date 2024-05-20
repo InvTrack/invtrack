@@ -33,7 +33,10 @@ export type HomeStackParamList = {
   SettingsScreen: undefined;
   NewBarcodeScreen: { inventoryId: number; new_barcode: string };
   NewStockScreen: undefined;
-  IdentifyAliasesScreen: { inventoryId: number };
+  IdentifyAliasesScreen: {
+    inventoryId: number;
+    isScanningSalesRaport: boolean;
+  };
 };
 
 /**

@@ -143,6 +143,66 @@ export type Database = {
           }
         ];
       };
+      name_alias: {
+        Row: {
+          alias: string;
+          company_id: number;
+          id: number;
+          product_id: number | null;
+          recipe_id: number | null;
+        };
+        Insert: {
+          alias: string;
+          company_id: number;
+          id?: number;
+          product_id?: number | null;
+          recipe_id?: number | null;
+        };
+        Update: {
+          alias?: string;
+          company_id?: number;
+          id?: number;
+          product_id?: number | null;
+          recipe_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "deleted_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "existing_products";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "name_alias_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "name_alias_recipe_id_fkey";
+            columns: ["recipe_id"];
+            isOneToOne: false;
+            referencedRelation: "recipe";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "public_name_alias_company_id_fkey";
+            columns: ["company_id"];
+            isOneToOne: false;
+            referencedRelation: "company";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
       product: {
         Row: {
           category_id: number | null;
@@ -222,56 +282,6 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "product_category_company_id_fkey";
-            columns: ["company_id"];
-            isOneToOne: false;
-            referencedRelation: "company";
-            referencedColumns: ["id"];
-          }
-        ];
-      };
-      product_name_alias: {
-        Row: {
-          alias: string;
-          company_id: number;
-          id: number;
-          product_id: number;
-        };
-        Insert: {
-          alias?: string;
-          company_id: number;
-          id?: number;
-          product_id: number;
-        };
-        Update: {
-          alias?: string;
-          company_id?: number;
-          id?: number;
-          product_id?: number;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "product_name_alias_product_id_fkey";
-            columns: ["product_id"];
-            isOneToOne: false;
-            referencedRelation: "deleted_products";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "product_name_alias_product_id_fkey";
-            columns: ["product_id"];
-            isOneToOne: false;
-            referencedRelation: "existing_products";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "product_name_alias_product_id_fkey";
-            columns: ["product_id"];
-            isOneToOne: false;
-            referencedRelation: "product";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "public_product_name_alias_company_id_fkey";
             columns: ["company_id"];
             isOneToOne: false;
             referencedRelation: "company";

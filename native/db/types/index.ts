@@ -44,10 +44,9 @@ export type CurrentCompanyId = CurrentCompanyIdTable["Row"];
 export type CurrentCompanyIdTable =
   Database["public"]["Views"]["current_company_id"];
 
-export type ProductNameAlias =
-  Database["public"]["Tables"]["product_name_alias"];
-export type ProductNameAliasTable = ProductNameAlias["Row"];
-export type ProductNameAliasInsert = ProductNameAlias["Insert"];
+export type NameAlias = Database["public"]["Tables"]["name_alias"];
+export type NameAliasTable = NameAlias["Row"];
+export type NameAliasInsert = NameAlias["Insert"];
 
 // Patch the database to remove excessive nullability from "existing_products" and "deleted_products"
 export type PatchedDatabase = {
@@ -66,11 +65,20 @@ export type PatchedDatabase = {
     : Database[A];
 };
 
-export type ScanDocResponse = {
+export type ProcessInvoiceResponse = {
   form: {
     [recordId: number]: {
       product_id: number;
       price_per_unit: number;
+      quantity: number;
+    };
+  };
+  unmatchedAliases: string[];
+} | null;
+
+export type ProcessSalesRaportResponse = {
+  form: {
+    [recipe_id: string]: {
       quantity: number;
     };
   };
