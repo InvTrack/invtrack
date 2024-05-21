@@ -5,7 +5,7 @@ const config = () => ({
   expo: {
     name: "InvTrack",
     slug: "invtrack",
-    version: "1.4.0",
+    version: "1.5.0",
     orientation: "portrait",
     owner: "invtrack",
     icon: "./assets/images/icon.png",
