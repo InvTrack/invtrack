@@ -28,7 +28,7 @@ alter table "public"."recipe_record" validate constraint "recipe_record_company_
 insert into recipe_record (inventory_id, recipe_id, company_id, quantity)
    (select i.id as inventory_id, r.id as recipe_id, r.company_id, 0 as quantity 
     from inventory i 
-    left join recipe r on r.company_id = i.company_id 
+    join recipe r on r.company_id = i.company_id 
     order by i.id asc);
 
 create policy "Admin can do anything within company"
