@@ -22,7 +22,7 @@ CREATE OR REPLACE VIEW public.deleted_products WITH ("security_invoker"='true') 
 SELECT * FROM public.product
 WHERE deleted_at IS NOT NULL;
 
-create view
+create or replace view
   public.record_view  with ("security_invoker"='true') as
 select
   product.name,
