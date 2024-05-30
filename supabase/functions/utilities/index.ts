@@ -3,7 +3,7 @@
 // This enables autocomplete, go to definition, etc.
 import { corsHeaders } from "../_shared/cors.ts";
 
-const currentMajorMinorAppVersion = "1.4";
+const currentMajorMinorAppVersion = "1.5";
 Deno.serve(async (req) => {
   // preflight request
   if (req.method === "OPTIONS") {
