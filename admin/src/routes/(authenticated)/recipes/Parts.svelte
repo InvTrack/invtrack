@@ -33,7 +33,6 @@
   export let selectedProductId = null as number | null;
   export let quantity = null as number | null;
   $: product = products.find((p) => p.id === selectedProductId);
-
   const addPart = () => {
     if (!quantity || !selectedProductId) return;
     if (
