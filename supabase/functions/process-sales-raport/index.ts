@@ -130,7 +130,7 @@ Deno.serve(async (req) => {
   const { data: productRecordDataRaw, error: productRecordError } =
     await supabase
       .from("product_record")
-      .select("id, product_id, quantity, price_per_unit, name_alias(alias)")
+      .select("product_id")
       .eq("inventory_id", requestBody.inventory_id);
 
   if (productRecordError) {
@@ -224,7 +224,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  if (result.analyzeResult.documents[0].fields.Items.type === "object") {
+  if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
     const itemValue =
       result.analyzeResult.documents[0].fields.Items.valueObject;
     const sanitizedName = parseStringForResponse(
@@ -238,7 +238,7 @@ Deno.serve(async (req) => {
       },
     ];
   }
-  if (result.analyzeResult.documents[0].fields.Items.type === "array") {
+  if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
     documentAnalysisResult =
       result.analyzeResult.documents[0].fields.Items.valueArray?.map((item) => {
         if (item.type !== "object") {
