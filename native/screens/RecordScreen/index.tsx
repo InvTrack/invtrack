@@ -15,7 +15,6 @@ import { useListProductRecordIds } from "../../db/hooks/useListProductRecordIds"
 import { createStyles } from "../../theme/useStyles";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { Divider } from "../../components/Divider";
 import SafeLayout from "../../components/SafeLayout";
 import { Skeleton } from "../../components/Skeleton";
@@ -96,22 +95,9 @@ const navigateToNextRecord = (
           navigate("RecordScreen", { id, recordId: prevRecordId, isDelivery });
       };
 
-const onRecordButtonStepperPress =
-  (
-    click: () => void,
-    id: number,
-    productId: number | null,
-    queryClient: QueryClient
-  ) =>
-  () => {
-    click();
-    queryClient.invalidateQueries(["previousRecordQuantity", id, productId]);
-  };
-
 export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const styles = useStyles();
   const { id, recordId, isDelivery } = route.params;
-  const queryClient = useQueryClient();
 
   const recordPanel = useRecordPanel(recordId);
   const isLoading = recordPanel?.isLoading;
@@ -223,12 +209,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 type="negative"
                 key={"negative" + step + i}
                 label={step.toString()}
-                onPress={onRecordButtonStepperPress(
-                  click,
-                  id,
-                  record?.product_id,
-                  queryClient
-                )}
+                onPress={click}
               />
             ))}
             <Button
@@ -272,12 +253,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 type="positive"
                 key={"positive" + step + i}
                 label={`+${step}`}
-                onPress={onRecordButtonStepperPress(
-                  click,
-                  id,
-                  record?.product_id,
-                  queryClient
-                )}
+                onPress={click}
               />
             ))}
             <Button
