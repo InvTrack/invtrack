@@ -115,8 +115,8 @@ export const IdentifyAliasesScreenSalesRaport = () => {
     // error
     return (
       <EmptyScreenTemplate>
-        <Typography variant="l" color="lightGrey">
-          Błąd - brak aliasów do wyświetlenia
+        <Typography variant="l" color="lightGrey" align="center">
+          Błąd - brak aliasów do wyświetlenia.
         </Typography>
         <Button
           size="l"
@@ -125,6 +125,8 @@ export const IdentifyAliasesScreenSalesRaport = () => {
           onPress={() => {
             dispatch(documentScannerAction.PHOTO_RESET_DATA());
             dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+            dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+            navigation.goBack();
           }}
           containerStyle={{ marginTop: 16 }}
         >

@@ -5,8 +5,8 @@ import { supabase } from "../supabase";
 
 const updateRecordsForm = async (form: StockForm) => {
   if (
-    !Object.keys(form.product_records).length ||
-    !Object.keys(form.recipe_records).length
+    Object.keys(form.product_records).length &&
+    Object.keys(form.recipe_records).length
   )
     return;
 
@@ -38,6 +38,7 @@ const updateRecordsForm = async (form: StockForm) => {
       )
     ).map((it) => it.data),
   ]);
+  console.log(data);
   return { products: data[0], recipes: data[1] };
 };
 

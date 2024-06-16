@@ -113,7 +113,23 @@ export const IdentifyAliasesScreenInvoice = () => {
     // error
     return (
       <EmptyScreenTemplate>
-        Błąd - brak aliasów do wyświetlenia
+        <Typography variant="l" color="lightGrey" align="center">
+          Błąd - brak aliasów do wyświetlenia.
+        </Typography>
+        <Button
+          size="l"
+          type="primary"
+          fullWidth
+          onPress={() => {
+            dispatch(documentScannerAction.PHOTO_RESET_DATA());
+            dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+            dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+            navigation.goBack();
+          }}
+          containerStyle={{ marginTop: 16 }}
+        >
+          Resetuj skaner
+        </Button>
       </EmptyScreenTemplate>
     );
   }
