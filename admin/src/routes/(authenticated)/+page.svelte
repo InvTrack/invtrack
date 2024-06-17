@@ -104,7 +104,7 @@
 </script>
 
 <main class="flex flex-col">
-  <ScreenCard header="Overview" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0 ">
+  <ScreenCard header="Podsumowanie" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0 ">
     <div class="flex justify-between pt-8">
       <PaginationItem class="mb-4 bg-gray-200 " on:click={handlePrev}>
         <ArrowLeftSolid class="w-5 h-5" />

@@ -45,7 +45,7 @@
       <Checkbox name="admin" bind:checked={is_admin} />
     </Label>
     <Button type="submit" class="mt-4" color="primary"
-      >{loading ? "Saving ..." : "Update worker"}</Button
+      >{loading ? "Ładowanie ..." : "Aktualizuj pracownika"}</Button
     >
   </form>
 </ScreenCard>
