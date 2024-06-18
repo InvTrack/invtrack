@@ -44,7 +44,7 @@
           notification_threshold: notificationThreshold,
         })
         .eq("id", id),
-      { setLoading: (x) => (loading = x) }
+      { setLoading: (x) => (loading = x), onSuccess: "/products" }
     );
     barcodesRef.submit(supabase, (x) => (loading = x), company_id, product.id);
     productNameAliasesRef.submit(supabase, (x) => (loading = x), company_id, product.id);

@@ -31,7 +31,7 @@
             display_order: i,
           })
           .eq("id", category.id),
-        { setLoading: (x) => (loading = x) }
+        { setLoading: (x) => (loading = x), onSuccess: "/products" }
       )
     );
     // Update the order of products, and which category they belong too
