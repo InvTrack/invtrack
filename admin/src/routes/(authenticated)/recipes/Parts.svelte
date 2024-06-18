@@ -36,8 +36,8 @@
   const addPart = () => {
     if (!quantity || !selectedProductId) return;
     if (
-      parts.find((v) => v.product_id === selectedProductId) ||
-      newParts.find((v) => v.product_id === selectedProductId)
+      parts.find((part) => part.product_id === selectedProductId) ||
+      newParts.find((newPart) => newPart.product_id === selectedProductId)
     ) {
       partErrorModal = true;
       return;
@@ -50,10 +50,13 @@
     unsavedChanges = true;
   };
 
-  const deletePart = (partIndex: number) => {
+  $: console.log({ parts, newParts, deleteParts });
+
+  const deletePart = (partToDelete: Part) => {
     unsavedChanges = true;
-    deleteParts = [...deleteParts, parts[partIndex]];
-    parts = parts.filter((_, i) => i !== partIndex);
+    deleteParts = [...deleteParts, partToDelete];
+    newParts = newParts.filter((newPart) => newPart.product_id !== partToDelete.product_id);
+    parts = parts.filter((part) => part.product_id !== partToDelete.product_id && part.id == null);
   };
 
   export const submit = (
@@ -61,24 +64,24 @@
     setLoading: (x: boolean) => void,
     recipe_id: number
   ) => {
-    if (newParts) {
-      newParts.forEach(({ product_id, quantity }) => {
-        genericUpdate(supabase.from("recipe_part").insert({ recipe_id, quantity, product_id }), {
-          setLoading,
-          onError: () => (partErrorModal = true),
-        });
-      });
-      // TODO - handle error when request fails
-      newParts = [];
-    }
     if (deleteParts) {
       deleteParts.forEach(
-        ({ id }) =>
-          id &&
-          genericUpdate(supabase.from("recipe_part").delete().match({ id }), {
+        ({ product_id }) =>
+          product_id &&
+          genericUpdate(supabase.from("recipe_part").delete().match({ product_id }), {
             setLoading,
           })
       );
+      if (newParts) {
+        newParts.forEach(({ product_id, quantity }) => {
+          genericUpdate(supabase.from("recipe_part").insert({ recipe_id, quantity, product_id }), {
+            setLoading,
+            onError: () => (partErrorModal = true),
+          });
+        });
+        // TODO - handle error when request fails
+        newParts = [];
+      }
       // TODO - handle error when request fails
       deleteParts = [];
     }
@@ -111,7 +114,7 @@
       </div>
       <Table>
         <TableBody>
-          {#each parts as part, i}
+          {#each parts as part}
             <TableBodyRow>
               <TableBodyCell>
                 {products.find((p) => p.id === part.product_id)?.name}
@@ -121,7 +124,7 @@
                 {products.find((p) => p.id === part.product_id)?.unit}
               </TableBodyCell>
               <TableBodyCell>
-                <CloseCircleSolid on:click={() => deletePart(i)} />
+                <CloseCircleSolid on:click={() => deletePart(part)} />
               </TableBodyCell>
             </TableBodyRow>
           {/each}
