@@ -33,8 +33,8 @@
     .map((p) => ({ name: p.name, value: p.id }))
     .filter(
       (p) =>
-        !newParts.find((newPart) => newPart.product_id == p.value) ||
-        deleteParts.find((deletedPart) => deletedPart.product_id == p.value)
+        !newParts.find((newPart) => newPart.product_id === p.value) ||
+        deleteParts.find((deletedPart) => deletedPart.product_id === p.value)
     );
   export let selectedProductId = null as number | null;
   export let quantity = null as number | null;
