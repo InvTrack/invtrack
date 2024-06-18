@@ -11,7 +11,6 @@
   let { supabase, products } = data;
   $: ({ supabase } = data);
   $: name = "";
-
   let company_id: number;
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
@@ -23,6 +22,7 @@
   let parts: Tables<"recipe_part">[] = [];
 
   const update = async () => {
+    partsRef.addPart();
     unsavedChanges = false;
     loading = true;
     const { data, error } = await supabase

@@ -32,6 +32,7 @@
 
   const update = async () => {
     // TODO - handle error when request fails
+    partsRef.addPart();
     genericUpdate(
       supabase
         .from("recipe")
