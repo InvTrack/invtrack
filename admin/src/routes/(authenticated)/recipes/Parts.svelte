@@ -50,13 +50,11 @@
     unsavedChanges = true;
   };
 
-  $: console.log({ parts, newParts, deleteParts });
-
   const deletePart = (partToDelete: Part) => {
     unsavedChanges = true;
     deleteParts = [...deleteParts, partToDelete];
     newParts = newParts.filter((newPart) => newPart.product_id !== partToDelete.product_id);
-    parts = parts.filter((part) => part.product_id !== partToDelete.product_id && part.id == null);
+    parts = parts.filter((part) => part.product_id !== partToDelete.product_id);
   };
 
   export const submit = (
@@ -66,9 +64,9 @@
   ) => {
     if (deleteParts) {
       deleteParts.forEach(
-        ({ product_id }) =>
-          product_id &&
-          genericUpdate(supabase.from("recipe_part").delete().match({ product_id }), {
+        ({ id }) =>
+          id &&
+          genericUpdate(supabase.from("recipe_part").delete().match({ id }), {
             setLoading,
           })
       );
