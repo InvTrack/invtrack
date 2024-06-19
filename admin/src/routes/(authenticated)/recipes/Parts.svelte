@@ -69,24 +69,37 @@
     recipe_id: number
   ) => {
     if (deleteParts) {
-      deleteParts.forEach(
-        ({ id }) =>
-          id &&
-          genericUpdate(supabase.from("recipe_part").delete().match({ id }), {
-            setLoading,
-          })
+      supabase;
+      genericUpdate(
+        supabase
+          .from("recipe_part")
+          .delete()
+          .in(
+            "id",
+            deleteParts.map((deletePart) => {
+              return deletePart.id;
+            })
+          ),
+        {
+          setLoading,
+        }
       );
-      if (newParts) {
-        newParts.forEach(({ product_id, quantity }) => {
-          genericUpdate(supabase.from("recipe_part").insert({ recipe_id, quantity, product_id }), {
-            setLoading,
-            onError: () => (partErrorModal = true),
-          });
-        });
-        // TODO - handle error when request fails
-        newParts = [];
-      }
+    }
+    if (newParts) {
+      genericUpdate(
+        supabase.from("recipe_part").insert(
+          newParts.map((newPart) => {
+            return {
+              product_id: newPart.product_id,
+              quantity: newPart.quantity,
+              recipe_id: recipe_id,
+            };
+          })
+        ),
+        { setLoading, onError: () => (partErrorModal = true) }
+      );
       // TODO - handle error when request fails
+      newParts = [];
       deleteParts = [];
     }
   };
