@@ -76,9 +76,7 @@
           .delete()
           .in(
             "id",
-            deleteParts.map((deletePart) => {
-              return deletePart.id;
-            })
+            deleteParts.map((deletePart) => deletePart.id)
           ),
         {
           setLoading,
@@ -88,13 +86,11 @@
     if (newParts) {
       genericUpdate(
         supabase.from("recipe_part").insert(
-          newParts.map((newPart) => {
-            return {
-              product_id: newPart.product_id,
-              quantity: newPart.quantity,
-              recipe_id: recipe_id,
-            };
-          })
+          newParts.map((newPart) => ({
+            product_id: newPart.product_id,
+            quantity: newPart.quantity,
+            recipe_id: recipe_id,
+          }))
         ),
         { setLoading, onError: () => (partErrorModal = true) }
       );
