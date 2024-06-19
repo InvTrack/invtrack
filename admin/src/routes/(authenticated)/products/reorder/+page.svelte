@@ -76,5 +76,4 @@
   <Button class="mt-4" color="primary" on:click={update}
     >{loading ? "Zapisywanie..." : "Aktualizuj kolejność"}</Button
   >
-  <Button class="hover:underline" href={`/products/reorder/add-category`}>Dodaj kategorię</Button>
 </ScreenCard>
