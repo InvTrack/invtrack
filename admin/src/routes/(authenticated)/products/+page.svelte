@@ -62,9 +62,8 @@
       {#each categories.filter((category) => category.items.length > 0) as category}
         <AccordionItem>
           <span slot="header">{category.name}</span>
-          <Table striped>
-            <!-- TODO pick some beatutiful colors -->
-            <TableHead class="bg-sky-800" theadClass="bg-sky-800 ">
+          <Table>
+            <TableHead>
               <TableHeadCell>Nazwa</TableHeadCell>
               <TableHeadCell>Jednostka</TableHeadCell>
               <TableHeadCell>Data utworzenia</TableHeadCell>
