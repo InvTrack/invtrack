@@ -94,6 +94,16 @@
         ),
         { setLoading, onError: () => (partErrorModal = true) }
       );
+      if (newParts) {
+        newParts.forEach(({ product_id, quantity }) => {
+          genericUpdate(supabase.from("recipe_part").insert({ recipe_id, quantity, product_id }), {
+            setLoading,
+            onError: () => (partErrorModal = true),
+          });
+        });
+        // TODO - handle error when request fails
+        newParts = [];
+      }
       // TODO - handle error when request fails
       newParts = [];
       deleteParts = [];
