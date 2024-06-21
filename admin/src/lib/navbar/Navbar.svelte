@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
   import { Navbar, NavHamburger, NavBrand } from "flowbite-svelte";
   import logo_dark from "$lib/assets/logo-dark.png";
   import logo_light from "$lib/assets/logo-light.png";
   let isThemeDark = true;
-  export let hideSidebar = true;
+
+  export let hideSidebar: boolean;
   const toggleSidebar = () => {
     hideSidebar = !hideSidebar;
   };
 </script>
 
-<Navbar class="md:hidden">
+<Navbar class="md:hidden fixed z-10">
   <NavHamburger on:click={() => toggleSidebar()} />
   <NavBrand href="/" class="w-1/3 place-self-center">
     {#if isThemeDark}

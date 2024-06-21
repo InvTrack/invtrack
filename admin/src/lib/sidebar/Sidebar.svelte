@@ -76,7 +76,7 @@
 
 <Sidebar
   {activeUrl}
-  class="h-screen absolute  md:sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10 md:flex flex-col justify-between "
+  class="h-screen absolute flex md:sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10 md:flex flex-col justify-between "
 >
   <div>
     <NotificationCenterModal
@@ -163,8 +163,8 @@
       </SidebarGroup>
     </SidebarWrapper>
   </div>
-  <div class="">
-    <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 mb-4">
+  <div>
+    <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 mb-4" border>
       <SidebarGroup class="flex flex-col">
         <h3 class="w-full text-base font-normal text-gray-900 rounded-lg dark:text-white">
           Zmień motyw

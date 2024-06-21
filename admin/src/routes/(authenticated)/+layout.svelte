@@ -8,7 +8,7 @@
   let { supabase } = data;
   $: ({ supabase } = data);
 
-  let hideSidebar: boolean;
+  let hideSidebar: boolean = true;
   let transitionParams = {
     x: -320,
     duration: 200,
@@ -29,7 +29,7 @@
         <Sidebar {supabase} bind:hideSidebar />
       </Drawer>
     {/if}
-    <main class=" bg-white dark:bg-primary-900">
+    <main class=" bg-white dark:bg-primary-900 overflow-scroll">
       <slot />
     </main>
   </div>
