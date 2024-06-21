@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { getIsThemeDark, toggleDarkMode } from "$lib/scripts/darkMode";
   import {
+    Drawer,
     Sidebar,
     SidebarDropdownItem,
     SidebarDropdownWrapper,
@@ -30,6 +31,8 @@
   import { onMount } from "svelte";
   import { genericGet } from "$lib/genericGet";
   import { browser } from "$app/environment";
+  import { writable } from "svelte/store";
+  import { sineIn } from "svelte/easing";
 
   export let supabase: any;
   let isThemeDark: boolean = true;
@@ -71,7 +74,7 @@
 
 <Sidebar
   {activeUrl}
-  class="h-screen sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10 flex justify-between flex-col"
+  class="h-screen absolute  md:sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10 md:flex flex-col justify-between "
 >
   <div>
     <NotificationCenterModal
@@ -79,9 +82,9 @@
       notifications={lowQuantityNotifications}
     />
     {#if isThemeDark}
-      <img src={logo_dark} class="mt-8 mb-8" alt="InvTrack logo" />
+      <img src={logo_dark} class="mt-8 mb-8 hidden md:inline-block" alt="InvTrack logo" />
     {:else}
-      <img src={logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
+      <img src={logo_light} class="mt-8 mb-8 hidden md:inline-block" alt="InvTrack logo" />
     {/if}
     <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 flex flex-col ">
       <SidebarGroup>
