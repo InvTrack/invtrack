@@ -12,7 +12,6 @@
     TableBodyRow,
     TableHead,
     TableHeadCell,
-    Toggle,
   } from "flowbite-svelte";
   import { parseISODatestring } from "$lib/dates/parseISODatestring";
   import ScreenCard from "$lib/ScreenCard.svelte";
@@ -32,12 +31,10 @@
   let currentPage = 0;
   let company_id: number | undefined | null;
   let loadingCsv = false;
-  let deletedProducts_id: number[] = [];
-  let productsToDisplay: Tables<"product">[] = [];
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
 
-  const getRecords = (page: number, movement: "next" | "previous" | "first" | "none") => {
+  const getRecords = (page: number, movement: "next" | "previous" | "first") => {
     let range = getPaginationRange(currentPage, 10);
     if (movement !== "first" && range[0] > maxTableLength) {
       currentPage -= 1;
@@ -61,8 +58,8 @@
           return;
         }
         records = x;
-        deletedProducts_id = products.filter((p) => p.deleted_at !== null).map((p) => p.id);
-        productsWithRecords = productsToDisplay.map((p) => ({
+
+        productsWithRecords = products.map((p) => ({
           name: p.name,
           records: x.map((r) => r.record_view.find((rr) => rr.product_id == p.id)),
         }));
@@ -104,17 +101,10 @@
     currentPage -= 1;
     getRecords(currentPage, "previous");
   };
-
-  $: showDeleted = true;
-  $: productsToDisplay = showDeleted
-    ? products
-    : products.filter((p) => !deletedProducts_id.includes(p.id));
-  $: console.log(productsToDisplay);
 </script>
 
 <main class="flex flex-col">
   <ScreenCard header="Podsumowanie" class="max-h-152 overflow-y-auto relative px-8 pb-8 pt-0 ">
-    <Toggle bind:checked={showDeleted}>Wyświetl usunięte</Toggle>
     <div class="flex justify-between pt-8">
       <PaginationItem class="mb-4 bg-gray-200 " on:click={handlePrev}>
         <ArrowLeftSolid class="w-5 h-5" />
@@ -137,7 +127,7 @@
         </TableHead>
         {#if records[0]}
           <TableBody>
-            {#each productsWithRecords as product}
+            {#each productsWithRecords as product, i}
               <TableBodyRow>
                 <TableBodyCell>{product.name}</TableBodyCell>
                 {#each product.records as record}
