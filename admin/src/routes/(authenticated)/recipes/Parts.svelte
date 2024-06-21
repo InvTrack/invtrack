@@ -65,15 +65,15 @@
     recipe_id: number
   ) => {
     if (deleteParts) {
-      supabase;
       genericUpdate(
         supabase
           .from("recipe_part")
           .delete()
           .in(
-            "id",
-            deleteParts.map((deletePart) => deletePart.id)
-          ),
+            "product_id",
+            deleteParts.map((deletePart) => deletePart.product_id)
+          )
+          .match({ recipe_id }),
         {
           setLoading,
         }
@@ -90,18 +90,9 @@
         ),
         { setLoading, onError: () => (partErrorModal = true) }
       );
-      if (newParts) {
-        newParts.forEach(({ product_id, quantity }) => {
-          genericUpdate(supabase.from("recipe_part").insert({ recipe_id, quantity, product_id }), {
-            setLoading,
-            onError: () => (partErrorModal = true),
-          });
-        });
-        // TODO - handle error when request fails
-        newParts = [];
-      }
       // TODO - handle error when request fails
       newParts = [];
+      // TODO - handle error when request fails
       deleteParts = [];
     }
   };
