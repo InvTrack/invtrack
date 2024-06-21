@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
   import { getIsThemeDark, toggleDarkMode } from "$lib/scripts/darkMode";
   import {
-    Drawer,
     Sidebar,
     SidebarDropdownItem,
     SidebarDropdownWrapper,
@@ -31,8 +30,6 @@
   import { onMount } from "svelte";
   import { genericGet } from "$lib/genericGet";
   import { browser } from "$app/environment";
-  import { writable } from "svelte/store";
-  import { sineIn } from "svelte/easing";
 
   export let supabase: any;
   let isThemeDark: boolean = true;
@@ -70,6 +67,11 @@
     supabase.auth.signOut();
     OneSignal.logout();
   };
+
+  export let hideSidebar: boolean;
+  function toggleSidebar() {
+    hideSidebar = !hideSidebar;
+  }
 </script>
 
 <Sidebar
@@ -108,7 +110,7 @@
         </SidebarItem>
       </SidebarGroup>
       <SidebarGroup border>
-        <SidebarItem label="Podsumowanie" href="/">
+        <SidebarItem label="Podsumowanie" href="/" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <HomeSolid
               active={activeUrl === "/"}
@@ -116,7 +118,7 @@
             />
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem label="Pracownicy" href="/workers">
+        <SidebarItem label="Pracownicy" href="/workers" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <UsersSolid
               active={activeUrl === "/workers"}
@@ -124,7 +126,7 @@
             />
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem label="Inwentaryzacje" href="/inventories">
+        <SidebarItem label="Inwentaryzacje" href="/inventories" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <ListSolid
               active={activeUrl === "/inventories"}
@@ -132,7 +134,7 @@
             />
           </svelte:fragment>
         </SidebarItem>
-        <SidebarItem label="Produkty" href="/products">
+        <SidebarItem label="Produkty" href="/products" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <BriefcaseSolid
               active={activeUrl === "/products"}
@@ -140,7 +142,7 @@
             /></svelte:fragment
           >
         </SidebarItem>
-        <SidebarItem label="Recepturownik" href="/recipes">
+        <SidebarItem label="Recepturownik" href="/recipes" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <InboxFullSolid
               active={activeUrl === "/recipes"}

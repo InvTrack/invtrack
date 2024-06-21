@@ -23,10 +23,10 @@
   <Navbar bind:hideSidebar />
   <div class="flex flex-row">
     {#if screenWidth > 768}
-      <Sidebar {supabase} />
+      <Sidebar {supabase} bind:hideSidebar />
     {:else}
       <Drawer bind:hidden={hideSidebar} {transitionParams} transitionType="fly">
-        <Sidebar {supabase} />
+        <Sidebar {supabase} bind:hideSidebar />
       </Drawer>
     {/if}
     <main class=" bg-white dark:bg-primary-900">
