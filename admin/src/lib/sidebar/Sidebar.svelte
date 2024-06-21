@@ -71,101 +71,107 @@
 
 <Sidebar
   {activeUrl}
-  class="h-screen sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10"
+  class="h-screen sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10 flex justify-between flex-col"
 >
-  <NotificationCenterModal
-    bind:open={isNotificationCenterModalOpen}
-    notifications={lowQuantityNotifications}
-  />
-  {#if isThemeDark}
-    <img src={logo_dark} class="mt-8 mb-8" alt="InvTrack logo" />
-  {:else}
-    <img src={logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
-  {/if}
-  <SidebarWrapper class="bg-gray-200 dark:bg-gray-800">
-    <SidebarGroup>
-      <SidebarItem
-        label="Powiadomienia"
-        spanClass="flex-1 ms-3 whitespace-nowrap"
-        on:click={() => (isNotificationCenterModalOpen = true)}
-      >
-        <svelte:fragment slot="icon">
-          <BellActiveAltSolid
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          />
-        </svelte:fragment>
-        <svelte:fragment slot="subtext">
-          <span
-            class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-primary-200 rounded-full dark:bg-primary-900 dark:text-primary-200"
+  <div>
+    <NotificationCenterModal
+      bind:open={isNotificationCenterModalOpen}
+      notifications={lowQuantityNotifications}
+    />
+    {#if isThemeDark}
+      <img src={logo_dark} class="mt-8 mb-8" alt="InvTrack logo" />
+    {:else}
+      <img src={logo_light} class="mt-8 mb-8" alt="InvTrack logo" />
+    {/if}
+    <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 flex flex-col ">
+      <SidebarGroup>
+        <SidebarItem
+          label="Powiadomienia"
+          spanClass="flex-1 ms-3 whitespace-nowrap"
+          on:click={() => (isNotificationCenterModalOpen = true)}
+        >
+          <svelte:fragment slot="icon">
+            <BellActiveAltSolid
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+          <svelte:fragment slot="subtext">
+            <span
+              class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-primary-200 rounded-full dark:bg-primary-900 dark:text-primary-200"
+            >
+              {lowQuantityProductRecords.length}
+            </span>
+          </svelte:fragment>
+        </SidebarItem>
+      </SidebarGroup>
+      <SidebarGroup border>
+        <SidebarItem label="Podsumowanie" href="/">
+          <svelte:fragment slot="icon">
+            <HomeSolid
+              active={activeUrl === "/"}
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Pracownicy" href="/workers">
+          <svelte:fragment slot="icon">
+            <UsersSolid
+              active={activeUrl === "/workers"}
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Inwentaryzacje" href="/inventories">
+          <svelte:fragment slot="icon">
+            <ListSolid
+              active={activeUrl === "/inventories"}
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+        </SidebarItem>
+        <SidebarItem label="Produkty" href="/products">
+          <svelte:fragment slot="icon">
+            <BriefcaseSolid
+              active={activeUrl === "/products"}
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            /></svelte:fragment
           >
-            {lowQuantityProductRecords.length}
-          </span>
-        </svelte:fragment>
-      </SidebarItem>
-    </SidebarGroup>
-    <SidebarGroup border>
-      <SidebarItem label="Podsumowanie" href="/">
-        <svelte:fragment slot="icon">
-          <HomeSolid
-            active={activeUrl === "/"}
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          />
-        </svelte:fragment>
-      </SidebarItem>
-      <SidebarItem label="Pracownicy" href="/workers">
-        <svelte:fragment slot="icon">
-          <UsersSolid
-            active={activeUrl === "/workers"}
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          />
-        </svelte:fragment>
-      </SidebarItem>
-      <SidebarItem label="Inwentaryzacje" href="/inventories">
-        <svelte:fragment slot="icon">
-          <ListSolid
-            active={activeUrl === "/inventories"}
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          />
-        </svelte:fragment>
-      </SidebarItem>
-      <SidebarItem label="Produkty" href="/products">
-        <svelte:fragment slot="icon">
-          <BriefcaseSolid
-            active={activeUrl === "/products"}
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          /></svelte:fragment
-        >
-      </SidebarItem>
-      <SidebarItem label="Recepturownik" href="/recipes">
-        <svelte:fragment slot="icon">
-          <InboxFullSolid
-            active={activeUrl === "/recipes"}
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          /></svelte:fragment
-        >
-      </SidebarItem>
-    </SidebarGroup>
-    <SidebarGroup border>
-      <SidebarDropdownWrapper label="Twoje konto">
-        <svelte:fragment slot="icon">
-          <UsersSolid
-            class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          />
-        </svelte:fragment>
-        <SidebarDropdownItem label="Wyloguj" on:click={handleLogout} />
-      </SidebarDropdownWrapper>
-    </SidebarGroup>
-    <SidebarGroup class="absolute bottom-24 flex flex-col mt-8">
-      <h3 class="w-full text-base font-normal text-gray-900 rounded-lg dark:text-white">
-        Zmień motyw
-      </h3>
-      <div class="flex flex-row">
-        <SunSolid class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" />
-        <Toggle checked={isThemeDark} on:click={toggleDarkMode} />
-        <MoonSolid class="w-6 h-6 text-gray-500 dark:text-gray-400" />
-      </div>
-    </SidebarGroup>
-  </SidebarWrapper>
+        </SidebarItem>
+        <SidebarItem label="Recepturownik" href="/recipes">
+          <svelte:fragment slot="icon">
+            <InboxFullSolid
+              active={activeUrl === "/recipes"}
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            /></svelte:fragment
+          >
+        </SidebarItem>
+      </SidebarGroup>
+      <SidebarGroup border>
+        <SidebarDropdownWrapper label="Twoje konto">
+          <svelte:fragment slot="icon">
+            <UsersSolid
+              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            />
+          </svelte:fragment>
+          <SidebarDropdownItem label="Wyloguj" on:click={handleLogout} />
+        </SidebarDropdownWrapper>
+      </SidebarGroup>
+    </SidebarWrapper>
+  </div>
+  <div class="">
+    <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 mb-4">
+      <SidebarGroup class="flex flex-col">
+        <h3 class="w-full text-base font-normal text-gray-900 rounded-lg dark:text-white">
+          Zmień motyw
+        </h3>
+        <div class="flex flex-row">
+          <SunSolid class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" />
+          <Toggle checked={isThemeDark} on:click={toggleDarkMode} />
+          <MoonSolid class="w-6 h-6 text-gray-500 dark:text-gray-400" />
+        </div>
+      </SidebarGroup>
+    </SidebarWrapper>
+  </div>
 </Sidebar>
 <!-- 
 "mr-3 shrink-0 bg-gray-200 rounded-full peer-focus:ring-4 peer-checked:after:translate-x-full peer-checked:after:border-white
