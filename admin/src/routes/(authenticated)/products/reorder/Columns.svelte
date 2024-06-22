@@ -38,9 +38,9 @@
 >
   {#each columnsContainer.columns as column (column.id)}
     <div
-      class="flex flex-col min-w-[4rem] m-1 p-4 sm:p-6 border-2
-         max-w-sm rounded-lg shadow-md bg-white dark:bg-gray-800 text-gray-500
-         dark:text-gray-400 border-gray-200 dark:border-gray-700 divide-gray-200 dark:divide-gray-700"
+      class="m-1 flex min-w-[4rem] max-w-sm flex-col divide-gray-200 rounded-lg
+         border-2 border-gray-200 bg-white p-4 text-gray-500 shadow-md
+         dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:p-6"
       animate:flip={{ duration: flipDurationMs }}
     >
       <div class="column-title">{column.name}</div>
@@ -52,7 +52,7 @@
       >
         {#each column.items as item (item.id)}
           <div animate:flip={{ duration: flipDurationMs }}>
-            <Badge class="p-2 m-2">
+            <Badge class="m-2 p-2">
               {item.name}
             </Badge>
           </div>

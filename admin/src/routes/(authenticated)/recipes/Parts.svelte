@@ -107,7 +107,7 @@
   };
 </script>
 
-<div class="space-y-2 mt-2">
+<div class="mt-2 space-y-2">
   <ErrorModal
     open={partErrorModal}
     message="Nie udało się dodać składnika - ten produkt już istnieje w tej recepturze"
@@ -117,7 +117,7 @@
   <Span>Składniki</Span>
   <div class="flex flex-col gap-4">
     <div class="grid grid-cols-2 place-items-start gap-4">
-      <div class="col-span-2 flex gap-4 w-full">
+      <div class="col-span-2 flex w-full gap-4">
         <Select items={productItems} bind:value={selectedProductId} placeholder="Produkt" />
         <ButtonGroup class="w-full" size="lg">
           <Input

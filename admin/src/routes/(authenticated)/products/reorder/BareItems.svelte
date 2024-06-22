@@ -27,7 +27,7 @@
 >
   {#each itemsContainer.items as item (item.id)}
     <div animate:flip={{ duration: flipDurationMs }}>
-      <Badge class="p-2 m-2">
+      <Badge class="m-2 p-2">
         {item.name}
       </Badge>
     </div>

@@ -10,16 +10,16 @@
 {#if notifications}
   <Modal bind:open class="max-h-128" size="md" outsideclose>
     <svelte:fragment slot="header">
-      <div class="flex flex-row gap-2 ml-2">
-        <BellActiveAltSolid class="w-6 h-6 text-gray-500 dark:text-gray-400 self-center" />
+      <div class="ml-2 flex flex-row gap-2">
+        <BellActiveAltSolid class="h-6 w-6 self-center text-gray-500 dark:text-gray-400" />
         <h2 class="text-2xl font-normal text-gray-500 dark:text-gray-400">Powiadomienia</h2>
       </div>
     </svelte:fragment>
-    <div class="text-center flex flex-col items-start justify-start">
+    <div class="flex flex-col items-start justify-start text-center">
       <Listgroup class="w-full">
         {#each notifications as notification (notification.data)}
           <ListgroupItem class="flex flex-row gap-2" active>
-            <Indicator class="bg-orange-400 self-center" />
+            <Indicator class="self-center bg-orange-400" />
             <div class="flex flex-col text-left">
               <h3 class="text-base font-normal text-gray-900 dark:text-white">
                 {notification.name}

@@ -82,17 +82,17 @@
       <Span>Nazwa</Span>
       <Input type="text" name="name" required bind:value={name} />
     </Label>
-    <Label class="space-y-2 mt-2">
+    <Label class="mt-2 space-y-2">
       <Span>Jednostka</Span>
       <Input type="text" name="unit" required bind:value={unit} />
     </Label>
-    <Label class="space-y-2 mt-2">
+    <Label class="mt-2 space-y-2">
       <Span>Próg powiadomień</Span>
       <div class="flex flex-row gap-4">
         <Input type="text" name="steps" required bind:value={notificationThreshold} />
       </div>
     </Label>
-    <Label class="space-y-2 mt-2">
+    <Label class="mt-2 space-y-2">
       <Span>Step</Span>
       <div class="flex flex-row gap-4">
         <Input type="text" name="steps" required bind:value={steps[0]} />
