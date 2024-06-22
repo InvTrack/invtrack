@@ -11,13 +11,12 @@
 </script>
 
 <Navbar class="md:hidden fixed z-10">
-  <NavHamburger on:click={() => toggleSidebar()} />
-  <NavBrand href="/" class="w-1/3 place-self-center">
+  <NavHamburger on:click={() => toggleSidebar()} class="absolute left-3" />
+  <NavBrand href="/" class=" w-32 place-self-center my-2  mx-auto">
     {#if isThemeDark}
       <img src={logo_dark} alt="InvTrack" />
     {:else}
       <img src={logo_light} alt="InvTrack" />
     {/if}
   </NavBrand>
-  <div />
 </Navbar>
