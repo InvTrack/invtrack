@@ -24,8 +24,15 @@ export const load = async ({ parent, params }) => {
     console.error(supabaseError2);
     throw error(404, "Products not found.");
   }
+
+  const sortedProducts = products.sort((a, b) => {
+    const x = a.name.toLowerCase();
+    const y = b.name.toLowerCase();
+    return x.localeCompare(y);
+  });
+
   return {
     recipe,
-    products,
+    products: sortedProducts,
   };
 };
