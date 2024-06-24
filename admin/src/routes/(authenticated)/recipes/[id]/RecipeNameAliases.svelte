@@ -103,7 +103,7 @@
           <Input
             type="text"
             name="steps"
-            placeholder="Dodaj nowy kod"
+            placeholder="Dodaj kod"
             class="h-min w-full"
             bind:value={newAlias}
           />

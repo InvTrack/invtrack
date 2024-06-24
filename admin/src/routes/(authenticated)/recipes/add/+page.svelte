@@ -50,7 +50,7 @@
 <ScreenCard header={"Dodaj nową recetpturę"} class="flex flex-col">
   <UnsavedWarningModal bind:unsavedChanges />
   <form on:submit|preventDefault={update} on:change={onFormChange} class="flex-1">
-    <Label class="space-y-2">
+    <Label class="text-md space-y-2">
       <Span>Nazwa</Span>
       <Input type="text" name="name" required bind:value={name} />
     </Label>

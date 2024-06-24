@@ -10,6 +10,7 @@
     ButtonGroup,
     Input,
     InputAddon,
+    Label,
     Select,
     Span,
     Table,
@@ -105,28 +106,36 @@
     confirmText="OK"
     onConfirm={() => (partErrorModal = false)}
   />
-  <Span>Składniki</Span>
+  <Label class="text-md space-y-2">
+    <Span>Składniki</Span>
+  </Label>
   <div class="flex flex-col gap-4">
-    <div class="grid grid-cols-2 place-items-start gap-4">
-      <div class="col-span-2 flex w-full gap-4">
-        <Select items={productItems} bind:value={selectedProductId} placeholder="Produkt" />
-        <ButtonGroup class="w-full" size="lg">
-          <Input
-            type="text"
-            name="steps"
-            placeholder="Ilość"
-            class="h-min w-full"
-            bind:value={quantity}
-          />
-          {#if product}<InputAddon>{product.unit}</InputAddon>{/if}
-        </ButtonGroup>
-        <Button color="primary" class="shrink-0" on:click={addPart}>Dodaj składnik</Button>
-      </div>
+    <div class="flex w-full flex-wrap gap-4">
+      <Select
+        items={productItems}
+        bind:value={selectedProductId}
+        placeholder="Produkt"
+        class="placeholder: max-w-fit"
+        size="md"
+      />
+      <ButtonGroup class="max-w-full" size="md">
+        <Input
+          type="text"
+          name="steps"
+          placeholder="Ilość"
+          class="h-min w-full"
+          bind:value={quantity}
+        />
+        {#if product}<InputAddon>{product.unit}</InputAddon>{/if}
+      </ButtonGroup>
+      <Button color="primary" class="shrink-0" on:click={addPart}>Dodaj składnik</Button>
+    </div>
+    <div class="max-w-[210%]">
       <Table>
         <TableBody>
           {#each parts as part}
             <TableBodyRow>
-              <TableBodyCell>
+              <TableBodyCell class="whitespace-normal">
                 {products.find((p) => p.id === part.product_id)?.name}
               </TableBodyCell>
               <TableBodyCell>
