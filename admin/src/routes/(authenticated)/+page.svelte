@@ -34,8 +34,12 @@
 
   currentCompanyId.subscribe((id) => id && (company_id = id));
 
+  let range: [number, number];
+
   const getRecords = (page: number, movement: "next" | "previous" | "first") => {
-    let range = getPaginationRange(currentPage, 10);
+    const [start, end] = getPaginationRange(currentPage, 10);
+    range = [start, end];
+
     if (movement !== "first" && range[0] > maxTableLength) {
       currentPage -= 1;
       getRecords(currentPage, movement);
@@ -129,9 +133,11 @@
           <TableBody>
             {#each productsWithRecords as product, i}
               <TableBodyRow>
-                <TableBodyCell>{product.name}</TableBodyCell>
+                <TableBodyCell tdClass="px-6 py-4 font-medium  whitespace-normal min-w-fit "
+                  >{product.name}</TableBodyCell
+                >
                 {#each product.records as record}
-                  <TableBodyCell>
+                  <TableBodyCell class="whitespace-normal">
                     {#if record}
                       {record.quantity} {record.unit}
                     {:else}

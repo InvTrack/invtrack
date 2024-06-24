@@ -82,7 +82,7 @@
       >{loading ? "Zapisywanie..." : "Aktualizuj recepturę"}</Button
     >
   </form>
-  <Button type="submit" class="w-fit self-end" color="red" on:click={deleteProductConfirmation}
+  <Button type="submit" class="mt-4 w-fit self-end" color="red" on:click={deleteProductConfirmation}
     >Usuń tą recepturę</Button
   >
 </ScreenCard>

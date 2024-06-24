@@ -97,7 +97,7 @@
       {/each}
     </Accordion>
   {/if}
-  <div class="mt-2 flex gap-4">
+  <div class="mt-2 flex flex-wrap justify-center gap-4">
     <Button class="hover:underline" href={`/products/add`}>Dodaj produkt</Button>
     <Button class="hover:underline" href={`/products/add-category`}>Dodaj kategorię</Button>
     <Button class="hover:underline" href={`/products/reorder`}>Zmień kolejność</Button>
