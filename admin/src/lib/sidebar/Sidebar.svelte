@@ -76,7 +76,7 @@
 
 <Sidebar
   {activeUrl}
-  class="absolute top-0 z-10 flex h-screen w-72 min-w-[18rem] flex-col justify-between bg-gray-200 px-4 dark:bg-gray-800 md:sticky md:flex "
+  class="absolute top-0 z-10 flex h-screen min-h-fit w-72 min-w-[18rem] flex-col justify-between bg-gray-200 px-4 md:sticky md:flex dark:bg-gray-800 "
 >
   <div>
     <NotificationCenterModal
@@ -102,7 +102,7 @@
           </svelte:fragment>
           <svelte:fragment slot="subtext">
             <span
-              class="ms-3 inline-flex h-3 w-3 items-center justify-center rounded-full bg-primary-200 p-3 text-sm font-medium text-primary-600 dark:bg-primary-900 dark:text-primary-200"
+              class="bg-primary-200 text-primary-600 dark:bg-primary-900 dark:text-primary-200 ms-3 inline-flex h-3 w-3 items-center justify-center rounded-full p-3 text-sm font-medium"
             >
               {lowQuantityProductRecords.length}
             </span>
