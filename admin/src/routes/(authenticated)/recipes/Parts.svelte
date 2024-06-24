@@ -65,7 +65,7 @@
     setLoading: (x: boolean) => void,
     recipe_id: number
   ) => {
-    if (deleteParts) {
+    if (deleteParts.length > 0) {
       genericUpdate(
         supabase
           .from("recipe_part")
@@ -80,7 +80,7 @@
         }
       );
     }
-    if (newParts) {
+    if (newParts.length > 0) {
       genericUpdate(
         supabase.from("recipe_part").insert(
           newParts.map((newPart) => ({
