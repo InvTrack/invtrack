@@ -108,7 +108,7 @@
 </script>
 
 <main class="flex flex-col">
-  <ScreenCard header="Podsumowanie" class="relative max-h-152 overflow-y-auto px-8 pb-8 pt-0 ">
+  <ScreenCard header="Podsumowanie" class="relative w-fit overflow-y-auto p-8 pt-0">
     <div class="flex justify-between pt-8">
       <PaginationItem class="mb-4 bg-gray-200 " on:click={handlePrev}>
         <ArrowLeftSolid class="h-5 w-5" />
@@ -133,8 +133,8 @@
           <TableBody>
             {#each productsWithRecords as product, i}
               <TableBodyRow>
-                <TableBodyCell tdClass="px-6 py-4 font-medium  whitespace-normal min-w-fit "
-                  >{product.name}</TableBodyCell
+                <TableBodyCell class="whitespace-normal"
+                  >{product.name + "" + product.name}</TableBodyCell
                 >
                 {#each product.records as record}
                   <TableBodyCell class="whitespace-normal">

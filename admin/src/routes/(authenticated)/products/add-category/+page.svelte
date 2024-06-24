@@ -35,7 +35,13 @@
   <form on:submit|preventDefault={update}>
     <Label class="space-y-2">
       <Span>Nazwa</Span>
-      <Input type="text" name="name" required bind:value={name} />
+      <Input
+        type="text"
+        name="name"
+        required
+        bind:value={name}
+        class="w-[90%] md:min-w-[24rem] xl:min-w-[32rem]"
+      />
     </Label>
     <Button type="submit" class="mt-4" color="primary"
       >{loading ? "Zapisywanie..." : "Dodaj kategorię"}</Button
