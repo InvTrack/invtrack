@@ -14,14 +14,17 @@ export const load = async ({ parent, params }) => {
     .from("inventory")
     .select(`date, product_record (price_per_unit)`, { count: "exact", head: false })
     .order("date")
-    .eq('product_record.product_id', id);
+    .eq("product_record.product_id", id);
 
   if (supabaseError) {
     console.error(supabaseError);
     throw error(404, "Product not found.");
   }
   return {
-    chartData: datesWithProductRecords?.map(r => ({date: new Date(r.date), ...r.product_record[0]})),
-    product
+    chartData: datesWithProductRecords?.map((r) => ({
+      date: new Date(r.date),
+      ...r.product_record[0],
+    })),
+    product,
   };
 };

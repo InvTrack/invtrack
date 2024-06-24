@@ -73,7 +73,7 @@
   };
 </script>
 
-<div class="space-y-2 mt-2">
+<div class="mt-2 space-y-2">
   <ErrorModal
     open={aliasErrorModal}
     message="Nie udało się dodać/usunąć aliasu - spróbuj za chwilę"
@@ -82,10 +82,10 @@
       aliasErrorModal = false;
     }}
   />
-  <div class="space-y-2 mt-2">
+  <div class="mt-2 space-y-2">
     <Span class="flex flex-row"
       >Aliasy nazw <Tooltip id="alias-ttip">
-        <div class="p-3 space-y-2">
+        <div class="space-y-2 p-3">
           <h3 class="font-semibold text-gray-900 dark:text-white">Aliasy nazw - co to?</h3>
           Nazwy receptur mogą się różnić między systemem InvTrack, a np. twoim systemem POS. Aby umożliwić
           łatwe rozpoznawanie produktów na raportach podczas skanowania, umożliwiamy dodawanie różnych
@@ -99,7 +99,7 @@
     >
     <div class="flex flex-col gap-4">
       <div class="grid grid-cols-2 place-items-start gap-4">
-        <div class="col-span-2 flex gap-4 w-full">
+        <div class="col-span-2 flex w-full gap-4">
           <Input
             type="text"
             name="steps"
@@ -114,7 +114,7 @@
             type="text"
             name="steps"
             readonly
-            class="h-fit focus:ring-0 focus:border-gray-300 focus:dark:border-gray-600"
+            class="h-fit focus:border-gray-300 focus:ring-0 focus:dark:border-gray-600"
             required
             bind:value={aliases[i]}
           >

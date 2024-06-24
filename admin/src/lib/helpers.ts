@@ -3,25 +3,25 @@ import type { Database } from "./database.types";
 
 // Patch the database to remove excessive nullability from "existing_products" and "deleted_products"
 export type PatchedDatabase = {
-  [A in keyof Database]: A extends 'public'
-      ? { 
-          [B in keyof Database[A]]: B extends 'Views'
-              ? {
-                  [C in keyof Database[A][B]]: C extends "existing_products" | "deleted_products"
-                    ? Database["public"]["Tables"]["product"]
-                    : Database[A][B][C]
-                }
-              : Database[A][B]
-        }
-      : Database[A];
+  [A in keyof Database]: A extends "public"
+    ? {
+        [B in keyof Database[A]]: B extends "Views"
+          ? {
+              [C in keyof Database[A][B]]: C extends "existing_products" | "deleted_products"
+                ? Database["public"]["Tables"]["product"]
+                : Database[A][B][C];
+            }
+          : Database[A][B];
+      }
+    : Database[A];
 };
-
 
 export type Tables<T extends keyof PatchedDatabase["public"]["Tables"]> =
   PatchedDatabase["public"]["Tables"][T]["Row"];
 export type Views<T extends keyof PatchedDatabase["public"]["Views"]> =
   PatchedDatabase["public"]["Views"][T]["Row"];
-export type Enums<T extends keyof PatchedDatabase["public"]["Enums"]> = PatchedDatabase["public"]["Enums"][T];
+export type Enums<T extends keyof PatchedDatabase["public"]["Enums"]> =
+  PatchedDatabase["public"]["Enums"][T];
 
 export type DbResult<T> = T extends PromiseLike<infer U> ? U : never;
 export type DbResultOk<T> = T extends PromiseLike<{ data: infer U }> ? Exclude<U, null> : never;

@@ -31,34 +31,33 @@
 </script>
 
 <section
-  class="max-h-[65vh] overflow-scroll flex flex-row flex-wrap"
+  class="flex max-h-[65vh] flex-row flex-wrap overflow-scroll"
   use:dragHandleZone={{ items: columnsContainer.columns, flipDurationMs, type: "columns" }}
   on:consider={handleDndConsiderColumns}
   on:finalize={handleDndFinalizeColumns}
 >
   {#each columnsContainer.columns as column, columnIndex (column.id)}
     <div
-      class="draggable-category flex flex-col min-w-[4rem] m-1 p-4 sm:p-6 border-2
-          max-w-[18%] max-h-[60vh] rounded-lg shadow-md bg-white dark:bg-gray-800 text-gray-500
-         dark:text-gray-400 border-gray-200 dark:border-gray-700 divide-gray-200 dark:divide-gray-700"
+      class="m-1 flex max-h-[60vh] min-w-[4rem] max-w-[18%] flex-col divide-gray-200
+          rounded-lg border-2 border-gray-200 bg-white p-4 text-gray-500 shadow-md
+         dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:p-6"
       animate:flip={{ duration: flipDurationMs }}
-      id="draggable-category"
     >
       <div use:dragHandle aria-label="drag-handle for {column.name} category" class="self-end">
-        <BarsOutline class="w-3 h-3" />
+        <BarsOutline class="h-3 w-3" />
       </div>
       <div class="column-title">{columnIndex + 1 + " - " + column.name}</div>
       <div
-        class="overflow-scroll flex flex-row flex-wrap"
+        class="flex flex-row flex-wrap overflow-scroll"
         use:dragHandleZone={{ items: column.items, flipDurationMs, centreDraggedOnCursor: true }}
         on:consider={(e) => handleDndConsiderCards(column.id, e)}
         on:finalize={(e) => handleDndFinalizeCards(column.id, e)}
       >
         {#each column.items as item (item.id)}
           <div animate:flip={{ duration: flipDurationMs }}>
-            <Badge class="p-2 m-1">
+            <Badge class="m-1 p-2">
               <div use:dragHandle aria-label="drag-handle for {item.name} product">
-                <BarsOutline class="w-2 h-2 mr-1" />
+                <BarsOutline class="mr-1 h-2 w-2" />
               </div>
               {item.name}
             </Badge>

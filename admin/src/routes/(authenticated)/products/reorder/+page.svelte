@@ -83,7 +83,7 @@
           kolejności. Dodatkowo, produkty mogą zawierać się w kategorii, również w ustalonej
           kolejności.
           <br />
-          - Aby przesunąć produkt, złap go za ikonę <BarsOutline class="w-2 inline " /> i przesuń w dowolne
+          - Aby przesunąć produkt, złap go za ikonę <BarsOutline class="inline w-2 " /> i przesuń w dowolne
           miejsce w obrębie kategorii, lub do obszaru bez kategorii (na samej górze ekranu).
           <br />
           To samo zrób z kategorią, by zmienić jej kolejność.
