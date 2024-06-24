@@ -1,9 +1,9 @@
 <script lang="ts">
   import { flip } from "svelte/animate";
-  import { dndzone, type DndEvent } from "svelte-dnd-action";
+  import { dragHandleZone, dragHandle } from "svelte-dnd-action";
   import { Badge, Button } from "flowbite-svelte";
   import type { Columns, DndColumnEvent, DndItemEvent } from "./types";
-
+  import { BarsOutline } from "flowbite-svelte-icons";
   export let columnsContainer: { columns: Columns };
   export let setUnsavedChanges: () => {};
 
@@ -31,28 +31,34 @@
 </script>
 
 <section
-  class="board"
-  use:dndzone={{ items: columnsContainer.columns, flipDurationMs, type: "columns" }}
+  class="flex max-h-[65vh] flex-row flex-wrap overflow-scroll"
+  use:dragHandleZone={{ items: columnsContainer.columns, flipDurationMs, type: "columns" }}
   on:consider={handleDndConsiderColumns}
   on:finalize={handleDndFinalizeColumns}
 >
-  {#each columnsContainer.columns as column (column.id)}
+  {#each columnsContainer.columns as column, columnIndex (column.id)}
     <div
-      class="m-1 flex min-w-[4rem] max-w-sm flex-col divide-gray-200 rounded-lg
-         border-2 border-gray-200 bg-white p-4 text-gray-500 shadow-md
+      class="m-1 flex max-h-[60vh] min-w-[4rem] max-w-[18%] flex-col divide-gray-200
+          rounded-lg border-2 border-gray-200 bg-white p-4 text-gray-500 shadow-md
          dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:p-6"
       animate:flip={{ duration: flipDurationMs }}
     >
-      <div class="column-title">{column.name}</div>
+      <div use:dragHandle aria-label="drag-handle for {column.name} category" class="self-end">
+        <BarsOutline class="h-3 w-3" />
+      </div>
+      <div class="column-title">{columnIndex + 1 + " - " + column.name}</div>
       <div
-        class="flex flex-row flex-wrap"
-        use:dndzone={{ items: column.items, flipDurationMs }}
+        class="flex flex-row flex-wrap overflow-scroll"
+        use:dragHandleZone={{ items: column.items, flipDurationMs, centreDraggedOnCursor: true }}
         on:consider={(e) => handleDndConsiderCards(column.id, e)}
         on:finalize={(e) => handleDndFinalizeCards(column.id, e)}
       >
         {#each column.items as item (item.id)}
           <div animate:flip={{ duration: flipDurationMs }}>
-            <Badge class="m-2 p-2">
+            <Badge class="m-1 p-2">
+              <div use:dragHandle aria-label="drag-handle for {item.name} product">
+                <BarsOutline class="mr-1 h-2 w-2" />
+              </div>
               {item.name}
             </Badge>
           </div>
