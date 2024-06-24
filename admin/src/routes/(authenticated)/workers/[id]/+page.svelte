@@ -40,7 +40,7 @@
       <Span>Nazwa</Span>
       <Input type="text" name="name" required bind:value={name} />
     </Label>
-    <Label class="space-y-2 mt-2">
+    <Label class="mt-2 space-y-2">
       <Span>Admin</Span>
       <Checkbox name="admin" bind:checked={is_admin} />
     </Label>

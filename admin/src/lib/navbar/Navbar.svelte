@@ -10,9 +10,9 @@
   };
 </script>
 
-<Navbar class="md:hidden fixed z-10">
+<Navbar class="fixed z-10 md:hidden">
   <NavHamburger on:click={() => toggleSidebar()} class="absolute  my-auto" />
-  <NavBrand href="/" class=" w-32 mx-auto mb-4">
+  <NavBrand href="/" class=" mx-auto mb-4 w-32">
     {#if isThemeDark}
       <img src={logo_dark} alt="InvTrack" />
     {:else}

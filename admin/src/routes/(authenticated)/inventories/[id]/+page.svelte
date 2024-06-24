@@ -58,7 +58,7 @@
       <Span>Nazwa</Span>
       <Input type="text" name="name" placeholder="Name" bind:value={name} />
     </Label>
-    <Label class="space-y-2 mt-2">
+    <Label class="mt-2 space-y-2">
       <Span>Data</Span>
       <Input type="text" name="date" placeholder="Date" bind:value={date} />
     </Label>

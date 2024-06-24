@@ -21,16 +21,16 @@
 </script>
 
 <section
-  class="overflow-scroll flex flex-row flex-wrap"
+  class="flex flex-row flex-wrap overflow-scroll"
   use:dragHandleZone={{ items: itemsContainer.items, flipDurationMs }}
   on:consider={handleDndConsider}
   on:finalize={handleDndFinalize}
 >
   {#each itemsContainer.items as item (item.id)}
     <div class="overflow-scroll" animate:flip={{ duration: flipDurationMs }}>
-      <Badge class="p-2 m-1">
+      <Badge class="m-1 p-2">
         <div use:dragHandle aria-label="drag-handle for {item.name} product">
-          <BarsOutline class="w-2 h-2 mr-1" />
+          <BarsOutline class="mr-1 h-2 w-2" />
         </div>
         {item.name}
       </Badge>

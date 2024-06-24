@@ -9,14 +9,14 @@
 
 <div class="flex items-center text-sm font-light text-gray-500 dark:text-gray-400">
   <button type="button" {id}>
-    <QuestionCircleSolid class="w-4 h-4 ms-1.5" />
+    <QuestionCircleSolid class="ms-1.5 h-4 w-4" />
     <span class="sr-only">Pokaż więcej informacji</span>
   </button>
 </div>
 <Popover
   placement="right-end"
   triggeredBy={`#${id}`}
-  class="w-72 text-sm font-light text-gray-500 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400"
+  class="w-72 bg-white text-sm font-light text-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
 >
   <slot />
   <!-- <div class="p-3 space-y-2">
