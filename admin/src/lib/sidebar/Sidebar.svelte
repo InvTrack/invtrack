@@ -76,7 +76,7 @@
 
 <Sidebar
   {activeUrl}
-  class="h-screen absolute flex md:sticky top-0 bg-gray-200 dark:bg-gray-800 px-4 w-72 min-w-[18rem] z-10 md:flex flex-col justify-between "
+  class="absolute top-0 z-10 flex h-screen w-72 min-w-[18rem] flex-col justify-between bg-gray-200 px-4 dark:bg-gray-800 md:sticky md:flex "
 >
   <div>
     <NotificationCenterModal
@@ -84,11 +84,11 @@
       notifications={lowQuantityNotifications}
     />
     {#if isThemeDark}
-      <img src={logo_dark} class="mt-8 mb-8 hidden md:inline-block" alt="InvTrack logo" />
+      <img src={logo_dark} class="mb-8 mt-8 hidden md:inline-block" alt="InvTrack logo" />
     {:else}
-      <img src={logo_light} class="mt-8 mb-8 hidden md:inline-block" alt="InvTrack logo" />
+      <img src={logo_light} class="mb-8 mt-8 hidden md:inline-block" alt="InvTrack logo" />
     {/if}
-    <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 flex flex-col ">
+    <SidebarWrapper class="flex flex-col bg-gray-200 dark:bg-gray-800 ">
       <SidebarGroup>
         <SidebarItem
           label="Powiadomienia"
@@ -97,12 +97,12 @@
         >
           <svelte:fragment slot="icon">
             <BellActiveAltSolid
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
           <svelte:fragment slot="subtext">
             <span
-              class="inline-flex justify-center items-center p-3 ms-3 w-3 h-3 text-sm font-medium text-primary-600 bg-primary-200 rounded-full dark:bg-primary-900 dark:text-primary-200"
+              class="ms-3 inline-flex h-3 w-3 items-center justify-center rounded-full bg-primary-200 p-3 text-sm font-medium text-primary-600 dark:bg-primary-900 dark:text-primary-200"
             >
               {lowQuantityProductRecords.length}
             </span>
@@ -114,7 +114,7 @@
           <svelte:fragment slot="icon">
             <HomeSolid
               active={activeUrl === "/"}
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
         </SidebarItem>
@@ -122,7 +122,7 @@
           <svelte:fragment slot="icon">
             <UsersSolid
               active={activeUrl === "/workers"}
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
         </SidebarItem>
@@ -130,7 +130,7 @@
           <svelte:fragment slot="icon">
             <ListSolid
               active={activeUrl === "/inventories"}
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
         </SidebarItem>
@@ -138,7 +138,7 @@
           <svelte:fragment slot="icon">
             <BriefcaseSolid
               active={activeUrl === "/products"}
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             /></svelte:fragment
           >
         </SidebarItem>
@@ -146,7 +146,7 @@
           <svelte:fragment slot="icon">
             <InboxFullSolid
               active={activeUrl === "/recipes"}
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             /></svelte:fragment
           >
         </SidebarItem>
@@ -155,7 +155,7 @@
         <SidebarDropdownWrapper label="Twoje konto">
           <svelte:fragment slot="icon">
             <UsersSolid
-              class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
           <SidebarDropdownItem label="Wyloguj" on:click={handleLogout} />
@@ -164,15 +164,15 @@
     </SidebarWrapper>
   </div>
   <div>
-    <SidebarWrapper class="bg-gray-200 dark:bg-gray-800 mb-4" border>
+    <SidebarWrapper class="mb-4 bg-gray-200 dark:bg-gray-800" border>
       <SidebarGroup class="flex flex-col">
-        <h3 class="w-full text-base font-normal text-gray-900 rounded-lg dark:text-white">
+        <h3 class="w-full rounded-lg text-base font-normal text-gray-900 dark:text-white">
           Zmień motyw
         </h3>
         <div class="flex flex-row">
-          <SunSolid class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" />
+          <SunSolid class="mr-2 h-6 w-6 text-gray-500 dark:text-gray-400" />
           <Toggle checked={isThemeDark} on:click={toggleDarkMode} />
-          <MoonSolid class="w-6 h-6 text-gray-500 dark:text-gray-400" />
+          <MoonSolid class="h-6 w-6 text-gray-500 dark:text-gray-400" />
         </div>
       </SidebarGroup>
     </SidebarWrapper>

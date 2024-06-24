@@ -10,7 +10,7 @@
   };
 </script>
 
-<Navbar class="sticky top-0 z-10 md:hidden shadow-md">
+<Navbar class="sticky top-0 z-10 shadow-md md:hidden">
   <NavHamburger on:click={() => toggleSidebar()} class="absolute  my-auto" />
   <NavBrand href="/" class=" mx-auto mb-4 w-32">
     {#if isThemeDark}
