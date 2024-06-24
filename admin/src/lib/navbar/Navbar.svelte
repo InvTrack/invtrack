@@ -11,8 +11,8 @@
 </script>
 
 <Navbar class="md:hidden fixed z-10">
-  <NavHamburger on:click={() => toggleSidebar()} class="absolute left-3" />
-  <NavBrand href="/" class=" w-32 place-self-center my-2  mx-auto">
+  <NavHamburger on:click={() => toggleSidebar()} class="absolute  my-auto" />
+  <NavBrand href="/" class=" w-32 mx-auto mb-4">
     {#if isThemeDark}
       <img src={logo_dark} alt="InvTrack" />
     {:else}
