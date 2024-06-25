@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { getIsThemeDark, toggleDarkMode } from "$lib/scripts/darkMode";
+  import { getIsThemeDark, reloadTheme, toggleDarkMode } from "$lib/scripts/darkMode";
   import {
     Sidebar,
     SidebarDropdownItem,
@@ -29,10 +29,8 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { genericGet } from "$lib/genericGet";
-  import { browser } from "$app/environment";
 
   export let supabase: any;
-  let isThemeDark: boolean = true;
   $: activeUrl = $page.url.pathname;
   $: lowQuantityNotifications =
     lowQuantityProductRecords &&
@@ -51,10 +49,10 @@
   let isNotificationCenterModalOpen = false;
   export let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
 
+  $: isThemeDark = getIsThemeDark();
   onMount(() => {
-    if (browser) {
-      isThemeDark = getIsThemeDark();
-    }
+    reloadTheme();
+    isThemeDark = getIsThemeDark();
     genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
       lowQuantityProductRecords = x as LowQuantityProductRecords[];
     });
@@ -84,9 +82,9 @@
       notifications={lowQuantityNotifications}
     />
     {#if isThemeDark}
-      <img src={logo_dark} class="mb-8 mt-8 hidden md:inline-block" alt="InvTrack logo" />
-    {:else}
       <img src={logo_light} class="mb-8 mt-8 hidden md:inline-block" alt="InvTrack logo" />
+    {:else}
+      <img src={logo_dark} class="mb-8 mt-8 hidden md:inline-block" alt="InvTrack logo" />
     {/if}
     <SidebarWrapper class="flex flex-col bg-gray-200 dark:bg-gray-800 ">
       <SidebarGroup>
@@ -171,7 +169,7 @@
         </h3>
         <div class="flex flex-row">
           <SunSolid class="mr-2 h-6 w-6 text-gray-500 dark:text-gray-400" />
-          <Toggle checked={isThemeDark} on:click={toggleDarkMode} />
+          <Toggle bind:checked={isThemeDark} on:click={toggleDarkMode} />
           <MoonSolid class="h-6 w-6 text-gray-500 dark:text-gray-400" />
         </div>
       </SidebarGroup>
