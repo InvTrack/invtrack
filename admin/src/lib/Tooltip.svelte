@@ -16,7 +16,7 @@
 <Popover
   placement="right-end"
   triggeredBy={`#${id}`}
-  class="w-72 bg-white text-sm font-light text-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
+  class="w-72 max-w-[50vw] bg-white text-sm font-light text-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
 >
   <slot />
   <!-- <div class="p-3 space-y-2">
