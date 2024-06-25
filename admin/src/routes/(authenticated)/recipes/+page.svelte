@@ -9,15 +9,17 @@
     TableHeadCell,
   } from "flowbite-svelte";
   import ScreenCard from "$lib/ScreenCard.svelte";
+  import { parseISODatestring } from "$lib/dates/parseISODatestring";
 
   export let data;
   let { recipes } = data;
 </script>
 
 <ScreenCard header="Recepturownik">
-  <Table>
+  <Table class="min-w-[48rem]">
     <TableHead class="bg-gray-200" theadClass="bg-gray-200">
       <TableHeadCell>Nazwa</TableHeadCell>
+      <TableHeadCell>Data utworzenia</TableHeadCell>
       <TableHeadCell />
     </TableHead>
     <TableBody>
@@ -25,6 +27,9 @@
         <TableBodyRow>
           <TableBodyCell>
             {recipe.name}
+          </TableBodyCell>
+          <TableBodyCell>
+            {parseISODatestring(recipe.created_at)}
           </TableBodyCell>
           <TableBodyCell>
             <Button class="hover:underline" href={`/recipes/${recipe.id}`}>Edytuj</Button>

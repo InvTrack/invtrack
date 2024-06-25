@@ -39,7 +39,7 @@
         <Sidebar {supabase} bind:hideSidebar bind:isThemeDark />
       </Drawer>
     {/if}
-    <main class=" dark:bg-primary-900 overflow-auto bg-white">
+    <main class="dark:bg-primary-900 w-fit overflow-auto bg-white">
       <slot />
     </main>
   </div>
