@@ -56,12 +56,12 @@
     });
   });
 
-  const handleLogout = (event: MouseEvent) => {
+  const handleLogout = async (event: MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    goto("/auth", { replaceState: true });
     supabase.auth.signOut();
     OneSignal.logout();
+    goto("/auth", { replaceState: true });
   };
 
   export let hideSidebar: boolean;
