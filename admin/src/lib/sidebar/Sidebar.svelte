@@ -49,9 +49,8 @@
   let isNotificationCenterModalOpen = false;
   export let lowQuantityProductRecords: LowQuantityProductRecords[] = [];
 
-  let isThemeDark = getTheme() === "dark";
+  export let isThemeDark: boolean;
   onMount(() => {
-    isThemeDark = getTheme() === "dark";
     reloadTheme();
     genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
       lowQuantityProductRecords = x as LowQuantityProductRecords[];
