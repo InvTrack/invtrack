@@ -38,9 +38,9 @@
 >
   {#each columnsContainer.columns as column, columnIndex (column.id)}
     <div
-      class="m-1 flex max-h-[60vh] min-w-[4rem] max-w-[18%] flex-col divide-gray-200
+      class="m-1 flex max-h-[60vh] min-w-[4rem] max-w-sm flex-col divide-gray-200
           rounded-lg border-2 border-gray-200 bg-white p-4 text-gray-500 shadow-md
-         dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:p-6"
+         sm:p-6 dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
       animate:flip={{ duration: flipDurationMs }}
     >
       <div use:dragHandle aria-label="drag-handle for {column.name} category" class="self-end">

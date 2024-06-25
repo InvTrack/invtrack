@@ -32,8 +32,8 @@
   };
 </script>
 
-<ScreenCard header="Add worker">
-  <form on:submit|preventDefault={update}>
+<ScreenCard header="Dodaj pracownika">
+  <form on:submit|preventDefault={update} class="md:min-w-[20rem] xl:min-w-[32rem]">
     <Label class="space-y-2">
       <Span>Imię</Span>
       <Input type="text" name="full_name" required bind:value={full_name} />

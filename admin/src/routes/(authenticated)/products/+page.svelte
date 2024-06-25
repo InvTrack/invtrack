@@ -21,7 +21,7 @@
   {#if categories}
     <Accordion flush multiple>
       {#if uncategorisedProducts && uncategorisedProducts.length > 0}
-        <AccordionItem>
+        <AccordionItem class=" min-w-max">
           <span slot="header">Brak kategorii</span>
           <Table>
             <TableHead>
@@ -60,7 +60,7 @@
       {/if}
 
       {#each categories.filter((category) => category.items.length > 0) as category}
-        <AccordionItem>
+        <AccordionItem class="min-w-max">
           <span slot="header">{category.name}</span>
           <Table>
             <TableHead>
@@ -97,7 +97,7 @@
       {/each}
     </Accordion>
   {/if}
-  <div class="mt-2 flex flex-wrap justify-center gap-4">
+  <div class="mt-2 flex flex-wrap justify-center gap-4 md:justify-start">
     <Button class="hover:underline" href={`/products/add`}>Dodaj produkt</Button>
     <Button class="hover:underline" href={`/products/add-category`}>Dodaj kategorię</Button>
     <Button class="hover:underline" href={`/products/reorder`}>Zmień kolejność</Button>
