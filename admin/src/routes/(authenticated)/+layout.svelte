@@ -19,9 +19,9 @@
 
 <svelte:window bind:innerWidth={screenWidth} />
 
-<div class="flex flex-col">
+<div class="flex h-fit min-h-screen flex-col">
   <Navbar bind:hideSidebar />
-  <div class="dark:bg-primary-900 flex flex-row bg-white">
+  <div class="dark:bg-primary-900 flex h-fit min-h-screen flex-row bg-white">
     {#if screenWidth > 768}
       <Sidebar {supabase} bind:hideSidebar />
     {:else}
