@@ -21,7 +21,7 @@
 
 <div class="flex flex-col">
   <Navbar bind:hideSidebar />
-  <div class="flex flex-row">
+  <div class="dark:bg-primary-900 flex flex-row bg-white">
     {#if screenWidth > 768}
       <Sidebar {supabase} bind:hideSidebar />
     {:else}
@@ -29,7 +29,7 @@
         <Sidebar {supabase} bind:hideSidebar />
       </Drawer>
     {/if}
-    <main class=" overflow-scroll bg-white dark:bg-primary-900">
+    <main class=" dark:bg-primary-900 overflow-scroll bg-white">
       <slot />
     </main>
   </div>
