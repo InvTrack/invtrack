@@ -133,9 +133,7 @@
           <TableBody>
             {#each productsWithRecords as product, i}
               <TableBodyRow>
-                <TableBodyCell class="whitespace-normal"
-                  >{product.name + "" + product.name}</TableBodyCell
-                >
+                <TableBodyCell class="whitespace-normal">{product.name}</TableBodyCell>
                 {#each product.records as record}
                   <TableBodyCell class="whitespace-normal">
                     {#if record}

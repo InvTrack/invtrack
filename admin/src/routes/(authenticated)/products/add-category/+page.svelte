@@ -40,7 +40,7 @@
         name="name"
         required
         bind:value={name}
-        class="w-[90%] md:min-w-[24rem] xl:min-w-[32rem]"
+        class="xl:min-w-128 w-[90%] md:min-w-[24rem]"
       />
     </Label>
     <Button type="submit" class="mt-4" color="primary"
