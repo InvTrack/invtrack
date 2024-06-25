@@ -2,12 +2,11 @@
   import { Navbar, NavHamburger, NavBrand } from "flowbite-svelte";
   import logo_dark from "$lib/assets/logo-dark.png";
   import logo_light from "$lib/assets/logo-light.png";
-  let isThemeDark = true;
-
   export let hideSidebar: boolean;
   const toggleSidebar = () => {
     hideSidebar = !hideSidebar;
   };
+  export let isThemeDark: boolean;
 </script>
 
 <Navbar class="sticky top-0 z-10 shadow-md md:hidden">
