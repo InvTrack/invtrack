@@ -2,29 +2,34 @@ import { browser } from "$app/environment";
 
 export const toggleDarkMode = () => {
   if (browser) {
-    if (!localStorage.theme) initTheme();
-    if (localStorage.theme === "dark") {
-      localStorage.theme = "light";
+    if (!getTheme()) initTheme();
+    if (getTheme() === "dark") {
+      localStorage.setItem("theme", "light");
     } else {
-      localStorage.theme = "dark";
+      localStorage.setItem("theme", "dark");
     }
     reloadTheme();
   }
 };
 
 export const initTheme = () => {
-  window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? (localStorage.theme = "dark")
-    : (localStorage.theme = "light");
+  if (!getTheme()) {
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? localStorage.setItem("theme", "dark")
+      : localStorage.setItem("theme", "light");
+  }
 };
 
 export const reloadTheme = () => {
   if (!browser) return;
-  if (localStorage.theme === "dark") {
+  if (!getTheme()) {
+    initTheme();
+  }
+  if (getTheme() === "dark") {
     document.documentElement.classList.add("dark");
   } else {
     document.documentElement.classList.remove("dark");
   }
 };
 
-export const getIsThemeDark = () => localStorage.theme === "dark";
+export const getTheme = () => localStorage.getItem("theme");
