@@ -1,13 +1,11 @@
 <script lang="ts">
   import "./styles.css";
-
+  import { reloadTheme } from "$lib/scripts/darkMode";
   import { onMount } from "svelte";
-  import { initializeDarkMode } from "$lib/scripts/darkMode";
   import OneSignal from "react-onesignal";
   import { browser } from "$app/environment";
   import { PUBLIC_ONESIGNAL_APP_ID, PUBLIC_ONESIGNAL_SAFARI_WEB_ID } from "$env/static/public";
   import { invalidate } from "$app/navigation";
-
   export let data;
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
@@ -16,6 +14,7 @@
     OneSignal.login(session.user.id);
   }
   onMount(() => {
+    reloadTheme();
     const {
       data: { subscription: supabaseSubscription },
     } = supabase.auth.onAuthStateChange((event, _session) => {
@@ -25,8 +24,6 @@
     });
 
     if (browser) {
-      initializeDarkMode();
-      //
       OneSignal.init({
         appId: PUBLIC_ONESIGNAL_APP_ID,
         safari_web_id: PUBLIC_ONESIGNAL_SAFARI_WEB_ID,

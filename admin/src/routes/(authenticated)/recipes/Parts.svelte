@@ -134,7 +134,7 @@
       <Table>
         <TableBody>
           {#each parts as part}
-            <TableBodyRow>
+            <TableBodyRow color="custom" class="border-x-none border-gray-300 dark:border-gray-700">
               <TableBodyCell class="whitespace-normal">
                 {products.find((p) => p.id === part.product_id)?.name}
               </TableBodyCell>

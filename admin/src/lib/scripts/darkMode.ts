@@ -1,54 +1,35 @@
 import { browser } from "$app/environment";
 
 export const toggleDarkMode = () => {
-  const root = document.documentElement; // Get the :root element
-  if (localStorage.getItem("color-theme")) {
-    if (localStorage.getItem("color-theme") === "light") {
-      root.classList.remove("light");
-      root.classList.add("dark");
-      root.style.setProperty("color-scheme", "dark");
-      localStorage.setItem("color-theme", "dark");
+  if (browser) {
+    if (!getTheme()) initTheme();
+    if (getTheme() === "dark") {
+      localStorage.setItem("theme", "light");
     } else {
-      root.classList.remove("dark");
-      root.classList.add("light");
-      root.style.setProperty("color-scheme", "light");
-      localStorage.setItem("color-theme", "light");
+      localStorage.setItem("theme", "dark");
     }
-
-    // if NOT set via local storage previously
-  } else {
-    if (root.classList.contains("dark") || root.style.getPropertyValue("color-scheme") === "dark") {
-      root.classList.remove("dark");
-      root.style.setProperty("color-scheme", "light");
-      root.classList.add("light");
-      localStorage.setItem("color-theme", "light");
-    } else {
-      root.classList.add("dark");
-      root.style.setProperty("color-scheme", "dark");
-      localStorage.setItem("color-theme", "dark");
-    }
+    reloadTheme();
   }
 };
 
-export const initializeDarkMode = () => {
+export const initTheme = () => {
+  if (!getTheme()) {
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? localStorage.setItem("theme", "dark")
+      : localStorage.setItem("theme", "light");
+  }
+};
+
+export const reloadTheme = () => {
   if (!browser) return;
-  const root = document.documentElement; // Get the :root element
-  if (
-    localStorage.getItem("color-theme") === "dark" ||
-    (!("color-theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
-    root.classList.add("dark");
-    root.style.setProperty("color-scheme", "dark");
+  if (!getTheme()) {
+    initTheme();
+  }
+  if (getTheme() === "dark") {
+    document.documentElement.classList.add("dark");
   } else {
-    root.classList.remove("dark");
-    root.style.setProperty("color-scheme", "light");
+    document.documentElement.classList.remove("dark");
   }
 };
 
-export const getIsThemeDark = () => {
-  return (
-    localStorage.getItem("color-theme") === "dark" ||
-    document.documentElement.style.getPropertyValue("color-scheme") === "dark" ||
-    document.documentElement.classList.contains("dark")
-  );
-};
+export const getTheme = () => localStorage.getItem("theme");
