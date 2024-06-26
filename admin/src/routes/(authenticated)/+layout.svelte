@@ -32,7 +32,12 @@
     {#if screenWidth > 768}
       <Sidebar {supabase} bind:hideSidebar bind:isThemeDark />
     {:else}
-      <Drawer bind:hidden={hideSidebar} {transitionParams} transitionType="fly">
+      <Drawer
+        bind:hidden={hideSidebar}
+        {transitionParams}
+        transitionType="fly"
+        class="m-0 w-72 p-0"
+      >
         <Sidebar {supabase} bind:hideSidebar bind:isThemeDark />
       </Drawer>
     {/if}

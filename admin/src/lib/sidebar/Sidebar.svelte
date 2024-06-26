@@ -73,7 +73,7 @@
 
 <Sidebar
   {activeUrl}
-  class="absolute top-0 z-10 flex h-fit min-h-screen w-72 min-w-[18rem] flex-col justify-between  bg-gray-200 px-4 md:sticky md:flex dark:bg-gray-800"
+  class="z-10 flex min-h-screen w-72 min-w-[18rem] flex-col justify-between bg-gray-200 px-4 md:sticky md:top-0  md:flex md:h-max dark:bg-gray-800"
 >
   <div>
     <NotificationCenterModal
