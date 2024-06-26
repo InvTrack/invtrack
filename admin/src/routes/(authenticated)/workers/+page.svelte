@@ -49,7 +49,7 @@
               {worker.email}
             </TableBodyCell>
             <TableBodyCell>
-              {worker.is_admin}
+              {worker.is_admin ? "Tak" : "Nie"}
             </TableBodyCell>
             <TableBodyCell>
               {parseISODatestring(worker.created_at)}

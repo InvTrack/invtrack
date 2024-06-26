@@ -73,7 +73,9 @@
 
 <Sidebar
   {activeUrl}
-  class="z-10 flex min-h-screen w-72 min-w-[18rem] flex-col justify-between bg-gray-200 px-4 md:sticky md:top-0  md:flex md:h-max dark:bg-gray-800"
+  activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-100 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-primary-200 dark:hover:bg-gray-700"
+  nonActiveClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-200 dark:hover:bg-gray-700'"
+  class="bg-primary-50 z-10 flex min-h-screen w-72 min-w-[18rem] flex-col justify-between px-4 md:sticky md:top-0  md:flex md:h-max dark:bg-gray-800"
 >
   <div>
     <NotificationCenterModal
@@ -85,7 +87,7 @@
     {:else}
       <img src={logo_light} class="mb-8 mt-8 hidden md:inline-block" alt="InvTrack logo" />
     {/if}
-    <SidebarWrapper class="flex flex-col bg-gray-200 dark:bg-gray-800 ">
+    <SidebarWrapper class="bg-primary-50 flex flex-col dark:bg-gray-800 ">
       <SidebarGroup>
         <SidebarItem
           label="Powiadomienia"
@@ -149,19 +151,23 @@
         </SidebarItem>
       </SidebarGroup>
       <SidebarGroup border>
-        <SidebarDropdownWrapper label="Twoje konto">
+        <SidebarDropdownWrapper label="Twoje konto" class="hover:bg-primary-200">
           <svelte:fragment slot="icon">
             <UsersSolid
-              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+              class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900  dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
-          <SidebarDropdownItem label="Wyloguj" on:click={handleLogout} />
+          <SidebarDropdownItem
+            label="Wyloguj"
+            on:click={handleLogout}
+            class="hover:bg-red-300 dark:hover:bg-red-800"
+          />
         </SidebarDropdownWrapper>
       </SidebarGroup>
     </SidebarWrapper>
   </div>
   <div>
-    <SidebarWrapper class="mb-4 bg-gray-200 dark:bg-gray-800" border>
+    <SidebarWrapper class="bg-primary-50 mb-4 dark:bg-gray-800" border>
       <SidebarGroup class="flex flex-col">
         <h3 class="w-full rounded-lg text-base font-normal text-gray-900 dark:text-white">
           Zmień motyw
