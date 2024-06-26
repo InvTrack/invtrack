@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { getTheme, reloadTheme, toggleDarkMode } from "$lib/scripts/darkMode";
+  import { reloadTheme, toggleDarkMode } from "$lib/scripts/darkMode";
   import {
     Sidebar,
     SidebarDropdownItem,
@@ -64,7 +64,10 @@
     supabase.auth.signOut();
     OneSignal.logout();
   };
-
+  const activeClass =
+    "flex items-center p-2 text-base font-normal text-gray-900 bg-primary-100 dark:bg-gray-700 rounded-lg dark:text-white";
+  const nonActiveClass =
+    "flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-200 dark:hover:bg-primary-800";
   export let hideSidebar: boolean;
   function toggleSidebar() {
     hideSidebar = !hideSidebar;
@@ -73,8 +76,8 @@
 
 <Sidebar
   {activeUrl}
-  activeClass="flex items-center p-2 text-base font-normal text-gray-900 bg-primary-100 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-primary-200 dark:hover:bg-gray-700"
-  nonActiveClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-primary-200 dark:hover:bg-gray-700'"
+  {activeClass}
+  {nonActiveClass}
   class="bg-primary-50 z-10 flex min-h-screen w-72 min-w-[18rem] flex-col justify-between px-4 md:sticky md:top-0  md:flex md:h-max dark:bg-gray-800"
 >
   <div>
@@ -112,7 +115,6 @@
         <SidebarItem label="Podsumowanie" href="/" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <HomeSolid
-              active={activeUrl === "/"}
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
@@ -120,7 +122,6 @@
         <SidebarItem label="Pracownicy" href="/workers" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <UsersSolid
-              active={activeUrl === "/workers"}
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
@@ -128,7 +129,6 @@
         <SidebarItem label="Inwentaryzacje" href="/inventories" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <ListSolid
-              active={activeUrl === "/inventories"}
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             />
           </svelte:fragment>
@@ -136,7 +136,6 @@
         <SidebarItem label="Produkty" href="/products" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <BriefcaseSolid
-              active={activeUrl === "/products"}
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             /></svelte:fragment
           >
@@ -144,14 +143,16 @@
         <SidebarItem label="Recepturownik" href="/recipes" on:click={() => toggleSidebar()}>
           <svelte:fragment slot="icon">
             <InboxFullSolid
-              active={activeUrl === "/recipes"}
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
             /></svelte:fragment
           >
         </SidebarItem>
       </SidebarGroup>
       <SidebarGroup border>
-        <SidebarDropdownWrapper label="Twoje konto" class="hover:bg-primary-200">
+        <SidebarDropdownWrapper
+          label="Twoje konto"
+          class="hover:bg-primary-200 dark:hover:bg-primary-800"
+        >
           <svelte:fragment slot="icon">
             <UsersSolid
               class="h-6 w-6 text-gray-500 transition duration-75 group-hover:text-gray-900  dark:text-gray-400 dark:group-hover:text-white"
