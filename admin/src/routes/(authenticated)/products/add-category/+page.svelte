@@ -32,16 +32,10 @@
 </script>
 
 <ScreenCard header={"Dodaj Kategorię"}>
-  <form on:submit|preventDefault={update}>
+  <form on:submit|preventDefault={update} class="xl:min-w-128 w-10/12 md:min-w-[22rem]">
     <Label class="space-y-2">
       <Span>Nazwa</Span>
-      <Input
-        type="text"
-        name="name"
-        required
-        bind:value={name}
-        class="xl:min-w-128 w-[90%] md:min-w-[24rem]"
-      />
+      <Input type="text" name="name" required bind:value={name} class="w-11/12" />
     </Label>
     <Button type="submit" class="mt-4" color="primary"
       >{loading ? "Zapisywanie..." : "Dodaj kategorię"}</Button

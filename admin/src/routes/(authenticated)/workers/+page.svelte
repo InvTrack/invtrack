@@ -17,8 +17,8 @@
 
 <ScreenCard header="Pracownicy">
   {#if workers}
-    <Table>
-      <TableHead class="bg-gray-200" theadClass="bg-gray-200">
+    <Table shadow>
+      <TableHead class="bg-primary-100 normal-case">
         <TableHeadCell>Imię</TableHeadCell>
         <TableHeadCell>E-mail</TableHeadCell>
         <TableHeadCell>Admin</TableHeadCell>
@@ -62,5 +62,5 @@
       </TableBody>
     </Table>
   {/if}
-  <Button class="hover:underline" href={`/workers/add`}>Dodaj</Button>
+  <Button class="mt-5 hover:underline" href={`/workers/add`}>Dodaj</Button>
 </ScreenCard>

@@ -23,8 +23,8 @@
       {#if uncategorisedProducts && uncategorisedProducts.length > 0}
         <AccordionItem class=" min-w-max">
           <span slot="header">Brak kategorii</span>
-          <Table>
-            <TableHead>
+          <Table shadow>
+            <TableHead class="bg-primary-100 normal-case dark:bg-gray-600">
               <TableHeadCell>Nazwa</TableHeadCell>
               <TableHeadCell>Jednostka</TableHeadCell>
               <TableHeadCell>Data utworzenia</TableHeadCell>
@@ -62,8 +62,8 @@
       {#each categories.filter((category) => category.items.length > 0) as category}
         <AccordionItem class="min-w-max">
           <span slot="header">{category.name}</span>
-          <Table>
-            <TableHead>
+          <Table shadow>
+            <TableHead class="bg-primary-100 normal-case dark:bg-gray-600">
               <TableHeadCell>Nazwa</TableHeadCell>
               <TableHeadCell>Jednostka</TableHeadCell>
               <TableHeadCell>Data utworzenia</TableHeadCell>

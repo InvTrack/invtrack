@@ -7,6 +7,7 @@
   import {
     Button,
     Table,
+    TableBody,
     TableBodyCell,
     TableBodyRow,
     TableHead,
@@ -20,14 +21,14 @@
 
 <ScreenCard header="Inwentaryzacje">
   {#if inventories}
-    <Table>
-      <TableHead class="bg-gray-200" theadClass="bg-gray-200">
+    <Table shadow>
+      <TableHead class="bg-primary-100 normal-case dark:bg-gray-600">
         <TableHeadCell>Nazwa</TableHeadCell>
         <TableHeadCell>Data</TableHeadCell>
         <TableHeadCell>Data utworzenia</TableHeadCell>
         <TableHeadCell />
       </TableHead>
-      <tbody>
+      <TableBody>
         {#each inventories as inventory}
           <TableBodyRow>
             <TableBodyCell>
@@ -44,7 +45,7 @@
             </TableBodyCell>
           </TableBodyRow>
         {/each}
-      </tbody>
+      </TableBody>
     </Table>
   {/if}
 </ScreenCard>
