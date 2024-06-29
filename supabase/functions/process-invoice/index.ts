@@ -249,9 +249,9 @@ Deno.serve(async (req) => {
     });
   }
 
-  if (result.analyzeResult.documents[0].fields.Items.type === "object") {
+  if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
     const itemValue =
-      result.analyzeResult.documents[0].fields.Items.valueObject;
+      result.analyzeResult.documents[0].fields.Items?.valueObject;
     const sanitizedName = parseStringForResponse(
       getName(itemValue?.Description)
     );
@@ -265,28 +265,30 @@ Deno.serve(async (req) => {
       },
     ];
   }
-  if (result.analyzeResult.documents[0].fields.Items.type === "array") {
+  if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
     documentAnalysisResult =
-      result.analyzeResult.documents[0].fields.Items.valueArray?.map((item) => {
-        if (item.type !== "object") {
-          return null;
+      result.analyzeResult.documents[0].fields.Items?.valueArray?.map(
+        (item) => {
+          if (item.type !== "object") {
+            return null;
+          }
+          const itemValue = item.valueObject;
+          const sanitizedName = parseStringForResponse(
+            getName(itemValue?.Description)
+          );
+          const price_per_unit = parseFloatForResponse(
+            getPricePerUnit(itemValue)
+          );
+          const quantity = parseFloatForResponse(
+            getQuantity(itemValue?.Quantity)
+          );
+          return {
+            sanitizedName,
+            price_per_unit,
+            quantity,
+          };
         }
-        const itemValue = item.valueObject;
-        const sanitizedName = parseStringForResponse(
-          getName(itemValue?.Description)
-        );
-        const price_per_unit = parseFloatForResponse(
-          getPricePerUnit(itemValue)
-        );
-        const quantity = parseFloatForResponse(
-          getQuantity(itemValue?.Quantity)
-        );
-        return {
-          sanitizedName,
-          price_per_unit,
-          quantity,
-        };
-      }) ?? null;
+      ) ?? null;
   }
 
   // this is extremely inefficient and we should find a better solution
