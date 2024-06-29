@@ -11,7 +11,8 @@ import { Skeleton } from "../components/Skeleton";
 import { useNetInfo } from "@react-native-community/netinfo";
 import isEmpty from "lodash/isEmpty";
 import { Collapsible } from "../components/Collapsible/Collapsible";
-import { IDListCardAdd } from "../components/IDListCardAdd";
+import { IDListCardAddProduct } from "../components/IDListCardAddProduct";
+import { IDListCardAddRecord } from "../components/IDListCardAddRecord";
 import { RecipeCard } from "../components/RecipeCard";
 import { useSnackbar } from "../components/Snackbar/hooks";
 import { StockForm } from "../components/StockFormContext/types";
@@ -173,7 +174,8 @@ export default function InventoryTabScreen({
                 <></>
               )
             )}
-            <IDListCardAdd inventoryId={inventoryId} />
+            <IDListCardAddProduct inventoryId={inventoryId} />
+            <IDListCardAddRecord inventoryId={inventoryId} />
           </ScrollView>
         }
         sections={categorizedRecordList?.map(({ title, data }, i) => ({
