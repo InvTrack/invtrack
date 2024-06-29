@@ -7,16 +7,18 @@ import { Button } from "./Button";
 export const IDListCardAddProduct = ({
   inventoryId,
 }: {
-  inventoryId: number;
+  inventoryId: number | null;
 }) => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
+
   return (
     <Button
       size="s"
       fullWidth
       type="primary"
       containerStyle={styles.button}
+      disabled={inventoryId == null}
       onPress={() => {
         navigation.navigate("NewProductScreen", { inventoryId });
       }}
