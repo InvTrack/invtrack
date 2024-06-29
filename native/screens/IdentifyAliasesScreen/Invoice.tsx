@@ -94,6 +94,9 @@ export const IdentifyAliasesScreenInvoice = () => {
     handleSubmit(
       (data) => {
         mutate(data);
+        dispatch(documentScannerAction.PHOTO_RESET_DATA());
+        dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+        dispatch(documentScannerAction.PHOTO_RETAKE());
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
@@ -104,6 +107,7 @@ export const IdentifyAliasesScreenInvoice = () => {
   const handleGoBackPress = () => {
     dispatch(documentScannerAction.PHOTO_RESET_DATA());
     dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+    dispatch(documentScannerAction.PHOTO_RETAKE());
     navigation.replace("DocumentScannerModal", {
       isScanningSalesRaport: false,
     });

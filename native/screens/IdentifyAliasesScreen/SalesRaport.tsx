@@ -95,6 +95,9 @@ export const IdentifyAliasesScreenSalesRaport = () => {
     handleSubmit(
       (data) => {
         mutate(data);
+        dispatch(documentScannerAction.PHOTO_RESET_DATA());
+        dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+        dispatch(documentScannerAction.PHOTO_RETAKE());
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
