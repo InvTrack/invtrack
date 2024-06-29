@@ -29,7 +29,8 @@ export type CreateProductFormValues = {
 
 const tooltipTitle = "Dodawanie produktów";
 const tooltipTextContent = `Brakuje ci produktu do policzenia? Dodaj go uproszczonym kreatorem w aplikacji. Proponujemy, aby jednostka była taka sama jak ta na fakturze, zapisana skrótem. 
-Np. opakowanie 6 sztuk -> opak.`;
+Np. opakowanie 6 sztuk -> opak.
+Produkt dostanie automatycznie dodany do bieżącej inwentaryzacji/dostawy.`;
 
 export function NewProductScreen({
   navigation,

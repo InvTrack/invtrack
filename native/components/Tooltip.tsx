@@ -27,12 +27,12 @@ export const Tooltip = ({
           <View style={[styles.container, { paddingBottom: bottom + 16 }]}>
             <Typography
               style={styles.title}
-              variant={title.length > 22 ? "lBold" : "xlBold"}
+              variant={title.length > 22 ? "mBold" : "lBold"}
               color="lightGrey"
             >
               {title}
             </Typography>
-            <Typography style={styles.title} variant="l" color="lightGrey">
+            <Typography style={styles.title} variant="m" color="lightGrey">
               {textContent}
             </Typography>
           </View>
@@ -55,7 +55,7 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
       justifyContent: "center",
       marginBottom: theme.spacing,
-      marginTop: theme.spacing * 2,
+      marginTop: theme.spacing,
     },
   })
 );
