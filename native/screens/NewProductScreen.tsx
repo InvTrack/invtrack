@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { formatISO } from "date-fns";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
-import { DateInputController } from "../components/DateInputController";
 import TextInputController from "../components/TextInputController";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import NumberInputController from "../components/NumberInputController";
 import { useSnackbar } from "../components/Snackbar/hooks";
-import { ToggleController } from "../components/ToggleController";
+import { Tooltip } from "../components/Tooltip";
 import { Typography } from "../components/Typography";
-import { isAndroid } from "../constants";
-import { useCreateInventory } from "../db";
+import { useCreateProduct } from "../db/hooks/useCreateProduct";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
@@ -23,60 +21,43 @@ type NewProductScreenProps = NativeStackScreenProps<
   "NewProductScreen"
 >;
 
-export type CreateInventoryFormValues = {
+export type CreateProductFormValues = {
   name: string;
-  date: string;
-  is_delivery: boolean;
+  unit: string;
+  steps: number[];
 };
 
-export function NewProductScreen({ navigation }: NewProductScreenProps) {
+const tooltipTitle = "Dodawanie produktów";
+const tooltipTextContent = `Brakuje ci produktu do policzenia? Dodaj go uproszczonym kreatorem w aplikacji. Proponujemy, aby jednostka była taka sama jak ta na fakturze, zapisana skrótem. 
+Np. opakowanie 6 sztuk -> opak.`;
+
+export function NewProductScreen({
+  navigation,
+  route: {
+    params: { inventoryId },
+  },
+}: NewProductScreenProps) {
   const styles = useStyles();
   const { isConnected } = useNetInfo();
-  const { showError } = useSnackbar();
+  const { showError, showSuccess } = useSnackbar();
 
-  const now = new Date(Date.now());
-
-  const { control, handleSubmit, getValues, reset, watch } =
-    useForm<CreateInventoryFormValues>({
-      defaultValues: {
-        name: "",
-        date: formatISO(now),
-        is_delivery: true,
-      },
-      resetOptions: {
-        keepDirtyValues: true,
-      },
-      mode: "onSubmit",
-    });
-  const {
-    mutate,
-    data: inventory,
-    isSuccess,
-    isLoading,
-    isError,
-  } = useCreateInventory();
-
-  const is_delivery = watch("is_delivery");
+  const { control, handleSubmit } = useForm<CreateProductFormValues>({
+    defaultValues: {
+      name: "",
+      unit: "szt.",
+      steps: [1, 5, 10],
+    },
+    mode: "onSubmit",
+  });
+  const { mutate, isSuccess, isLoading, isError } =
+    useCreateProduct(inventoryId);
 
   useEffect(() => {
-    if (isSuccess && inventory) {
-      if (is_delivery) {
-        navigation.navigate("Tabs", {
-          screen: "DeliveryTab",
-          params: {
-            id: inventory.id,
-          },
-        });
-        return;
-      }
-      navigation.navigate("Tabs", {
-        screen: "InventoryTab",
-        params: {
-          id: inventory.id,
-        },
-      });
+    if (isSuccess) {
+      showSuccess("Dodano nowy produkt");
+      navigation.goBack();
     }
-  }, [navigation, isSuccess, inventory, is_delivery]);
+  }, [navigation, isSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -84,7 +65,7 @@ export function NewProductScreen({ navigation }: NewProductScreenProps) {
     }
   }, [isError]);
 
-  const onSubmit = (data: CreateInventoryFormValues) => {
+  const onSubmit = (data: CreateProductFormValues) => {
     if (!isConnected) {
       showError("Brak połączenia z internetem");
       return;
@@ -92,62 +73,136 @@ export function NewProductScreen({ navigation }: NewProductScreenProps) {
     mutate(data);
   };
 
-  const setDateValue = (value: string) => {
-    reset({ ...getValues, date: value });
-  };
-
-  const handlePress = () => {
-    handleSubmit(onSubmit)();
-  };
+  const handlePress = handleSubmit(onSubmit);
 
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.container}>
-      <Typography style={styles.title} variant="xlBold" color="lightGrey">
-        Nowy wpis:
-      </Typography>
-      <View
-        style={{
-          flexDirection: "row",
-          gap: 8,
-          marginLeft: isAndroid ? -8 : 0,
-          marginBottom: isAndroid ? 0 : 16,
-        }}
-      >
-        <ToggleController control={control} name="is_delivery" />
-        <Typography
-          variant="l"
-          color="lightGrey"
-          style={{
-            alignSelf: "center",
-          }}
-        >
-          {is_delivery ? `Dostawa` : `Inwentaryzacja`}
+      <View>
+        <Typography style={styles.title} variant="xlBold" color="lightGrey">
+          Nowy produkt
         </Typography>
+        <Tooltip
+          title={tooltipTitle}
+          textContent={tooltipTextContent}
+          iconContainerStyle={{
+            ...styles.title,
+            position: "absolute",
+            right: 0,
+          }}
+        />
       </View>
+      <Typography
+        style={{ marginBottom: 16 }}
+        variant="lBold"
+        color="lightGrey"
+      >
+        Nazwa
+      </Typography>
       <TextInputController
         control={control}
         name="name"
         rules={{
           minLength: { value: 3, message: "Minimalna długość to 3 znaki" },
-          maxLength: { value: 30, message: "Maksymalna długość to 30 znaków" },
+          maxLength: { value: 50, message: "Maksymalna długość to 50 znaków" },
           required: { value: true, message: "Wymagane" },
         }}
         textInputProps={{
-          placeholder: "Nazwa",
+          placeholder: "Nazwa produktu",
           containerStyle: styles.mb,
         }}
       />
-      <DateInputController
+      <Typography
+        style={{ marginBottom: 16 }}
+        variant="lBold"
+        color="lightGrey"
+      >
+        Jednostka
+      </Typography>
+      <TextInputController
         control={control}
-        name="date"
-        setDateValue={setDateValue}
-        RHFValue={getValues("date")}
-        dateValue={
-          formatISO(now) === getValues("date")
-            ? now
-            : new Date(getValues("date"))
-        }
+        name="unit"
+        rules={{
+          minLength: { value: 3, message: "Minimalna długość to 3 znaki" },
+          maxLength: { value: 50, message: "Maksymalna długość to 50 znaków" },
+          required: { value: true, message: "Wymagane" },
+        }}
+        textInputProps={{
+          placeholder: "szt.",
+          containerStyle: styles.mb,
+        }}
       />
+      <Typography
+        style={{ marginBottom: 16 }}
+        variant="lBold"
+        color="lightGrey"
+      >
+        Step
+      </Typography>
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
+        <NumberInputController
+          control={control}
+          name="steps.0"
+          rules={{
+            required: {
+              value: true,
+              message: "Pole wymagane",
+            },
+            min: {
+              value: 0,
+              message: "Minimalna ilość to 0",
+            },
+            max: {
+              value: 999,
+              message: "Maksymalna ilość to 999",
+            },
+            pattern: {
+              message:
+                "Niepoprawna wartość, tylko liczby, maksymalnie 2 miejsca po przecinku",
+              value: /^[0-9]+([.,][0-9]{1,2})?$/,
+            },
+          }}
+          textInputProps={{
+            placeholder: "1",
+            containerStyle: { ...styles.mb, marginRight: 8, flex: 1 },
+          }}
+        />
+        <NumberInputController
+          control={control}
+          name="steps.1"
+          rules={{
+            minLength: { value: 3, message: "Minimalna długość to 3 znaki" },
+            maxLength: {
+              value: 50,
+              message: "Maksymalna długość to 50 znaków",
+            },
+            required: { value: true, message: "Wymagane" },
+          }}
+          textInputProps={{
+            placeholder: "5",
+            containerStyle: { ...styles.mb, marginHorizontal: 8, flex: 1 },
+          }}
+        />
+        <NumberInputController
+          control={control}
+          name="steps.2"
+          rules={{
+            minLength: { value: 3, message: "Minimalna długość to 3 znaki" },
+            maxLength: {
+              value: 50,
+              message: "Maksymalna długość to 50 znaków",
+            },
+            required: { value: true, message: "Wymagane" },
+          }}
+          textInputProps={{
+            placeholder: "10",
+            containerStyle: { ...styles.mb, marginLeft: 8, flex: 1 },
+          }}
+        />
+      </View>
       <Button
         type="primary"
         size="s"
@@ -178,7 +233,7 @@ const useStyles = createStyles((theme) =>
     title: {
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: theme.spacing * 8,
+      marginBottom: theme.spacing * 4,
       marginTop: "20%",
     },
     buttonContainer: {
