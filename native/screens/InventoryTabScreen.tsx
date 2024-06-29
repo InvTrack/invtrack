@@ -146,6 +146,8 @@ export default function InventoryTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
+            <IDListCardAddProduct inventoryId={inventoryId} />
+            <IDListCardAddRecord inventoryId={inventoryId} />
             {recipeList?.map((recipe) => (
               <RecipeCard
                 key={recipe?.id}
@@ -174,8 +176,6 @@ export default function InventoryTabScreen({
                 <></>
               )
             )}
-            <IDListCardAddProduct inventoryId={inventoryId} />
-            <IDListCardAddRecord inventoryId={inventoryId} />
           </ScrollView>
         }
         sections={categorizedRecordList?.map(({ title, data }, i) => ({

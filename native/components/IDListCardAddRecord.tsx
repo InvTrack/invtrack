@@ -34,6 +34,7 @@ const useStyles = createStyles((theme) =>
       justifyContent: "center",
       alignSelf: "center",
       marginTop: theme.spacing,
+      marginBottom: theme.spacing,
     },
   })
 );

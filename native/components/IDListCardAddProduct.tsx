@@ -33,7 +33,7 @@ const useStyles = createStyles((theme) =>
       alignItems: "center",
       justifyContent: "center",
       alignSelf: "center",
-      marginTop: theme.spacing * 2.5,
+      marginTop: theme.spacing,
       marginBottom: theme.spacing,
     },
   })
