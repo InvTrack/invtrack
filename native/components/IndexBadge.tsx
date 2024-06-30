@@ -1,21 +1,19 @@
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { createStyles } from "../theme/useStyles";
-import { CheckmarkIcon } from "./Icon";
+import { Typography } from "./Typography";
 
-export const Badge = ({
-  isShown,
+export const IndexBadge = ({
+  index,
   containerStyle,
 }: {
-  isShown: boolean;
+  index: number;
   containerStyle?: ViewStyle;
 }) => {
   const styles = useStyles();
-  return isShown ? (
+  return (
     <View style={[styles.badge, styles.badgeSize, containerStyle]}>
-      <CheckmarkIcon color="black" size={12} />
+      <Typography variant="xs">{index}</Typography>
     </View>
-  ) : (
-    <View style={[styles.badgeSize, containerStyle]}></View>
   );
 };
 
@@ -28,7 +26,7 @@ const useStyles = createStyles((theme) =>
     },
     badge: {
       padding: 2,
-      backgroundColor: theme.colors.green,
+      backgroundColor: theme.colors.highlight,
       alignItems: "center",
       justifyContent: "center",
     },

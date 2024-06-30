@@ -3,36 +3,38 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { createStyles } from "../theme/useStyles";
 import { Button } from "./Button";
-import { PlusIcon } from "./Icon";
 
-export const IDListCardAdd = ({ inventoryId }: { inventoryId: number }) => {
+export const IDListCardAddRecord = ({
+  inventoryId,
+}: {
+  inventoryId: number;
+}) => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
   return (
     <Button
-      // overriden in styles
-      size="l"
+      size="s"
       fullWidth
       type="primary"
-      containerStyle={styles.plusCard}
+      containerStyle={styles.button}
       onPress={() => {
         navigation.navigate("AddRecordScreen", { inventoryId });
       }}
     >
-      <PlusIcon size={25} color="lightGrey" />
+      Dodaj brakujące produkty
     </Button>
   );
 };
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    plusCard: {
-      height: 45,
+    button: {
       borderRadius: theme.borderRadiusSmall,
       alignItems: "center",
       justifyContent: "center",
       alignSelf: "center",
-      marginTop: theme.spacing * 2.5,
+      marginTop: theme.spacing,
+      marginBottom: theme.spacing,
     },
   })
 );
