@@ -159,6 +159,8 @@ export default function DeliveryTabScreen({
                 <IDListCard
                   key={record.id}
                   recordId={record.id!}
+                  productId={record.product_id!}
+                  inventoryId={inventoryId}
                   id={+inventoryId}
                   quantity={
                     record.id
@@ -183,6 +185,8 @@ export default function DeliveryTabScreen({
               <IDListCard
                 key={record.id}
                 recordId={record.id!}
+                productId={record.product_id!}
+                inventoryId={inventoryId}
                 id={+inventoryId}
                 quantity={
                   record.id
