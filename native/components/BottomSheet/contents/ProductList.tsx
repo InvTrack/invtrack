@@ -1,10 +1,15 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import * as React from "react";
+import { useForm } from "react-hook-form";
 import { createStyles } from "../../../theme/useStyles";
+import { useKeyboard } from "../../../utils/useKeyboard";
 import { Button } from "../../Button";
+import TextInputController from "../../TextInputController";
 import { Typography } from "../../Typography";
 
+type ProductListBottomSheetForm = { searchText: string };
 export const ProductListBottomSheetContent = ({
   closeBottomSheet,
   products,
@@ -18,36 +23,80 @@ export const ProductListBottomSheetContent = ({
 }) => {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
+  const {
+    coordinates: {
+      end: { height: keyboardHeight },
+    },
+  } = useKeyboard();
+  const { height: windowHeight } = useWindowDimensions();
+
+  const {
+    control,
+    setFocus: _setFocus,
+    watch,
+  } = useForm<ProductListBottomSheetForm>({
+    defaultValues: {
+      searchText: "",
+    },
+    mode: "onChange",
+  });
+
+  const sortedProducts = React.useMemo(
+    () =>
+      products.sort((a, b) => {
+        const x = a.name.toLowerCase();
+        const y = b.name.toLowerCase();
+        return x.localeCompare(y);
+      }),
+    [products]
+  );
+
+  const searchText = watch("searchText");
 
   return (
     <View
       style={[
         styles.container,
         {
+          minHeight: keyboardHeight + windowHeight / 3,
           paddingBottom: insets.bottom + 16,
         },
       ]}
     >
       <View style={styles.topRow}>
-        <Typography style={styles.inputLabel} color="lightGrey">
+        <Typography style={styles.listLabel} color="lightGrey">
           Wybierz produkt dla tej pozycji
         </Typography>
       </View>
+      <TextInputController
+        control={control}
+        name="searchText"
+        textInputProps={{
+          containerStyle: styles.searchInputContainer,
+          placeholder: "Wyszukaj produkty",
+        }}
+      />
       <View style={styles.productsContainer}>
-        {products.map((product) => (
-          <Button
-            key={product.id}
-            size="xs"
-            type="primary"
-            containerStyle={styles.button}
-            onPress={() => {
-              setValue(String(product.id), alias);
-              closeBottomSheet();
-            }}
-          >
-            {product.name}
-          </Button>
-        ))}
+        {sortedProducts
+          .filter((p) =>
+            p.name
+              .toLowerCase()
+              .includes(searchText ? searchText.toLowerCase() : "")
+          )
+          .map((product) => (
+            <Button
+              key={product.id}
+              size="xs"
+              type="primary"
+              containerStyle={styles.button}
+              onPress={() => {
+                setValue(String(product.id), alias);
+                closeBottomSheet();
+              }}
+            >
+              {product.name}
+            </Button>
+          ))}
       </View>
     </View>
   );
@@ -60,7 +109,7 @@ const useStyles = createStyles((theme) =>
       paddingTop: theme.spacing,
       paddingHorizontal: theme.spacing * 2,
     },
-    inputLabel: {
+    listLabel: {
       paddingBottom: theme.spacing,
       flexShrink: 1,
     },
@@ -77,5 +126,6 @@ const useStyles = createStyles((theme) =>
       flexWrap: "wrap",
       justifyContent: "space-between",
     },
+    searchInputContainer: { marginBottom: 8 },
   })
 );
