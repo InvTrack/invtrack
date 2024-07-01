@@ -6,7 +6,7 @@ import { channel } from "expo-updates";
 // the end user receives the correct key/url
 // https://docs.expo.dev/build-reference/variables/
 
-const runtimeVersion = "1.5.1";
+const runtimeVersion = "1.5.2";
 
 const isDevEnv =
   (process.env?.EXPO_ENV || process.env.NODE_ENV) === "development";
