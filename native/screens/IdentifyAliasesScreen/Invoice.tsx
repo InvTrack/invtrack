@@ -104,10 +104,6 @@ export const IdentifyAliasesScreenInvoice = () => {
   useEffect(() => {
     if (isSuccess) {
       if (processedInvoice) {
-        // console.log("suc resolvedAliases", resolvedAliases);
-        // console.log("suc unmatched records", processedInvoice?.unmatched);
-        // console.log("suc matched records", processedInvoice?.form);
-
         let newMatched: typeof processedInvoice.form = [];
 
         for (const name in processedInvoice.unmatched) {
@@ -124,18 +120,9 @@ export const IdentifyAliasesScreenInvoice = () => {
           newMatched[record.id] = { price_per_unit, quantity, product_id };
         }
 
-        // console.log("newM", newMatched);
-
-        dispatch(
-          documentScannerAction.SET_PROCESSED_INVOICE({
-            processedInvoice: {
-              ...processedInvoice,
-              form: { ...processedInvoice.form, ...newMatched },
-            },
-          })
-        );
+        dispatch(documentScannerAction.SET_NEW_MATCHED({ newMatched }));
       }
-      // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+      dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
       navigation.goBack();
     }
   }, [isSuccess]);
