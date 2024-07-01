@@ -1,8 +1,8 @@
 import React from "react";
 import {
   FieldValues,
-  useController,
   UseControllerProps,
+  useController,
 } from "react-hook-form";
 
 import { View, ViewStyle } from "react-native";
