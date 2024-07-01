@@ -12,6 +12,13 @@ interface DocumentScannerSlice {
   isCameraReady: boolean | null;
   photo: CameraCapturedPicture | undefined | null;
   processedInvoice: ProcessInvoiceResponse;
+  newMatched: {
+    [recordId: number]: {
+      product_id: number;
+      price_per_unit: number;
+      quantity: number;
+    };
+  };
   processedSalesRaport: ProcessSalesRaportResponse;
   inventory_id: number | null;
 }
@@ -22,6 +29,7 @@ const initialState: DocumentScannerSlice = {
   isCameraReady: null,
   photo: null,
   processedInvoice: null,
+  newMatched: {},
   processedSalesRaport: null,
   inventory_id: null,
 } as DocumentScannerSlice;
@@ -62,6 +70,14 @@ export const documentScannerSlice = createSlice({
         processedInvoice: DocumentScannerSlice["processedInvoice"];
       }>
     ) => ({ ...state, processedInvoice: payload.processedInvoice }),
+    SET_NEW_MATCHED: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        newMatched: DocumentScannerSlice["newMatched"];
+      }>
+    ) => ({ ...state, newMatched: payload.newMatched }),
     SET_PROCESSED_SALES_RAPORT: (
       state,
       {
@@ -91,6 +107,7 @@ export const documentScannerSlice = createSlice({
     selectisTakingPhoto: (state) => state.isTakingPhoto,
     selectPhoto: (state) => state.photo,
     selectInventoryId: (state) => state.inventory_id,
+    selectNewMatched: (state) => state.newMatched,
     selectProcessedInvoice: (state) => state.processedInvoice,
     selectProcessedSalesRaport: (state) => state.processedSalesRaport,
     selectInvoiceUnmatchedAliases: (state) =>

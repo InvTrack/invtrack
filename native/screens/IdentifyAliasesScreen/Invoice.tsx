@@ -14,6 +14,7 @@ import { IDListCardAddProduct } from "../../components/IDListCardAddProduct";
 import { IndexBadge } from "../../components/IndexBadge";
 import { useSnackbar } from "../../components/Snackbar/hooks";
 import { Typography } from "../../components/Typography";
+import { useListProductRecords } from "../../db";
 import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
 import { useListExistingProducts } from "../../db/hooks/useListProducts";
 import { IdentifyAliasesScreenNavigationProp } from "../../navigation/types";
@@ -68,13 +69,23 @@ export const IdentifyAliasesScreenInvoice = () => {
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const { showInfo } = useSnackbar();
   const { data: products } = useListExistingProducts();
-  const { mutate, isSuccess } = useCreateProductNameAlias();
+  const {
+    mutate,
+    isSuccess,
+    data: resolvedAliases,
+  } = useCreateProductNameAlias();
 
   const dispatch = useAppDispatch();
   const inventoryId = useAppSelector(documentScannerSelector.selectInventoryId);
   const aliases = useAppSelector(
     documentScannerSelector.selectInvoiceUnmatchedAliases
   );
+
+  const processedInvoice = useAppSelector(
+    documentScannerSelector.selectProcessedInvoice
+  );
+
+  const { data: productRecords } = useListProductRecords(inventoryId as number);
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
     defaultValues: async () =>
@@ -92,6 +103,26 @@ export const IdentifyAliasesScreenInvoice = () => {
   const usedAliases = watch("usedAliases");
   useEffect(() => {
     if (isSuccess) {
+      if (processedInvoice) {
+        let newMatched: typeof processedInvoice.form = [];
+
+        for (const name in processedInvoice.unmatched) {
+          const { price_per_unit, quantity } = processedInvoice.unmatched[name];
+          const alias = resolvedAliases?.find((alias) => alias.alias === name);
+          if (!alias || !alias.product_id) continue;
+          const { product_id } = alias;
+
+          const record = productRecords?.find(
+            (r) => r.product_id === product_id
+          );
+          if (!record || !record.id) continue;
+
+          newMatched[record.id] = { price_per_unit, quantity, product_id };
+        }
+
+        dispatch(documentScannerAction.SET_NEW_MATCHED({ newMatched }));
+      }
+      dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
       navigation.goBack();
     }
   }, [isSuccess]);
@@ -99,9 +130,10 @@ export const IdentifyAliasesScreenInvoice = () => {
   const handleSavePress = () => {
     handleSubmit(
       (data) => {
+        // New alisases are inserted into the db here
         mutate(data);
         dispatch(documentScannerAction.PHOTO_RESET_DATA());
-        dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+        // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
         dispatch(documentScannerAction.PHOTO_RETAKE());
       },
       (_errors) => {
