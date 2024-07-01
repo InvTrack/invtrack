@@ -1,10 +1,16 @@
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { isAndroid } from "../../../constants";
 import { createStyles } from "../../../theme/useStyles";
+import { useKeyboard } from "../../../utils/useKeyboard";
 import { Button } from "../../Button";
+import TextInputController from "../../TextInputController";
 import { Typography } from "../../Typography";
 
+type ProductListBottomSheetForm = { searchText: string };
 export const ProductListBottomSheetContent = ({
   closeBottomSheet,
   products,
@@ -18,12 +24,30 @@ export const ProductListBottomSheetContent = ({
 }) => {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
+  const {
+    coordinates: {
+      end: { height: keyboardHeight },
+    },
+  } = useKeyboard();
+
+  const {
+    control,
+    setFocus: _setFocus,
+    watch,
+  } = useForm<ProductListBottomSheetForm>({
+    defaultValues: {
+      searchText: "",
+    },
+    mode: "onChange",
+  });
+  const searchText = watch("searchText");
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={[
         styles.container,
         {
+          height: isAndroid ? undefined : keyboardHeight + 256,
           paddingBottom: insets.bottom + 16,
         },
       ]}
@@ -33,23 +57,39 @@ export const ProductListBottomSheetContent = ({
           Wybierz produkt dla tej pozycji
         </Typography>
       </View>
+      <TextInputController
+        control={control}
+        name="searchText"
+        shouldDebounce={true}
+      />
       <View style={styles.productsContainer}>
-        {products.map((product) => (
-          <Button
-            key={product.id}
-            size="xs"
-            type="primary"
-            containerStyle={styles.button}
-            onPress={() => {
-              setValue(String(product.id), alias);
-              closeBottomSheet();
-            }}
-          >
-            {product.name}
-          </Button>
-        ))}
+        {products
+          .filter((p) =>
+            p.name
+              .toLowerCase()
+              .includes(searchText ? searchText.toLowerCase() : "")
+          )
+          .sort((a, b) => {
+            const x = a.name.toLowerCase();
+            const y = b.name.toLowerCase();
+            return x.localeCompare(y);
+          })
+          .map((product) => (
+            <Button
+              key={product.id}
+              size="xs"
+              type="primary"
+              containerStyle={styles.button}
+              onPress={() => {
+                setValue(String(product.id), alias);
+                closeBottomSheet();
+              }}
+            >
+              {product.name}
+            </Button>
+          ))}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
