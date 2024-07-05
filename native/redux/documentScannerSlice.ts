@@ -43,14 +43,20 @@ export const documentScannerSlice = createSlice({
     },
     PHOTO_TAKE: (
       state,
-      { payload }: PayloadAction<{ photo: DocumentScannerSlice["photo"] }>
-    ) => ({ ...state, photo: payload.photo || null }),
+      action: PayloadAction<{ photo: DocumentScannerSlice["photo"] }>
+    ) => {
+      state.photo = action.payload.photo || null;
+    },
     PHOTO_RETAKE: (state) => {
       state.photo = null;
       state.isPreviewShown = false;
     },
-    PHOTO_START: (state) => ({ ...state, isTakingPhoto: true }),
-    PHOTO_END: (state) => ({ ...state, isTakingPhoto: false }),
+    PHOTO_START: (state) => {
+      state.isTakingPhoto = true;
+    },
+    PHOTO_END: (state) => {
+      state.isTakingPhoto = false;
+    },
     PHOTO_RESET_DATA: (state) => {
       state.photo = null;
       state.isPreviewShown = false;
@@ -61,32 +67,42 @@ export const documentScannerSlice = createSlice({
       action: PayloadAction<{
         processedInvoice: DocumentScannerSlice["processedInvoice"];
       }>
-    ) => ({ ...state, processedInvoice: action.payload.processedInvoice }),
+    ) => {
+      state.processedInvoice = action.payload.processedInvoice;
+    },
     SET_NEW_MATCHED: (
       state,
       action: PayloadAction<{
         newMatched: DocumentScannerSlice["newMatched"];
       }>
-    ) => ({ ...state, newMatched: action.payload.newMatched }),
+    ) => {
+      state.newMatched = action.payload.newMatched;
+    },
     SET_PROCESSED_SALES_RAPORT: (
       state,
-      {
-        payload,
-      }: PayloadAction<{
+      action: PayloadAction<{
         processedSalesRaport: DocumentScannerSlice["processedSalesRaport"];
       }>
-    ) => ({ ...state, processedSalesRaport: payload.processedSalesRaport }),
-    RESET_PROCESSED_INVOICE: (state) => ({ ...state, processedInvoice: null }),
+    ) => {
+      state.processedSalesRaport = action.payload.processedSalesRaport;
+    },
+    RESET_PROCESSED_INVOICE: (state) => {
+      state.processedInvoice = null;
+    },
     RESET_PROCESSED_SALES_RAPORT: (state) => {
       state.processedSalesRaport = null;
     },
     SET_INVENTORY_ID: (
       state,
-      {
-        payload,
-      }: PayloadAction<{ inventory_id: DocumentScannerSlice["inventory_id"] }>
-    ) => ({ ...state, inventory_id: payload.inventory_id }),
-    RESET_INVENTORY_ID: (state) => ({ ...state, inventory_id: null }),
+      action: PayloadAction<{
+        inventory_id: DocumentScannerSlice["inventory_id"];
+      }>
+    ) => {
+      state.inventory_id = action.payload.inventory_id;
+    },
+    RESET_INVENTORY_ID: (state) => {
+      state.inventory_id = null;
+    },
   },
   selectors: {
     selectIsPreviewShown: (state) => state.isPreviewShown,
