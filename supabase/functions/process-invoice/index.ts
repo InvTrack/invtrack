@@ -376,10 +376,39 @@ Deno.serve(async (req) => {
     ),
   ];
 
+  const unmatched = documentAnalysisResult
+    ?.filter(
+      (analysis) =>
+        !matchAliasesToRecognizedData.recognizedAliases.some(
+          (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
+        )
+    )
+    .reduce(
+      (acc, item) => {
+        if (item?.sanitizedName == null) return acc;
+
+        return {
+          ...acc,
+          [item.sanitizedName]: {
+            price_per_unit: item?.price_per_unit ?? null,
+            quantity: item?.quantity ?? null,
+          },
+        };
+      },
+      {} as Record<
+        string,
+        {
+          price_per_unit: number | null;
+          quantity: number | null;
+        }
+      >
+    );
+
   return new Response(
     JSON.stringify({
       form: matchAliasesToRecognizedData.recognized,
       unmatchedAliases,
+      unmatched,
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
