@@ -149,16 +149,16 @@
         {/if}
       </Table>
     {/if}
+    <Button
+      class="mt-4 h-12 self-end text-lg font-bold"
+      color="primary"
+      on:click={() => downloadCsv()}
+    >
+      {#if loadingCsv}
+        <Spinner size="8" color="white" />
+      {:else}
+        Eksportuj dane
+      {/if}
+    </Button>
   </ScreenCard>
-  <Button
-    class="mx-8 mt-4 h-12 w-[10.75rem] self-end text-lg font-bold"
-    color="primary"
-    on:click={() => downloadCsv()}
-  >
-    {#if loadingCsv}
-      <Spinner size="8" color="white" />
-    {:else}
-      Eksportuj dane
-    {/if}
-  </Button>
 </main>
