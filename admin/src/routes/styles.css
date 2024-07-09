@@ -2,18 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
-    background-color: rgb(17 24 39);
+    color-scheme: dark;
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    background-color: rgb(255 255 255);
+    color-scheme: light;
   }
 }
