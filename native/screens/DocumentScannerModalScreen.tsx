@@ -59,7 +59,7 @@ export const DocumentScannerModalScreen = ({
       return;
     }
     if (processedInvoice != null)
-      if (inventory_id && !isEmpty(processedInvoice?.unmatchedAliases)) {
+      if (inventory_id && !isEmpty(processedInvoice?.unmatchedNames)) {
         navigation.replace("IdentifyAliasesScreen", {
           inventoryId: inventory_id,
           isScanningSalesRaport,

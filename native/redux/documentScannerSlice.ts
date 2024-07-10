@@ -110,8 +110,8 @@ export const documentScannerSlice = createSlice({
     selectNewMatched: (state) => state.newMatched,
     selectProcessedInvoice: (state) => state.processedInvoice,
     selectProcessedSalesRaport: (state) => state.processedSalesRaport,
-    selectInvoiceUnmatchedAliases: (state) =>
-      state.processedInvoice?.unmatchedAliases,
+    selectInvoiceUnmatchedNames: (state) =>
+      state.processedInvoice?.unmatchedNames,
     selectSalesRaportUnmatchedAliases: (state) =>
       state.processedSalesRaport?.unmatchedAliases,
   },

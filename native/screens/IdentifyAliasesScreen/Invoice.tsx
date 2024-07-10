@@ -78,7 +78,7 @@ export const IdentifyAliasesScreenInvoice = () => {
   const dispatch = useAppDispatch();
   const inventoryId = useAppSelector(documentScannerSelector.selectInventoryId);
   const aliases = useAppSelector(
-    documentScannerSelector.selectInvoiceUnmatchedAliases
+    documentScannerSelector.selectInvoiceUnmatchedNames
   );
 
   const processedInvoice = useAppSelector(
@@ -104,10 +104,11 @@ export const IdentifyAliasesScreenInvoice = () => {
   useEffect(() => {
     if (isSuccess) {
       if (processedInvoice) {
-        let newMatched: typeof processedInvoice.form = [];
+        let newMatched: typeof processedInvoice.matchedProductRecords = {};
 
-        for (const name in processedInvoice.unmatched) {
-          const { price_per_unit, quantity } = processedInvoice.unmatched[name];
+        for (const name in processedInvoice.unmatchedRows) {
+          const { price_per_unit, quantity } =
+            processedInvoice.unmatchedRows[name];
           const alias = resolvedAliases?.find((alias) => alias.alias === name);
           if (!alias || !alias.product_id) continue;
           const { product_id } = alias;

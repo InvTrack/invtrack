@@ -1,11 +1,113 @@
 {
-  "form": {
+  "matchedProductRecords": {
     "1": { "product_id": 1, "price_per_unit": 44.44, "quantity": 17 },
     "2": { "product_id": 2, "price_per_unit": 58.51, "quantity": 10 }
   },
-  "unmatchedAliases": [
-    "Nutella 825 g",
-    "Ananas Kostka Sandra 565g",
+  "matchedProductsNotInInventory": {
+    "3": { "price_per_unit": 5.3, "quantity": 6 },
+    "4": { "price_per_unit": 21.85, "quantity": 12 }
+  },
+  "unmatchedRows": [
+    {
+      "name": "Sos Czekoladowy Dijo 1kg",
+      "price_per_unit": 17.64,
+      "quantity": 1
+    },
+    {
+      "name": "Sos Czekolada Biała Dijo 1",
+      "price_per_unit": 19.38,
+      "quantity": 1
+    },
+    {
+      "name": "Sos Adwokatowy Dijo 1kg",
+      "price_per_unit": 17.24,
+      "quantity": 1
+    },
+    {
+      "name": "Sos Truskawkowy Dijo 1kg",
+      "price_per_unit": 16.8,
+      "quantity": 1
+    },
+    { "name": "Sos Toffi Dijo 1kg", "price_per_unit": 16.44, "quantity": 5 },
+    {
+      "name": "Sos Mix Jagodowy Dijo 1kg",
+      "price_per_unit": 18.13,
+      "quantity": 1
+    },
+    { "name": "Sos Wiśniowy Dijo 1kg", "price_per_unit": 16.44, "quantity": 1 },
+    { "name": "Sos Malinowy Dijo 1kg", "price_per_unit": 18.13, "quantity": 1 },
+    {
+      "name": "Maliny w Żelu Prospona 3,2kg",
+      "price_per_unit": 107.52,
+      "quantity": 1
+    },
+    {
+      "name": "Jagody w Żelu Prospona 3,2kg",
+      "price_per_unit": 91.2,
+      "quantity": 1
+    },
+    {
+      "name": "Brzoskwinie Kostka Regularna Sandra 4250g",
+      "price_per_unit": 35.65,
+      "quantity": 2
+    },
+    {
+      "name": "Posypka Kolorowa Dijo 1kg",
+      "price_per_unit": 16.39,
+      "quantity": 1
+    },
+    {
+      "name": "Posypka o Smaku Kakaowym Dijo 1kg Wafle Rożek Włoski Madren(35) 546",
+      "price_per_unit": 3.77,
+      "quantity": 3
+    },
+    {
+      "name": "Wafle Kubek Kanadyjski Duży Madren(05) 450",
+      "price_per_unit": 63.08,
+      "quantity": 2
+    },
+    {
+      "name": "Olej Rzepakowy Uniwersalny 51",
+      "price_per_unit": 25.45,
+      "quantity": 9
+    },
+    {
+      "name": "Brzoskwinie Połówki Sandra 820g",
+      "price_per_unit": 7.22,
+      "quantity": 4
+    },
+    {
+      "name": "Wiśnie w Żelu Prospona 3,2kg",
+      "price_per_unit": 47,
+      "quantity": 5
+    },
+    {
+      "name": "Wafle Kubek Kanadyjski Średni Madren(04) 450",
+      "price_per_unit": 59.42,
+      "quantity": 1
+    },
+    {
+      "name": "Jabłko Zielone w Żelu Prospona 3,1kg",
+      "price_per_unit": 44.34,
+      "quantity": 1
+    },
+    {
+      "name": "Truskawki w Żelu Dijo 3,2kg",
+      "price_per_unit": 60.35,
+      "quantity": 1
+    },
+    {
+      "name": "Maliny w Żelu Dijo 3,2kg",
+      "price_per_unit": 60.35,
+      "quantity": 1
+    },
+    {
+      "name": "Mleko Mlekovita UHT 3,2% 1L",
+      "price_per_unit": 2.98,
+      "quantity": 12
+    }
+  ],
+  "unmatchedNames": [
     "Sos Czekoladowy Dijo 1kg",
     "Sos Czekolada Biała Dijo 1",
     "Sos Adwokatowy Dijo 1kg",
@@ -28,49 +130,5 @@
     "Truskawki w Żelu Dijo 3,2kg",
     "Maliny w Żelu Dijo 3,2kg",
     "Mleko Mlekovita UHT 3,2% 1L"
-  ],
-  "unmatched": {
-    "Nutella 825 g": { "price_per_unit": 21.85, "quantity": 12 },
-    "Ananas Kostka Sandra 565g": { "price_per_unit": 5.3, "quantity": 6 },
-    "Sos Czekoladowy Dijo 1kg": { "price_per_unit": 17.64, "quantity": 1 },
-    "Sos Czekolada Biała Dijo 1": { "price_per_unit": 19.38, "quantity": 1 },
-    "Sos Adwokatowy Dijo 1kg": { "price_per_unit": 17.24, "quantity": 1 },
-    "Sos Truskawkowy Dijo 1kg": { "price_per_unit": 16.8, "quantity": 1 },
-    "Sos Toffi Dijo 1kg": { "price_per_unit": 16.44, "quantity": 5 },
-    "Sos Mix Jagodowy Dijo 1kg": { "price_per_unit": 18.13, "quantity": 1 },
-    "Sos Wiśniowy Dijo 1kg": { "price_per_unit": 16.44, "quantity": 1 },
-    "Sos Malinowy Dijo 1kg": { "price_per_unit": 18.13, "quantity": 1 },
-    "Maliny w Żelu Prospona 3,2kg": { "price_per_unit": 107.52, "quantity": 1 },
-    "Jagody w Żelu Prospona 3,2kg": { "price_per_unit": 91.2, "quantity": 1 },
-    "Brzoskwinie Kostka Regularna Sandra 4250g": {
-      "price_per_unit": 35.65,
-      "quantity": 2
-    },
-    "Posypka Kolorowa Dijo 1kg": { "price_per_unit": 16.39, "quantity": 1 },
-    "Posypka o Smaku Kakaowym Dijo 1kg Wafle Rożek Włoski Madren(35) 546": {
-      "price_per_unit": 3.77,
-      "quantity": 3
-    },
-    "Wafle Kubek Kanadyjski Duży Madren(05) 450": {
-      "price_per_unit": 63.08,
-      "quantity": 2
-    },
-    "Olej Rzepakowy Uniwersalny 51": { "price_per_unit": 25.45, "quantity": 9 },
-    "Brzoskwinie Połówki Sandra 820g": {
-      "price_per_unit": 7.22,
-      "quantity": 4
-    },
-    "Wiśnie w Żelu Prospona 3,2kg": { "price_per_unit": 47, "quantity": 5 },
-    "Wafle Kubek Kanadyjski Średni Madren(04) 450": {
-      "price_per_unit": 59.42,
-      "quantity": 1
-    },
-    "Jabłko Zielone w Żelu Prospona 3,1kg": {
-      "price_per_unit": 44.34,
-      "quantity": 1
-    },
-    "Truskawki w Żelu Dijo 3,2kg": { "price_per_unit": 60.35, "quantity": 1 },
-    "Maliny w Żelu Dijo 3,2kg": { "price_per_unit": 60.35, "quantity": 1 },
-    "Mleko Mlekovita UHT 3,2% 1L": { "price_per_unit": 2.98, "quantity": 12 }
-  }
+  ]
 }

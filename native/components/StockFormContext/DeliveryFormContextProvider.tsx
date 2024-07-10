@@ -1,16 +1,8 @@
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ProcessInvoiceResponse } from "../../db/types";
 import { documentScannerSelector } from "../../redux/documentScannerSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { StockForm } from "./types";
-
-const getValuesForForm = (processInvoiceResponse: ProcessInvoiceResponse) => {
-  if (processInvoiceResponse == null) {
-    return undefined;
-  }
-  return processInvoiceResponse.form;
-};
 
 export const DeliveryFormContextProvider = ({
   children,
@@ -28,21 +20,21 @@ export const DeliveryFormContextProvider = ({
   const dirtyFields = methods.formState.dirtyFields;
 
   useEffect(() => {
-    const valuesForForm = getValuesForForm(processedInvoice);
-    if (!valuesForForm) return;
+    if (!processedInvoice) return;
+    const matchedProductRecords = processedInvoice.matchedProductRecords;
 
-    for (const record_id in valuesForForm) {
+    for (const record_id in matchedProductRecords) {
       if (record_id in dirtyFields) continue;
       methods.setValue(
         `product_records.${record_id}.quantity`,
-        valuesForForm[record_id].quantity,
+        matchedProductRecords[record_id].quantity,
         {
           shouldDirty: true,
         }
       );
       methods.setValue(
         `product_records.${record_id}.price_per_unit`,
-        valuesForForm[record_id].price_per_unit,
+        matchedProductRecords[record_id].price_per_unit,
         {
           shouldDirty: true,
         }

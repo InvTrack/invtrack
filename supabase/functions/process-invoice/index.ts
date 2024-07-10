@@ -123,18 +123,20 @@ const getQuantity = (item: DocumentFieldOutput | undefined): number | null => {
   return parseFloat6Precision(item.valueNumber);
 };
 
+/**
+ * This edge function works in two consecutive steps:
+ * 1. Send the image data to an AI service, get a list of rows in the form {sanitizedName, price_per_unit, quantity}
+ * 2. Match the list with existing name_alias'es, return a form object to be used on the frontend.
+ */
 Deno.serve(async (req) => {
   // preflight request
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
-  //
-  //
+
   const requestBody: { image?: { data?: unknown }; inventory_id?: unknown } =
     await req.json();
-  // const requestBody = { image: { data: "" }, inventory_id: 11 };
-  //
-  //
+
   if (
     requestBody?.image?.data == null ||
     requestBody?.inventory_id == null ||
@@ -148,38 +150,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const authHeader = req.headers.get("Authorization");
-  if (authHeader == null) {
-    console.error("Unauthorized");
-    return new Response("Unauthorized", { status: 401 });
-  }
-  const supabase = createClient<Database>(
-    Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
-    { global: { headers: { Authorization: authHeader } } }
-  );
-
-  const { data: productAliasData, error: productAliasError } = await supabase
-    .from("name_alias")
-    .select("alias, product_id")
-    .is("recipe_id", null);
-
-  if (productAliasError) {
-    console.error("Error fetching table data");
-    return new Response("Error fetching table data", { status: 500 });
-  }
-
-  const productIds = productAliasData?.map((item) => item.product_id);
-  const { data: productRecordData, error: productRecordError } = await supabase
-    .from("product_record")
-    .select("id, product_id, quantity, price_per_unit")
-    .eq("inventory_id", requestBody.inventory_id)
-    .in("product_id", productIds);
-
-  if (productRecordError) {
-    console.error("Error fetching table data");
-    return new Response("Error fetching table data", { status: 500 });
-  }
+  /** STEP 1: scan and analyze the invoice */
 
   let documentAnalysisResult:
     | ({
@@ -298,124 +269,108 @@ Deno.serve(async (req) => {
     }
   }
 
-  // this is extremely inefficient and we should find a better solution
-  const matchAliasesToRecognizedData = productRecordData.reduce(
-    (acc, productRecord) => {
-      const product_id = productRecord.product_id;
-      const record_id = productRecord.id;
+  /** STEP 2: match scan result to existing aliases */
 
-      const matchedAliases = productAliasData.filter(
-        (alias) => alias.product_id === product_id
-      );
-
-      if (isEmpty(matchedAliases)) {
-        return { ...acc };
-      }
-
-      const matchedDocumentData = documentAnalysisResult?.filter(
-        (documentItem) =>
-          matchedAliases.some(
-            (matchedAlias) => documentItem?.sanitizedName === matchedAlias.alias
-          )
-      );
-
-      if (matchedDocumentData == null) {
-        return { ...acc };
-      }
-
-      const price_per_unit = Math.max(
-        ...matchedDocumentData.map(
-          (item) => item?.price_per_unit ?? productRecord?.price_per_unit ?? 0
-        )
-      );
-
-      const quantity =
-        matchedDocumentData.reduce(
-          (sum, item) => sum + (item?.quantity ?? 0),
-          0
-        ) + productRecord.quantity;
-
-      return {
-        recognized: {
-          ...acc.recognized,
-          [String(record_id)]: {
-            product_id,
-            price_per_unit: price_per_unit
-              ? parseFloatForResponse(price_per_unit)
-              : // temporary until null handling/merging is figured out in the app
-                0,
-            quantity: quantity
-              ? parseFloatForResponse(quantity)
-              : // temporary until null handling/merging is figured out in the app
-                0,
-          },
-        },
-        recognizedAliases: [
-          ...acc.recognizedAliases,
-          ...matchedAliases.map((a) => a.alias),
-        ],
-      };
-    },
-    { recognized: {}, recognizedAliases: [] } as {
-      recognized: Record<
-        string,
-        {
-          product_id: number;
-          price_per_unit: number | null;
-          quantity: number | null;
-        }
-      >;
-      recognizedAliases: string[];
-    }
+  const authHeader = req.headers.get("Authorization");
+  if (authHeader == null) {
+    console.error("Unauthorized");
+    return new Response("Unauthorized", { status: 401 });
+  }
+  const supabase = createClient<Database>(
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+    { global: { headers: { Authorization: authHeader } } }
   );
 
-  // we want them unique
-  const unmatchedAliases = [
-    ...new Set(
-      documentAnalysisResult
-        ?.filter(
-          (analysis) =>
-            !matchAliasesToRecognizedData.recognizedAliases.some(
-              (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
-            )
-        )
-        .map((item) => item?.sanitizedName) ?? []
-    ),
-  ];
+  const { data: productAliasData, error: productAliasError } = await supabase
+    .from("name_alias")
+    .select("alias, product_id")
+    .is("recipe_id", null);
 
-  const unmatched = documentAnalysisResult
-    ?.filter(
-      (analysis) =>
-        !matchAliasesToRecognizedData.recognizedAliases.some(
-          (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
-        )
-    )
-    .reduce(
-      (acc, item) => {
-        if (item?.sanitizedName == null) return acc;
+  if (productAliasError) {
+    console.error("Error fetching table data");
+    return new Response("Error fetching table data", { status: 500 });
+  }
 
-        return {
-          ...acc,
-          [item.sanitizedName]: {
-            price_per_unit: item?.price_per_unit ?? null,
-            quantity: item?.quantity ?? null,
-          },
-        };
-      },
-      {} as Record<
-        string,
-        {
-          price_per_unit: number | null;
-          quantity: number | null;
-        }
-      >
+  const productIds = productAliasData?.map((item) => item.product_id);
+  const { data: productRecordData, error: productRecordError } = await supabase
+    .from("product_record")
+    .select("id, product_id, quantity, price_per_unit")
+    .eq("inventory_id", requestBody.inventory_id)
+    .in("product_id", productIds);
+
+  if (productRecordError) {
+    console.error("Error fetching table data");
+    return new Response("Error fetching table data", { status: 500 });
+  }
+
+  const matchedProductRecords: {
+    [id: number]: {
+    product_id: number;
+    price_per_unit: number;
+    quantity: number;
+    }
+  } = {};
+  const matchedProductsNotInInventory: {
+    [id: number]: {
+    price_per_unit: number;
+    quantity: number;
+    }
+  } = {};
+  const unmatchedRows: {
+    name: string;
+    price_per_unit: number;
+    quantity: number;
+  }[] = [];
+  const unmatchedNames: string[] = [];
+
+  if (!documentAnalysisResult) {
+    console.error("No analysis result");
+    return new Response("No analysis result", { status: 500 });
+  }
+
+  for (const row of documentAnalysisResult) {
+    if (!row || !row.sanitizedName || !row.price_per_unit || !row.quantity)
+      continue;
+    const quantity = row.quantity;
+    const price_per_unit = row.price_per_unit;
+
+    const alias = productAliasData.find((a) => a.alias === row?.sanitizedName);
+
+    if (!alias) {
+      unmatchedRows.push({ name: row.sanitizedName, price_per_unit, quantity });
+      unmatchedNames.push(row.sanitizedName);
+      continue;
+    }
+
+    const productRecord = productRecordData.find(
+      (r) => r.product_id === alias.product_id
     );
+
+    // TODO: add functionality for recipies
+    if (!alias.product_id) continue;
+
+    if (!productRecord) {
+      matchedProductsNotInInventory[alias.product_id] = ({
+        price_per_unit,
+        quantity,
+      });
+      continue;
+    }
+
+    matchedProductRecords[productRecord.id] = ({
+      product_id: alias.product_id,
+      price_per_unit,
+      quantity,
+    });
+  }
 
   return new Response(
     JSON.stringify({
-      form: matchAliasesToRecognizedData.recognized,
-      unmatchedAliases,
-      unmatched,
+      matchedProductRecords,
+      matchedProductsNotInInventory,
+      unmatchedRows,
+      unmatchedNames,
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
