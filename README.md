@@ -1,4 +1,4 @@
-# invtrack
+# InvTrack
 
 ## Setup
 

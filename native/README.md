@@ -1,4 +1,4 @@
-# invtrack mobile app README
+# InvTrack Mobile App
 
 ## Setup
 
