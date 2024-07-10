@@ -322,7 +322,6 @@ Deno.serve(async (req) => {
     price_per_unit: number;
     quantity: number;
   }[] = [];
-  const unmatchedNames: string[] = [];
 
   if (!documentAnalysisResult) {
     console.error("No analysis result");
@@ -339,7 +338,6 @@ Deno.serve(async (req) => {
 
     if (!alias) {
       unmatchedRows.push({ name: row.sanitizedName, price_per_unit, quantity });
-      unmatchedNames.push(row.sanitizedName);
       continue;
     }
 
@@ -370,7 +368,6 @@ Deno.serve(async (req) => {
       matchedProductRecords,
       matchedProductsNotInInventory,
       unmatchedRows,
-      unmatchedNames,
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

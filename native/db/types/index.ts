@@ -84,7 +84,6 @@ export type ProcessInvoiceResponse = {
     price_per_unit: number;
     quantity: number;
   }[];
-  unmatchedNames: string[];
 } | null;
 
 export type ProcessSalesRaportResponse = {

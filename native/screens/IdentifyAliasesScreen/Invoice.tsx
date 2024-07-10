@@ -77,8 +77,8 @@ export const IdentifyAliasesScreenInvoice = () => {
 
   const dispatch = useAppDispatch();
   const inventoryId = useAppSelector(documentScannerSelector.selectInventoryId);
-  const aliases = useAppSelector(
-    documentScannerSelector.selectInvoiceUnmatchedNames
+  const unmatchedRows = useAppSelector(
+    documentScannerSelector.selectInvoiceUnmatchedRows
   );
 
   const processedInvoice = useAppSelector(
@@ -152,7 +152,7 @@ export const IdentifyAliasesScreenInvoice = () => {
     });
   };
 
-  if (isEmpty(aliases) || !aliases) {
+  if (isEmpty(unmatchedRows) || !unmatchedRows) {
     // error
     return (
       <EmptyScreenTemplate>
@@ -200,11 +200,11 @@ export const IdentifyAliasesScreenInvoice = () => {
         </Button>
       </View>
       <IDListCardAddProduct inventoryId={inventoryId} />
-      {aliases.map((alias, i) => (
+      {unmatchedRows.map((row, i) => (
         <View key={i}>
           <Badge
             containerStyle={styles.checkmarkBadgePosition}
-            isShown={usedAliases?.includes(alias)}
+            isShown={usedAliases?.includes(row.name)}
           />
           <IndexBadge
             containerStyle={styles.indexBadgePosition}
@@ -216,7 +216,7 @@ export const IdentifyAliasesScreenInvoice = () => {
               openBottomSheet(() => (
                 <ProductListBottomSheetContent
                   products={products!}
-                  alias={alias}
+                  alias={row.name}
                   closeBottomSheet={closeBottomSheet}
                   setValue={setAlias(setValue, getValues, showInfo)}
                 />
@@ -226,9 +226,9 @@ export const IdentifyAliasesScreenInvoice = () => {
             <Typography
               color="lightGrey"
               numberOfLines={2}
-              variant={alias.length > 50 ? "xs" : "s"}
+              variant={row.name.length > 50 ? "xs" : "s"}
             >
-              {alias}
+              {row.name}
             </Typography>
           </DropdownButton>
         </View>
