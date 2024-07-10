@@ -1,11 +1,11 @@
 {
   "form": {
-    "3969": { "product_id": 176, "price_per_unit": 58.51, "quantity": 10 },
-    "3970": { "product_id": 175, "price_per_unit": 44.44, "quantity": 17 },
-    "3971": { "product_id": 177, "price_per_unit": 5.3, "quantity": 6 },
-    "3972": { "product_id": 178, "price_per_unit": 21.85, "quantity": 12 }
+    "1": { "product_id": 1, "price_per_unit": 44.44, "quantity": 17 },
+    "2": { "product_id": 2, "price_per_unit": 58.51, "quantity": 10 }
   },
   "unmatchedAliases": [
+    "Nutella 825 g",
+    "Ananas Kostka Sandra 565g",
     "Sos Czekoladowy Dijo 1kg",
     "Sos Czekolada Biała Dijo 1",
     "Sos Adwokatowy Dijo 1kg",
@@ -18,8 +18,7 @@
     "Jagody w Żelu Prospona 3,2kg",
     "Brzoskwinie Kostka Regularna Sandra 4250g",
     "Posypka Kolorowa Dijo 1kg",
-    "Posypka o Smaku Kakaowym Dijo 1kg",
-    "Wafle Rożek Włoski Madren(35) 546",
+    "Posypka o Smaku Kakaowym Dijo 1kg Wafle Rożek Włoski Madren(35) 546",
     "Wafle Kubek Kanadyjski Duży Madren(05) 450",
     "Olej Rzepakowy Uniwersalny 51",
     "Brzoskwinie Połówki Sandra 820g",
@@ -31,6 +30,8 @@
     "Mleko Mlekovita UHT 3,2% 1L"
   ],
   "unmatched": {
+    "Nutella 825 g": { "price_per_unit": 21.85, "quantity": 12 },
+    "Ananas Kostka Sandra 565g": { "price_per_unit": 5.3, "quantity": 6 },
     "Sos Czekoladowy Dijo 1kg": { "price_per_unit": 17.64, "quantity": 1 },
     "Sos Czekolada Biała Dijo 1": { "price_per_unit": 19.38, "quantity": 1 },
     "Sos Adwokatowy Dijo 1kg": { "price_per_unit": 17.24, "quantity": 1 },
@@ -46,12 +47,8 @@
       "quantity": 2
     },
     "Posypka Kolorowa Dijo 1kg": { "price_per_unit": 16.39, "quantity": 1 },
-    "Posypka o Smaku Kakaowym Dijo 1kg": {
-      "price_per_unit": 17.17,
-      "quantity": 1
-    },
-    "Wafle Rożek Włoski Madren(35) 546": {
-      "price_per_unit": 65.38,
+    "Posypka o Smaku Kakaowym Dijo 1kg Wafle Rożek Włoski Madren(35) 546": {
+      "price_per_unit": 3.77,
       "quantity": 3
     },
     "Wafle Kubek Kanadyjski Duży Madren(05) 450": {

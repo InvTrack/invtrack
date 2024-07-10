@@ -11,6 +11,9 @@ import isEmpty from "lodash/isEmpty";
 import { isNil } from "../_shared/isNil.ts";
 import { createClient } from "@supabase/supabase-js@2";
 import { Database } from "../_shared/database.types.ts";
+import mockDocumentAnalysisResult from "./documentAnalysisResult.mock.json" with {type: "json"};
+
+const test = false;
 
 const DocumentIntelligenceEndpoint = Deno.env.get(
   "DOCUMENT_INTELLIGENCE_ENDPOINT"
@@ -186,109 +189,113 @@ Deno.serve(async (req) => {
       } | null)[]
     | null = null;
 
-  if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
-    console.error("Environment variables are not set up correctly");
-    return new Response("Environment variables are not set up correctly.", {
-      status: 500,
+  if (test) {
+    documentAnalysisResult = mockDocumentAnalysisResult;
+  } else {
+    if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
+      console.error("Environment variables are not set up correctly");
+      return new Response("Environment variables are not set up correctly.", {
+        status: 500,
+      });
+    }
+
+    const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
+      key: DocumentIntelligenceApiKey,
     });
-  }
+    const initialResponse = await client
+      .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
+      .post({
+        contentType: "application/json",
+        body: {
+          base64Source: requestBody.image.data,
+        },
+      });
 
-  const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
-    key: DocumentIntelligenceApiKey,
-  });
-  const initialResponse = await client
-    .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
-    .post({
-      contentType: "application/json",
-      body: {
-        base64Source: requestBody.image.data,
-      },
-    });
+    const poller = await getLongRunningPoller(client, initialResponse);
+    const result = (await poller.pollUntilDone())
+      .body as AnalyzeResultOperationOutput;
 
-  const poller = await getLongRunningPoller(client, initialResponse);
-  const result = (await poller.pollUntilDone())
-    .body as AnalyzeResultOperationOutput;
+    // to mock, copy a json from examples
+    // const result = mockResponse;
 
-  // to mock, copy a json from examples
-  // const result = mockResponse;
+    // analyzeResult?.documents?.[0].fields contents are defined here
+    // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
+    if (
+      !result.analyzeResult ||
+      isEmpty(result.analyzeResult?.documents) ||
+      !result.analyzeResult?.documents
+    ) {
+      console.error(
+        `No useful data found during processing, status ${
+          result.status
+        }, ${JSON.stringify(result.error, null, 2)}`
+      );
+      return new Response(`No useful data found during processing`, {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
 
-  // analyzeResult?.documents?.[0].fields contents are defined here
-  // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
-  if (
-    !result.analyzeResult ||
-    isEmpty(result.analyzeResult?.documents) ||
-    !result.analyzeResult?.documents
-  ) {
-    console.error(
-      `No useful data found during processing, status ${
-        result.status
-      }, ${JSON.stringify(result.error, null, 2)}`
-    );
-    return new Response(`No useful data found during processing`, {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
+    if (result.analyzeResult.documents.length > 1) {
+      console.error("More than one page in document");
+      return new Response("More than one page in document", {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
 
-  if (result.analyzeResult.documents.length > 1) {
-    console.error("More than one page in document");
-    return new Response("More than one page in document", {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
+    if (
+      isEmpty(result.analyzeResult?.documents[0].fields) ||
+      !result.analyzeResult.documents[0].fields
+    ) {
+      console.error("No data extracted from document");
+      return new Response("No data extracted from document", {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
 
-  if (
-    isEmpty(result.analyzeResult?.documents[0].fields) ||
-    !result.analyzeResult.documents[0].fields
-  ) {
-    console.error("No data extracted from document");
-    return new Response("No data extracted from document", {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
-
-  if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
-    const itemValue =
-      result.analyzeResult.documents[0].fields.Items?.valueObject;
-    const sanitizedName = parseStringForResponse(
-      getName(itemValue?.Description)
-    );
-    const price_per_unit = parseFloatForResponse(getPricePerUnit(itemValue));
-    const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
-    documentAnalysisResult = [
-      {
-        sanitizedName,
-        price_per_unit,
-        quantity,
-      },
-    ];
-  }
-  if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
-    documentAnalysisResult =
-      result.analyzeResult.documents[0].fields.Items?.valueArray?.map(
-        (item) => {
-          if (item.type !== "object") {
-            return null;
+    if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
+      const itemValue =
+        result.analyzeResult.documents[0].fields.Items?.valueObject;
+      const sanitizedName = parseStringForResponse(
+        getName(itemValue?.Description)
+      );
+      const price_per_unit = parseFloatForResponse(getPricePerUnit(itemValue));
+      const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
+      documentAnalysisResult = [
+        {
+          sanitizedName,
+          price_per_unit,
+          quantity,
+        },
+      ];
+    }
+    if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
+      documentAnalysisResult =
+        result.analyzeResult.documents[0].fields.Items?.valueArray?.map(
+          (item) => {
+            if (item.type !== "object") {
+              return null;
+            }
+            const itemValue = item.valueObject;
+            const sanitizedName = parseStringForResponse(
+              getName(itemValue?.Description)
+            );
+            const price_per_unit = parseFloatForResponse(
+              getPricePerUnit(itemValue)
+            );
+            const quantity = parseFloatForResponse(
+              getQuantity(itemValue?.Quantity)
+            );
+            return {
+              sanitizedName,
+              price_per_unit,
+              quantity,
+            };
           }
-          const itemValue = item.valueObject;
-          const sanitizedName = parseStringForResponse(
-            getName(itemValue?.Description)
-          );
-          const price_per_unit = parseFloatForResponse(
-            getPricePerUnit(itemValue)
-          );
-          const quantity = parseFloatForResponse(
-            getQuantity(itemValue?.Quantity)
-          );
-          return {
-            sanitizedName,
-            price_per_unit,
-            quantity,
-          };
-        }
-      ) ?? null;
+        ) ?? null;
+    }
   }
 
   // this is extremely inefficient and we should find a better solution
@@ -421,5 +428,3 @@ Deno.serve(async (req) => {
 // curl -v 'http://127.0.0.1:54321/functions/v1/scan-doc' \
 //   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
 // --data '{"inventory_id":10,"image":{"data":""}}'
-
-// const mockResponse =
