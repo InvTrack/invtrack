@@ -7,6 +7,8 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { supabase } from "../supabase";
 import { ProcessInvoiceResponse } from "../types";
+const mockResponse = require("./useProcessInvoice.mockResponse.json");
+const test = false;
 
 export const useProcessInvoice = () => {
   const { showError } = useSnackbar();
@@ -23,6 +25,16 @@ export const useProcessInvoice = () => {
       base64Photo: string;
       inventory_id: number | null;
     }): Promise<ProcessInvoiceResponse> => {
+      if (test) {
+        const data = mockResponse;
+        dispatch(
+          documentScannerAction.SET_PROCESSED_INVOICE({
+            processedInvoice: data,
+          })
+        );
+        return data as ProcessInvoiceResponse;
+      }
+
       if (inventory_id == null) {
         showError("Nie udało się przetworzyć zdjęcia");
         console.log(
