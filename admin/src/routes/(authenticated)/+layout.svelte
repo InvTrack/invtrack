@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import Navbar from "$lib/navbar/Navbar.svelte";
+
   import { getTheme } from "$lib/scripts/darkMode.js";
   import Sidebar from "$lib/sidebar/Sidebar.svelte";
   import { Drawer } from "flowbite-svelte";
@@ -9,7 +11,9 @@
   export let data;
   let { supabase } = data;
   $: ({ supabase } = data);
-
+  $: if (!data.session) {
+    goto("/auth", { replaceState: true });
+  }
   let hideSidebar: boolean = true;
   let transitionParams = {
     x: -320,

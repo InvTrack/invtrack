@@ -31,6 +31,7 @@
   import { genericGet } from "$lib/genericGet";
 
   export let supabase: any;
+
   $: activeUrl = $page.url.pathname;
   $: lowQuantityNotifications =
     lowQuantityProductRecords &&
@@ -51,18 +52,17 @@
 
   export let isThemeDark: boolean;
   onMount(() => {
-    reloadTheme();
     genericGet(supabase.from("low_quantity_product_records_view").select("*"), (x) => {
       lowQuantityProductRecords = x as LowQuantityProductRecords[];
     });
   });
 
-  const handleLogout = (event: MouseEvent) => {
+  const handleLogout = async (event: MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
-    goto("/auth", { replaceState: true });
     supabase.auth.signOut();
     OneSignal.logout();
+    goto("/auth", { replaceState: true });
   };
   const activeClass =
     "flex items-center p-2 text-base font-normal text-gray-900 bg-primary-100 dark:bg-gray-700 rounded-lg dark:text-white";
