@@ -58,6 +58,4 @@
       >Zarejstruj się!</span
     >
   </p>
-  <Hr />
-  <GoogleLogin {supabase} />
 </form>

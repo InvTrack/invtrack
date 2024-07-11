@@ -16,8 +16,8 @@
 </script>
 
 <ScreenCard header="Recepturownik">
-  <Table class="min-w-[48rem]">
-    <TableHead class="bg-gray-200" theadClass="bg-gray-200">
+  <Table class="min-w-[48rem]" shadow>
+    <TableHead class="bg-primary-100 normal-case">
       <TableHeadCell>Nazwa</TableHeadCell>
       <TableHeadCell>Data utworzenia</TableHeadCell>
       <TableHeadCell />

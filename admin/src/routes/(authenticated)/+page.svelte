@@ -110,18 +110,18 @@
 <main class="flex flex-col">
   <ScreenCard header="Podsumowanie" class="relative w-fit overflow-y-auto p-8 pt-0">
     <div class="flex justify-between pt-8">
-      <PaginationItem class="mb-4 bg-gray-200 " on:click={handlePrev}>
+      <PaginationItem class="hover:bg-primary-200 mb-4 " on:click={handlePrev}>
         <ArrowLeftSolid class="h-5 w-5" />
         <Heading tag="h6" class="ml-4 ">Poprzedni</Heading>
       </PaginationItem>
-      <PaginationItem class="mb-4 bg-gray-200 " on:click={handleNext}>
+      <PaginationItem class="hover:bg-primary-200 mb-4" on:click={handleNext}>
         <Heading tag="h6" class="mr-4">Następny</Heading>
         <ArrowRightSolid class="h-5 w-5" />
       </PaginationItem>
     </div>
     {#if records}
-      <Table divClass="relative" class="border-separate">
-        <TableHead class="bg-gray-200" theadClass="sticky top-0 bg-gray-200">
+      <Table shadow>
+        <TableHead class="bg-primary-100 normal-case dark:bg-gray-600 ">
           <TableHeadCell />
           {#each records as record}
             <TableHeadCell class="place-items-center border-l"
@@ -149,16 +149,16 @@
         {/if}
       </Table>
     {/if}
+    <Button
+      class="mt-4 h-12 self-end text-lg font-bold"
+      color="primary"
+      on:click={() => downloadCsv()}
+    >
+      {#if loadingCsv}
+        <Spinner size="8" color="white" />
+      {:else}
+        Eksportuj dane
+      {/if}
+    </Button>
   </ScreenCard>
-  <Button
-    class="mx-8 mt-4 h-12 w-[10.75rem] self-end text-lg font-bold"
-    color="primary"
-    on:click={() => downloadCsv()}
-  >
-    {#if loadingCsv}
-      <Spinner size="8" color="white" />
-    {:else}
-      Eksportuj dane
-    {/if}
-  </Button>
 </main>
