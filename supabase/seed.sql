@@ -30,11 +30,11 @@ DELETE FROM "public"."product_record" WHERE product_id = 4;
 INSERT INTO "public"."recipe" ("id", "created_at", "name", "company_id") VALUES
 	(1, '2024-04-18 15:12:53.215491+00', 'Pizza Salami Pikante', 2);
 
-INSERT INTO "public"."name_alias" ("id", "alias", "recipe_id", "product_id", "company_id") VALUES
-	(1, 'Gofry Emix 5kg', NULL, 1, 2),
-	(2, 'Deserowa UHT Bieruńska 33% 5 lit.', NULL, 2, 2),
-	(3, 'Ananas Kostka Sandra 565g', NULL, 3, 2),
-	(4, 'Nutella 825 g', NULL, 4, 2);
+INSERT INTO "public"."name_alias" ("alias", "recipe_id", "product_id", "company_id") VALUES
+	('Gofry Emix 5kg', NULL, 1, 2),
+	('Deserowa UHT Bieruńska 33% 5 lit.', NULL, 2, 2),
+	('Ananas Kostka Sandra 565g', NULL, 3, 2),
+	('Nutella 825 g', NULL, 4, 2);
 
 RESET ALL;
 
