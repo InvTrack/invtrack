@@ -138,15 +138,11 @@ export const RecipeCard = ({
       recordAndMultiplier.forEach((ram) => {
         if (ram.record_id == null || ram.multiplier == null) return;
 
-        const stringifiedRecordId = String(ram.record_id);
-
         // the object may not exist, if the user did not navigate to the given RecordScreen
         // may change during the form refactor
-        const oldRecordValues = watch(
-          `product_records.${stringifiedRecordId}`
-        ) || {
+        const oldRecordValues = watch(`product_records.${ram.product_id}`) || {
           price_per_unit: null,
-          product_id: ram.product_id,
+          id: ram.record_id,
           quantity: ram.record_quantity_backup,
         };
 
@@ -163,7 +159,7 @@ export const RecipeCard = ({
         }
 
         setValue(
-          `product_records.${stringifiedRecordId}.quantity`,
+          `product_records.${ram.product_id}.quantity`,
           newRecordQuantity,
           {
             shouldDirty: true,
@@ -185,13 +181,13 @@ export const RecipeCard = ({
     )
       return;
 
-    const stringifiedRecordId = String(recordAndMultiplier[0].record_id);
-
     // the object may not exist, if the user did not navigate to the given RecordScreen
     // may change during the form refactor
-    const oldRecordValues = watch(`product_records.${stringifiedRecordId}`) || {
+    const oldRecordValues = watch(
+      `product_records.${recordAndMultiplier[0].product_id}`
+    ) || {
       price_per_unit: null,
-      product_id: recordAndMultiplier[0].product_id,
+      id: recordAndMultiplier[0].record_id,
       quantity: recordAndMultiplier[0].record_quantity_backup,
     };
 
@@ -206,7 +202,7 @@ export const RecipeCard = ({
     }
 
     setValue(
-      `product_records.${stringifiedRecordId}.quantity`,
+      `product_records.${recordAndMultiplier[0].product_id}.quantity`,
       newRecordQuantity,
       {
         shouldDirty: true,

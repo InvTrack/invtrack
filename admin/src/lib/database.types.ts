@@ -135,7 +135,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "inventory_company_id_fkey"
+            foreignKeyName: "public_inventory_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
@@ -147,21 +147,18 @@ export type Database = {
         Row: {
           alias: string
           company_id: number
-          id: number
           product_id: number | null
           recipe_id: number | null
         }
         Insert: {
           alias: string
           company_id: number
-          id?: number
           product_id?: number | null
           recipe_id?: number | null
         }
         Update: {
           alias?: string
           company_id?: number
-          id?: number
           product_id?: number | null
           recipe_id?: number | null
         }
@@ -249,7 +246,7 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_company_id_fkey"
+            foreignKeyName: "public_product_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
@@ -316,35 +313,35 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "product_record_inventory_id_fkey"
+            foreignKeyName: "public_product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_inventory_id_fkey"
+            foreignKeyName: "public_product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
             referencedColumns: ["inventory_id"]
           },
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "public_product_record_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "deleted_products"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "public_product_record_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "existing_products"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "public_product_record_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "product"
@@ -402,21 +399,21 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "recipe_part_product_id_fkey"
+            foreignKeyName: "public_recipe_part_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "deleted_products"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "recipe_part_product_id_fkey"
+            foreignKeyName: "public_recipe_part_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "existing_products"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "recipe_part_product_id_fkey"
+            foreignKeyName: "public_recipe_part_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "product"
@@ -458,28 +455,28 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "recipe_record_company_id_fkey"
+            foreignKeyName: "public_recipe_record_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "recipe_record_inventory_id_fkey"
+            foreignKeyName: "public_recipe_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "recipe_record_inventory_id_fkey"
+            foreignKeyName: "public_recipe_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
             referencedColumns: ["inventory_id"]
           },
           {
-            foreignKeyName: "recipe_record_recipe_id_fkey"
+            foreignKeyName: "public_recipe_record_recipe_id_fkey"
             columns: ["recipe_id"]
             isOneToOne: false
             referencedRelation: "recipe"
@@ -514,14 +511,14 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "worker_company_id_fkey"
+            foreignKeyName: "public_worker_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "worker_id_fkey"
+            foreignKeyName: "public_worker_id_fkey"
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"
@@ -543,7 +540,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "worker_company_id_fkey"
+            foreignKeyName: "public_worker_company_id_fkey"
             columns: ["id"]
             isOneToOne: false
             referencedRelation: "company"
@@ -597,7 +594,7 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_company_id_fkey"
+            foreignKeyName: "public_product_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
@@ -651,7 +648,7 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_company_id_fkey"
+            foreignKeyName: "public_product_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
@@ -666,7 +663,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "worker_id_fkey"
+            foreignKeyName: "public_worker_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
             referencedRelation: "users"
@@ -686,21 +683,21 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "product_company_id_fkey"
+            foreignKeyName: "public_product_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_inventory_id_fkey"
+            foreignKeyName: "public_product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_inventory_id_fkey"
+            foreignKeyName: "public_product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
@@ -725,35 +722,35 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "product_record_inventory_id_fkey"
+            foreignKeyName: "public_product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "inventory"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_inventory_id_fkey"
+            foreignKeyName: "public_product_record_inventory_id_fkey"
             columns: ["inventory_id"]
             isOneToOne: false
             referencedRelation: "low_quantity_notifications_user_id_view"
             referencedColumns: ["inventory_id"]
           },
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "public_product_record_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "product"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "public_product_record_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "deleted_products"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "product_record_product_id_fkey"
+            foreignKeyName: "public_product_record_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "existing_products"
@@ -772,14 +769,14 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "worker_company_id_fkey"
+            foreignKeyName: "public_worker_company_id_fkey"
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "company"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "worker_id_fkey"
+            foreignKeyName: "public_worker_id_fkey"
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"
@@ -1120,6 +1117,10 @@ export type Database = {
           metadata: Json
           updated_at: string
         }[]
+      }
+      operation: {
+        Args: Record<PropertyKey, never>
+        Returns: string
       }
       search: {
         Args: {

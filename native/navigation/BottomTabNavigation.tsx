@@ -58,7 +58,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
     );
 
   return (
-    <DeliveryFormContextProvider>
+    <DeliveryFormContextProvider inventoryId={deliveryId}>
       <DeliveryStack.Navigator screenOptions={{ headerShown: true }}>
         <DeliveryStack.Screen
           name="DeliveryTabScreen"

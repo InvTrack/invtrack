@@ -158,7 +158,7 @@ export default function InventoryTabScreen({
               />
             ))}
             {uncategorizedRecordList?.map((record) =>
-              record ? (
+              record && record.product_id ? (
                 <IDListCard
                   key={record.id}
                   recordId={record.id!}
@@ -167,7 +167,7 @@ export default function InventoryTabScreen({
                   id={+inventoryId}
                   quantity={
                     record.id
-                      ? inventoryFormValues.product_records[record.id]
+                      ? inventoryFormValues.product_records[record.product_id]
                           ?.quantity ?? record.quantity
                       : null
                   }
@@ -184,7 +184,7 @@ export default function InventoryTabScreen({
           id: i + 1,
           title: title,
           data: data.map((record) =>
-            record ? (
+            record && record.product_id ? (
               <IDListCard
                 key={record.id}
                 recordId={record.id!}
@@ -193,7 +193,7 @@ export default function InventoryTabScreen({
                 id={+inventoryId}
                 quantity={
                   record.id
-                    ? inventoryFormValues.product_records[record.id]
+                    ? inventoryFormValues.product_records[record.product_id]
                         ?.quantity ?? record.quantity
                     : null
                 }

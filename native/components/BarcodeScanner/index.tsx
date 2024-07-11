@@ -64,7 +64,8 @@ export const BarcodeScanner = ({
     // @ts-ignore
     navigation.navigate("RecordScreen", {
       id: inventoryId,
-      recordId: barcodeMappedToId,
+      productId: barcodeMappedToId.productId,
+      recordId: barcodeMappedToId.recordId,
     });
   };
 

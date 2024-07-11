@@ -5,13 +5,16 @@ import { supabase } from "../supabase";
 import { ProductRecordView } from "../types";
 
 export type BarcodeList = {
-  [barcode: string]: ProductRecordView["id"];
+  [barcode: string]: {
+    recordId: ProductRecordView["id"];
+    productId: ProductRecordView["product_id"];
+  };
 };
 
 const barcodeList = async (inventory_id: number) => {
   const res = await supabase
     .from("record_view")
-    .select("id, barcode")
+    .select("id, barcode, product_id")
     .eq("inventory_id", inventory_id);
 
   const data = res.data;
@@ -22,7 +25,7 @@ const barcodeList = async (inventory_id: number) => {
 
     const barcode: string = item.barcode as string;
     if (barcode) {
-      result[barcode] = item.id;
+      result[barcode] = { recordId: item.id, productId: item.product_id };
     }
     return result;
   }, {} as BarcodeList);

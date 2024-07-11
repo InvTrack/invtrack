@@ -155,7 +155,7 @@ export default function DeliveryTabScreen({
             <IDListCardAddProduct inventoryId={inventoryId} />
             <IDListCardAddRecord inventoryId={inventoryId} />
             {uncategorizedRecordList?.map((record) =>
-              record ? (
+              record && record.product_id ? (
                 <IDListCard
                   key={record.id}
                   recordId={record.id!}
@@ -164,7 +164,7 @@ export default function DeliveryTabScreen({
                   id={+inventoryId}
                   quantity={
                     record.id
-                      ? deliveryFormValues.product_records[record.id]
+                      ? deliveryFormValues.product_records[record.product_id]
                           ?.quantity ?? record.quantity
                       : null
                   }
@@ -181,7 +181,7 @@ export default function DeliveryTabScreen({
           id: i + 1,
           title: title,
           data: data.map((record) =>
-            record ? (
+            record && record.product_id ? (
               <IDListCard
                 key={record.id}
                 recordId={record.id!}
@@ -190,8 +190,8 @@ export default function DeliveryTabScreen({
                 id={+inventoryId}
                 quantity={
                   record.id
-                    ? deliveryFormValues.product_records[record.id]?.quantity ??
-                      record.quantity
+                    ? deliveryFormValues.product_records[record.product_id]
+                        ?.quantity ?? record.quantity
                     : null
                 }
                 unit={record.unit!}

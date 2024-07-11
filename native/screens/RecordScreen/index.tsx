@@ -71,47 +71,61 @@ const navigateToPreviousRecord = (
   navigate: RecordScreenNavigationProp["navigate"],
   isDelivery: RecordScreenProps["route"]["params"]["isDelivery"],
   id: number,
+  prevProductId: number | undefined,
   prevRecordId: number | undefined,
   isFirst: boolean
 ) =>
-  prevRecordId === undefined
+  prevRecordId === undefined || prevProductId === undefined
     ? () => {}
     : () => {
         !isFirst &&
-          navigate("RecordScreen", { id, recordId: prevRecordId, isDelivery });
+          navigate("RecordScreen", {
+            id,
+            recordId: prevRecordId,
+            isDelivery,
+            productId: prevProductId,
+          });
       };
 
 const navigateToNextRecord = (
   navigate: RecordScreenNavigationProp["navigate"],
   isDelivery: RecordScreenProps["route"]["params"]["isDelivery"],
   id: number,
-  prevRecordId: number | undefined,
+  nextProductId: number | undefined,
+  nextRecordId: number | undefined,
   isLast: boolean
 ) =>
-  prevRecordId === undefined
+  nextRecordId === undefined || nextProductId === undefined
     ? () => {}
     : () => {
         !isLast &&
-          navigate("RecordScreen", { id, recordId: prevRecordId, isDelivery });
+          navigate("RecordScreen", {
+            id,
+            recordId: nextRecordId,
+            isDelivery,
+            productId: nextProductId,
+          });
       };
 
 export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const styles = useStyles();
-  const { id, recordId, isDelivery } = route.params;
+  const { id: inventoryId, recordId, isDelivery, productId } = route.params;
 
-  const recordPanel = useRecordPanel(recordId);
+  const recordPanel = useRecordPanel({ inventoryId, productId });
   const isLoading = recordPanel?.isLoading;
   const isSuccess = recordPanel?.isSuccess;
   const record = recordPanel?.data;
 
-  const { data: inventoryName } = useGetInventoryName(+id);
-  const { data: recordIds } = useListProductRecordIds(id);
+  const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const { data: recordIds } = useListProductRecordIds(inventoryId);
+  // const { data: productRecords } = useListProductRecords(inventoryId);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
-    id,
+    inventoryId,
     record?.product_id
   );
 
-  const { isFirst, isLast, nextRecordId, prevRecordId } = useRecordPagination(
+  // TODO: The pagination should respect display order and categories, not go by id
+  const { isFirst, isLast, nextRecord, prevRecord } = useRecordPagination(
     recordId,
     recordIds
   );
@@ -131,7 +145,8 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
     isLoading ||
     !record?.steps ||
     !record?.inventory_id ||
-    !record?.name
+    !record?.name ||
+    !record?.product_id
   )
     return (
       <View style={[styles.container, styles.bg]}>
@@ -221,7 +236,8 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 navigation.navigate,
                 isDelivery,
                 record.inventory_id,
-                prevRecordId,
+                prevRecord?.product_id,
+                prevRecord?.id,
                 isFirst
               )}
             >
@@ -265,7 +281,8 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
                 navigation.navigate,
                 isDelivery,
                 record.inventory_id,
-                nextRecordId,
+                nextRecord?.product_id,
+                nextRecord?.id,
                 isLast
               )}
             >

@@ -106,9 +106,9 @@ export const IdentifyAliasesScreenInvoice = () => {
       if (processedInvoice) {
         let newMatched: typeof processedInvoice.matchedProductRecords = {};
 
-        for (const name in processedInvoice.unmatchedRows) {
-          const { price_per_unit, quantity } =
-            processedInvoice.unmatchedRows[name];
+        for (const row of processedInvoice.unmatchedRows) {
+          const { price_per_unit, quantity, name } = row;
+
           const alias = resolvedAliases?.find((alias) => alias.alias === name);
           if (!alias || !alias.product_id) continue;
           const { product_id } = alias;
@@ -121,6 +121,7 @@ export const IdentifyAliasesScreenInvoice = () => {
           newMatched[record.id] = { price_per_unit, quantity, product_id };
         }
 
+        console.log({ newMatched, resolvedAliases });
         dispatch(documentScannerAction.SET_NEW_MATCHED({ newMatched }));
       }
       dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());

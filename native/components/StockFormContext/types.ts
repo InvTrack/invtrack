@@ -1,8 +1,9 @@
 export type StockForm = {
   product_records: {
-    [record_id: string]: {
+    [product_id: string]: {
+      id: number | null;
+      // product_id: number;
       quantity: number;
-      product_id: number;
       price_per_unit: number | null;
     };
   };

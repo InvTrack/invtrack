@@ -52,7 +52,7 @@ export const IDListCard = ({
 }: IDListCardProps) => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
-  const { data: originalRecord } = useGetRecord(recordId);
+  const { data: originalRecord } = useGetRecord(inventoryId, productId);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     inventoryId,
     productId
@@ -67,7 +67,7 @@ export const IDListCard = ({
   const quantityDelta = useMemo(
     () =>
       getQuantityDelta(
-        form.watch(`product_records.${recordId}`)?.quantity,
+        form.watch(`product_records.${productId}`)?.quantity,
         wasQuantityChanged ? originalRecord?.quantity : previousQuantity
       ),
     [originalRecord?.quantity, previousQuantity, wasQuantityChanged]
@@ -91,6 +91,7 @@ export const IDListCard = ({
             // no need to specify, as they both contain the Record route, with these params
             navigation.navigate("RecordScreen", {
               recordId,
+              productId,
               id,
             })
           }

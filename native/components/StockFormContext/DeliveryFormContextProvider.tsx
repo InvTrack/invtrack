@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+// import { useCreateProductRecords } from "../../db/hooks/useCreateProductRecords";
 import { documentScannerSelector } from "../../redux/documentScannerSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { StockForm } from "./types";
@@ -7,6 +8,7 @@ import { StockForm } from "./types";
 export const DeliveryFormContextProvider = ({
   children,
 }: {
+  inventoryId: number;
   children: React.ReactNode;
 }) => {
   const processedInvoice = useAppSelector(
@@ -19,44 +21,44 @@ export const DeliveryFormContextProvider = ({
 
   const dirtyFields = methods.formState.dirtyFields;
 
+  // const { mutate: createProductRecords } = useCreateProductRecords(
+  //   +inventoryId
+  // );
+
   useEffect(() => {
     if (!processedInvoice) return;
     const matchedProductRecords = processedInvoice.matchedProductRecords;
 
     for (const record_id in matchedProductRecords) {
+      const product_id = matchedProductRecords[record_id].product_id;
       if (record_id in dirtyFields) continue;
       methods.setValue(
-        `product_records.${record_id}.quantity`,
+        `product_records.${product_id}.quantity`,
         matchedProductRecords[record_id].quantity,
-        {
-          shouldDirty: true,
-        }
+        { shouldDirty: true }
       );
       methods.setValue(
-        `product_records.${record_id}.price_per_unit`,
+        `product_records.${product_id}.price_per_unit`,
         matchedProductRecords[record_id].price_per_unit,
-        {
-          shouldDirty: true,
-        }
+        { shouldDirty: true }
       );
     }
   }, [processedInvoice]);
 
   useEffect(() => {
-    const valuesForForm = newMatched;
-
-    for (const record_id in valuesForForm) {
+    for (const record_id in newMatched) {
+      const product_id = newMatched[record_id].product_id;
       if (record_id in dirtyFields) continue;
       methods.setValue(
-        `product_records.${record_id}.quantity`,
-        valuesForForm[record_id].quantity,
+        `product_records.${product_id}.quantity`,
+        newMatched[record_id].quantity,
         {
           shouldDirty: true,
         }
       );
       methods.setValue(
-        `product_records.${record_id}.price_per_unit`,
-        valuesForForm[record_id].price_per_unit,
+        `product_records.${product_id}.price_per_unit`,
+        newMatched[record_id].price_per_unit,
         {
           shouldDirty: true,
         }

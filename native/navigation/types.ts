@@ -68,7 +68,12 @@ export type ListTabScreenNavigationProp = ListTabScreenProps["navigation"];
  */
 export type InventoryStackParamList = {
   InventoryTabScreen: { id: number };
-  RecordScreen: { id: number; recordId: number; isDelivery?: boolean };
+  RecordScreen: {
+    id: number;
+    recordId: number;
+    productId: number;
+    isDelivery?: boolean;
+  };
   AddRecordScreen: { inventoryId: number };
 };
 export type InventoryTabProps = CompositeScreenProps<
@@ -88,7 +93,12 @@ export type InventoryTabScreenNavigationProp =
  */
 export type DeliveryStackParamList = {
   DeliveryTabScreen: { id: number };
-  RecordScreen: { id: number; recordId: number; isDelivery?: boolean };
+  RecordScreen: {
+    id: number;
+    recordId: number;
+    productId: number;
+    isDelivery?: boolean;
+  };
   AddRecordScreen: { inventoryId: number };
 };
 export type DeliveryTabProps = CompositeScreenProps<

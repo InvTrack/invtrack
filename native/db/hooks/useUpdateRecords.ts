@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { StockForm } from "../../components/StockFormContext/types";
 import { supabase } from "../supabase";
 
-const updateRecordsForm = async (form: StockForm) => {
+const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
   if (
     Object.keys(form.product_records).length &&
     Object.keys(form.recipe_records).length
@@ -14,11 +14,12 @@ const updateRecordsForm = async (form: StockForm) => {
     (
       await Promise.all(
         Object.entries(form.product_records).map(
-          ([record_id, { quantity, price_per_unit }]) => {
+          ([product_id, { quantity, price_per_unit }]) => {
             return supabase
               .from("product_record")
               .update({ quantity, price_per_unit })
-              .eq("id", Number(record_id))
+              .eq("inventory_id", inventoryId)
+              .eq("product_id", product_id)
               .select()
               .single();
           }
@@ -46,15 +47,15 @@ export const useUpdateRecords = (inventoryId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (form) => await updateRecordsForm(form),
+    mutationFn: async (form) => await updateRecordsForm(form, inventoryId),
     onMutate: async (form: StockForm) => {
       const recordsIterable = Object.entries(form.product_records);
       await Promise.all(
-        recordsIterable.map(([recordId, _record]) => {
-          queryClient.cancelQueries(["product_record", recordId]);
+        recordsIterable.map(([productId, _record]) => {
+          queryClient.cancelQueries(["product_record", inventoryId, productId]);
           queryClient.setQueryData(
-            ["product_record", recordId],
-            (old: any) => ({ ...old, ...form.product_records[recordId] })
+            ["product_record", inventoryId, productId],
+            (old: any) => ({ ...old, ...form.product_records[productId] })
           );
         })
       );
@@ -85,12 +86,15 @@ export const useUpdateRecords = (inventoryId: number) => {
         ]);
         await Promise.all(
           data.products.map((updatedRecord) => {
-            const recordId = updatedRecord?.id;
-            if (!recordId) return;
-            queryClient.invalidateQueries(["product_record", recordId], {
-              exact: true,
-              refetchType: "all",
-            });
+            const productId = updatedRecord?.product_id;
+            if (!productId) return;
+            queryClient.invalidateQueries(
+              ["product_record", inventoryId, productId],
+              {
+                exact: true,
+                refetchType: "all",
+              }
+            );
           })
         );
       } else if (data?.recipes) {
