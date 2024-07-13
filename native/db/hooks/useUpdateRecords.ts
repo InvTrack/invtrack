@@ -13,8 +13,9 @@ const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
   const data = await Promise.all([
     (
       await Promise.all(
-        Object.entries(form.product_records).map(
-          ([product_id, { quantity, price_per_unit }]) => {
+        Object.entries(form.product_records)
+          .filter(([_, { id }]) => !!id)
+          .map(([product_id, { quantity, price_per_unit }]) => {
             return supabase
               .from("product_record")
               .update({ quantity, price_per_unit })
@@ -22,8 +23,21 @@ const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
               .eq("product_id", product_id)
               .select()
               .single();
-          }
-        )
+          })
+      )
+    ).map((it) => it.data),
+    (
+      await Promise.all(
+        Object.entries(form.product_records)
+          .filter(([_, { id }]) => !id)
+          .map(([product_id, { quantity, price_per_unit }]) => {
+            return supabase.from("product_record").insert({
+              product_id: parseInt(product_id),
+              quantity,
+              price_per_unit,
+              inventory_id: inventoryId,
+            });
+          })
       )
     ).map((it) => it.data),
     (
@@ -39,8 +53,7 @@ const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
       )
     ).map((it) => it.data),
   ]);
-  console.log(data);
-  return { products: data[0], recipes: data[1] };
+  return { products: data[0], recipes: data[2] };
 };
 
 export const useUpdateRecords = (inventoryId: number) => {

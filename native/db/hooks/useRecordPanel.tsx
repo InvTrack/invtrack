@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from "react";
-
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import { StockForm } from "../../components/StockFormContext/types";
 import { roundFloat } from "../../utils";
-import { useGetRecord } from "./useGetRecord";
+import { useGetProduct } from "./useGetProduct";
+
 type Form = StockForm;
 /**
  * This hook simplifies the process of populating the form with the backend data.
@@ -12,58 +12,16 @@ type Form = StockForm;
  * Submitting the form is done in a separate hook.
  */
 export const useRecordPanel = ({
-  inventoryId,
   productId,
 }: {
   inventoryId: number;
   productId: number;
 }) => {
-  const recordResult = useGetRecord(inventoryId, productId);
   const form = useFormContext<Form>();
   if (!form) throw new Error("Missing form context");
 
-  const { data: record, isSuccess } = recordResult;
-
-  useEffect(() => {
-    // guard would be cleaner but for some reason it doesn't work here
-    // no idea why
-    if (record?.product_id && record?.quantity) {
-      const productId = record.product_id;
-      // const shouldAddMissingValues =
-      //   // is nullish
-      //   form.getValues().product_records[recordId.toString()]?.product_id ==
-      //   null;
-
-      // if (shouldAddMissingValues) {
-      //   form.setValue(
-      //     `product_records.${recordId.toString()}.product_id`,
-      //     record.product_id
-      //   );
-      // }
-
-      const shouldUpdateQuantity =
-        !form.getFieldState(`product_records.${productId}.quantity`).isDirty ||
-        record.quantity !==
-          form.getValues().product_records[productId.toString()]?.quantity;
-
-      if (shouldUpdateQuantity) {
-        form.setValue(`product_records.${productId}.quantity`, record.quantity);
-      }
-      const shouldUpdatePrice =
-        !form.getFieldState(`product_records.${productId}.price_per_unit`)
-          .isDirty ||
-        record.price_per_unit !==
-          form.getValues().product_records[productId.toString()]
-            ?.price_per_unit;
-
-      if (shouldUpdatePrice) {
-        form.setValue(
-          `product_records.${productId}.price_per_unit`,
-          record.price_per_unit
-        );
-      }
-    }
-  }, [record?.product_id, record?.quantity, record?.price_per_unit, isSuccess]);
+  const productResult = useGetProduct(productId);
+  const { data: product, isSuccess } = productResult;
 
   const quantity = form.watch(`product_records.${productId}.quantity`) ?? 0;
   const price = form.watch(`product_records.${productId}.price_per_unit`) ?? 0;
@@ -133,25 +91,25 @@ export const useRecordPanel = ({
     [quantity, productId, form]
   );
 
-  if (!isSuccess || !record || !record.steps)
+  if (!isSuccess || !product || !product.steps)
     return {
       steppers: { negative: [], positive: [] },
       setQuantity,
       quantity,
       setPrice,
       price,
-      ...recordResult,
+      productResult,
     } as const;
 
   return {
     steppers: {
-      negative: record.steps.map((step) => stepperFunction(-step)),
-      positive: record.steps.map((step) => stepperFunction(step)),
+      negative: product.steps.map((step) => stepperFunction(-step)),
+      positive: product.steps.map((step) => stepperFunction(step)),
     },
     setQuantity,
     quantity,
     setPrice,
     price,
-    ...recordResult,
+    productResult,
   } as const;
 };

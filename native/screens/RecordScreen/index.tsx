@@ -112,19 +112,22 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const { id: inventoryId, recordId, isDelivery, productId } = route.params;
 
   const recordPanel = useRecordPanel({ inventoryId, productId });
-  const isLoading = recordPanel?.isLoading;
-  const isSuccess = recordPanel?.isSuccess;
-  const record = recordPanel?.data;
+  const { productResult } = recordPanel;
+  const isLoading = productResult?.isLoading;
+  const isSuccess = productResult?.isSuccess;
+  const product = productResult?.data;
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
   const { data: recordIds } = useListProductRecordIds(inventoryId);
   // const { data: productRecords } = useListProductRecords(inventoryId);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     inventoryId,
-    record?.product_id
+    product?.id
   );
 
   // TODO: The pagination should respect display order and categories, not go by id
+  // TODO: after removing recordId here, it can probably be removed from everywhere
+  //       else in the form, for example in the IDListCard, etc.
   const { isFirst, isLast, nextRecord, prevRecord } = useRecordPagination(
     recordId,
     recordIds
@@ -143,10 +146,9 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   if (
     !isSuccess ||
     isLoading ||
-    !record?.steps ||
-    !record?.inventory_id ||
-    !record?.name ||
-    !record?.product_id
+    !product?.steps ||
+    !product?.name ||
+    !product?.id
   )
     return (
       <View style={[styles.container, styles.bg]}>
@@ -170,7 +172,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
 
   const { steppers, setQuantity, quantity } = recordPanel;
 
-  const { name: recordName, unit } = record;
+  const { name: recordName, unit } = product;
 
   const openManualInput = (
     quantity: number,
@@ -235,7 +237,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
               onPress={navigateToPreviousRecord(
                 navigation.navigate,
                 isDelivery,
-                record.inventory_id,
+                inventoryId,
                 prevRecord?.product_id,
                 prevRecord?.id,
                 isFirst
@@ -280,7 +282,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
               onPress={navigateToNextRecord(
                 navigation.navigate,
                 isDelivery,
-                record.inventory_id,
+                inventoryId,
                 nextRecord?.product_id,
                 nextRecord?.id,
                 isLast

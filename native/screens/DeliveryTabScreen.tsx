@@ -15,8 +15,8 @@ import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/hooks";
 import { StockForm } from "../components/StockFormContext/types";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
-import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
-import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
+import { useListExistingProducts } from "../db/hooks/useListProducts";
+import { useListProductsCategorized } from "../db/hooks/useListProductsCategorized";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecords";
 import { DeliveryTabScreenProps } from "../navigation/types";
 import { documentScannerAction } from "../redux/documentScannerSlice";
@@ -36,13 +36,37 @@ export default function DeliveryTabScreen({
   const dispatch = useAppDispatch();
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
-  const { data: uncategorizedRecordList, isSuccess: uncategorizedIsSuccess } =
-    useListUncategorizedProductRecords(+inventoryId);
-  const { data: categorizedRecordList, isSuccess: categorizedIsSuccess } =
-    useListCategorizedProductRecords(+inventoryId);
 
   const deliveryForm = useFormContext<StockForm>();
   const deliveryFormValues = deliveryForm.watch();
+
+  const productsResponse = useListExistingProducts();
+  const { data: products, isSuccess: productsIsSuccess } = productsResponse;
+  const uncategorizedProducts =
+    products
+      ?.filter(
+        (p) =>
+          p.category_id === null && deliveryFormValues.product_records[p.id]
+      )
+      .map((p) => ({
+        ...deliveryFormValues.product_records[p.id],
+        ...p,
+        record_id: deliveryFormValues.product_records[p.id].id,
+      })) || [];
+
+  const { data: categories, isSuccess: categorizedIsSuccess } =
+    useListProductsCategorized();
+  const categorizedProducts = categories.map((c) => ({
+    name: c.name,
+    display_order: c.display_order,
+    products: c.existing_products
+      .filter((p) => p.id in deliveryFormValues.product_records)
+      .map((p) => ({
+        ...deliveryFormValues.product_records[p.id],
+        ...p,
+        record_id: deliveryFormValues.product_records[p.id].id,
+      })),
+  }));
 
   const {
     mutate,
@@ -82,7 +106,7 @@ export default function DeliveryTabScreen({
           showError("Brak połączenia z internetem");
           return;
         }
-        mutate(data);
+        mutate({ product_records: data.product_records, recipe_records: {} });
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
@@ -91,7 +115,7 @@ export default function DeliveryTabScreen({
     )();
   };
 
-  if (!uncategorizedIsSuccess || !categorizedIsSuccess)
+  if (!productsIsSuccess || !categorizedIsSuccess || !inventoryId)
     return (
       <SafeAreaView edges={["left", "right"]}>
         <View style={styles.scroll}>
@@ -154,22 +178,17 @@ export default function DeliveryTabScreen({
             </View>
             <IDListCardAddProduct inventoryId={inventoryId} />
             <IDListCardAddRecord inventoryId={inventoryId} />
-            {uncategorizedRecordList?.map((record) =>
-              record && record.product_id ? (
+            {uncategorizedProducts?.map((product) =>
+              product && product.id ? (
                 <IDListCard
-                  key={record.id}
-                  recordId={record.id!}
-                  productId={record.product_id!}
+                  key={product.id}
+                  recordId={product.record_id!}
+                  productId={product.id!}
                   inventoryId={inventoryId}
                   id={+inventoryId}
-                  quantity={
-                    record.id
-                      ? deliveryFormValues.product_records[record.product_id]
-                          ?.quantity ?? record.quantity
-                      : null
-                  }
-                  unit={record.unit!}
-                  name={record.name}
+                  quantity={product.quantity}
+                  unit={product.unit!}
+                  name={product.name}
                 />
               ) : (
                 <></>
@@ -177,26 +196,21 @@ export default function DeliveryTabScreen({
             )}
           </ScrollView>
         }
-        sections={categorizedRecordList?.map(({ title, data }, i) => ({
+        sections={categorizedProducts?.map((category, i) => ({
           id: i + 1,
-          title: title,
-          data: data.map((record) =>
-            record && record.product_id ? (
+          title: category.name,
+          data: category.products.map((product, j) =>
+            product && product.id ? (
               <IDListCard
-                key={record.id}
-                recordId={record.id!}
-                productId={record.product_id!}
+                key={product.id}
+                recordId={product.record_id!}
+                productId={product.id!}
                 inventoryId={inventoryId}
                 id={+inventoryId}
-                quantity={
-                  record.id
-                    ? deliveryFormValues.product_records[record.product_id]
-                        ?.quantity ?? record.quantity
-                    : null
-                }
-                unit={record.unit!}
-                name={record.name}
-                borderBottom={data[data.length - 1]?.id === record.id}
+                quantity={product.quantity}
+                unit={product.unit!}
+                name={product.name}
+                borderBottom={category.products.length === j + 1}
                 borderLeft
                 borderRight
               />
