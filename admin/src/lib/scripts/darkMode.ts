@@ -1,5 +1,7 @@
 import { browser } from "$app/environment";
 
+type ThemeMode = 'light' | 'dark' | null
+
 export const toggleDarkMode = () => {
   if (browser) {
     if (!getTheme()) initTheme();
@@ -32,4 +34,4 @@ export const reloadTheme = () => {
   }
 };
 
-export const getTheme = () => localStorage.getItem("theme");
+export const getTheme = (): ThemeMode => localStorage.getItem("theme") as ThemeMode;

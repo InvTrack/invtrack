@@ -4,12 +4,12 @@
   import { Button, Heading } from "flowbite-svelte";
   import logo_dark from "$lib/assets/logo-dark.png";
   import logo_light from "$lib/assets/logo-light.png";
-  import { getIsThemeDark } from "$lib/scripts/darkMode";
+  import { getTheme } from "$lib/scripts/darkMode";
   import { onMount } from "svelte";
   import Tooltip from "$lib/Tooltip.svelte";
   let isThemeDark = false;
   onMount(() => {
-    isThemeDark = getIsThemeDark();
+    isThemeDark = getTheme() === "dark";
   });
 </script>
 
