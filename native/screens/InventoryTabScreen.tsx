@@ -77,7 +77,7 @@ export default function InventoryTabScreen({
           showError("Brak połączenia z internetem");
           return;
         }
-        mutate(data);
+        mutate({ productRecords: {}, recipeRecords: {} });
       },
       (_errors) => {
         // TODO show a snackbar? handle error better

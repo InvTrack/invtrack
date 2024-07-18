@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { View } from "react-native";
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
-import { DeliveryFormContextProvider } from "../components/StockFormContext/DeliveryFormContextProvider";
 import { InventoryFormContextProvider } from "../components/StockFormContext/InventoryFormContextProvider";
 
 import { isEmpty } from "lodash";
@@ -12,6 +11,7 @@ import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { TabBar } from "../components/TabBar";
 import { useListInventories } from "../db";
 
+import { StockContextProvider } from "../components/StockContext/StockContextProvider";
 import { AddRecordScreen } from "../screens/AddRecordScreen";
 import DeliveryTabScreen from "../screens/DeliveryTabScreen";
 import InventoryTabScreen from "../screens/InventoryTabScreen";
@@ -58,7 +58,8 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
     );
 
   return (
-    <DeliveryFormContextProvider inventoryId={deliveryId}>
+    <StockContextProvider stockId={deliveryId}>
+      {/* <DeliveryFormContextProvider inventoryId={deliveryId}> */}
       <DeliveryStack.Navigator screenOptions={{ headerShown: true }}>
         <DeliveryStack.Screen
           name="DeliveryTabScreen"
@@ -135,7 +136,8 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
           }}
         />
       </DeliveryStack.Navigator>
-    </DeliveryFormContextProvider>
+      {/* </DeliveryFormContextProvider> */}
+    </StockContextProvider>
   );
 };
 

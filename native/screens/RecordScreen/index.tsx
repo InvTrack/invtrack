@@ -135,7 +135,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const { control, handleSubmit, onSubmit } = useRecordScreenForm(
-    recordPanel.price,
+    recordPanel.price || 0,
     recordPanel.setPrice
   );
 

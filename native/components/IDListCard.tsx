@@ -2,13 +2,13 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { useFormContext } from "react-hook-form";
 import { useGetRecord } from "../db";
 import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
 import { createStyles } from "../theme/useStyles";
 import { formatAndRoundFloat } from "../utils";
 import { Card } from "./Card";
 import { QuantityBadge } from "./QuantityBadge";
+import { useStockContext } from "./StockContext/StockContextProvider";
 import { Typography } from "./Typography";
 
 type IDListCardProps = {
@@ -57,7 +57,7 @@ export const IDListCard = ({
     inventoryId,
     productId
   );
-  const form = useFormContext();
+  const stock = useStockContext();
 
   if (!name) {
     return null;
@@ -67,7 +67,7 @@ export const IDListCard = ({
   const quantityDelta = useMemo(
     () =>
       getQuantityDelta(
-        form.watch(`product_records.${productId}`)?.quantity,
+        stock.productRecords[productId].quantity,
         wasQuantityChanged ? originalRecord?.quantity : previousQuantity
       ),
     [originalRecord?.quantity, previousQuantity, wasQuantityChanged]

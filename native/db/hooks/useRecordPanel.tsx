@@ -1,10 +1,8 @@
 import { useCallback } from "react";
-import { useFormContext } from "react-hook-form";
-import { StockForm } from "../../components/StockFormContext/types";
+import { useStockContext } from "../../components/StockContext/StockContextProvider";
 import { roundFloat } from "../../utils";
 import { useGetProduct } from "./useGetProduct";
 
-type Form = StockForm;
 /**
  * This hook simplifies the process of populating the form with the backend data.
  * Registers the records as needed, returns values needed to manipulate the form in a safe way.
@@ -17,45 +15,34 @@ export const useRecordPanel = ({
   inventoryId: number;
   productId: number;
 }) => {
-  const form = useFormContext<Form>();
-  if (!form) throw new Error("Missing form context");
+  const { productRecords, updateProductRecords } = useStockContext();
+  const { quantity, price_per_unit } = productRecords[productId];
 
   const productResult = useGetProduct(productId);
   const { data: product, isSuccess } = productResult;
-
-  const quantity = form.watch(`product_records.${productId}.quantity`) ?? 0;
-  const price = form.watch(`product_records.${productId}.price_per_unit`) ?? 0;
 
   const setQuantity = useCallback(
     (quantity: number) => {
       if (quantity < 0) return;
       const roundedQuantity = roundFloat(quantity);
-      // dot notation is more performant
-      form.setValue(`product_records.${productId}.quantity`, roundedQuantity, {
-        shouldDirty: true,
-        shouldTouch: true,
+      updateProductRecords((d) => {
+        d[productId].quantity = roundedQuantity;
       });
       return;
     },
-    [form, productId, quantity]
+    [updateProductRecords, productId, quantity]
   );
 
   const setPrice = useCallback(
     (price: number) => {
       if (price < 0) return;
       const roundedPrice = roundFloat(price);
-      // dot notation is more performant
-      form.setValue(
-        `product_records.${productId}.price_per_unit`,
-        roundedPrice,
-        {
-          shouldDirty: true,
-          shouldTouch: true,
-        }
-      );
+      updateProductRecords((d) => {
+        d[productId].price_per_unit = roundedPrice;
+      });
       return;
     },
-    [form, productId, price]
+    [updateProductRecords, productId, price_per_unit]
   );
 
   const stepperFunction = useCallback(
@@ -63,32 +50,20 @@ export const useRecordPanel = ({
       ({
         click: () => {
           if (quantity + step < 0) {
-            form.setValue(
-              // dot notation is more performant
-              `product_records.${productId}.quantity`,
-              0,
-              {
-                shouldDirty: true,
-                shouldTouch: true,
-              }
-            );
+            updateProductRecords((d) => {
+              d[productId].quantity = 0;
+            });
             return;
           }
           const roundedQuantityStep = roundFloat(quantity + step);
-          form.setValue(
-            // dot notation is more performant
-            `product_records.${productId}.quantity`,
-            roundedQuantityStep,
-            {
-              shouldDirty: true,
-              shouldTouch: true,
-            }
-          );
+          updateProductRecords((d) => {
+            d[productId].quantity = roundedQuantityStep;
+          });
           return;
         },
         step,
       } as const),
-    [quantity, productId, form]
+    [quantity, productId, updateProductRecords]
   );
 
   if (!isSuccess || !product || !product.steps)
@@ -97,7 +72,7 @@ export const useRecordPanel = ({
       setQuantity,
       quantity,
       setPrice,
-      price,
+      price: price_per_unit,
       productResult,
     } as const;
 
@@ -109,7 +84,7 @@ export const useRecordPanel = ({
     setQuantity,
     quantity,
     setPrice,
-    price,
+    price: price_per_unit,
     productResult,
   } as const;
 };

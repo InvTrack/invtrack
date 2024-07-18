@@ -1,20 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { StockForm } from "../../components/StockFormContext/types";
+import { StockData } from "../../components/StockContext/types";
 import { supabase } from "../supabase";
 
-const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
+const updateRecordsForm = async (stock: StockData, inventoryId: number) => {
   if (
-    Object.keys(form.product_records).length &&
-    Object.keys(form.recipe_records).length
+    Object.keys(stock.productRecords).length &&
+    Object.keys(stock.recipeRecords).length
   )
     return;
 
   const data = await Promise.all([
     (
       await Promise.all(
-        Object.entries(form.product_records)
-          .filter(([_, { id }]) => !!id)
+        Object.entries(stock.productRecords)
+          .filter(([_, { record_id }]) => !!record_id)
           .map(([product_id, { quantity, price_per_unit }]) => {
             return supabase
               .from("product_record")
@@ -28,8 +28,8 @@ const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
     ).map((it) => it.data),
     (
       await Promise.all(
-        Object.entries(form.product_records)
-          .filter(([_, { id }]) => !id)
+        Object.entries(stock.productRecords)
+          .filter(([_, { record_id }]) => !record_id)
           .map(([product_id, { quantity, price_per_unit }]) => {
             return supabase.from("product_record").insert({
               product_id: parseInt(product_id),
@@ -42,7 +42,7 @@ const updateRecordsForm = async (form: StockForm, inventoryId: number) => {
     ).map((it) => it.data),
     (
       await Promise.all(
-        Object.entries(form.recipe_records).map(([record_id, { quantity }]) => {
+        Object.entries(stock.recipeRecords).map(([record_id, { quantity }]) => {
           return supabase
             .from("recipe_record")
             .update({ quantity })
@@ -60,25 +60,25 @@ export const useUpdateRecords = (inventoryId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (form) => await updateRecordsForm(form, inventoryId),
-    onMutate: async (form: StockForm) => {
-      const recordsIterable = Object.entries(form.product_records);
+    mutationFn: async (stock) => await updateRecordsForm(stock, inventoryId),
+    onMutate: async (stock: StockData) => {
+      const recordsIterable = Object.entries(stock.productRecords);
       await Promise.all(
         recordsIterable.map(([productId, _record]) => {
           queryClient.cancelQueries(["product_record", inventoryId, productId]);
           queryClient.setQueryData(
             ["product_record", inventoryId, productId],
-            (old: any) => ({ ...old, ...form.product_records[productId] })
+            (old: any) => ({ ...old, ...stock.productRecords[productId] })
           );
         })
       );
-      const recipesIterable = Object.entries(form.recipe_records);
+      const recipesIterable = Object.entries(stock.recipeRecords);
       await Promise.all(
         recipesIterable.map(([recordId, _record]) => {
           queryClient.cancelQueries(["recipeRecord", recordId]);
           queryClient.setQueryData(["recipeRecord", recordId], (old: any) => ({
             ...old,
-            ...form.recipe_records[recordId],
+            ...stock.recipeRecords[recordId],
           }));
         })
       );

@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { useNetInfo } from "@react-native-community/netinfo";
-import isEmpty from "lodash/isEmpty";
-import { useFormContext } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../components/Button";
 import { Collapsible } from "../components/Collapsible/Collapsible";
@@ -13,7 +11,7 @@ import { IDListCardAddRecord } from "../components/IDListCardAddRecord";
 import { DocumentScannerIcon, ScanBarcodeIcon } from "../components/Icon";
 import { Skeleton } from "../components/Skeleton";
 import { useSnackbar } from "../components/Snackbar/hooks";
-import { StockForm } from "../components/StockFormContext/types";
+import { useStockContext } from "../components/StockContext/StockContextProvider";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListExistingProducts } from "../db/hooks/useListProducts";
 import { useListProductsCategorized } from "../db/hooks/useListProductsCategorized";
@@ -32,26 +30,25 @@ export default function DeliveryTabScreen({
   const { isConnected } = useNetInfo();
   const inventoryId = route.params?.id;
 
-  const { showError, showInfo, showSuccess } = useSnackbar();
+  // const { showError, showInfo, showSuccess } = useSnackbar();
+  const { showError, showSuccess } = useSnackbar();
   const dispatch = useAppDispatch();
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
 
-  const deliveryForm = useFormContext<StockForm>();
-  const deliveryFormValues = deliveryForm.watch();
+  const { productRecords } = useStockContext();
+
+  // console.log({ productRecords });
 
   const productsResponse = useListExistingProducts();
   const { data: products, isSuccess: productsIsSuccess } = productsResponse;
   const uncategorizedProducts =
     products
-      ?.filter(
-        (p) =>
-          p.category_id === null && deliveryFormValues.product_records[p.id]
-      )
+      ?.filter((p) => p.category_id === null && productRecords[p.id])
       .map((p) => ({
-        ...deliveryFormValues.product_records[p.id],
+        ...productRecords[p.id],
         ...p,
-        record_id: deliveryFormValues.product_records[p.id].id,
+        record_id: productRecords[p.id].record_id,
       })) || [];
 
   const { data: categories, isSuccess: categorizedIsSuccess } =
@@ -60,11 +57,11 @@ export default function DeliveryTabScreen({
     name: c.name,
     display_order: c.display_order,
     products: c.existing_products
-      .filter((p) => p.id in deliveryFormValues.product_records)
+      .filter((p) => p.id in productRecords)
       .map((p) => ({
-        ...deliveryFormValues.product_records[p.id],
+        ...productRecords[p.id],
         ...p,
-        record_id: deliveryFormValues.product_records[p.id].id,
+        record_id: productRecords[p.id].record_id,
       })),
   }));
 
@@ -95,25 +92,26 @@ export default function DeliveryTabScreen({
     }
   }, [isUpdateSuccess, isUpdateError]);
 
-  const handlePress = () => {
-    deliveryForm.handleSubmit(
-      (data) => {
-        if (isEmpty(data)) {
-          showInfo("Brak zmian do zapisania");
-          return;
-        }
-        if (!isConnected) {
-          showError("Brak połączenia z internetem");
-          return;
-        }
-        mutate({ product_records: data.product_records, recipe_records: {} });
-      },
-      (_errors) => {
-        // TODO show a snackbar? handle error better
-        console.log("error", _errors);
-      }
-    )();
-  };
+  // const handlePress = () => {
+  //   // WIP
+  //   // deliveryForm.handleSubmit(
+  //   //   (data) => {
+  //   //     if (isEmpty(data)) {
+  //   //       showInfo("Brak zmian do zapisania");
+  //   //       return;
+  //   //     }
+  //   //     if (!isConnected) {
+  //   //       showError("Brak połączenia z internetem");
+  //   //       return;
+  //   //     }
+  //   //     mutate({ product_records: data.product_records, recipe_records: {} });
+  //   //   },
+  //   //   (_errors) => {
+  //   //     // TODO show a snackbar? handle error better
+  //   //     console.log("error", _errors);
+  //   //   }
+  //   // )();
+  // };
 
   if (!productsIsSuccess || !categorizedIsSuccess || !inventoryId)
     return (
@@ -155,7 +153,10 @@ export default function DeliveryTabScreen({
                 type="primary"
                 fullWidth
                 labelStyle={styles.saveButtonLabel}
-                onPress={handlePress}
+                // onPress={handlePress}
+                onPress={() => {
+                  mutate({ productRecords, recipeRecords: {} });
+                }}
                 disabled={!isConnected}
               >
                 Zapisz zmiany

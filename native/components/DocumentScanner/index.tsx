@@ -1,11 +1,8 @@
 import { CameraView as ExpoCamera } from "expo-camera";
 
 import React, { useRef } from "react";
-import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { documentScannerAction } from "../../redux/documentScannerSlice";
+import { useAppDispatch } from "../../redux/hooks";
 import { Camera } from "../Camera";
 import { InvoicePhotoPreview } from "./InvoicePhotoPreview";
 import { SalesRaportPhotoPreview } from "./SalesRaportPhotoPreview";
@@ -17,12 +14,14 @@ export const DocumentScanner = ({
 }) => {
   const cameraRef = useRef<ExpoCamera>(null);
 
-  const isPreviewShown = useAppSelector(
-    documentScannerSelector.selectIsPreviewShown
-  );
-  const isTakingPhoto = useAppSelector(
-    documentScannerSelector.selectisTakingPhoto
-  );
+  const isPreviewShown = false;
+  const isTakingPhoto = false;
+  // const isPreviewShown = useAppSelector(
+  //   documentScannerSelector.selectIsPreviewShown
+  // );
+  // const isTakingPhoto = useAppSelector(
+  //   documentScannerSelector.selectisTakingPhoto
+  // );
 
   const dispatch = useAppDispatch();
   const takePicture = async () => {
