@@ -126,7 +126,6 @@ export const RecipeCard = ({
 
   const setRecipeQuantity = (v: number) =>
     updateRecipeRecords((d) => {
-      console.log(d[recipeId], recipeId);
       if (!d[recipeId]) {
         d[recipeId] = { quantity: v };
       } else {

@@ -14,11 +14,11 @@ import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
 import { useCreateProductRecords } from "../db/hooks/useCreateProductRecords";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListMissingProducts } from "../db/hooks/useListMissingProducts";
-import { InventoryStackParamList } from "../navigation/types";
+import { StockStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
 type AddRecordScreenProps = NativeStackScreenProps<
-  InventoryStackParamList,
+  StockStackParamList,
   "AddRecordScreen"
 >;
 
@@ -30,20 +30,20 @@ export function AddRecordScreen({ route, navigation }: AddRecordScreenProps) {
     NonNullable<ReturnType<typeof useListMissingProducts>["data"]>
   >([]);
 
-  const { inventoryId } = route.params;
+  const { stockId } = route.params;
 
-  const { data: inventoryName } = useGetInventoryName(+inventoryId);
-  const { data: productList, isSuccess } = useListMissingProducts(+inventoryId);
+  const { data: inventoryName } = useGetInventoryName(+stockId);
+  const { data: productList, isSuccess } = useListMissingProducts(+stockId);
   const {
     mutate,
     isSuccess: isInsertSuccess,
     isError: isInsertError,
-  } = useCreateProductRecords(+inventoryId);
+  } = useCreateProductRecords(+stockId);
   const { showError, showSuccess } = useSnackbar();
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
-  }, [inventoryId, inventoryName, navigation]);
+  }, [stockId, inventoryName, navigation]);
 
   useEffect(() => {
     if (isInsertSuccess) {

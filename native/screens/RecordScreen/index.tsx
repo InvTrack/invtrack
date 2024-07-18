@@ -21,9 +21,8 @@ import SafeLayout from "../../components/common/SafeLayout";
 import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
 import { useGetPreviousRecordQuantity } from "../../db/hooks/useGetPreviousRecordQuantity";
 import {
-  DeliveryStackParamList,
-  InventoryStackParamList,
   RecordScreenNavigationProp,
+  StockStackParamList,
 } from "../../navigation/types";
 import { useRecordPagination } from "../../utils/useRecordPagination";
 import {
@@ -32,7 +31,7 @@ import {
 } from "./RecordScreenForm";
 
 export type RecordScreenProps = NativeStackScreenProps<
-  InventoryStackParamList | DeliveryStackParamList,
+  StockStackParamList,
   "RecordScreen"
 >;
 
@@ -69,7 +68,7 @@ const RecordButton = ({
 
 const navigateToPreviousRecord = (
   navigate: RecordScreenNavigationProp["navigate"],
-  isDelivery: RecordScreenProps["route"]["params"]["isDelivery"],
+  stockType: "delivery" | "inventory",
   id: number,
   prevProductId: number | undefined,
   prevRecordId: number | undefined,
@@ -82,14 +81,14 @@ const navigateToPreviousRecord = (
           navigate("RecordScreen", {
             id,
             recordId: prevRecordId,
-            isDelivery,
+            stockType,
             productId: prevProductId,
           });
       };
 
 const navigateToNextRecord = (
   navigate: RecordScreenNavigationProp["navigate"],
-  isDelivery: RecordScreenProps["route"]["params"]["isDelivery"],
+  stockType: "delivery" | "inventory",
   id: number,
   nextProductId: number | undefined,
   nextRecordId: number | undefined,
@@ -102,14 +101,14 @@ const navigateToNextRecord = (
           navigate("RecordScreen", {
             id,
             recordId: nextRecordId,
-            isDelivery,
+            stockType,
             productId: nextProductId,
           });
       };
 
 export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const styles = useStyles();
-  const { id: inventoryId, recordId, isDelivery, productId } = route.params;
+  const { id: inventoryId, recordId, stockType, productId } = route.params;
 
   const recordPanel = useRecordPanel({ inventoryId, productId });
   const { productResult } = recordPanel;
@@ -236,7 +235,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
               containerStyle={isFirst && styles.firstRecord}
               onPress={navigateToPreviousRecord(
                 navigation.navigate,
-                isDelivery,
+                stockType,
                 inventoryId,
                 prevRecord?.product_id,
                 prevRecord?.id,
@@ -281,7 +280,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
               containerStyle={isLast && styles.lastRecord}
               onPress={navigateToNextRecord(
                 navigation.navigate,
-                isDelivery,
+                stockType,
                 inventoryId,
                 nextRecord?.product_id,
                 nextRecord?.id,
@@ -293,7 +292,7 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
           </View>
         </View>
       </View>
-      {isDelivery && (
+      {stockType === "delivery" && (
         <>
           <Divider />
           <RecordScreenPriceCollapsible

@@ -16,12 +16,8 @@ import { Typography } from "../../components/common/Typography";
 import { useListProductRecords } from "../../db";
 import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
 import { useListExistingProducts } from "../../db/hooks/useListProducts";
+import { ProcessInvoiceResponse } from "../../db/types";
 import { IdentifyAliasesScreenNavigationProp } from "../../navigation/types";
-import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createStyles } from "../../theme/useStyles";
 import { IDListCardAddProduct } from "../StockTabScreen/IDListCard/IDListCardAddProduct";
 import { AliasForm } from "./types";
@@ -62,7 +58,13 @@ const setAlias =
     setValue("usedAliases", [...aliasSet]);
   };
 
-export const IdentifyAliasesScreenInvoice = () => {
+export const IdentifyAliasesScreenInvoice = ({
+  processedInvoice,
+  stockId,
+}: {
+  processedInvoice: ProcessInvoiceResponse;
+  stockId: number;
+}) => {
   const navigation = useNavigation<IdentifyAliasesScreenNavigationProp>();
   const { isConnected } = useNetInfo();
   const styles = useStyles();
@@ -75,17 +77,10 @@ export const IdentifyAliasesScreenInvoice = () => {
     data: resolvedAliases,
   } = useCreateProductNameAlias();
 
-  const dispatch = useAppDispatch();
-  const inventoryId = useAppSelector(documentScannerSelector.selectInventoryId);
-  const unmatchedRows = useAppSelector(
-    documentScannerSelector.selectInvoiceUnmatchedRows
-  );
+  // const dispatch = useAppDispatch();
+  const unmatchedRows = processedInvoice?.unmatchedRows;
 
-  const processedInvoice = useAppSelector(
-    documentScannerSelector.selectProcessedInvoice
-  );
-
-  const { data: productRecords } = useListProductRecords(inventoryId as number);
+  const { data: productRecords } = useListProductRecords(stockId);
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
     defaultValues: async () =>
@@ -122,9 +117,9 @@ export const IdentifyAliasesScreenInvoice = () => {
         }
 
         console.log({ newMatched, resolvedAliases });
-        dispatch(documentScannerAction.SET_NEW_MATCHED({ newMatched }));
+        // dispatch(documentScannerAction.SET_NEW_MATCHED({ newMatched }));
       }
-      dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+      // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
       navigation.goBack();
     }
   }, [isSuccess]);
@@ -134,9 +129,9 @@ export const IdentifyAliasesScreenInvoice = () => {
       (data) => {
         // New alisases are inserted into the db here
         mutate(data);
-        dispatch(documentScannerAction.PHOTO_RESET_DATA());
+        // dispatch(documentScannerAction.PHOTO_RESET_DATA());
         // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
-        dispatch(documentScannerAction.PHOTO_RETAKE());
+        // dispatch(documentScannerAction.PHOTO_RETAKE());
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
@@ -145,11 +140,12 @@ export const IdentifyAliasesScreenInvoice = () => {
     )();
   };
   const handleGoBackPress = () => {
-    dispatch(documentScannerAction.PHOTO_RESET_DATA());
-    dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
-    dispatch(documentScannerAction.PHOTO_RETAKE());
+    // dispatch(documentScannerAction.PHOTO_RESET_DATA());
+    // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+    // dispatch(documentScannerAction.PHOTO_RETAKE());
     navigation.replace("DocumentScannerModal", {
       isScanningSalesRaport: false,
+      stockId,
     });
   };
 
@@ -165,9 +161,9 @@ export const IdentifyAliasesScreenInvoice = () => {
           type="primary"
           fullWidth
           onPress={() => {
-            dispatch(documentScannerAction.PHOTO_RESET_DATA());
-            dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
-            dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+            // dispatch(documentScannerAction.PHOTO_RESET_DATA());
+            // dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+            // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
             navigation.goBack();
           }}
           containerStyle={{ marginTop: 16 }}
@@ -200,7 +196,7 @@ export const IdentifyAliasesScreenInvoice = () => {
           Zapisz zmiany
         </Button>
       </View>
-      <IDListCardAddProduct inventoryId={inventoryId} />
+      <IDListCardAddProduct inventoryId={stockId} />
       {unmatchedRows.map((row, i) => (
         <View key={i}>
           <Badge

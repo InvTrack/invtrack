@@ -1,50 +1,52 @@
 import { CameraView as ExpoCamera } from "expo-camera";
 
 import React, { useRef } from "react";
-import { documentScannerAction } from "../../redux/documentScannerSlice";
-import { useAppDispatch } from "../../redux/hooks";
-import { Camera } from "../Camera";
+import { Camera } from "../../components/Camera";
+import { useDocumentScannerContext } from "./DocumentScannerContext";
 import { InvoicePhotoPreview } from "./InvoicePhotoPreview";
 import { SalesRaportPhotoPreview } from "./SalesRaportPhotoPreview";
 
 export const DocumentScanner = ({
   isScanningSalesRaport,
+  stockId,
 }: {
   isScanningSalesRaport: boolean;
+  stockId: number;
 }) => {
   const cameraRef = useRef<ExpoCamera>(null);
 
-  const isPreviewShown = false;
-  const isTakingPhoto = false;
-  // const isPreviewShown = useAppSelector(
-  //   documentScannerSelector.selectIsPreviewShown
-  // );
-  // const isTakingPhoto = useAppSelector(
-  //   documentScannerSelector.selectisTakingPhoto
-  // );
+  const { documentScannerState, updateDocumentScannerState } =
+    useDocumentScannerContext();
+  const { isPreviewShown, isTakingPhoto } = documentScannerState;
 
-  const dispatch = useAppDispatch();
   const takePicture = async () => {
     if (!cameraRef.current || isTakingPhoto) return;
 
-    dispatch(documentScannerAction.PHOTO_START());
+    updateDocumentScannerState((d) => {
+      d.isTakingPhoto = true;
+    });
     const photo = await cameraRef.current.takePictureAsync({
       exif: false,
       base64: true,
       quality: 0.6,
       imageType: "jpg",
     });
-    dispatch(documentScannerAction.PHOTO_TAKE({ photo }));
-    dispatch(documentScannerAction.SWITCH_PREVIEW());
-    dispatch(documentScannerAction.PHOTO_END());
+    updateDocumentScannerState((d) => {
+      d.photo = photo || null;
+      d.isPreviewShown = !d.isPreviewShown;
+      d.isTakingPhoto = false;
+    });
+    // dispatch(documentScannerAction.PHOTO_TAKE({ photo }));
+    // dispatch(documentScannerAction.SWITCH_PREVIEW());
+    // dispatch(documentScannerAction.PHOTO_END());
     return;
   };
 
   if (isPreviewShown && isScanningSalesRaport) {
-    return <SalesRaportPhotoPreview />;
+    return <SalesRaportPhotoPreview stockId={stockId} />;
   }
   if (isPreviewShown && !isScanningSalesRaport) {
-    return <InvoicePhotoPreview />;
+    return <InvoicePhotoPreview stockId={stockId} />;
   }
 
   return (

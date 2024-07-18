@@ -12,8 +12,6 @@ import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
 import { useListRecipes } from "../../db/hooks/useListRecipes";
 import { useUpdateRecords } from "../../db/hooks/useUpdateRecords";
 import { StockTabScreenProps } from "../../navigation/types";
-import { documentScannerAction } from "../../redux/documentScannerSlice";
-import { useAppDispatch } from "../../redux/hooks";
 import { IDListCard } from "./IDListCard/IDListCard";
 import { IDListCardAddProduct } from "./IDListCard/IDListCardAddProduct";
 import { IDListCardAddRecord } from "./IDListCard/IDListCardAddRecord";
@@ -30,10 +28,10 @@ export default function StockTabScreen({
 
   const { isConnected } = useNetInfo();
   const inventoryId = route.params?.id;
+  // const stockType = route.params?.stockType;
 
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
-  const dispatch = useAppDispatch();
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
 
@@ -58,12 +56,6 @@ export default function StockTabScreen({
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
   }, [inventoryId, inventoryName, navigation]);
-
-  useEffect(() => {
-    dispatch(
-      documentScannerAction.SET_INVENTORY_ID({ inventory_id: +inventoryId })
-    );
-  }, [inventoryId]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -111,6 +103,7 @@ export default function StockTabScreen({
                   navigation.navigate("DocumentScannerModal" as any, {
                     // WIP
                     isScanningSalesRaport: false,
+                    stockId: inventoryId,
                   });
                 }}
               >

@@ -2,21 +2,10 @@ import React, { ReactNode, createContext, useContext } from "react";
 import { Updater, useImmer } from "use-immer";
 import { useListProductRecords } from "../../../db/hooks/useListProductRecords";
 import {
-  DocumentScannerState,
   ProductRecordsByProductId,
   RecipeRecordsByRecipeId,
   StockData,
 } from "./types";
-
-const initialDocumentScannerState: DocumentScannerState = {
-  isPreviewShown: false,
-  isTakingPhoto: false,
-  isCameraReady: null,
-  photo: null,
-  processedInvoice: null,
-  processedSalesRaport: null,
-  inventory_id: null,
-};
 
 const initialStockId = 0;
 const initialProductRecords: ProductRecordsByProductId = {};
@@ -27,8 +16,6 @@ type StockContextType = StockData & {
   stockType: "inventory" | "delivery";
   updateProductRecords: Updater<ProductRecordsByProductId>;
   updateRecipeRecords: Updater<RecipeRecordsByRecipeId>;
-  documentScannerState: DocumentScannerState;
-  setDocumentScannerState: Updater<DocumentScannerState>;
 };
 
 const StockContext = createContext<StockContextType>({
@@ -38,8 +25,6 @@ const StockContext = createContext<StockContextType>({
   updateProductRecords: () => null,
   recipeRecords: initialRecipeRecords,
   updateRecipeRecords: () => null,
-  documentScannerState: initialDocumentScannerState,
-  setDocumentScannerState: () => null,
 });
 
 export const StockContextProvider = ({
@@ -69,11 +54,6 @@ export const StockContextProvider = ({
     );
   const [recipeRecords, updateRecipeRecords] = useImmer(initialRecipeRecords);
 
-  const [documentScannerState, setDocumentScannerState] =
-    useImmer<DocumentScannerState>(initialDocumentScannerState);
-
-  // const setProductRecord = (product_id: number, value: Partial<ProductRecordByProductId>) => setProductRecords(records => ({...records}))
-
   return (
     <StockContext.Provider
       value={{
@@ -83,8 +63,6 @@ export const StockContextProvider = ({
         updateProductRecords,
         recipeRecords,
         updateRecipeRecords,
-        documentScannerState,
-        setDocumentScannerState,
       }}
     >
       {children}

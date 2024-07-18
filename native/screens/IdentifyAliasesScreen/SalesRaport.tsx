@@ -15,12 +15,8 @@ import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate
 import { Typography } from "../../components/common/Typography";
 import { useCreateRecipeNameAlias } from "../../db/hooks/useCreateRecipeNameAlias";
 import { useListRecipes } from "../../db/hooks/useListRecipes";
+import { ProcessSalesRaportResponse } from "../../db/types";
 import { IdentifyAliasesScreenNavigationProp } from "../../navigation/types";
-import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createStyles } from "../../theme/useStyles";
 import { AliasForm } from "./types";
 
@@ -60,20 +56,23 @@ const setAlias =
     setValue("usedAliases", [...aliasSet]);
   };
 
-export const IdentifyAliasesScreenSalesRaport = () => {
+export const IdentifyAliasesScreenSalesRaport = ({
+  processedSalesReport,
+  stockId,
+}: {
+  processedSalesReport: ProcessSalesRaportResponse;
+  stockId: number;
+}) => {
   const navigation = useNavigation<IdentifyAliasesScreenNavigationProp>();
   const { isConnected } = useNetInfo();
   const styles = useStyles();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const { showInfo } = useSnackbar();
 
-  const dispatch = useAppDispatch();
-  const inventoryId = useAppSelector(documentScannerSelector.selectInventoryId);
-  const aliases = useAppSelector(
-    documentScannerSelector.selectSalesRaportUnmatchedAliases
-  );
+  // const dispatch = useAppDispatch();
+  const aliases = processedSalesReport?.unmatchedAliases;
 
-  const { data: recipes } = useListRecipes(inventoryId);
+  const { data: recipes } = useListRecipes(stockId);
   const { mutate, isSuccess } = useCreateRecipeNameAlias();
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
@@ -100,9 +99,9 @@ export const IdentifyAliasesScreenSalesRaport = () => {
     handleSubmit(
       (data) => {
         mutate(data);
-        dispatch(documentScannerAction.PHOTO_RESET_DATA());
-        dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
-        dispatch(documentScannerAction.PHOTO_RETAKE());
+        // dispatch(documentScannerAction.PHOTO_RESET_DATA());
+        // dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+        // dispatch(documentScannerAction.PHOTO_RETAKE());
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
@@ -111,11 +110,12 @@ export const IdentifyAliasesScreenSalesRaport = () => {
     )();
   };
   const handleGoBackPress = () => {
-    dispatch(documentScannerAction.PHOTO_RESET_DATA());
-    dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
-    dispatch(documentScannerAction.PHOTO_RETAKE());
+    // dispatch(documentScannerAction.PHOTO_RESET_DATA());
+    // dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+    // dispatch(documentScannerAction.PHOTO_RETAKE());
     navigation.replace("DocumentScannerModal", {
       isScanningSalesRaport: true,
+      stockId,
     });
   };
 
@@ -131,9 +131,9 @@ export const IdentifyAliasesScreenSalesRaport = () => {
           type="primary"
           fullWidth
           onPress={() => {
-            dispatch(documentScannerAction.PHOTO_RESET_DATA());
-            dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
-            dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
+            // dispatch(documentScannerAction.PHOTO_RESET_DATA());
+            // dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
+            // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
             navigation.goBack();
           }}
           containerStyle={{ marginTop: 16 }}

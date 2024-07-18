@@ -3,16 +3,16 @@ import React from "react";
 import { Linking, StyleSheet } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { BarcodeScanner } from "../components/BarcodeScanner";
-import { Button } from "../components/common/Button";
+import { Button } from "../../components/common/Button";
+import { BarcodeScanner } from "./BarcodeScanner";
 
-import { Typography } from "../components/common/Typography";
+import { Typography } from "../../components/common/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
-import { LoadingSpinner } from "../components/common/LoadingSpinner";
-import { HomeStackParamList } from "../navigation/types";
-import { createStyles } from "../theme/useStyles";
+import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import { HomeStackParamList } from "../../navigation/types";
+import { createStyles } from "../../theme/useStyles";
 
 export type BarcodeModalScreenProps = NativeStackScreenProps<
   HomeStackParamList,

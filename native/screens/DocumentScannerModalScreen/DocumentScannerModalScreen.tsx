@@ -2,23 +2,24 @@ import { useCameraPermissions } from "expo-camera";
 import React, { useEffect } from "react";
 import { Linking, StyleSheet } from "react-native";
 
-import { Button } from "../components/common/Button";
+import { Button } from "../../components/common/Button";
 
-import { Typography } from "../components/common/Typography";
+import { Typography } from "../../components/common/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import isEmpty from "lodash/isEmpty";
-import { DocumentScanner } from "../components/DocumentScanner";
-import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
-import { LoadingSpinner } from "../components/common/LoadingSpinner";
-import SafeLayout from "../components/common/SafeLayout";
-import { HomeStackParamList } from "../navigation/types";
+import { useImmer } from "use-immer";
+import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import SafeLayout from "../../components/common/SafeLayout";
+import { HomeStackParamList } from "../../navigation/types";
+import { createStyles } from "../../theme/useStyles";
+import { DocumentScanner } from "./DocumentScanner";
 import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { createStyles } from "../theme/useStyles";
+  DocumentScannerContext,
+  DocumentScannerState,
+  initialDocumentScannerState,
+} from "./DocumentScannerContext";
 
 export type DocumentScannerModalScreen = NativeStackScreenProps<
   HomeStackParamList,
@@ -29,52 +30,47 @@ export const DocumentScannerModalScreen = ({
   navigation,
   route,
 }: DocumentScannerModalScreen) => {
+  const [documentScannerState, updateDocumentScannerState] =
+    useImmer<DocumentScannerState>(initialDocumentScannerState);
+
+  const resetDocumentScanner = () =>
+    updateDocumentScannerState(initialDocumentScannerState);
+
   const styles = useStyles();
-  const isScanningSalesRaport = route.params.isScanningSalesRaport;
+  const { isScanningSalesRaport, stockId } = route.params;
   const [permission, requestPermission] = useCameraPermissions();
 
-  const inventory_id = useAppSelector(
-    documentScannerSelector.selectInventoryId
-  );
-  const processedInvoice = useAppSelector(
-    documentScannerSelector.selectProcessedInvoice
-  );
-  const processedSalesRaport = useAppSelector(
-    documentScannerSelector.selectProcessedSalesRaport
-  );
-
-  const dispatch = useAppDispatch();
+  const { processedInvoice, processedSalesReport } = documentScannerState;
 
   useEffect(() => {
-    if (isScanningSalesRaport && processedSalesRaport != null) {
-      if (inventory_id && !isEmpty(processedSalesRaport?.unmatchedAliases)) {
+    if (isScanningSalesRaport && processedSalesReport != null) {
+      if (stockId && !isEmpty(processedSalesReport?.unmatchedAliases)) {
         navigation.replace("IdentifyAliasesScreen", {
-          inventoryId: inventory_id,
+          stockId,
           isScanningSalesRaport,
+          processedInvoice: null,
+          processedSalesReport,
         });
       } else {
         navigation.goBack();
       }
-      dispatch(documentScannerAction.PHOTO_RESET_DATA());
+      resetDocumentScanner();
       return;
     }
     if (processedInvoice != null)
-      if (inventory_id && !isEmpty(processedInvoice?.unmatchedRows)) {
+      if (stockId && !isEmpty(processedInvoice?.unmatchedRows)) {
         navigation.replace("IdentifyAliasesScreen", {
-          inventoryId: inventory_id,
+          stockId,
           isScanningSalesRaport,
+          processedInvoice,
+          processedSalesReport: null,
         });
       } else {
         navigation.goBack();
       }
-    dispatch(documentScannerAction.PHOTO_RESET_DATA());
+    resetDocumentScanner();
     return;
-  }, [
-    isScanningSalesRaport,
-    inventory_id,
-    processedInvoice,
-    processedSalesRaport,
-  ]);
+  }, [isScanningSalesRaport, stockId, processedInvoice, processedSalesReport]);
 
   const awaitingPermission = !permission;
   const permissionDeniedCanAskAgain =
@@ -151,7 +147,18 @@ export const DocumentScannerModalScreen = ({
 
   return (
     <SafeLayout style={styles.container}>
-      <DocumentScanner isScanningSalesRaport={isScanningSalesRaport} />
+      <DocumentScannerContext.Provider
+        value={{
+          documentScannerState,
+          updateDocumentScannerState,
+          resetDocumentScanner,
+        }}
+      >
+        <DocumentScanner
+          isScanningSalesRaport={isScanningSalesRaport}
+          stockId={stockId}
+        />
+      </DocumentScannerContext.Provider>
     </SafeLayout>
   );
 };

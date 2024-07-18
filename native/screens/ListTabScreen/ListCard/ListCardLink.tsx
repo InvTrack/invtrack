@@ -14,16 +14,10 @@ type ListCardAddProps = {
 };
 
 const navigateToTabScreen =
-  (navigation: any, id: number, isDelivery: boolean) => () => {
-    // WIP
-    if (isDelivery) {
-      (navigation as StockTabNavigationProp).navigate("StockTabScreen", {
-        id,
-      });
-      return;
-    }
+  (navigation: any, id: number, stockType: "delivery" | "inventory") => () => {
     (navigation as StockTabNavigationProp).navigate("StockTabScreen", {
       id,
+      stockType,
     });
     return;
   };
@@ -37,7 +31,11 @@ export const ListCardLink = ({ title, id, isDelivery }: ListCardAddProps) => {
       style={styles.card}
       padding="none"
       badge={isDelivery ? "green" : "red"}
-      onPress={navigateToTabScreen(navigation, id, isDelivery)}
+      onPress={navigateToTabScreen(
+        navigation,
+        id,
+        isDelivery ? "delivery" : "inventory"
+      )}
     >
       <Typography
         color="lightGrey"

@@ -8,7 +8,12 @@ import { IdentifyAliasesScreenSalesRaport } from "./SalesRaport";
 export const IdentifyAliasesScreen = ({
   route,
 }: IdentifyAliasesScreenProps) => {
-  const { isScanningSalesRaport } = route.params;
+  const {
+    isScanningSalesRaport,
+    processedInvoice,
+    processedSalesReport,
+    stockId,
+  } = route.params;
   const styles = useStyles();
 
   return (
@@ -19,9 +24,15 @@ export const IdentifyAliasesScreen = ({
       scrollable
     >
       {isScanningSalesRaport ? (
-        <IdentifyAliasesScreenSalesRaport />
+        <IdentifyAliasesScreenSalesRaport
+          processedSalesReport={processedSalesReport}
+          stockId={stockId}
+        />
       ) : (
-        <IdentifyAliasesScreenInvoice />
+        <IdentifyAliasesScreenInvoice
+          processedInvoice={processedInvoice}
+          stockId={stockId}
+        />
       )}
     </SafeLayout>
   );

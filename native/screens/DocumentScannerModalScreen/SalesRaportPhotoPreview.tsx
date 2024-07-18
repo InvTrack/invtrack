@@ -1,25 +1,19 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { ImageBackground } from "react-native";
-import { useProcessSalesRaport } from "../../db/hooks/useProcesSalesRaport";
-import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Button } from "../common/Button";
-import { LoadingSpinner } from "../common/LoadingSpinner";
+import { Button } from "../../components/common/Button";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import { useDocumentScannerContext } from "./DocumentScannerContext";
+import { useProcessSalesRaport } from "./useProcesSalesRaport";
 
-export const SalesRaportPhotoPreview = () => {
+export const SalesRaportPhotoPreview = ({ stockId }: { stockId: number }) => {
   const { isConnected } = useNetInfo();
 
-  const photo = useAppSelector(documentScannerSelector.selectPhoto);
-  const inventory_id = useAppSelector(
-    documentScannerSelector.selectInventoryId
-  );
+  const { documentScannerState, updateDocumentScannerState } =
+    useDocumentScannerContext();
 
-  const dispatch = useAppDispatch();
+  const photo = documentScannerState.photo;
 
-  const { mutate, isLoading } = useProcessSalesRaport(inventory_id);
+  const { mutate, isLoading } = useProcessSalesRaport(stockId);
 
   return (
     <ImageBackground
@@ -44,7 +38,11 @@ export const SalesRaportPhotoPreview = () => {
             onPress={
               isLoading
                 ? () => null
-                : () => dispatch(documentScannerAction.PHOTO_RETAKE())
+                : () =>
+                    updateDocumentScannerState((d) => {
+                      d.photo = null;
+                      d.isPreviewShown = false;
+                    })
             }
             size="s"
             type="primary"

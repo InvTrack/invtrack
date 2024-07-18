@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "../../components/Snackbar/hooks";
-import { documentScannerAction } from "../../redux/documentScannerSlice";
-import { useAppDispatch } from "../../redux/hooks";
-import { supabase } from "../supabase";
-import { ProcessSalesRaportResponse } from "../types";
-import { queryKeys } from "./queryKeys";
+import { queryKeys } from "../../db/hooks/queryKeys";
+import { supabase } from "../../db/supabase";
+import { ProcessSalesRaportResponse } from "../../db/types";
+import { useDocumentScannerContext } from "./DocumentScannerContext";
 
 export const useProcessSalesRaport = (inventory_id: number | null) => {
   const { showError } = useSnackbar();
-  const dispatch = useAppDispatch();
+
+  const { updateDocumentScannerState } = useDocumentScannerContext();
 
   return useMutation(
     async ({
@@ -42,11 +42,9 @@ export const useProcessSalesRaport = (inventory_id: number | null) => {
         return null;
       }
 
-      dispatch(
-        documentScannerAction.SET_PROCESSED_SALES_RAPORT({
-          processedSalesRaport: data,
-        })
-      );
+      updateDocumentScannerState((d) => {
+        d.processedSalesReport = data;
+      });
 
       return data as ProcessSalesRaportResponse;
     },

@@ -83,7 +83,7 @@ const StockStackNavigator = ({ route }: StockTabProps) => {
         <StockStack.Screen
           name="RecordScreen"
           component={RecordScreen}
-          initialParams={{ isDelivery: true }}
+          initialParams={{ stockType: "delivery" }}
           options={{
             headerBackground: () => (
               <View

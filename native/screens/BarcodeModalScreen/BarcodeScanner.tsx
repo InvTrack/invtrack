@@ -2,12 +2,12 @@ import { useNavigation } from "@react-navigation/native";
 import { BarcodeScanningResult, CameraView as ExpoCamera } from "expo-camera";
 import React, { useRef, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
+import { Camera } from "../../components/Camera";
 import { useListBarcodes } from "../../db/hooks/useListBarcodes";
-import { Camera } from "../Camera";
 
-import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import { createStyles } from "../../theme/useStyles";
-import { LoadingSpinner } from "../common/LoadingSpinner";
+import { BarcodeModalScreenProps } from "./BarcodeModalScreen";
 
 export const BarcodeScanner = ({
   inventoryId,

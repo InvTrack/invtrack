@@ -1,7 +1,6 @@
 import { Action, ThunkAction, Tuple, configureStore } from "@reduxjs/toolkit";
 import { appSliceReducer } from "./appSlice";
 import { counterSliceReducer } from "./counterSlice";
-import { documentScannerSliceReducer } from "./documentScannerSlice";
 import { snackbarSliceReducer } from "./snackbarSlice";
 
 // @ts-expect-error
@@ -26,7 +25,6 @@ export const store = configureStore({
   reducer: {
     app: appSliceReducer,
     counter: counterSliceReducer,
-    documentScanner: documentScannerSliceReducer,
     snackbar: snackbarSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>

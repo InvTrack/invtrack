@@ -1,25 +1,19 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { ImageBackground } from "react-native";
-import { useProcessInvoice } from "../../db/hooks/useProcessInvoice";
-import {
-  documentScannerAction,
-  documentScannerSelector,
-} from "../../redux/documentScannerSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Button } from "../common/Button";
-import { LoadingSpinner } from "../common/LoadingSpinner";
+import { Button } from "../../components/common/Button";
+import { LoadingSpinner } from "../../components/common/LoadingSpinner";
+import { useDocumentScannerContext } from "./DocumentScannerContext";
+import { useProcessInvoice } from "./useProcessInvoice";
 
-export const InvoicePhotoPreview = () => {
+export const InvoicePhotoPreview = ({ stockId }: { stockId: number }) => {
   const { isConnected } = useNetInfo();
 
-  const photo = useAppSelector(documentScannerSelector.selectPhoto);
-  const inventory_id = useAppSelector(
-    documentScannerSelector.selectInventoryId
-  );
+  const { documentScannerState, updateDocumentScannerState } =
+    useDocumentScannerContext();
 
-  const dispatch = useAppDispatch();
+  const photo = documentScannerState.photo;
 
-  const { mutate, isLoading, data: _data } = useProcessInvoice();
+  const { mutate, isLoading, data: _data } = useProcessInvoice(stockId);
 
   return (
     <ImageBackground
@@ -44,7 +38,12 @@ export const InvoicePhotoPreview = () => {
             onPress={
               isLoading
                 ? () => null
-                : () => dispatch(documentScannerAction.PHOTO_RETAKE())
+                : () =>
+                    updateDocumentScannerState((d) => {
+                      d.photo = null;
+                      d.isPreviewShown = false;
+                    })
+              // () => dispatch(documentScannerAction.PHOTO_RETAKE())
             }
             size="s"
             type="primary"
@@ -64,7 +63,10 @@ export const InvoicePhotoPreview = () => {
               isLoading
                 ? () => null
                 : () => {
-                    mutate({ inventory_id, base64Photo: photo?.base64! });
+                    mutate({
+                      inventory_id: stockId,
+                      base64Photo: photo?.base64!,
+                    });
                   }
             }
             size="s"
