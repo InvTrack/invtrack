@@ -3,21 +3,21 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { useBottomSheet } from "../../components/BottomSheet";
 import { InputBottomSheetContent } from "../../components/BottomSheet/contents";
-import { Button } from "../../components/Button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PencilIcon,
 } from "../../components/Icon";
-import { Typography } from "../../components/Typography";
+import { Button } from "../../components/common/Button";
+import { Typography } from "../../components/common/Typography";
 import { useRecordPanel } from "../../db";
 import { useListProductRecordIds } from "../../db/hooks/useListProductRecordIds";
 import { createStyles } from "../../theme/useStyles";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Divider } from "../../components/Divider";
-import SafeLayout from "../../components/SafeLayout";
 import { Skeleton } from "../../components/Skeleton";
+import { Divider } from "../../components/common/Divider";
+import SafeLayout from "../../components/common/SafeLayout";
 import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
 import { useGetPreviousRecordQuantity } from "../../db/hooks/useGetPreviousRecordQuantity";
 import {

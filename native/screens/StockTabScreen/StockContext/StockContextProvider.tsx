@@ -1,11 +1,11 @@
-import React, { ReactNode, createContext, useContext, useState } from "react";
-import { useImmer } from "use-immer";
-import { useListProductRecords } from "../../db/hooks/useListProductRecords";
+import React, { ReactNode, createContext, useContext } from "react";
+import { Updater, useImmer } from "use-immer";
+import { useListProductRecords } from "../../../db/hooks/useListProductRecords";
 import {
   DocumentScannerState,
   ProductRecordsByProductId,
   RecipeRecordsByRecipeId,
-  StockContextType,
+  StockData,
 } from "./types";
 
 const initialDocumentScannerState: DocumentScannerState = {
@@ -22,12 +22,22 @@ const initialStockId = 0;
 const initialProductRecords: ProductRecordsByProductId = {};
 const initialRecipeRecords: RecipeRecordsByRecipeId = {};
 
+type StockContextType = StockData & {
+  stockId: number;
+  stockType: "inventory" | "delivery";
+  updateProductRecords: Updater<ProductRecordsByProductId>;
+  updateRecipeRecords: Updater<RecipeRecordsByRecipeId>;
+  documentScannerState: DocumentScannerState;
+  setDocumentScannerState: Updater<DocumentScannerState>;
+};
+
 const StockContext = createContext<StockContextType>({
   stockType: "delivery",
   stockId: initialStockId,
   productRecords: initialProductRecords,
-  recipeRecords: initialRecipeRecords,
   updateProductRecords: () => null,
+  recipeRecords: initialRecipeRecords,
+  updateRecipeRecords: () => null,
   documentScannerState: initialDocumentScannerState,
   setDocumentScannerState: () => null,
 });
@@ -57,10 +67,10 @@ export const StockContextProvider = ({
           )
         : initialProductRecords
     );
-  const [recipeRecords, _] = useState(initialRecipeRecords);
+  const [recipeRecords, updateRecipeRecords] = useImmer(initialRecipeRecords);
 
   const [documentScannerState, setDocumentScannerState] =
-    useState<DocumentScannerState>(initialDocumentScannerState);
+    useImmer<DocumentScannerState>(initialDocumentScannerState);
 
   // const setProductRecord = (product_id: number, value: Partial<ProductRecordByProductId>) => setProductRecords(records => ({...records}))
 
@@ -70,8 +80,9 @@ export const StockContextProvider = ({
         stockId,
         stockType,
         productRecords,
-        recipeRecords,
         updateProductRecords,
+        recipeRecords,
+        updateRecipeRecords,
         documentScannerState,
         setDocumentScannerState,
       }}

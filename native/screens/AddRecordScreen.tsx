@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../components/Button";
 import { Skeleton } from "../components/Skeleton";
+import { Button } from "../components/common/Button";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { isEmpty } from "lodash";
-import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { useSnackbar } from "../components/Snackbar/hooks";
+import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
 import { useCreateProductRecords } from "../db/hooks/useCreateProductRecords";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListMissingProducts } from "../db/hooks/useListMissingProducts";

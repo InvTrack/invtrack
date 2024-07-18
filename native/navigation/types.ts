@@ -27,7 +27,7 @@ export type HomeStackParamList = {
   Tabs: NavigatorScreenParams<BottomTabParamList>;
   BarcodeModal: {
     inventoryId: number;
-    navigateTo: "InventoryTab" | "DeliveryTab";
+    navigateTo: "StockTab";
   };
   DocumentScannerModal: { isScanningSalesRaport: boolean };
   SettingsScreen: undefined;
@@ -47,6 +47,7 @@ export type BottomTabParamList = {
   ListTab: undefined;
   DeliveryTab: { id?: number };
   InventoryTab: { id?: number };
+  StockTab: { id?: number };
 };
 export type BottomTabProps = CompositeScreenProps<
   NativeStackScreenProps<HomeStackParamList, "Tabs">,
@@ -113,6 +114,31 @@ export type DeliveryTabScreenProps = NativeStackScreenProps<
 >;
 export type DeliveryTabScreenNavigationProp =
   DeliveryTabScreenProps["navigation"];
+
+/**
+ * Delivery Tab/Stack
+ */
+export type StockStackParamList = {
+  StockTabScreen: { id: number };
+  RecordScreen: {
+    id: number;
+    recordId: number;
+    productId: number;
+    isDelivery?: boolean;
+  };
+  AddRecordScreen: { inventoryId: number };
+};
+export type StockTabProps = CompositeScreenProps<
+  BottomTabScreenProps<BottomTabParamList, "StockTab">,
+  NativeStackScreenProps<StockStackParamList>
+>;
+export type StockTabNavigationProp = StockTabProps["navigation"];
+
+export type StockTabScreenProps = NativeStackScreenProps<
+  StockStackParamList,
+  "StockTabScreen"
+>;
+export type StockTabScreenNavigationProp = StockTabScreenProps["navigation"];
 
 /**
  * Record Screen

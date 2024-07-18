@@ -12,8 +12,8 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { isAndroid } from "../constants";
-import { createStyles } from "../theme/useStyles";
+import { isAndroid } from "../../constants";
+import { createStyles } from "../../theme/useStyles";
 import { Typography } from "./Typography";
 
 const BORDER_WIDTH = 2;

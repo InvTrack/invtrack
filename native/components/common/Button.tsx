@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from "react-native";
 
-import { createStyles } from "../theme/useStyles";
+import { createStyles } from "../../theme/useStyles";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { Typography, TypographyProps } from "./Typography";
 

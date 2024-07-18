@@ -2,14 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { useGetRecord } from "../db";
-import { useGetPreviousRecordQuantity } from "../db/hooks/useGetPreviousRecordQuantity";
-import { createStyles } from "../theme/useStyles";
-import { formatAndRoundFloat } from "../utils";
-import { Card } from "./Card";
-import { QuantityBadge } from "./QuantityBadge";
-import { useStockContext } from "./StockContext/StockContextProvider";
-import { Typography } from "./Typography";
+import { QuantityBadge } from "../../../components/QuantityBadge";
+import { Card } from "../../../components/common/Card";
+import { Typography } from "../../../components/common/Typography";
+import { useGetRecord } from "../../../db";
+import { useGetPreviousRecordQuantity } from "../../../db/hooks/useGetPreviousRecordQuantity";
+import { createStyles } from "../../../theme/useStyles";
+import { formatAndRoundFloat } from "../../../utils";
+import { useStockContext } from "../StockContext/StockContextProvider";
 
 type IDListCardProps = {
   name: string | null | undefined;
@@ -67,7 +67,7 @@ export const IDListCard = ({
   const quantityDelta = useMemo(
     () =>
       getQuantityDelta(
-        stock.productRecords[productId].quantity,
+        stock.productRecords[productId]?.quantity,
         wasQuantityChanged ? originalRecord?.quantity : previousQuantity
       ),
     [originalRecord?.quantity, previousQuantity, wasQuantityChanged]

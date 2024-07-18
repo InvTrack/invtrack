@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useStockContext } from "../../components/StockContext/StockContextProvider";
+import { useStockContext } from "../../screens/StockTabScreen/StockContext/StockContextProvider";
 import { roundFloat } from "../../utils";
 import { useGetProduct } from "./useGetProduct";
 

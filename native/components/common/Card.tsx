@@ -8,8 +8,8 @@ import {
 } from "react-native";
 
 import { useTheme } from "@react-navigation/native";
-import { ThemeColors } from "../theme";
-import { createStyles } from "../theme/useStyles";
+import { ThemeColors } from "../../theme";
+import { createStyles } from "../../theme/useStyles";
 
 type CardPaddings = "none" | "dense" | "normal";
 

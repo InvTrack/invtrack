@@ -1,39 +1,42 @@
-// import { Link } from "expo-router";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { createStyles } from "../../theme/useStyles";
-import { Button } from "../Button";
-import { PlusIcon } from "../Icon";
+import { Button } from "../../../components/common/Button";
+import { createStyles } from "../../../theme/useStyles";
 
-export const ListCardAdd = () => {
+export const IDListCardAddProduct = ({
+  inventoryId,
+}: {
+  inventoryId: number | null;
+}) => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
+
   return (
     <Button
-      // overriden in styles
-      size="l"
+      size="s"
       fullWidth
       type="primary"
-      containerStyle={styles.plusCard}
+      containerStyle={styles.button}
+      disabled={inventoryId == null}
       onPress={() => {
-        navigation.navigate("NewStockScreen");
+        navigation.navigate("NewProductScreen", { inventoryId });
       }}
     >
-      <PlusIcon size={25} color="lightGrey" />
+      Dodaj nowy produkt
     </Button>
   );
 };
 
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
-    plusCard: {
-      height: 45,
+    button: {
       borderRadius: theme.borderRadiusSmall,
       alignItems: "center",
       justifyContent: "center",
       alignSelf: "center",
-      marginBottom: theme.spacing * 2,
+      marginTop: theme.spacing,
+      marginBottom: theme.spacing,
     },
   })
 );

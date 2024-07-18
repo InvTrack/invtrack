@@ -4,15 +4,15 @@ import { StyleSheet, View } from "react-native";
 import { formatISO } from "date-fns";
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../components/Button";
 import { DateInputController } from "../components/DateInputController";
-import TextInputController from "../components/TextInputController";
+import { Button } from "../components/common/Button";
+import TextInputController from "../components/common/TextInputController";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useSnackbar } from "../components/Snackbar/hooks";
 import { ToggleController } from "../components/ToggleController";
-import { Typography } from "../components/Typography";
+import { Typography } from "../components/common/Typography";
 import { isAndroid } from "../constants";
 import { useCreateInventory } from "../db";
 import { HomeStackParamList } from "../navigation/types";
@@ -62,7 +62,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
     if (isSuccess && inventory) {
       if (is_delivery) {
         navigation.navigate("Tabs", {
-          screen: "DeliveryTab",
+          screen: "StockTab",
           params: {
             id: inventory.id,
           },
@@ -70,7 +70,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
         return;
       }
       navigation.navigate("Tabs", {
-        screen: "InventoryTab",
+        screen: "StockTab",
         params: {
           id: inventory.id,
         },

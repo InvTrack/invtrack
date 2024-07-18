@@ -2,17 +2,17 @@ import capitalize from "lodash/capitalize";
 import React, { useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ListCardAdd } from "../components/ListCard/ListCardAdd";
 
 import isEmpty from "lodash/isEmpty";
-import { Button } from "../components/Button";
-import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
-import { ListCardLink } from "../components/ListCard/ListCardLink";
-import { Skeleton } from "../components/Skeleton";
-import { Typography } from "../components/Typography";
-import { useListInventories } from "../db";
-import { ListTabScreenProps } from "../navigation/types";
-import { createStyles } from "../theme/useStyles";
+import { Skeleton } from "../../components/Skeleton";
+import { Button } from "../../components/common/Button";
+import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate";
+import { Typography } from "../../components/common/Typography";
+import { useListInventories } from "../../db";
+import { ListTabScreenProps } from "../../navigation/types";
+import { createStyles } from "../../theme/useStyles";
+import { ListCardAdd } from "./ListCard/ListCardAdd";
+import { ListCardLink } from "./ListCard/ListCardLink";
 
 const MonthTitle = ({ title }: { title: string }) => {
   const styles = useStyles();

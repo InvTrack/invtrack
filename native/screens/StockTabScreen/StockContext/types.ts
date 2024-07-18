@@ -1,10 +1,8 @@
 import { CameraCapturedPicture } from "expo-camera";
-import { Dispatch, SetStateAction } from "react";
-import { Updater } from "use-immer";
 import {
   ProcessInvoiceResponse,
   ProcessSalesRaportResponse,
-} from "../../db/types";
+} from "../../../db/types";
 
 type ProductRecordByProductId = {
   record_id: number | null;
@@ -17,12 +15,12 @@ export type ProductRecordsByProductId = {
 };
 
 type RecipeRecordByRecipeId = {
-  record_id: number | null;
+  // record_id: number | null;
   quantity: number;
 };
 
 export type RecipeRecordsByRecipeId = {
-  [product_id: string]: RecipeRecordByRecipeId;
+  [recipe_id: string]: RecipeRecordByRecipeId;
 };
 
 export type DocumentScannerState = {
@@ -40,12 +38,4 @@ export type StockData = {
   //   stockType: "inventory" | "delivery";
   productRecords: ProductRecordsByProductId;
   recipeRecords: RecipeRecordsByRecipeId;
-};
-
-export type StockContextType = StockData & {
-  stockId: number;
-  stockType: "inventory" | "delivery";
-  updateProductRecords: Updater<ProductRecordsByProductId>;
-  documentScannerState: DocumentScannerState;
-  setDocumentScannerState: Dispatch<SetStateAction<DocumentScannerState>>;
 };

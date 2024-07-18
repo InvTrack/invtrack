@@ -4,34 +4,29 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { View } from "react-native";
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
-import { InventoryFormContextProvider } from "../components/StockFormContext/InventoryFormContextProvider";
 
 import { isEmpty } from "lodash";
-import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
 import { TabBar } from "../components/TabBar";
+import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
 import { useListInventories } from "../db";
 
-import { StockContextProvider } from "../components/StockContext/StockContextProvider";
 import { AddRecordScreen } from "../screens/AddRecordScreen";
-import DeliveryTabScreen from "../screens/DeliveryTabScreen";
-import InventoryTabScreen from "../screens/InventoryTabScreen";
-import { ListTab } from "../screens/ListTabScreen";
+import { ListTab } from "../screens/ListTabScreen/ListTabScreen";
 import { RecordScreen } from "../screens/RecordScreen";
+import { StockContextProvider } from "../screens/StockTabScreen/StockContext/StockContextProvider";
+import StockTabScreen from "../screens/StockTabScreen/StockTabScreen";
 import {
   BottomTabParamList,
   BottomTabProps,
-  DeliveryStackParamList,
-  DeliveryTabProps,
-  InventoryStackParamList,
-  InventoryTabProps,
+  StockStackParamList,
+  StockTabProps,
 } from "./types";
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const DeliveryStack = createNativeStackNavigator<DeliveryStackParamList>();
-const InventoryStack = createNativeStackNavigator<InventoryStackParamList>();
+const StockStack = createNativeStackNavigator<StockStackParamList>();
 
-const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
+const StockStackNavigator = ({ route }: StockTabProps) => {
   const theme = useTheme();
   const routeDeliveryId = route.params?.id;
 
@@ -59,11 +54,10 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
 
   return (
     <StockContextProvider stockId={deliveryId}>
-      {/* <DeliveryFormContextProvider inventoryId={deliveryId}> */}
-      <DeliveryStack.Navigator screenOptions={{ headerShown: true }}>
-        <DeliveryStack.Screen
-          name="DeliveryTabScreen"
-          component={DeliveryTabScreen}
+      <StockStack.Navigator screenOptions={{ headerShown: true }}>
+        <StockStack.Screen
+          name="StockTabScreen"
+          component={StockTabScreen}
           initialParams={{ id: deliveryId }}
           options={{
             headerBackground: () => (
@@ -86,7 +80,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackVisible: false,
           }}
         />
-        <DeliveryStack.Screen
+        <StockStack.Screen
           name="RecordScreen"
           component={RecordScreen}
           initialParams={{ isDelivery: true }}
@@ -111,7 +105,7 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackVisible: false,
           }}
         />
-        <DeliveryStack.Screen
+        <StockStack.Screen
           name="AddRecordScreen"
           component={AddRecordScreen}
           options={{
@@ -135,118 +129,8 @@ const DeliveryStackNavigator = ({ route }: DeliveryTabProps) => {
             headerBackVisible: false,
           }}
         />
-      </DeliveryStack.Navigator>
-      {/* </DeliveryFormContextProvider> */}
+      </StockStack.Navigator>
     </StockContextProvider>
-  );
-};
-
-const InventoryStackNavigator = ({ route }: InventoryTabProps) => {
-  const theme = useTheme();
-  const { data } = useListInventories();
-
-  const routeInventoryId = route.params?.id;
-  const lastestInventoryId = data?.find((item) => !item.is_delivery)?.id;
-
-  const inventoryId = (routeInventoryId ?? lastestInventoryId) as number;
-
-  const noInventories = !lastestInventoryId && !isEmpty(data);
-  if (noInventories)
-    return (
-      <EmptyScreenTemplate>
-        Brak inwentaryzacji. Dodaj nową inwentaryzację z ekranu listy!
-      </EmptyScreenTemplate>
-    );
-  if (!inventoryId)
-    return (
-      <EmptyScreenTemplate>
-        Błąd - brak identyfikatora inwentaryzacji. Zrestartuj aplikację i
-        spróbuj ponownie.
-      </EmptyScreenTemplate>
-    );
-
-  return (
-    <InventoryFormContextProvider>
-      <InventoryStack.Navigator
-        screenOptions={{
-          headerShown: true,
-        }}
-      >
-        <InventoryStack.Screen
-          name="InventoryTabScreen"
-          component={InventoryTabScreen}
-          initialParams={{ id: inventoryId }}
-          options={{
-            headerBackground: () => (
-              <View
-                style={{
-                  borderColor: theme.colors.darkBlue,
-                  borderTopWidth: 2,
-                  backgroundColor: theme.colors.mediumBlue,
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            ),
-            headerTitleStyle: {
-              color: theme.colors.highlight,
-              fontSize: theme.text.xs.fontSize,
-              fontFamily: theme.text.xs.fontFamily,
-            },
-            headerTitleAlign: "center",
-            headerBackVisible: false,
-          }}
-        />
-        <InventoryStack.Screen
-          name="RecordScreen"
-          component={RecordScreen}
-          options={{
-            headerBackground: () => (
-              <View
-                style={{
-                  borderColor: theme.colors.darkBlue,
-                  borderTopWidth: 2,
-                  backgroundColor: theme.colors.mediumBlue,
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            ),
-            headerTitleStyle: {
-              color: theme.colors.highlight,
-              fontSize: theme.text.xs.fontSize,
-              fontFamily: theme.text.xs.fontFamily,
-            },
-            headerTitleAlign: "center",
-            headerBackVisible: false,
-          }}
-        />
-        <InventoryStack.Screen
-          name="AddRecordScreen"
-          component={AddRecordScreen}
-          options={{
-            headerBackground: () => (
-              <View
-                style={{
-                  borderColor: theme.colors.darkBlue,
-                  borderTopWidth: 2,
-                  backgroundColor: theme.colors.mediumBlue,
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            ),
-            headerTitleStyle: {
-              color: theme.colors.highlight,
-              fontSize: theme.text.xs.fontSize,
-              fontFamily: theme.text.xs.fontFamily,
-            },
-            headerTitleAlign: "center",
-            headerBackVisible: false,
-          }}
-        />
-      </InventoryStack.Navigator>
-    </InventoryFormContextProvider>
   );
 };
 
@@ -270,25 +154,20 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         }}
       />
       <Tab.Screen
-        name="InventoryTab"
-        component={InventoryStackNavigator}
+        name="StockTab"
+        component={StockStackNavigator}
         options={{
-          title: "Inwentaryzacja",
+          // WIP
+          title: "Stock",
           tabBarShowLabel: false,
           tabBarActiveTintColor: theme.colors.highlight,
-          tabBarIcon: () => <InventoryIcon color="darkGrey" size={37} />,
-          headerShown: false,
-          lazy: false,
-        }}
-      />
-      <Tab.Screen
-        name="DeliveryTab"
-        component={DeliveryStackNavigator}
-        options={{
-          title: "Dostawa",
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: theme.colors.highlight,
-          tabBarIcon: () => <DeliveryIcon color="darkGrey" size={37} />,
+          // WIP
+          tabBarIcon: () =>
+            true ? (
+              <DeliveryIcon color="darkGrey" size={37} />
+            ) : (
+              <InventoryIcon color="darkGrey" size={37} />
+            ),
           headerShown: false,
           lazy: false,
         }}

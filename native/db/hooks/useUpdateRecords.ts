@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { StockData } from "../../components/StockContext/types";
+import { StockData } from "../../screens/StockTabScreen/StockContext/types";
 import { supabase } from "../supabase";
 
 const updateRecordsForm = async (stock: StockData, inventoryId: number) => {

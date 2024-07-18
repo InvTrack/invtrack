@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import SafeLayout from "../../components/SafeLayout";
+import SafeLayout from "../../components/common/SafeLayout";
 import { IdentifyAliasesScreenProps } from "../../navigation/types";
 import { createStyles } from "../../theme/useStyles";
 import { IdentifyAliasesScreenInvoice } from "./Invoice";

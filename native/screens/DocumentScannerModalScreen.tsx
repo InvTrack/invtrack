@@ -2,16 +2,16 @@ import { useCameraPermissions } from "expo-camera";
 import React, { useEffect } from "react";
 import { Linking, StyleSheet } from "react-native";
 
-import { Button } from "../components/Button";
+import { Button } from "../components/common/Button";
 
-import { Typography } from "../components/Typography";
+import { Typography } from "../components/common/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import isEmpty from "lodash/isEmpty";
 import { DocumentScanner } from "../components/DocumentScanner";
-import { EmptyScreenTemplate } from "../components/EmptyScreenTemplate";
-import { LoadingSpinner } from "../components/LoadingSpinner";
-import SafeLayout from "../components/SafeLayout";
+import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import SafeLayout from "../components/common/SafeLayout";
 import { HomeStackParamList } from "../navigation/types";
 import {
   documentScannerAction,

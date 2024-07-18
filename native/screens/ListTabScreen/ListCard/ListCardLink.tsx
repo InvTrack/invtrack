@@ -1,14 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
-import {
-  DeliveryTabNavigationProp,
-  InventoryTabNavigationProp,
-} from "../../navigation/types";
-import { createStyles } from "../../theme/useStyles";
-import { Card } from "../Card";
-import { SmallerArrowRightIcon } from "../Icon";
-import { Typography } from "../Typography";
+import { SmallerArrowRightIcon } from "../../../components/Icon";
+import { Card } from "../../../components/common/Card";
+import { Typography } from "../../../components/common/Typography";
+import { StockTabNavigationProp } from "../../../navigation/types";
+import { createStyles } from "../../../theme/useStyles";
 
 type ListCardAddProps = {
   title: string | undefined;
@@ -18,13 +15,14 @@ type ListCardAddProps = {
 
 const navigateToTabScreen =
   (navigation: any, id: number, isDelivery: boolean) => () => {
+    // WIP
     if (isDelivery) {
-      (navigation as DeliveryTabNavigationProp).navigate("DeliveryTabScreen", {
+      (navigation as StockTabNavigationProp).navigate("StockTabScreen", {
         id,
       });
       return;
     }
-    (navigation as InventoryTabNavigationProp).navigate("InventoryTabScreen", {
+    (navigation as StockTabNavigationProp).navigate("StockTabScreen", {
       id,
     });
     return;

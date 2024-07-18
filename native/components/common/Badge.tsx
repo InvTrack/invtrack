@@ -1,6 +1,6 @@
 import { StyleSheet, View, ViewStyle } from "react-native";
-import { createStyles } from "../theme/useStyles";
-import { CheckmarkIcon } from "./Icon";
+import { createStyles } from "../../theme/useStyles";
+import { CheckmarkIcon } from "../Icon";
 
 export const Badge = ({
   isShown,

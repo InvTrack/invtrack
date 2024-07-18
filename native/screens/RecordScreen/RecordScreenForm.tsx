@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { CollapsibleItem } from "../../components/Collapsible/CollapsibleItem";
 import { SingularCollapsible } from "../../components/Collapsible/SingularCollapsible";
-import TextInputController from "../../components/TextInputController";
+import TextInputController from "../../components/common/TextInputController";
 import { formatFloatString } from "../../utils";
 
 type RecordScreenForm = {

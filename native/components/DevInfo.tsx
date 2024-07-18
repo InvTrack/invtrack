@@ -1,7 +1,7 @@
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { EnvConfig } from "../config/env";
 
-import { Typography } from "./Typography";
+import { Typography } from "./common/Typography";
 
 export const DevInfo = () => {
   const { bottom: safeAreaBottomInset } = useSafeAreaInsets();

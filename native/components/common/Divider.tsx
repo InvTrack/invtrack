@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { createStyles } from "../theme/useStyles";
+import { createStyles } from "../../theme/useStyles";
 
 export const Divider = () => {
   const styles = useStyles();

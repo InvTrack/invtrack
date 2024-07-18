@@ -6,8 +6,8 @@ import {
   documentScannerSelector,
 } from "../../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Button } from "../Button";
-import { LoadingSpinner } from "../LoadingSpinner";
+import { Button } from "../common/Button";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export const InvoicePhotoPreview = () => {
   const { isConnected } = useNetInfo();

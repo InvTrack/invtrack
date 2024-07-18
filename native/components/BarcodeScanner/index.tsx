@@ -7,14 +7,14 @@ import { Camera } from "../Camera";
 
 import { BarcodeModalScreenProps } from "../../screens/BarcodeModalScreen";
 import { createStyles } from "../../theme/useStyles";
-import { LoadingSpinner } from "../LoadingSpinner";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export const BarcodeScanner = ({
   inventoryId,
   navigateTo: _navigateTo,
 }: {
   inventoryId: number;
-  navigateTo: "DeliveryTab" | "InventoryTab";
+  navigateTo: "StockTab";
 }) => {
   const styles = useStyles();
   const navigation = useNavigation<BarcodeModalScreenProps["navigation"]>();

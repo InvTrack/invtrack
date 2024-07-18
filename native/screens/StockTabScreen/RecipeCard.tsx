@@ -1,20 +1,18 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { useFormContext } from "react-hook-form";
-import { useGetRecipeRecord } from "../db/hooks/useGetRecipeRecord";
-import { useListRecipes } from "../db/hooks/useListRecipes";
-import { useListRecords } from "../db/hooks/useListRecords";
-import { createStyles } from "../theme/useStyles";
-import { roundFloat } from "../utils";
-import { useBottomSheet } from "./BottomSheet";
-import { InputBottomSheetContent } from "./BottomSheet/contents";
-import { Button } from "./Button";
-import { Card } from "./Card";
-import { PencilIcon } from "./Icon";
-import { useSnackbar } from "./Snackbar/hooks";
-import { StockForm } from "./StockFormContext/types";
-import { Typography } from "./Typography";
+import { useBottomSheet } from "../../components/BottomSheet";
+import { InputBottomSheetContent } from "../../components/BottomSheet/contents";
+import { PencilIcon } from "../../components/Icon";
+import { useSnackbar } from "../../components/Snackbar/hooks";
+import { Button } from "../../components/common/Button";
+import { Card } from "../../components/common/Card";
+import { Typography } from "../../components/common/Typography";
+import { useListRecipes } from "../../db/hooks/useListRecipes";
+import { useListRecords } from "../../db/hooks/useListRecords";
+import { createStyles } from "../../theme/useStyles";
+import { roundFloat } from "../../utils";
+import { useStockContext } from "./StockContext/StockContextProvider";
 
 type RecipeCardProps = {
   name: string | null | undefined;
@@ -25,6 +23,7 @@ type RecipeCardProps = {
       >[number]["recipe_part"];
   inventoryId: number;
   recipeRecordId: number | null | undefined;
+  recipeId: number;
   borderLeft?: boolean;
   borderRight?: boolean;
   borderBottom?: boolean;
@@ -89,7 +88,7 @@ const getRecordAndMultiplier = (
 export const RecipeCard = ({
   name,
   recipePart,
-  recipeRecordId,
+  recipeId,
   inventoryId,
   borderLeft = false,
   borderRight = false,
@@ -98,12 +97,21 @@ export const RecipeCard = ({
   const styles = useStyles();
   const { closeBottomSheet, openBottomSheet } = useBottomSheet();
   const { showInfo } = useSnackbar();
-  const { watch, setValue } = useFormContext<StockForm>();
+  const {
+    recipeRecords,
+    updateRecipeRecords,
+    productRecords,
+    updateProductRecords,
+  } = useStockContext();
+  // WIP
+  // const recordId = recipeRecordId || 0;
+  const recipeRecord = recipeRecords[recipeId];
+  // const { watch, setValue } = useFormContext<StockForm>();
   const { data: recordsList } = useListRecords(inventoryId);
-  const { data: recipeRecord } = useGetRecipeRecord(
-    inventoryId,
-    recipeRecordId
-  );
+  // const { data: recipeRecord } = useGetRecipeRecord(
+  //   inventoryId,
+  //   recipeRecordId
+  // );
 
   const recordAndMultiplier = useMemo(
     () => getRecordAndMultiplier(recipePart, recordsList),
@@ -114,13 +122,16 @@ export const RecipeCard = ({
     return null;
   }
 
-  const recipeQuantity =
-    watch(`recipe_records.${recipeRecordId}.quantity`) ??
-    recipeRecord?.quantity ??
-    0;
+  const recipeQuantity = recipeRecord?.quantity || 0;
+
   const setRecipeQuantity = (v: number) =>
-    setValue(`recipe_records.${recipeRecordId}.quantity`, v, {
-      shouldDirty: true,
+    updateRecipeRecords((d) => {
+      console.log(d[recipeId], recipeId);
+      if (!d[recipeId]) {
+        d[recipeId] = { quantity: v };
+      } else {
+        d[recipeId].quantity = v;
+      }
     });
 
   // value is an integer, see InputBottomSheetContent props
@@ -136,15 +147,24 @@ export const RecipeCard = ({
 
     if (Array.isArray(recipePart)) {
       recordAndMultiplier.forEach((ram) => {
-        if (ram.record_id == null || ram.multiplier == null) return;
+        if (
+          ram.record_id === null ||
+          ram.multiplier === null ||
+          ram.product_id === null
+        )
+          return;
+
+        const productId = ram.product_id;
 
         // the object may not exist, if the user did not navigate to the given RecordScreen
         // may change during the form refactor
-        const oldRecordValues = watch(`product_records.${ram.product_id}`) || {
-          price_per_unit: null,
-          id: ram.record_id,
-          quantity: ram.record_quantity_backup,
-        };
+        // WIP
+        const oldRecordValues = productRecords[productId];
+        // const oldRecordValues = watch(`product_records.${ram.product_id}`) || {
+        //   price_per_unit: null,
+        //   id: ram.record_id,
+        //   quantity: ram.record_quantity_backup,
+        // };
 
         const dMultiplied = roundFloat(delta * ram.multiplier);
         const newRecordQuantity = roundFloat(
@@ -158,14 +178,9 @@ export const RecipeCard = ({
           return;
         }
 
-        setValue(
-          `product_records.${ram.product_id}.quantity`,
-          newRecordQuantity,
-          {
-            shouldDirty: true,
-            shouldTouch: true,
-          }
-        );
+        updateProductRecords((d) => {
+          d[productId].quantity = newRecordQuantity;
+        });
       });
 
       setRecipeQuantity(value);
@@ -177,19 +192,21 @@ export const RecipeCard = ({
 
     if (
       recordAndMultiplier[0]?.record_id == null ||
+      recordAndMultiplier[0]?.product_id == null ||
       recordAndMultiplier[0]?.multiplier == null
     )
       return;
 
     // the object may not exist, if the user did not navigate to the given RecordScreen
     // may change during the form refactor
-    const oldRecordValues = watch(
-      `product_records.${recordAndMultiplier[0].product_id}`
-    ) || {
-      price_per_unit: null,
-      id: recordAndMultiplier[0].record_id,
-      quantity: recordAndMultiplier[0].record_quantity_backup,
-    };
+    const oldRecordValues = productRecords[recordAndMultiplier[0].product_id];
+    // const oldRecordValues = watch(
+    //   `product_records.${recordAndMultiplier[0].product_id}`
+    // ) || {
+    //   price_per_unit: null,
+    //   id: recordAndMultiplier[0].record_id,
+    //   quantity: recordAndMultiplier[0].record_quantity_backup,
+    // };
 
     const dMultiplied = roundFloat(delta * recordAndMultiplier[0].multiplier);
     const newRecordQuantity = roundFloat(
@@ -201,14 +218,9 @@ export const RecipeCard = ({
       return;
     }
 
-    setValue(
-      `product_records.${recordAndMultiplier[0].product_id}.quantity`,
-      newRecordQuantity,
-      {
-        shouldDirty: true,
-        shouldTouch: true,
-      }
-    );
+    updateRecipeRecords((d) => {
+      d[recipeId].quantity = newRecordQuantity;
+    });
 
     setRecipeQuantity(value);
     return;

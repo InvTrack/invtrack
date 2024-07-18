@@ -6,13 +6,13 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 // import { Button } from "../components/Button";
-import { Card } from "../components/Card";
+import { Card } from "../components/common/Card";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Button } from "../components/Button";
 import { DevInfo } from "../components/DevInfo";
 import { PrivacyPolicy } from "../components/PrivacyPolicy";
-import { Typography } from "../components/Typography";
+import { Button } from "../components/common/Button";
+import { Typography } from "../components/common/Typography";
 import { LoginStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 

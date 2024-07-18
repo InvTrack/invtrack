@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { createStyles } from "../theme/useStyles";
+import { createStyles } from "../../theme/useStyles";
 import { Typography } from "./Typography";
 
 export const EmptyScreenTemplate = ({

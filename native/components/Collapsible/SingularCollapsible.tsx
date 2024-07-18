@@ -2,9 +2,9 @@ import React, { ReactNode, useState } from "react";
 
 import { StyleSheet } from "react-native";
 import { createStyles } from "../../theme/useStyles";
-import { Card } from "../Card";
 import { ExpandMoreIcon } from "../Icon";
-import { Typography } from "../Typography";
+import { Card } from "../common/Card";
+import { Typography } from "../common/Typography";
 
 export const SingularCollapsible = ({
   children,

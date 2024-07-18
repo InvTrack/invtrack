@@ -1,6 +1,6 @@
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { createStyles } from "../theme/useStyles";
-import { Typography } from "./Typography";
+import { Typography } from "./common/Typography";
 
 export const QuantityBadge = ({
   delta,

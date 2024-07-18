@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createStyles } from "../theme/useStyles";
 import { useBottomSheet } from "./BottomSheet";
 import { InfoIcon } from "./Icon";
-import { Typography } from "./Typography";
+import { Typography } from "./common/Typography";
 
 export const Tooltip = ({
   title,

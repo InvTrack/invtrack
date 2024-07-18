@@ -4,16 +4,15 @@ import isEmpty from "lodash/isEmpty";
 import { useEffect } from "react";
 import { UseFormGetValues, UseFormSetValue, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
-import { Badge } from "../../components/Badge";
 import { useBottomSheet } from "../../components/BottomSheet";
 import { ProductListBottomSheetContent } from "../../components/BottomSheet/contents/ProductList";
-import { Button } from "../../components/Button";
 import { DropdownButton } from "../../components/DropdownButton";
-import { EmptyScreenTemplate } from "../../components/EmptyScreenTemplate";
-import { IDListCardAddProduct } from "../../components/IDListCardAddProduct";
 import { IndexBadge } from "../../components/IndexBadge";
 import { useSnackbar } from "../../components/Snackbar/hooks";
-import { Typography } from "../../components/Typography";
+import { Badge } from "../../components/common/Badge";
+import { Button } from "../../components/common/Button";
+import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate";
+import { Typography } from "../../components/common/Typography";
 import { useListProductRecords } from "../../db";
 import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
 import { useListExistingProducts } from "../../db/hooks/useListProducts";
@@ -24,6 +23,7 @@ import {
 } from "../../redux/documentScannerSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { createStyles } from "../../theme/useStyles";
+import { IDListCardAddProduct } from "../StockTabScreen/IDListCard/IDListCardAddProduct";
 import { AliasForm } from "./types";
 
 const BADGE_SIDE_SIZE = 20;

@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { isIos } from "../constants";
-import { createStyles } from "../theme/useStyles";
-import { getKeyboardVerticalOffset } from "../utils";
+import { isIos } from "../../constants";
+import { createStyles } from "../../theme/useStyles";
+import { getKeyboardVerticalOffset } from "../../utils";
 
 interface SafeLayoutProps {
   scrollable?: boolean;
