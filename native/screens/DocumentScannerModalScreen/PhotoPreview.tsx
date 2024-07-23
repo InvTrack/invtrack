@@ -3,9 +3,15 @@ import { ImageBackground } from "react-native";
 import { Button } from "../../components/common/Button";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import { useDocumentScannerContext } from "./DocumentScannerContext";
-import { useProcessInvoice } from "./useProcessInvoice";
+import { useProcessDocument } from "./useProcessDocument";
 
-export const InvoicePhotoPreview = ({ stockId }: { stockId: number }) => {
+export const PhotoPreview = ({
+  stockId,
+  stockType,
+}: {
+  stockId: number;
+  stockType: "delivery" | "inventory";
+}) => {
   const { isConnected } = useNetInfo();
 
   const { documentScannerState, updateDocumentScannerState } =
@@ -13,7 +19,11 @@ export const InvoicePhotoPreview = ({ stockId }: { stockId: number }) => {
 
   const photo = documentScannerState.photo;
 
-  const { mutate, isLoading, data: _data } = useProcessInvoice(stockId);
+  const {
+    mutate,
+    isLoading,
+    data: _data,
+  } = useProcessDocument(stockId, stockType);
 
   return (
     <ImageBackground
@@ -64,7 +74,6 @@ export const InvoicePhotoPreview = ({ stockId }: { stockId: number }) => {
                 ? () => null
                 : () => {
                     mutate({
-                      inventory_id: stockId,
                       base64Photo: photo?.base64!,
                     });
                   }

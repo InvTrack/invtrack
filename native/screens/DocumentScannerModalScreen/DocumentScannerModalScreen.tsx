@@ -37,7 +37,7 @@ export const DocumentScannerModalScreen = ({
     updateDocumentScannerState(initialDocumentScannerState);
 
   const styles = useStyles();
-  const { isScanningSalesRaport, stockId } = route.params;
+  const { isScanningSalesRaport, stockId, stockType } = route.params;
   const [permission, requestPermission] = useCameraPermissions();
 
   const { processedInvoice, processedSalesReport } = documentScannerState;
@@ -50,6 +50,7 @@ export const DocumentScannerModalScreen = ({
           isScanningSalesRaport,
           processedInvoice: null,
           processedSalesReport,
+          stockType,
         });
       } else {
         navigation.goBack();
@@ -64,6 +65,7 @@ export const DocumentScannerModalScreen = ({
           isScanningSalesRaport,
           processedInvoice,
           processedSalesReport: null,
+          stockType,
         });
       } else {
         navigation.goBack();
@@ -157,6 +159,7 @@ export const DocumentScannerModalScreen = ({
         <DocumentScanner
           isScanningSalesRaport={isScanningSalesRaport}
           stockId={stockId}
+          stockType={stockType}
         />
       </DocumentScannerContext.Provider>
     </SafeLayout>

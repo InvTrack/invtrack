@@ -13,6 +13,7 @@ export const IdentifyAliasesScreen = ({
     processedInvoice,
     processedSalesReport,
     stockId,
+    stockType,
   } = route.params;
   const styles = useStyles();
 
@@ -27,11 +28,13 @@ export const IdentifyAliasesScreen = ({
         <IdentifyAliasesScreenSalesRaport
           processedSalesReport={processedSalesReport}
           stockId={stockId}
+          stockType={stockType}
         />
       ) : (
         <IdentifyAliasesScreenInvoice
           processedInvoice={processedInvoice}
           stockId={stockId}
+          stockType={stockType}
         />
       )}
     </SafeLayout>

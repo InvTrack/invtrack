@@ -28,6 +28,7 @@ export default function StockTabScreen({
 
   const { isConnected } = useNetInfo();
   const inventoryId = route.params?.id;
+  const stockType = route.params?.stockType;
   // const stockType = route.params?.stockType;
 
   // const { showError, showInfo, showSuccess } = useSnackbar();
@@ -104,6 +105,7 @@ export default function StockTabScreen({
                     // WIP
                     isScanningSalesRaport: false,
                     stockId: inventoryId,
+                    stockType,
                   });
                 }}
               >

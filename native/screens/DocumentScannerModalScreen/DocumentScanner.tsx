@@ -3,15 +3,15 @@ import { CameraView as ExpoCamera } from "expo-camera";
 import React, { useRef } from "react";
 import { Camera } from "../../components/Camera";
 import { useDocumentScannerContext } from "./DocumentScannerContext";
-import { InvoicePhotoPreview } from "./InvoicePhotoPreview";
-import { SalesRaportPhotoPreview } from "./SalesRaportPhotoPreview";
+import { PhotoPreview } from "./PhotoPreview";
 
 export const DocumentScanner = ({
-  isScanningSalesRaport,
   stockId,
+  stockType,
 }: {
   isScanningSalesRaport: boolean;
   stockId: number;
+  stockType: "delivery" | "inventory";
 }) => {
   const cameraRef = useRef<ExpoCamera>(null);
 
@@ -42,11 +42,8 @@ export const DocumentScanner = ({
     return;
   };
 
-  if (isPreviewShown && isScanningSalesRaport) {
-    return <SalesRaportPhotoPreview stockId={stockId} />;
-  }
-  if (isPreviewShown && !isScanningSalesRaport) {
-    return <InvoicePhotoPreview stockId={stockId} />;
+  if (isPreviewShown) {
+    return <PhotoPreview stockId={stockId} stockType={stockType} />;
   }
 
   return (

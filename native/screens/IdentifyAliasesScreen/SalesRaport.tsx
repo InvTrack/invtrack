@@ -59,9 +59,11 @@ const setAlias =
 export const IdentifyAliasesScreenSalesRaport = ({
   processedSalesReport,
   stockId,
+  stockType,
 }: {
   processedSalesReport: ProcessSalesRaportResponse;
   stockId: number;
+  stockType: "delivery" | "inventory";
 }) => {
   const navigation = useNavigation<IdentifyAliasesScreenNavigationProp>();
   const { isConnected } = useNetInfo();
@@ -116,6 +118,7 @@ export const IdentifyAliasesScreenSalesRaport = ({
     navigation.replace("DocumentScannerModal", {
       isScanningSalesRaport: true,
       stockId,
+      stockType,
     });
   };
 

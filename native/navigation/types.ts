@@ -33,7 +33,11 @@ export type HomeStackParamList = {
     inventoryId: number;
     navigateTo: "StockTab";
   };
-  DocumentScannerModal: { stockId: number; isScanningSalesRaport: boolean };
+  DocumentScannerModal: {
+    stockId: number;
+    stockType: "delivery" | "inventory";
+    isScanningSalesRaport: boolean;
+  };
   SettingsScreen: undefined;
   NewBarcodeScreen: { inventoryId: number; new_barcode: string };
   NewStockScreen: undefined;
@@ -41,6 +45,7 @@ export type HomeStackParamList = {
   IdentifyAliasesScreen: {
     stockId: number;
     isScanningSalesRaport: boolean;
+    stockType: "delivery" | "inventory";
     processedInvoice: ProcessInvoiceResponse;
     processedSalesReport: ProcessSalesRaportResponse;
   };

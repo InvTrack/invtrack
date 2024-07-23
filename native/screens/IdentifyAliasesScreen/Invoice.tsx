@@ -61,9 +61,11 @@ const setAlias =
 export const IdentifyAliasesScreenInvoice = ({
   processedInvoice,
   stockId,
+  stockType,
 }: {
   processedInvoice: ProcessInvoiceResponse;
   stockId: number;
+  stockType: "delivery" | "inventory";
 }) => {
   const navigation = useNavigation<IdentifyAliasesScreenNavigationProp>();
   const { isConnected } = useNetInfo();
@@ -77,7 +79,6 @@ export const IdentifyAliasesScreenInvoice = ({
     data: resolvedAliases,
   } = useCreateProductNameAlias();
 
-  // const dispatch = useAppDispatch();
   const unmatchedRows = processedInvoice?.unmatchedRows;
 
   const { data: productRecords } = useListProductRecords(stockId);
@@ -146,6 +147,7 @@ export const IdentifyAliasesScreenInvoice = ({
     navigation.replace("DocumentScannerModal", {
       isScanningSalesRaport: false,
       stockId,
+      stockType,
     });
   };
 
