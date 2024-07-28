@@ -67,14 +67,14 @@ export type PatchedDatabase = {
 
 export type ProcessInvoiceResponse = {
   matchedProductRecords: {
-    [id: number]: {
-      product_id: number;
+    [product_id: number]: {
+      record_id: number;
       price_per_unit: number;
       quantity: number;
     };
   };
   matchedProductsNotInInventory: {
-    [id: number]: {
+    [product_id: number]: {
       price_per_unit: number;
       quantity: number;
     };

@@ -1,9 +1,8 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { useNavigation } from "@react-navigation/native";
 import isEmpty from "lodash/isEmpty";
-import { useEffect } from "react";
 import { UseFormGetValues, UseFormSetValue, useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { useBottomSheet } from "../../components/BottomSheet";
 import { ProductListBottomSheetContent } from "../../components/BottomSheet/contents/ProductList";
 import { DropdownButton } from "../../components/DropdownButton";
@@ -13,17 +12,17 @@ import { Badge } from "../../components/common/Badge";
 import { Button } from "../../components/common/Button";
 import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate";
 import { Typography } from "../../components/common/Typography";
-import { useListProductRecords } from "../../db";
-import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
 import { useListExistingProducts } from "../../db/hooks/useListProducts";
-import { ProcessInvoiceResponse } from "../../db/types";
+import { useListRecipes } from "../../db/hooks/useListRecipes";
+import {
+  ProcessInvoiceResponse,
+  ProcessSalesRaportResponse,
+} from "../../db/types";
 import { IdentifyAliasesScreenNavigationProp } from "../../navigation/types";
-import { createStyles } from "../../theme/useStyles";
 import { IDListCardAddProduct } from "../StockTabScreen/IDListCard/IDListCardAddProduct";
+import { ProductRecordsByProductId } from "../StockTabScreen/StockContext/types";
+import { useAliasesStyles } from "./styles";
 import { AliasForm } from "./types";
-
-const BADGE_SIDE_SIZE = 20;
-const PADDING = 4;
 
 // unique
 const aliasSet = new Set<string>([]);
@@ -34,16 +33,17 @@ const setAlias =
     showInfo: ReturnType<typeof useSnackbar>["showInfo"]
   ) =>
   (product_id: string, alias: string) => {
-    const productAliases = getValues(product_id);
+    const productAliases = getValues(`productAliases.${product_id}`);
 
     if (aliasSet.has(alias)) {
       const entireFormValues = getValues();
       for (const product_id in entireFormValues) {
-        if (product_id === "usedAliases") continue;
         if (
-          entireFormValues[product_id]?.some((usedAlias) => usedAlias === alias)
+          entireFormValues.productAliases[product_id]?.some(
+            (usedAlias) => usedAlias === alias
+          )
         ) {
-          setValue(product_id, [
+          setValue(`productAliases.${product_id}`, [
             ...(productAliases?.filter((ua) => ua === alias) || []),
             alias,
           ]);
@@ -53,102 +53,142 @@ const setAlias =
       }
       return void this;
     }
-    setValue(product_id, [...(productAliases || []), alias]);
+    setValue(`productAliases.${product_id}`, [
+      ...(productAliases || []),
+      alias,
+    ]);
     aliasSet.add(alias);
     setValue("usedAliases", [...aliasSet]);
   };
 
-export const IdentifyAliasesScreenInvoice = ({
-  processedInvoice,
+const getNewMatched = (
+  documentResponse: ProcessInvoiceResponse,
+  productAliases: AliasForm["productAliases"],
+  products: { id: number }[]
+) => {
+  if (!documentResponse) return null;
+  let newMatched: ProductRecordsByProductId = {};
+  // const productAliases = getValues(`productAliases`);
+
+  for (const row of documentResponse.unmatchedRows) {
+    const { price_per_unit, quantity, name } = row;
+
+    const product_id = Object.entries(productAliases).find(
+      ([_, aliases]) => !!aliases?.find((alias) => alias === name)
+    )?.[0];
+
+    if (!product_id) continue;
+
+    const product = products?.find((p) => p.id === parseInt(product_id));
+    if (!product || !product.id) continue;
+
+    newMatched[product.id] = {
+      price_per_unit,
+      quantity,
+      record_id: null,
+    };
+  }
+  return newMatched;
+  // navigation.goBack();
+};
+
+export const IdentifyAliasesComponent = ({
+  documentResponse,
   stockId,
   stockType,
-}: {
-  processedInvoice: ProcessInvoiceResponse;
-  stockId: number;
-  stockType: "delivery" | "inventory";
-}) => {
+}:
+  | {
+      documentResponse: ProcessInvoiceResponse;
+      stockId: number;
+      stockType: "delivery";
+    }
+  | {
+      documentResponse: ProcessSalesRaportResponse;
+      stockId: number;
+      stockType: "inventory";
+    }) => {
   const navigation = useNavigation<IdentifyAliasesScreenNavigationProp>();
+  // const navigation = useNavigation<StockTabNavigationProp>();
   const { isConnected } = useNetInfo();
-  const styles = useStyles();
+  const styles = useAliasesStyles();
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const { showInfo } = useSnackbar();
+  // const {
+  //   mutate,
+  //   isSuccess,
+  //   data: resolvedAliases,
+  // } = useCreateProductNameAlias();
+
+  const unmatchedRows =
+    stockType === "delivery"
+      ? documentResponse?.unmatchedRows
+      : documentResponse?.unmatchedAliases.map((a) => ({ name: a }));
+
+  // const { data: productRecords } = useListProductRecords(stockId);
   const { data: products } = useListExistingProducts();
-  const {
-    mutate,
-    isSuccess,
-    data: resolvedAliases,
-  } = useCreateProductNameAlias();
 
-  const unmatchedRows = processedInvoice?.unmatchedRows;
+  const { data: recipes } = useListRecipes();
 
-  const { data: productRecords } = useListProductRecords(stockId);
+  // const [newMatched, setNewMatched] = useState< typeof documentResponse.matchedProductRecords>({});
 
   const { setValue, handleSubmit, watch, getValues } = useForm<AliasForm>({
-    defaultValues: async () =>
-      !!products
+    defaultValues: async () => ({
+      productAliases: !!products
         ? products.reduce(
             (acc, { id: product_id }) => ({
               ...acc,
               [String(product_id)]: null,
             }),
-            { usedAliases: [] } as AliasForm
+            {}
           )
-        : { usedAliases: [] },
+        : {},
+      recipeAliases: !!recipes
+        ? recipes.reduce(
+            (acc, { id: recipe_id }) => ({
+              ...acc,
+              [String(recipe_id)]: null,
+            }),
+            {}
+          )
+        : {},
+      usedAliases: [],
+    }),
   });
 
   const usedAliases = watch("usedAliases");
-  useEffect(() => {
-    if (isSuccess) {
-      if (processedInvoice) {
-        let newMatched: typeof processedInvoice.matchedProductRecords = {};
-
-        for (const row of processedInvoice.unmatchedRows) {
-          const { price_per_unit, quantity, name } = row;
-
-          const alias = resolvedAliases?.find((alias) => alias.alias === name);
-          if (!alias || !alias.product_id) continue;
-          const { product_id } = alias;
-
-          const record = productRecords?.find(
-            (r) => r.product_id === product_id
-          );
-          if (!record || !record.id) continue;
-
-          newMatched[record.id] = { price_per_unit, quantity, product_id };
-        }
-
-        console.log({ newMatched, resolvedAliases });
-        // dispatch(documentScannerAction.SET_NEW_MATCHED({ newMatched }));
-      }
-      // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
-      navigation.goBack();
-    }
-  }, [isSuccess]);
 
   const handleSavePress = () => {
     handleSubmit(
       (data) => {
-        // New alisases are inserted into the db here
-        mutate(data);
-        // dispatch(documentScannerAction.PHOTO_RESET_DATA());
-        // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
-        // dispatch(documentScannerAction.PHOTO_RETAKE());
+        // WIP
+        if (stockType === "delivery" && products && documentResponse) {
+          const newMatchedProducts = getNewMatched(
+            documentResponse,
+            data.productAliases,
+            products
+          );
+
+          const merged: ProductRecordsByProductId = {
+            ...documentResponse.matchedProductsNotInInventory,
+            ...documentResponse.matchedProductRecords,
+            // order is important, newMatchedProducts should be last, because it is the result of the user selection
+            // or is it?
+            ...newMatchedProducts,
+          };
+
+          // WIP "necessery hack"? idk how navigation works
+          navigation.navigate("StockTabScreen" as any, {
+            id: stockId,
+            stockType,
+            recordsFromInvoice: merged,
+          });
+        }
       },
       (_errors) => {
         // TODO show a snackbar? handle error better
         console.log("error", _errors);
       }
     )();
-  };
-  const handleGoBackPress = () => {
-    // dispatch(documentScannerAction.PHOTO_RESET_DATA());
-    // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
-    // dispatch(documentScannerAction.PHOTO_RETAKE());
-    navigation.replace("DocumentScannerModal", {
-      isScanningSalesRaport: false,
-      stockId,
-      stockType,
-    });
   };
 
   if (isEmpty(unmatchedRows) || !unmatchedRows) {
@@ -163,9 +203,6 @@ export const IdentifyAliasesScreenInvoice = ({
           type="primary"
           fullWidth
           onPress={() => {
-            // dispatch(documentScannerAction.PHOTO_RESET_DATA());
-            // dispatch(documentScannerAction.RESET_PROCESSED_SALES_RAPORT());
-            // dispatch(documentScannerAction.RESET_PROCESSED_INVOICE());
             navigation.goBack();
           }}
           containerStyle={{ marginTop: 16 }}
@@ -183,7 +220,13 @@ export const IdentifyAliasesScreenInvoice = ({
           size="l"
           type="primary"
           fullWidth
-          onPress={handleGoBackPress}
+          onPress={() =>
+            navigation.replace("DocumentScannerModal", {
+              isScanningSalesRaport: false,
+              stockId,
+              stockType,
+            })
+          }
         >
           Wróć do skanera
         </Button>
@@ -235,35 +278,3 @@ export const IdentifyAliasesScreenInvoice = ({
     </>
   );
 };
-
-const useStyles = createStyles((theme) =>
-  StyleSheet.create({
-    bg: {
-      backgroundColor: theme.colors.darkBlue,
-    },
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      backgroundColor: theme.colors.darkBlue,
-      height: "100%",
-      paddingHorizontal: theme.spacing * 2,
-    },
-    dropdown: { marginTop: -theme.spacing * 3 },
-    saveButtonContainer: {
-      marginTop: theme.spacing * 2,
-      flexShrink: 1,
-    },
-    checkmarkBadgePosition: {
-      position: "relative",
-      top: BADGE_SIDE_SIZE - 10,
-      left: BADGE_SIDE_SIZE + PADDING + 5,
-      zIndex: 10,
-    },
-    indexBadgePosition: {
-      position: "relative",
-      top: -10,
-      left: 5,
-      zIndex: 10,
-    },
-  })
-);

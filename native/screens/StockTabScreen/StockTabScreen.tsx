@@ -9,7 +9,7 @@ import { Skeleton } from "../../components/Skeleton";
 import { useSnackbar } from "../../components/Snackbar/hooks";
 import { Button } from "../../components/common/Button";
 import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
-import { useListRecipes } from "../../db/hooks/useListRecipes";
+import { useListRecipesWithRecords } from "../../db/hooks/useListRecipes";
 import { useUpdateRecords } from "../../db/hooks/useUpdateRecords";
 import { StockTabScreenProps } from "../../navigation/types";
 import { IDListCard } from "./IDListCard/IDListCard";
@@ -29,14 +29,21 @@ export default function StockTabScreen({
   const { isConnected } = useNetInfo();
   const inventoryId = route.params?.id;
   const stockType = route.params?.stockType;
-  // const stockType = route.params?.stockType;
+
+  const recordsFromInvoice = route.params.recordsFromInvoice;
+  // console.log({ recordsFromInvoice });
 
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
 
-  const { productRecords } = useStockContext();
+  useEffect(() => {
+    if (!!recordsFromInvoice) setRecordsFromInvoice(recordsFromInvoice);
+  }, [recordsFromInvoice]);
+
+  const { productRecords, setRecordsFromInvoice } = useStockContext();
+  // console.log({ productRecords });
 
   const {
     productsIsSuccess,
@@ -45,8 +52,13 @@ export default function StockTabScreen({
     uncategorizedProducts,
   } = useProductRecords();
 
+  // console.log({
+  //   x: categorizedProducts.map((c) => c.products),
+  //   uncategorizedProducts,
+  // });
+
   const { data: recipeList, isSuccess: recipesIsSuccess } =
-    useListRecipes(inventoryId);
+    useListRecipesWithRecords(inventoryId);
 
   const {
     mutate,
@@ -142,6 +154,11 @@ export default function StockTabScreen({
             </View>
             <IDListCardAddProduct inventoryId={inventoryId} />
             <IDListCardAddRecord inventoryId={inventoryId} />
+            {/* <Button type="primary" size="l" fullWidth>
+              {recordsFromInvoice
+                ? Object.keys(recordsFromInvoice).toString()
+                : "No invoice"}
+            </Button> */}
             {recipeList?.map((recipe) => (
               <RecipeCard
                 key={recipe?.id}

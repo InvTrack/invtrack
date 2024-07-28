@@ -1,11 +1,9 @@
-type ProductRecordByProductId = {
-  record_id: number | null;
-  quantity: number;
-  price_per_unit: number | null;
-};
-
 export type ProductRecordsByProductId = {
-  [product_id: string]: ProductRecordByProductId;
+  [product_id: string]: {
+    record_id?: number | null;
+    quantity: number;
+    price_per_unit: number | null;
+  };
 };
 
 type RecipeRecordByRecipeId = {

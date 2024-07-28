@@ -2,19 +2,13 @@ import { StyleSheet } from "react-native";
 import SafeLayout from "../../components/common/SafeLayout";
 import { IdentifyAliasesScreenProps } from "../../navigation/types";
 import { createStyles } from "../../theme/useStyles";
-import { IdentifyAliasesScreenInvoice } from "./Invoice";
-import { IdentifyAliasesScreenSalesRaport } from "./SalesRaport";
+import { IdentifyAliasesComponent } from "./Aliases";
 
 export const IdentifyAliasesScreen = ({
   route,
 }: IdentifyAliasesScreenProps) => {
-  const {
-    isScanningSalesRaport,
-    processedInvoice,
-    processedSalesReport,
-    stockId,
-    stockType,
-  } = route.params;
+  const { processedInvoice, processedSalesReport, stockId, stockType } =
+    route.params;
   const styles = useStyles();
 
   return (
@@ -24,17 +18,17 @@ export const IdentifyAliasesScreen = ({
       contentContainerStyle={styles.bg}
       scrollable
     >
-      {isScanningSalesRaport ? (
-        <IdentifyAliasesScreenSalesRaport
-          processedSalesReport={processedSalesReport}
+      {stockType === "delivery" ? (
+        <IdentifyAliasesComponent
           stockId={stockId}
           stockType={stockType}
+          documentResponse={processedInvoice}
         />
       ) : (
-        <IdentifyAliasesScreenInvoice
-          processedInvoice={processedInvoice}
+        <IdentifyAliasesComponent
           stockId={stockId}
           stockType={stockType}
+          documentResponse={processedSalesReport}
         />
       )}
     </SafeLayout>

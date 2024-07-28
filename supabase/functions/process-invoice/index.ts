@@ -305,17 +305,17 @@ Deno.serve(async (req) => {
   }
 
   const matchedProductRecords: {
-    [id: number]: {
-    product_id: number;
-    price_per_unit: number;
-    quantity: number;
-    }
+    [product_id: number]: {
+      record_id: number;
+      price_per_unit: number;
+      quantity: number;
+    };
   } = {};
   const matchedProductsNotInInventory: {
-    [id: number]: {
-    price_per_unit: number;
-    quantity: number;
-    }
+    [product_id: number]: {
+      price_per_unit: number;
+      quantity: number;
+    };
   } = {};
   const unmatchedRows: {
     name: string;
@@ -349,18 +349,18 @@ Deno.serve(async (req) => {
     if (!alias.product_id) continue;
 
     if (!productRecord) {
-      matchedProductsNotInInventory[alias.product_id] = ({
+      matchedProductsNotInInventory[alias.product_id] = {
         price_per_unit,
         quantity,
-      });
+      };
       continue;
     }
 
-    matchedProductRecords[productRecord.id] = ({
-      product_id: alias.product_id,
+    matchedProductRecords[alias.product_id] = {
+      record_id: productRecord.id,
       price_per_unit,
       quantity,
-    });
+    };
   }
 
   return new Response(

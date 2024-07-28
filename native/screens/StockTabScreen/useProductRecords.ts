@@ -4,6 +4,7 @@ import { useStockContext } from "./StockContext/StockContextProvider";
 
 export const useProductRecords = () => {
   const { productRecords } = useStockContext();
+  // console.log({ productRecords });
 
   const productsResponse = useListExistingProducts();
   const { data: products, isSuccess: productsIsSuccess } = productsResponse;

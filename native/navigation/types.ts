@@ -8,6 +8,7 @@ import {
   ProcessInvoiceResponse,
   ProcessSalesRaportResponse,
 } from "../db/types";
+import { ProductRecordsByProductId } from "../screens/StockTabScreen/StockContext/types";
 
 /**
  * Update Required Stack
@@ -82,6 +83,7 @@ export type StockStackParamList = {
   StockTabScreen: {
     id: number;
     stockType: "delivery" | "inventory";
+    recordsFromInvoice?: ProductRecordsByProductId;
   };
   RecordScreen: {
     id: number;
