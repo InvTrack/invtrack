@@ -14,7 +14,7 @@ export const PhotoPreview = ({
 }) => {
   const { isConnected } = useNetInfo();
 
-  const { documentScannerState, updateDocumentScannerState } =
+  const { documentScannerState, setDocumentScannerState } =
     useDocumentScannerContext();
 
   const photo = documentScannerState.photo;
@@ -49,10 +49,11 @@ export const PhotoPreview = ({
               isLoading
                 ? () => null
                 : () =>
-                    updateDocumentScannerState((d) => {
-                      d.photo = null;
-                      d.isPreviewShown = false;
-                    })
+                    setDocumentScannerState((s) => ({
+                      ...s,
+                      photo: null,
+                      isPreviewShown: false,
+                    }))
               // () => dispatch(documentScannerAction.PHOTO_RETAKE())
             }
             size="s"

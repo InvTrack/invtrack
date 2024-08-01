@@ -11,7 +11,7 @@ export const useProcessDocument = (
 ) => {
   const { showError } = useSnackbar();
 
-  const { updateDocumentScannerState } = useDocumentScannerContext();
+  const { setDocumentScannerState } = useDocumentScannerContext();
 
   return useMutation(
     async ({
@@ -45,13 +45,11 @@ export const useProcessDocument = (
         return null;
       }
 
-      updateDocumentScannerState((d) => {
-        if (stockType === "delivery") {
-          d.processedInvoice = data;
-        } else {
-          d.processedSalesReport = data;
-        }
-      });
+      setDocumentScannerState((s) =>
+        stockType === "delivery"
+          ? { ...s, processedInvoice: data }
+          : { ...s, processedSalesReport: data }
+      );
 
       return data as ProcessSalesRaportResponse;
     }

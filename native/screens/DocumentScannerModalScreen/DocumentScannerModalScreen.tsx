@@ -1,5 +1,5 @@
 import { useCameraPermissions } from "expo-camera";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Linking, StyleSheet } from "react-native";
 
 import { Button } from "../../components/common/Button";
@@ -8,7 +8,6 @@ import { Typography } from "../../components/common/Typography";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import isEmpty from "lodash/isEmpty";
-import { useImmer } from "use-immer";
 import { EmptyScreenTemplate } from "../../components/common/EmptyScreenTemplate";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import SafeLayout from "../../components/common/SafeLayout";
@@ -30,11 +29,11 @@ export const DocumentScannerModalScreen = ({
   navigation,
   route,
 }: DocumentScannerModalScreen) => {
-  const [documentScannerState, updateDocumentScannerState] =
-    useImmer<DocumentScannerState>(initialDocumentScannerState);
+  const [documentScannerState, setDocumentScannerState] =
+    useState<DocumentScannerState>(initialDocumentScannerState);
 
   const resetDocumentScanner = () =>
-    updateDocumentScannerState(initialDocumentScannerState);
+    setDocumentScannerState(initialDocumentScannerState);
 
   const styles = useStyles();
   const { isScanningSalesRaport, stockId, stockType } = route.params;
@@ -152,7 +151,7 @@ export const DocumentScannerModalScreen = ({
       <DocumentScannerContext.Provider
         value={{
           documentScannerState,
-          updateDocumentScannerState,
+          setDocumentScannerState,
           resetDocumentScanner,
         }}
       >

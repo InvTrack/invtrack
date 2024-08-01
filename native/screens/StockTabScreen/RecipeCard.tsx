@@ -97,12 +97,8 @@ export const RecipeCard = ({
   const styles = useStyles();
   const { closeBottomSheet, openBottomSheet } = useBottomSheet();
   const { showInfo } = useSnackbar();
-  const {
-    recipeRecords,
-    updateRecipeRecords,
-    productRecords,
-    updateProductRecords,
-  } = useStockContext();
+  const { recipeRecords, productRecords, setProductRecord, setRecipeRecord } =
+    useStockContext();
   // WIP
   // const recordId = recipeRecordId || 0;
   const recipeRecord = recipeRecords[recipeId];
@@ -125,13 +121,7 @@ export const RecipeCard = ({
   const recipeQuantity = recipeRecord?.quantity || 0;
 
   const setRecipeQuantity = (v: number) =>
-    updateRecipeRecords((d) => {
-      if (!d[recipeId]) {
-        d[recipeId] = { quantity: v };
-      } else {
-        d[recipeId].quantity = v;
-      }
-    });
+    setRecipeRecord(recipeId, { quantity: v });
 
   // value is an integer, see InputBottomSheetContent props
   // in need of desparate refactoring hehe
@@ -177,9 +167,7 @@ export const RecipeCard = ({
           return;
         }
 
-        updateProductRecords((d) => {
-          d[productId].quantity = newRecordQuantity;
-        });
+        setProductRecord(productId, { quantity: newRecordQuantity });
       });
 
       setRecipeQuantity(value);
@@ -217,9 +205,7 @@ export const RecipeCard = ({
       return;
     }
 
-    updateRecipeRecords((d) => {
-      d[recipeId].quantity = newRecordQuantity;
-    });
+    setRecipeRecord(recipeId, { quantity: newRecordQuantity });
 
     setRecipeQuantity(value);
     return;

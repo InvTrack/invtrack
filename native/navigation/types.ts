@@ -8,6 +8,7 @@ import {
   ProcessInvoiceResponse,
   ProcessSalesRaportResponse,
 } from "../db/types";
+import { AliasForm } from "../screens/IdentifyAliasesScreen/types";
 import { ProductRecordsByProductId } from "../screens/StockTabScreen/StockContext/types";
 
 /**
@@ -84,6 +85,7 @@ export type StockStackParamList = {
     id: number;
     stockType: "delivery" | "inventory";
     recordsFromInvoice?: ProductRecordsByProductId;
+    aliasForm?: AliasForm;
   };
   RecordScreen: {
     id: number;

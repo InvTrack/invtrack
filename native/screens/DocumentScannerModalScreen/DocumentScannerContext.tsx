@@ -1,6 +1,5 @@
 import { CameraCapturedPicture } from "expo-camera";
 import { createContext, useContext } from "react";
-import { Updater } from "use-immer";
 import {
   ProcessInvoiceResponse,
   ProcessSalesRaportResponse,
@@ -24,41 +23,19 @@ export const initialDocumentScannerState: DocumentScannerState = {
 
 type DocumentScannerContextType = {
   documentScannerState: DocumentScannerState;
-  updateDocumentScannerState: Updater<DocumentScannerState>;
+  setDocumentScannerState: React.Dispatch<
+    React.SetStateAction<DocumentScannerState>
+  >;
   resetDocumentScanner: () => void;
 };
 
 export const DocumentScannerContext = createContext<DocumentScannerContextType>(
   {
     documentScannerState: initialDocumentScannerState,
-    updateDocumentScannerState: () => null,
+    setDocumentScannerState: () => null,
     resetDocumentScanner: () => null,
   }
 );
-
-// export const DocumentScannerContextProvider = ({
-//   children,
-// }: {
-//   children: ReactNode;
-// }) => {
-//   const [documentScannerState, updateDocumentScannerState] =
-//     useImmer<DocumentScannerState>(initialDocumentScannerState);
-
-//   const resetDocumentScanner = () =>
-//     updateDocumentScannerState(initialDocumentScannerState);
-
-//   return (
-//     <DocumentScannerContext.Provider
-//       value={{
-//         documentScannerState,
-//         updateDocumentScannerState,
-//         resetDocumentScanner,
-//       }}
-//     >
-//       {children}
-//     </DocumentScannerContext.Provider>
-//   );
-// };
 
 export const useDocumentScannerContext = () => {
   return useContext(DocumentScannerContext);

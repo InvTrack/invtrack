@@ -5,10 +5,11 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Updater, useImmer } from "use-immer";
 import { useListProductRecords } from "../../../db/hooks/useListProductRecords";
 import {
+  ProductRecordByProductIdValue,
   ProductRecordsByProductId,
+  RecipeRecordByRecipeIdValue,
   RecipeRecordsByRecipeId,
   StockData,
 } from "./types";
@@ -20,8 +21,12 @@ const initialRecipeRecords: RecipeRecordsByRecipeId = {};
 type StockContextType = StockData & {
   stockId: number;
   stockType: "inventory" | "delivery";
-  updateProductRecords: Updater<ProductRecordsByProductId>;
-  updateRecipeRecords: Updater<RecipeRecordsByRecipeId>;
+  setProductRecords: React.Dispatch<
+    React.SetStateAction<ProductRecordsByProductId>
+  >;
+  setRecipeRecords: React.Dispatch<
+    React.SetStateAction<RecipeRecordsByRecipeId>
+  >;
   recordsFromInvoice: ProductRecordsByProductId;
   setRecordsFromInvoice: React.Dispatch<
     React.SetStateAction<ProductRecordsByProductId>
@@ -32,9 +37,9 @@ const StockContext = createContext<StockContextType>({
   stockType: "delivery",
   stockId: initialStockId,
   productRecords: initialProductRecords,
-  updateProductRecords: () => null,
+  setProductRecords: () => null,
   recipeRecords: initialRecipeRecords,
-  updateRecipeRecords: () => null,
+  setRecipeRecords: () => null,
   recordsFromInvoice: initialProductRecords,
   setRecordsFromInvoice: () => null,
 });
@@ -63,12 +68,12 @@ export const StockContextProvider = ({
       )
     : {};
 
-  const [productRecords, updateProductRecords] =
-    useImmer<ProductRecordsByProductId>(defaultProductRecords);
+  const [productRecords, setProductRecords] =
+    useState<ProductRecordsByProductId>(defaultProductRecords);
   const [recordsFromInvoice, setRecordsFromInvoice] =
     useState<ProductRecordsByProductId>(defaultProductRecords);
 
-  const [recipeRecords, updateRecipeRecords] = useImmer(initialRecipeRecords);
+  const [recipeRecords, setRecipeRecords] = useState(initialRecipeRecords);
 
   return (
     <StockContext.Provider
@@ -76,9 +81,9 @@ export const StockContextProvider = ({
         stockId,
         stockType,
         productRecords,
-        updateProductRecords,
+        setProductRecords,
         recipeRecords,
-        updateRecipeRecords,
+        setRecipeRecords,
         recordsFromInvoice,
         setRecordsFromInvoice,
       }}
@@ -110,6 +115,26 @@ const mergeRawAndInvoiceProductRecords = (
 export const useStockContext = () => {
   const context = useContext(StockContext);
 
+  const setProductRecord = (
+    productId: number,
+    value: Partial<ProductRecordByProductIdValue>
+  ) => {
+    context.setProductRecords((r) => ({
+      ...r,
+      [productId]: { ...r[productId], ...value },
+    }));
+  };
+
+  const setRecipeRecord = (
+    recipeId: number,
+    value: Partial<RecipeRecordByRecipeIdValue>
+  ) => {
+    context.setRecipeRecords((r) => ({
+      ...r,
+      [recipeId]: { ...r[recipeId], ...value },
+    }));
+  };
+
   const productRecords = useMemo(
     () =>
       mergeRawAndInvoiceProductRecords(
@@ -119,5 +144,5 @@ export const useStockContext = () => {
     [context.productRecords, context.recordsFromInvoice]
   );
 
-  return { ...context, productRecords };
+  return { ...context, productRecords, setProductRecord, setRecipeRecord };
 };

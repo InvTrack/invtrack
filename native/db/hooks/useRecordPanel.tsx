@@ -15,7 +15,8 @@ export const useRecordPanel = ({
   inventoryId: number;
   productId: number;
 }) => {
-  const { productRecords, updateProductRecords } = useStockContext();
+  const { productRecords, setProductRecords, setProductRecord } =
+    useStockContext();
   const { quantity, price_per_unit } = productRecords[productId];
 
   const productResult = useGetProduct(productId);
@@ -25,24 +26,20 @@ export const useRecordPanel = ({
     (quantity: number) => {
       if (quantity < 0) return;
       const roundedQuantity = roundFloat(quantity);
-      updateProductRecords((d) => {
-        d[productId].quantity = roundedQuantity;
-      });
+      setProductRecord(productId, { quantity: roundedQuantity });
       return;
     },
-    [updateProductRecords, productId, quantity]
+    [setProductRecords, productId, quantity]
   );
 
   const setPrice = useCallback(
     (price: number) => {
       if (price < 0) return;
       const roundedPrice = roundFloat(price);
-      updateProductRecords((d) => {
-        d[productId].price_per_unit = roundedPrice;
-      });
+      setProductRecord(productId, { price_per_unit: roundedPrice });
       return;
     },
-    [updateProductRecords, productId, price_per_unit]
+    [setProductRecords, productId, price_per_unit]
   );
 
   const stepperFunction = useCallback(
@@ -50,20 +47,16 @@ export const useRecordPanel = ({
       ({
         click: () => {
           if (quantity + step < 0) {
-            updateProductRecords((d) => {
-              d[productId].quantity = 0;
-            });
+            setProductRecord(productId, { quantity: 0 });
             return;
           }
           const roundedQuantityStep = roundFloat(quantity + step);
-          updateProductRecords((d) => {
-            d[productId].quantity = roundedQuantityStep;
-          });
+          setProductRecord(productId, { quantity: roundedQuantityStep });
           return;
         },
         step,
       } as const),
-    [quantity, productId, updateProductRecords]
+    [quantity, productId, setProductRecords]
   );
 
   if (!isSuccess || !product || !product.steps)

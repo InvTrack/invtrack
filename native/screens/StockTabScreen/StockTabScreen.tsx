@@ -8,6 +8,8 @@ import { DocumentScannerIcon, ScanBarcodeIcon } from "../../components/Icon";
 import { Skeleton } from "../../components/Skeleton";
 import { useSnackbar } from "../../components/Snackbar/hooks";
 import { Button } from "../../components/common/Button";
+import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
+import { useCreateRecipeNameAlias } from "../../db/hooks/useCreateRecipeNameAlias";
 import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
 import { useListRecipesWithRecords } from "../../db/hooks/useListRecipes";
 import { useUpdateRecords } from "../../db/hooks/useUpdateRecords";
@@ -30,8 +32,7 @@ export default function StockTabScreen({
   const inventoryId = route.params?.id;
   const stockType = route.params?.stockType;
 
-  const recordsFromInvoice = route.params.recordsFromInvoice;
-  // console.log({ recordsFromInvoice });
+  const { recordsFromInvoice, aliasForm } = route.params;
 
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
@@ -43,7 +44,6 @@ export default function StockTabScreen({
   }, [recordsFromInvoice]);
 
   const { productRecords, setRecordsFromInvoice } = useStockContext();
-  // console.log({ productRecords });
 
   const {
     productsIsSuccess,
@@ -51,11 +51,6 @@ export default function StockTabScreen({
     categorizedProducts,
     uncategorizedProducts,
   } = useProductRecords();
-
-  // console.log({
-  //   x: categorizedProducts.map((c) => c.products),
-  //   uncategorizedProducts,
-  // });
 
   const { data: recipeList, isSuccess: recipesIsSuccess } =
     useListRecipesWithRecords(inventoryId);
@@ -65,6 +60,8 @@ export default function StockTabScreen({
     isSuccess: isUpdateSuccess,
     isError: isUpdateError,
   } = useUpdateRecords(+inventoryId);
+  const { mutate: createProductNameAliases } = useCreateProductNameAlias();
+  const { mutate: createRecipeNameAliases } = useCreateRecipeNameAlias();
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
@@ -131,6 +128,10 @@ export default function StockTabScreen({
                 labelStyle={styles.saveButtonLabel}
                 onPress={() => {
                   mutate({ productRecords, recipeRecords: {} });
+                  if (aliasForm) {
+                    createProductNameAliases(aliasForm);
+                    createRecipeNameAliases(aliasForm);
+                  }
                 }}
                 disabled={!isConnected}
               >

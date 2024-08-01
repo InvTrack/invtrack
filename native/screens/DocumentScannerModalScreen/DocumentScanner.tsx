@@ -15,27 +15,29 @@ export const DocumentScanner = ({
 }) => {
   const cameraRef = useRef<ExpoCamera>(null);
 
-  const { documentScannerState, updateDocumentScannerState } =
+  const { documentScannerState, setDocumentScannerState } =
     useDocumentScannerContext();
   const { isPreviewShown, isTakingPhoto } = documentScannerState;
 
   const takePicture = async () => {
     if (!cameraRef.current || isTakingPhoto) return;
 
-    updateDocumentScannerState((d) => {
-      d.isTakingPhoto = true;
-    });
+    setDocumentScannerState((s) => ({
+      ...s,
+      isTakingPhoto: true,
+    }));
     const photo = await cameraRef.current.takePictureAsync({
       exif: false,
       base64: true,
       quality: 0.6,
       imageType: "jpg",
     });
-    updateDocumentScannerState((d) => {
-      d.photo = photo || null;
-      d.isPreviewShown = !d.isPreviewShown;
-      d.isTakingPhoto = false;
-    });
+    setDocumentScannerState((s) => ({
+      ...s,
+      photo: photo || null,
+      isPreviewShown: !s.isPreviewShown,
+      isTakingPhoto: false,
+    }));
     // dispatch(documentScannerAction.PHOTO_TAKE({ photo }));
     // dispatch(documentScannerAction.SWITCH_PREVIEW());
     // dispatch(documentScannerAction.PHOTO_END());

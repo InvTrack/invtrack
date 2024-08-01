@@ -181,6 +181,7 @@ export const IdentifyAliasesComponent = ({
             id: stockId,
             stockType,
             recordsFromInvoice: merged,
+            aliasForm: getValues(),
           });
         }
       },
