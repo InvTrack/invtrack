@@ -20,7 +20,7 @@ const initialRecipeRecords: RecipeRecordsByRecipeId = {};
 
 type StockContextType = StockData & {
   stockId: number;
-  stockType: "inventory" | "delivery";
+  // stockType: "inventory" | "delivery";
   setProductRecords: React.Dispatch<
     React.SetStateAction<ProductRecordsByProductId>
   >;
@@ -34,7 +34,7 @@ type StockContextType = StockData & {
 };
 
 const StockContext = createContext<StockContextType>({
-  stockType: "delivery",
+  // stockType: "delivery",
   stockId: initialStockId,
   productRecords: initialProductRecords,
   setProductRecords: () => null,
@@ -51,8 +51,7 @@ export const StockContextProvider = ({
   children: ReactNode;
   stockId: number;
 }) => {
-  // WIP
-  const stockType = "delivery";
+  // const stockType = "delivery";
 
   const { data: productRecordsRaw } = useListProductRecords(stockId);
   const defaultProductRecords = productRecordsRaw
@@ -79,7 +78,7 @@ export const StockContextProvider = ({
     <StockContext.Provider
       value={{
         stockId,
-        stockType,
+        // stockType,
         productRecords,
         setProductRecords,
         recipeRecords,

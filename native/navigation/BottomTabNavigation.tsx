@@ -157,13 +157,13 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         name="StockTab"
         component={StockStackNavigator}
         options={{
-          // WIP
+          // VISUAL
           title: "Stock",
           tabBarShowLabel: false,
           tabBarActiveTintColor: theme.colors.highlight,
-          // WIP
+          // VISUAL
           tabBarIcon: () =>
-            true ? (
+            false ? (
               <DeliveryIcon color="darkGrey" size={37} />
             ) : (
               <InventoryIcon color="darkGrey" size={37} />

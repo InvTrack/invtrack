@@ -9,7 +9,6 @@ export const DocumentScanner = ({
   stockId,
   stockType,
 }: {
-  isScanningSalesRaport: boolean;
   stockId: number;
   stockType: "delivery" | "inventory";
 }) => {

@@ -38,7 +38,6 @@ export type HomeStackParamList = {
   DocumentScannerModal: {
     stockId: number;
     stockType: "delivery" | "inventory";
-    isScanningSalesRaport: boolean;
   };
   SettingsScreen: undefined;
   NewBarcodeScreen: { inventoryId: number; new_barcode: string };
@@ -46,7 +45,6 @@ export type HomeStackParamList = {
   NewProductScreen: { inventoryId: number };
   IdentifyAliasesScreen: {
     stockId: number;
-    isScanningSalesRaport: boolean;
     stockType: "delivery" | "inventory";
     processedInvoice: ProcessInvoiceResponse;
     processedSalesReport: ProcessSalesRaportResponse;
@@ -58,8 +56,6 @@ export type HomeStackParamList = {
  */
 export type BottomTabParamList = {
   ListTab: undefined;
-  DeliveryTab: { id?: number };
-  InventoryTab: { id?: number };
   StockTab: { id?: number };
 };
 export type BottomTabProps = CompositeScreenProps<

@@ -176,7 +176,7 @@ export const IdentifyAliasesComponent = ({
             ...newMatchedProducts,
           };
 
-          // WIP "necessery hack"? idk how navigation works
+          // "necessery hack"? idk how navigation works
           navigation.navigate("StockTabScreen" as any, {
             id: stockId,
             stockType,
@@ -223,7 +223,6 @@ export const IdentifyAliasesComponent = ({
           fullWidth
           onPress={() =>
             navigation.replace("DocumentScannerModal", {
-              isScanningSalesRaport: false,
               stockId,
               stockType,
             })

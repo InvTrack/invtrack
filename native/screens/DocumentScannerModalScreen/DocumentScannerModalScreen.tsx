@@ -36,17 +36,16 @@ export const DocumentScannerModalScreen = ({
     setDocumentScannerState(initialDocumentScannerState);
 
   const styles = useStyles();
-  const { isScanningSalesRaport, stockId, stockType } = route.params;
+  const { stockId, stockType } = route.params;
   const [permission, requestPermission] = useCameraPermissions();
 
   const { processedInvoice, processedSalesReport } = documentScannerState;
 
   useEffect(() => {
-    if (isScanningSalesRaport && processedSalesReport != null) {
+    if (stockType === "inventory" && processedSalesReport != null) {
       if (stockId && !isEmpty(processedSalesReport?.unmatchedAliases)) {
         navigation.replace("IdentifyAliasesScreen", {
           stockId,
-          isScanningSalesRaport,
           processedInvoice: null,
           processedSalesReport,
           stockType,
@@ -61,7 +60,6 @@ export const DocumentScannerModalScreen = ({
       if (stockId && !isEmpty(processedInvoice?.unmatchedRows)) {
         navigation.replace("IdentifyAliasesScreen", {
           stockId,
-          isScanningSalesRaport,
           processedInvoice,
           processedSalesReport: null,
           stockType,
@@ -71,7 +69,7 @@ export const DocumentScannerModalScreen = ({
       }
     resetDocumentScanner();
     return;
-  }, [isScanningSalesRaport, stockId, processedInvoice, processedSalesReport]);
+  }, [stockId, processedInvoice, processedSalesReport]);
 
   const awaitingPermission = !permission;
   const permissionDeniedCanAskAgain =
@@ -155,11 +153,7 @@ export const DocumentScannerModalScreen = ({
           resetDocumentScanner,
         }}
       >
-        <DocumentScanner
-          isScanningSalesRaport={isScanningSalesRaport}
-          stockId={stockId}
-          stockType={stockType}
-        />
+        <DocumentScanner stockId={stockId} stockType={stockType} />
       </DocumentScannerContext.Provider>
     </SafeLayout>
   );

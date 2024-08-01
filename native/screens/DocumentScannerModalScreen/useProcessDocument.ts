@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSnackbar } from "../../components/Snackbar/hooks";
-// import { queryKeys } from "../../db/hooks/queryKeys";
 import { supabase } from "../../db/supabase";
 import { ProcessSalesRaportResponse } from "../../db/types";
 import { useDocumentScannerContext } from "./DocumentScannerContext";
@@ -53,9 +52,5 @@ export const useProcessDocument = (
 
       return data as ProcessSalesRaportResponse;
     }
-    // WIP
-    // {
-    //   mutationKey: queryKeys.processSalesRaport(stockId),
-    // }
   );
 };

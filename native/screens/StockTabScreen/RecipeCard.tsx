@@ -99,15 +99,8 @@ export const RecipeCard = ({
   const { showInfo } = useSnackbar();
   const { recipeRecords, productRecords, setProductRecord, setRecipeRecord } =
     useStockContext();
-  // WIP
-  // const recordId = recipeRecordId || 0;
   const recipeRecord = recipeRecords[recipeId];
-  // const { watch, setValue } = useFormContext<StockForm>();
   const { data: recordsList } = useListRecords(inventoryId);
-  // const { data: recipeRecord } = useGetRecipeRecord(
-  //   inventoryId,
-  //   recipeRecordId
-  // );
 
   const recordAndMultiplier = useMemo(
     () => getRecordAndMultiplier(recipePart, recordsList),
@@ -145,15 +138,7 @@ export const RecipeCard = ({
 
         const productId = ram.product_id;
 
-        // the object may not exist, if the user did not navigate to the given RecordScreen
-        // may change during the form refactor
-        // WIP
         const oldRecordValues = productRecords[productId];
-        // const oldRecordValues = watch(`product_records.${ram.product_id}`) || {
-        //   price_per_unit: null,
-        //   id: ram.record_id,
-        //   quantity: ram.record_quantity_backup,
-        // };
 
         const dMultiplied = roundFloat(delta * ram.multiplier);
         const newRecordQuantity = roundFloat(

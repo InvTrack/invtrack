@@ -111,8 +111,6 @@ export default function StockTabScreen({
                 onPress={() => {
                   // necessary hack, handled by parent navigator - be cautious
                   navigation.navigate("DocumentScannerModal" as any, {
-                    // WIP
-                    isScanningSalesRaport: false,
                     stockId: inventoryId,
                     stockType,
                   });

@@ -28,7 +28,6 @@ export const useMakeSessionState = () => {
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(
       async (_event, _session) => {
-        // console.log("auth changed", session?.user.id);
         setSession(_session);
       }
     );
