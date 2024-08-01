@@ -4,10 +4,10 @@ import { StyleSheet } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../components/Button";
-import { LoadingSpinner } from "../components/LoadingSpinner";
-import TextInputController from "../components/TextInputController";
-import { Typography } from "../components/Typography";
+import { Button } from "../components/common/Button";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import TextInputController from "../components/common/TextInputController";
+import { Typography } from "../components/common/Typography";
 import { supabase } from "../db";
 import { LoginStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";

@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import * as Updates from "expo-updates";
 import { Linking, StyleSheet, View } from "react-native";
-import { Button } from "../../components/Button";
 import { AppIcon } from "../../components/Icon";
-import SafeLayout from "../../components/SafeLayout";
-import { Typography } from "../../components/Typography";
+import { Button } from "../../components/common/Button";
+import SafeLayout from "../../components/common/SafeLayout";
+import { Typography } from "../../components/common/Typography";
 import { isIos } from "../../constants";
 import { useCheckIfNativeUpdateNeeded } from "../../db/hooks/useCheckIfNativeUpdateNeeded";
 import { createStyles } from "../../theme/useStyles";

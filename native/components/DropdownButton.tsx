@@ -11,8 +11,8 @@ import {
 
 import { createStyles } from "../theme/useStyles";
 import { ExpandMoreIcon } from "./Icon";
-import { LoadingSpinner } from "./LoadingSpinner";
-import { Typography, TypographyProps } from "./Typography";
+import { LoadingSpinner } from "./common/LoadingSpinner";
+import { Typography, TypographyProps } from "./common/Typography";
 
 export type ButtonOnPress = (event: GestureResponderEvent) => void;
 type ButtonProps = {

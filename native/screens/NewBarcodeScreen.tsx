@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../components/Button";
 import { NewBarcodeListItem } from "../components/NewBarcodeListItem";
 import { Skeleton } from "../components/Skeleton";
+import { Button } from "../components/common/Button";
 import { useListProductRecords } from "../db";
 
 import { useNetInfo } from "@react-native-community/netinfo";

@@ -16,7 +16,7 @@ import { appAction, appSelector } from "../redux/appSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { createStyles } from "../theme/useStyles";
 import { CameraSwitchIcon, InfoIcon } from "./Icon";
-import { LoadingSpinner } from "./LoadingSpinner";
+import { LoadingSpinner } from "./common/LoadingSpinner";
 
 type CameraProps = {
   onBarcodeScanned?: ComponentProps<typeof ExpoCamera>["onBarcodeScanned"];

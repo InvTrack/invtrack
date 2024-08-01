@@ -1,33 +1,48 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { StockForm } from "../../components/StockFormContext/types";
+import { StockData } from "../../screens/StockTabScreen/StockContext/types";
 import { supabase } from "../supabase";
 
-const updateRecordsForm = async (form: StockForm) => {
+const updateRecordsForm = async (stock: StockData, inventoryId: number) => {
   if (
-    Object.keys(form.product_records).length &&
-    Object.keys(form.recipe_records).length
+    Object.keys(stock.productRecords).length &&
+    Object.keys(stock.recipeRecords).length
   )
     return;
 
   const data = await Promise.all([
     (
       await Promise.all(
-        Object.entries(form.product_records).map(
-          ([record_id, { quantity, price_per_unit }]) => {
+        Object.entries(stock.productRecords)
+          .filter(([_, { record_id }]) => !!record_id)
+          .map(([product_id, { quantity, price_per_unit }]) => {
             return supabase
               .from("product_record")
               .update({ quantity, price_per_unit })
-              .eq("id", Number(record_id))
+              .eq("inventory_id", inventoryId)
+              .eq("product_id", product_id)
               .select()
               .single();
-          }
-        )
+          })
       )
     ).map((it) => it.data),
     (
       await Promise.all(
-        Object.entries(form.recipe_records).map(([record_id, { quantity }]) => {
+        Object.entries(stock.productRecords)
+          .filter(([_, { record_id }]) => !record_id)
+          .map(([product_id, { quantity, price_per_unit }]) => {
+            return supabase.from("product_record").insert({
+              product_id: parseInt(product_id),
+              quantity,
+              price_per_unit,
+              inventory_id: inventoryId,
+            });
+          })
+      )
+    ).map((it) => it.data),
+    (
+      await Promise.all(
+        Object.entries(stock.recipeRecords).map(([record_id, { quantity }]) => {
           return supabase
             .from("recipe_record")
             .update({ quantity })
@@ -38,33 +53,32 @@ const updateRecordsForm = async (form: StockForm) => {
       )
     ).map((it) => it.data),
   ]);
-  console.log(data);
-  return { products: data[0], recipes: data[1] };
+  return { products: data[0], recipes: data[2] };
 };
 
 export const useUpdateRecords = (inventoryId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (form) => await updateRecordsForm(form),
-    onMutate: async (form: StockForm) => {
-      const recordsIterable = Object.entries(form.product_records);
+    mutationFn: async (stock) => await updateRecordsForm(stock, inventoryId),
+    onMutate: async (stock: StockData) => {
+      const recordsIterable = Object.entries(stock.productRecords);
       await Promise.all(
-        recordsIterable.map(([recordId, _record]) => {
-          queryClient.cancelQueries(["product_record", recordId]);
+        recordsIterable.map(([productId, _record]) => {
+          queryClient.cancelQueries(["product_record", inventoryId, productId]);
           queryClient.setQueryData(
-            ["product_record", recordId],
-            (old: any) => ({ ...old, ...form.product_records[recordId] })
+            ["product_record", inventoryId, productId],
+            (old: any) => ({ ...old, ...stock.productRecords[productId] })
           );
         })
       );
-      const recipesIterable = Object.entries(form.recipe_records);
+      const recipesIterable = Object.entries(stock.recipeRecords);
       await Promise.all(
         recipesIterable.map(([recordId, _record]) => {
           queryClient.cancelQueries(["recipeRecord", recordId]);
           queryClient.setQueryData(["recipeRecord", recordId], (old: any) => ({
             ...old,
-            ...form.recipe_records[recordId],
+            ...stock.recipeRecords[recordId],
           }));
         })
       );
@@ -85,12 +99,15 @@ export const useUpdateRecords = (inventoryId: number) => {
         ]);
         await Promise.all(
           data.products.map((updatedRecord) => {
-            const recordId = updatedRecord?.id;
-            if (!recordId) return;
-            queryClient.invalidateQueries(["product_record", recordId], {
-              exact: true,
-              refetchType: "all",
-            });
+            const productId = updatedRecord?.product_id;
+            if (!productId) return;
+            queryClient.invalidateQueries(
+              ["product_record", inventoryId, productId],
+              {
+                exact: true,
+                refetchType: "all",
+              }
+            );
           })
         );
       } else if (data?.recipes) {

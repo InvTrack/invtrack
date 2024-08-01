@@ -3,15 +3,15 @@ import { StyleSheet, View } from "react-native";
 
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../components/Button";
-import TextInputController from "../components/TextInputController";
+import { Button } from "../components/common/Button";
+import TextInputController from "../components/common/TextInputController";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import NumberInputController from "../components/NumberInputController";
 import { useSnackbar } from "../components/Snackbar/hooks";
 import { Tooltip } from "../components/Tooltip";
-import { Typography } from "../components/Typography";
+import NumberInputController from "../components/common/NumberInputController";
+import { Typography } from "../components/common/Typography";
 import { useCreateProduct } from "../db/hooks/useCreateProduct";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";

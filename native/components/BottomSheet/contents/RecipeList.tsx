@@ -3,8 +3,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useListRecipes } from "../../../db/hooks/useListRecipes";
 import { createStyles } from "../../../theme/useStyles";
-import { Button } from "../../Button";
-import { Typography } from "../../Typography";
+import { Button } from "../../common/Button";
+import { Typography } from "../../common/Typography";
 
 export const RecipesListBottomSheetContent = ({
   closeBottomSheet,

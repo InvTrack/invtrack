@@ -5,9 +5,9 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { createStyles } from "../../../theme/useStyles";
 import { useKeyboard } from "../../../utils/useKeyboard";
-import { Button } from "../../Button";
-import TextInputController from "../../TextInputController";
-import { Typography } from "../../Typography";
+import { Button } from "../../common/Button";
+import TextInputController from "../../common/TextInputController";
+import { Typography } from "../../common/Typography";
 
 type ProductListBottomSheetForm = { searchText: string };
 export const ProductListBottomSheetContent = ({

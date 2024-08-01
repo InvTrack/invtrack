@@ -7,9 +7,9 @@ import { isAndroid } from "../../../constants";
 import { createStyles } from "../../../theme/useStyles";
 import { formatFloatString } from "../../../utils";
 import { useKeyboard } from "../../../utils/useKeyboard";
-import { Button } from "../../Button";
-import TextInputController from "../../TextInputController";
-import { Typography } from "../../Typography";
+import { Button } from "../../common/Button";
+import TextInputController from "../../common/TextInputController";
+import { Typography } from "../../common/Typography";
 
 type InputBottomSheetForm = {
   quantity: string;

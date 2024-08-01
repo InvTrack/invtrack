@@ -66,20 +66,24 @@ export type PatchedDatabase = {
 };
 
 export type ProcessInvoiceResponse = {
-  form: {
-    [recordId: number]: {
-      product_id: number;
+  matchedProductRecords: {
+    [product_id: number]: {
+      record_id: number;
       price_per_unit: number;
       quantity: number;
     };
   };
-  unmatched: {
-    [name: string]: {
+  matchedProductsNotInInventory: {
+    [product_id: number]: {
       price_per_unit: number;
       quantity: number;
     };
   };
-  unmatchedAliases: string[];
+  unmatchedRows: {
+    name: string;
+    price_per_unit: number;
+    quantity: number;
+  }[];
 } | null;
 
 export type ProcessSalesRaportResponse = {

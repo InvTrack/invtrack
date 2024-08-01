@@ -10,8 +10,8 @@ export const useCreateRecipeNameAlias = () => {
   const { showError, showSuccess } = useSnackbar();
   const { data: currentCompanyId } = useGetCurrentCompanyId();
   return useMutation(
-    async (recipeNameAliases: AliasForm): Promise<NameAliasTable[] | []> => {
-      if (isEmpty(recipeNameAliases)) {
+    async (aliasForm: AliasForm): Promise<NameAliasTable[] | []> => {
+      if (isEmpty(aliasForm.recipeAliases)) {
         return [];
       }
       if (currentCompanyId?.id == null) {
@@ -20,11 +20,11 @@ export const useCreateRecipeNameAlias = () => {
       }
       const company_id = currentCompanyId?.id;
 
-      const mapped = Object.entries(recipeNameAliases).reduce(
+      const mapped = Object.entries(aliasForm.recipeAliases).reduce(
         (acc, [recipe_id, aliases]) => {
-          if (recipe_id === "usedAliases") {
-            return acc;
-          }
+          // if (recipe_id === "usedAliases") {
+          //   return acc;
+          // }
           return [
             ...acc,
             ...(aliases?.map((alias) => ({

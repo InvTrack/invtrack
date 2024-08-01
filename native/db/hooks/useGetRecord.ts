@@ -2,21 +2,26 @@ import { useQuery } from "@tanstack/react-query";
 
 import { supabase } from "../supabase";
 
-export type UseGetRecordQueryKey = ["product_record", recordId: number];
+export type UseGetRecordQueryKey = [
+  "product_record",
+  inventoryId: number,
+  productId: number
+];
 
-const getRecord = async (recordId: number) => {
+const getRecord = async (inventoryId: number, productId: number) => {
   const { data, error } = await supabase
     .from("record_view")
     .select()
-    .eq("id", recordId)
+    .eq("inventory_id", inventoryId)
+    .eq("product_id", productId)
     .single();
   if (error) throw new Error(error.message);
   return data;
 };
 
-export const useGetRecord = (recordId: number) => {
-  const query = useQuery(["product_record", recordId], () =>
-    getRecord(recordId)
+export const useGetRecord = (inventoryId: number, productId: number) => {
+  const query = useQuery(["product_record", inventoryId, productId], () =>
+    getRecord(inventoryId, productId)
   );
   return query;
 };

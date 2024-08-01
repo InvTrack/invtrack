@@ -64,7 +64,11 @@ export const useInsertBarcode = (inventory_id: number) => {
           ["barcodeList", inventory_id],
           (old) => {
             if (!old) return;
-            return { ...old, [new_barcode]: product_id };
+            return {
+              ...old,
+              // TODO: check if null recordId here doesn't break it
+              [new_barcode]: { productId: product_id, recordId: null },
+            };
           }
         );
         return { previousBarcodesList };

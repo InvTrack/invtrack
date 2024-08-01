@@ -10,8 +10,8 @@ export const useCreateProductNameAlias = () => {
   const { showError, showSuccess } = useSnackbar();
   const { data: currentCompanyId } = useGetCurrentCompanyId();
   return useMutation(
-    async (productNameAliases: AliasForm): Promise<NameAliasTable[] | []> => {
-      if (isEmpty(productNameAliases)) {
+    async (aliasForm: AliasForm): Promise<NameAliasTable[] | []> => {
+      if (isEmpty(aliasForm.productAliases)) {
         return [];
       }
       if (currentCompanyId?.id == null) {
@@ -20,11 +20,8 @@ export const useCreateProductNameAlias = () => {
       }
       const company_id = currentCompanyId?.id;
 
-      const mapped = Object.entries(productNameAliases).reduce(
+      const mapped = Object.entries(aliasForm.productAliases).reduce(
         (acc, [product_id, aliases]) => {
-          if (product_id === "usedAliases") {
-            return acc;
-          }
           return [
             ...acc,
             ...(aliases?.map((alias) => ({

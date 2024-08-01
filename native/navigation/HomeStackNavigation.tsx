@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Header } from "../components/Header";
-import { BarcodeModalScreen } from "../screens/BarcodeModalScreen";
-import { DocumentScannerModalScreen } from "../screens/DocumentScannerModalScreen";
+import { BarcodeModalScreen } from "../screens/BarcodeModalScreen/BarcodeModalScreen";
+import { DocumentScannerModalScreen } from "../screens/DocumentScannerModalScreen/DocumentScannerModalScreen";
 import { IdentifyAliasesScreen } from "../screens/IdentifyAliasesScreen";
 import { NewBarcodeScreen } from "../screens/NewBarcodeScreen";
 import { NewProductScreen } from "../screens/NewProductScreen";

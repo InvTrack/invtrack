@@ -2,8 +2,8 @@ import React from "react";
 
 import { useForm } from "react-hook-form";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../components/Button";
-import TextInputController from "../components/TextInputController";
+import { Button } from "../components/common/Button";
+import TextInputController from "../components/common/TextInputController";
 
 import { ScrollView, StyleSheet } from "react-native";
 
@@ -11,7 +11,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQueryClient } from "@tanstack/react-query";
 import { DevInfo } from "../components/DevInfo";
 import { PrivacyPolicy } from "../components/PrivacyPolicy";
-import { Typography } from "../components/Typography";
+import { Typography } from "../components/common/Typography";
 import { supabase, useSession } from "../db";
 import { HomeStackParamList } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";

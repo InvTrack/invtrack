@@ -1,35 +1,37 @@
 import { useListProductRecordIds } from "../db/hooks/useListProductRecordIds";
 
+type LocalRecordType = ReturnType<
+  typeof useListProductRecordIds
+>["data"][number];
+
 export const useRecordPagination = (
   recordId: number | undefined,
-  recordIds: ReturnType<typeof useListProductRecordIds>["data"]
+  records: LocalRecordType[]
 ): {
-  nextRecordId: number | undefined;
-  prevRecordId: number | undefined;
+  nextRecord: LocalRecordType | undefined;
+  prevRecord: LocalRecordType | undefined;
   isLast: boolean;
   isFirst: boolean;
 } => {
-  if (!recordIds || recordIds.length === 0) {
+  if (!records || records.length === 0) {
     return {
-      nextRecordId: undefined,
-      prevRecordId: undefined,
+      nextRecord: undefined,
+      prevRecord: undefined,
       isLast: false,
       isFirst: false,
     };
   }
 
-  const numberRecordIds: number[] = recordIds.map((r) => r.id);
-
-  const index = numberRecordIds.findIndex((id) => id === recordId);
-  const isLast = index === numberRecordIds.length - 1;
+  const index = records.findIndex((r) => r.id === recordId);
+  const isLast = index === records.length - 1;
   const isFirst = index === 0;
 
-  const nextRecordId = isLast ? undefined : numberRecordIds[index + 1];
-  const prevRecordId = isFirst ? undefined : numberRecordIds[index - 1];
+  const nextRecord = isLast ? undefined : records[index + 1];
+  const prevRecord = isFirst ? undefined : records[index - 1];
 
   return {
-    nextRecordId,
-    prevRecordId,
+    nextRecord,
+    prevRecord,
     isLast,
     isFirst,
   };

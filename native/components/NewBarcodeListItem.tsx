@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createStyles } from "../theme/useStyles";
-import { Card } from "./Card";
-import { Typography } from "./Typography";
+import { Card } from "./common/Card";
+import { Typography } from "./common/Typography";
 
 type NewBarcodeListItemProps = {
   name: string;

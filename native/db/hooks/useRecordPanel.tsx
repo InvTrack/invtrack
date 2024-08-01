@@ -1,101 +1,45 @@
-import { useCallback, useEffect } from "react";
-
-import { useFormContext } from "react-hook-form";
-import { StockForm } from "../../components/StockFormContext/types";
+import { useCallback } from "react";
+import { useStockContext } from "../../screens/StockTabScreen/StockContext/StockContextProvider";
 import { roundFloat } from "../../utils";
-import { useGetRecord } from "./useGetRecord";
-type Form = StockForm;
+import { useGetProduct } from "./useGetProduct";
+
 /**
  * This hook simplifies the process of populating the form with the backend data.
  * Registers the records as needed, returns values needed to manipulate the form in a safe way.
  *
  * Submitting the form is done in a separate hook.
  */
-export const useRecordPanel = (recordId: number) => {
-  const recordResult = useGetRecord(recordId);
-  const form = useFormContext<Form>();
-  if (!form) throw new Error("Missing form context");
+export const useRecordPanel = ({
+  productId,
+}: {
+  inventoryId: number;
+  productId: number;
+}) => {
+  const { productRecords, setProductRecords, setProductRecord } =
+    useStockContext();
+  const { quantity, price_per_unit } = productRecords[productId];
 
-  const { data: record, isSuccess } = recordResult;
-
-  useEffect(() => {
-    // guard would be cleaner but for some reason it doesn't work here
-    // no idea why
-    if (record?.product_id && record?.quantity) {
-      const shouldAddMissingValues =
-        // is nullish
-        form.getValues().product_records[recordId.toString()]?.product_id ==
-        null;
-
-      if (shouldAddMissingValues) {
-        form.setValue(
-          `product_records.${recordId.toString()}.product_id`,
-          record.product_id
-        );
-      }
-
-      const shouldUpdateQuantity =
-        !form.getFieldState(`product_records.${recordId}.quantity`).isDirty ||
-        record.quantity !==
-          form.getValues().product_records[recordId.toString()]?.quantity;
-
-      if (shouldUpdateQuantity) {
-        form.setValue(`product_records.${recordId}.quantity`, record.quantity);
-      }
-      const shouldUpdatePrice =
-        !form.getFieldState(`product_records.${recordId}.price_per_unit`)
-          .isDirty ||
-        record.price_per_unit !==
-          form.getValues().product_records[recordId.toString()]?.price_per_unit;
-
-      if (shouldUpdatePrice) {
-        form.setValue(
-          `product_records.${recordId}.price_per_unit`,
-          record.price_per_unit
-        );
-      }
-    }
-  }, [
-    recordId,
-    record?.product_id,
-    record?.quantity,
-    record?.price_per_unit,
-    isSuccess,
-  ]);
-
-  const quantity = form.watch(`product_records.${recordId}.quantity`) ?? 0;
-  const price = form.watch(`product_records.${recordId}.price_per_unit`) ?? 0;
+  const productResult = useGetProduct(productId);
+  const { data: product, isSuccess } = productResult;
 
   const setQuantity = useCallback(
     (quantity: number) => {
       if (quantity < 0) return;
       const roundedQuantity = roundFloat(quantity);
-      // dot notation is more performant
-      form.setValue(`product_records.${recordId}.quantity`, roundedQuantity, {
-        shouldDirty: true,
-        shouldTouch: true,
-      });
+      setProductRecord(productId, { quantity: roundedQuantity });
       return;
     },
-    [form, recordId, quantity]
+    [setProductRecords, productId, quantity]
   );
 
   const setPrice = useCallback(
     (price: number) => {
       if (price < 0) return;
       const roundedPrice = roundFloat(price);
-      // dot notation is more performant
-      form.setValue(
-        `product_records.${recordId}.price_per_unit`,
-        roundedPrice,
-        {
-          shouldDirty: true,
-          shouldTouch: true,
-        }
-      );
+      setProductRecord(productId, { price_per_unit: roundedPrice });
       return;
     },
-    [form, recordId, price]
+    [setProductRecords, productId, price_per_unit]
   );
 
   const stepperFunction = useCallback(
@@ -103,53 +47,37 @@ export const useRecordPanel = (recordId: number) => {
       ({
         click: () => {
           if (quantity + step < 0) {
-            form.setValue(
-              // dot notation is more performant
-              `product_records.${recordId}.quantity`,
-              0,
-              {
-                shouldDirty: true,
-                shouldTouch: true,
-              }
-            );
+            setProductRecord(productId, { quantity: 0 });
             return;
           }
           const roundedQuantityStep = roundFloat(quantity + step);
-          form.setValue(
-            // dot notation is more performant
-            `product_records.${recordId}.quantity`,
-            roundedQuantityStep,
-            {
-              shouldDirty: true,
-              shouldTouch: true,
-            }
-          );
+          setProductRecord(productId, { quantity: roundedQuantityStep });
           return;
         },
         step,
       } as const),
-    [quantity, recordId, form]
+    [quantity, productId, setProductRecords]
   );
 
-  if (!isSuccess || !record || !record.steps)
+  if (!isSuccess || !product || !product.steps)
     return {
       steppers: { negative: [], positive: [] },
       setQuantity,
       quantity,
       setPrice,
-      price,
-      ...recordResult,
+      price: price_per_unit,
+      productResult,
     } as const;
 
   return {
     steppers: {
-      negative: record.steps.map((step) => stepperFunction(-step)),
-      positive: record.steps.map((step) => stepperFunction(step)),
+      negative: product.steps.map((step) => stepperFunction(-step)),
+      positive: product.steps.map((step) => stepperFunction(step)),
     },
     setQuantity,
     quantity,
     setPrice,
-    price,
-    ...recordResult,
+    price: price_per_unit,
+    productResult,
   } as const;
 };

@@ -11,6 +11,9 @@ import isEmpty from "lodash/isEmpty";
 import { isNil } from "../_shared/isNil.ts";
 import { createClient } from "@supabase/supabase-js@2";
 import { Database } from "../_shared/database.types.ts";
+import mockDocumentAnalysisResult from "./documentAnalysisResult.mock.json" with {type: "json"};
+
+const test = false;
 
 const DocumentIntelligenceEndpoint = Deno.env.get(
   "DOCUMENT_INTELLIGENCE_ENDPOINT"
@@ -120,18 +123,20 @@ const getQuantity = (item: DocumentFieldOutput | undefined): number | null => {
   return parseFloat6Precision(item.valueNumber);
 };
 
+/**
+ * This edge function works in two consecutive steps:
+ * 1. Send the image data to an AI service, get a list of rows in the form {sanitizedName, price_per_unit, quantity}
+ * 2. Match the list with existing name_alias'es, return a form object to be used on the frontend.
+ */
 Deno.serve(async (req) => {
   // preflight request
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
-  //
-  //
+
   const requestBody: { image?: { data?: unknown }; inventory_id?: unknown } =
     await req.json();
-  // const requestBody = { image: { data: "" }, inventory_id: 11 };
-  //
-  //
+
   if (
     requestBody?.image?.data == null ||
     requestBody?.inventory_id == null ||
@@ -144,6 +149,127 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders },
     });
   }
+
+  /** STEP 1: scan and analyze the invoice */
+
+  let documentAnalysisResult:
+    | ({
+        sanitizedName: string | null;
+        price_per_unit: number | null;
+        quantity: number | null;
+      } | null)[]
+    | null = null;
+
+  if (test) {
+    documentAnalysisResult = mockDocumentAnalysisResult;
+  } else {
+    if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
+      console.error("Environment variables are not set up correctly");
+      return new Response("Environment variables are not set up correctly.", {
+        status: 500,
+      });
+    }
+
+    const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
+      key: DocumentIntelligenceApiKey,
+    });
+    const initialResponse = await client
+      .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
+      .post({
+        contentType: "application/json",
+        body: {
+          base64Source: requestBody.image.data,
+        },
+      });
+
+    const poller = await getLongRunningPoller(client, initialResponse);
+    const result = (await poller.pollUntilDone())
+      .body as AnalyzeResultOperationOutput;
+
+    // to mock, copy a json from examples
+    // const result = mockResponse;
+
+    // analyzeResult?.documents?.[0].fields contents are defined here
+    // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
+    if (
+      !result.analyzeResult ||
+      isEmpty(result.analyzeResult?.documents) ||
+      !result.analyzeResult?.documents
+    ) {
+      console.error(
+        `No useful data found during processing, status ${
+          result.status
+        }, ${JSON.stringify(result.error, null, 2)}`
+      );
+      return new Response(`No useful data found during processing`, {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
+
+    if (result.analyzeResult.documents.length > 1) {
+      console.error("More than one page in document");
+      return new Response("More than one page in document", {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
+
+    if (
+      isEmpty(result.analyzeResult?.documents[0].fields) ||
+      !result.analyzeResult.documents[0].fields
+    ) {
+      console.error("No data extracted from document");
+      return new Response("No data extracted from document", {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
+
+    if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
+      const itemValue =
+        result.analyzeResult.documents[0].fields.Items?.valueObject;
+      const sanitizedName = parseStringForResponse(
+        getName(itemValue?.Description)
+      );
+      const price_per_unit = parseFloatForResponse(getPricePerUnit(itemValue));
+      const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
+      documentAnalysisResult = [
+        {
+          sanitizedName,
+          price_per_unit,
+          quantity,
+        },
+      ];
+    }
+    if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
+      documentAnalysisResult =
+        result.analyzeResult.documents[0].fields.Items?.valueArray?.map(
+          (item) => {
+            if (item.type !== "object") {
+              return null;
+            }
+            const itemValue = item.valueObject;
+            const sanitizedName = parseStringForResponse(
+              getName(itemValue?.Description)
+            );
+            const price_per_unit = parseFloatForResponse(
+              getPricePerUnit(itemValue)
+            );
+            const quantity = parseFloatForResponse(
+              getQuantity(itemValue?.Quantity)
+            );
+            return {
+              sanitizedName,
+              price_per_unit,
+              quantity,
+            };
+          }
+        ) ?? null;
+    }
+  }
+
+  /** STEP 2: match scan result to existing aliases */
 
   const authHeader = req.headers.get("Authorization");
   if (authHeader == null) {
@@ -178,237 +304,70 @@ Deno.serve(async (req) => {
     return new Response("Error fetching table data", { status: 500 });
   }
 
-  let documentAnalysisResult:
-    | ({
-        sanitizedName: string | null;
-        price_per_unit: number | null;
-        quantity: number | null;
-      } | null)[]
-    | null = null;
+  const matchedProductRecords: {
+    [product_id: number]: {
+      record_id: number;
+      price_per_unit: number;
+      quantity: number;
+    };
+  } = {};
+  const matchedProductsNotInInventory: {
+    [product_id: number]: {
+      price_per_unit: number;
+      quantity: number;
+    };
+  } = {};
+  const unmatchedRows: {
+    name: string;
+    price_per_unit: number;
+    quantity: number;
+  }[] = [];
 
-  if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
-    console.error("Environment variables are not set up correctly");
-    return new Response("Environment variables are not set up correctly.", {
-      status: 500,
-    });
+  if (!documentAnalysisResult) {
+    console.error("No analysis result");
+    return new Response("No analysis result", { status: 500 });
   }
 
-  const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
-    key: DocumentIntelligenceApiKey,
-  });
-  const initialResponse = await client
-    .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
-    .post({
-      contentType: "application/json",
-      body: {
-        base64Source: requestBody.image.data,
-      },
-    });
+  for (const row of documentAnalysisResult) {
+    if (!row || !row.sanitizedName || !row.price_per_unit || !row.quantity)
+      continue;
+    const quantity = row.quantity;
+    const price_per_unit = row.price_per_unit;
 
-  const poller = await getLongRunningPoller(client, initialResponse);
-  const result = (await poller.pollUntilDone())
-    .body as AnalyzeResultOperationOutput;
+    const alias = productAliasData.find((a) => a.alias === row?.sanitizedName);
 
-  // to mock, copy a json from examples
-  // const result = mockResponse;
+    if (!alias) {
+      unmatchedRows.push({ name: row.sanitizedName, price_per_unit, quantity });
+      continue;
+    }
 
-  // analyzeResult?.documents?.[0].fields contents are defined here
-  // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
-  if (
-    !result.analyzeResult ||
-    isEmpty(result.analyzeResult?.documents) ||
-    !result.analyzeResult?.documents
-  ) {
-    console.error(
-      `No useful data found during processing, status ${
-        result.status
-      }, ${JSON.stringify(result.error, null, 2)}`
+    const productRecord = productRecordData.find(
+      (r) => r.product_id === alias.product_id
     );
-    return new Response(`No useful data found during processing`, {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
 
-  if (result.analyzeResult.documents.length > 1) {
-    console.error("More than one page in document");
-    return new Response("More than one page in document", {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
+    // TODO: add functionality for recipies
+    if (!alias.product_id) continue;
 
-  if (
-    isEmpty(result.analyzeResult?.documents[0].fields) ||
-    !result.analyzeResult.documents[0].fields
-  ) {
-    console.error("No data extracted from document");
-    return new Response("No data extracted from document", {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
-
-  if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
-    const itemValue =
-      result.analyzeResult.documents[0].fields.Items?.valueObject;
-    const sanitizedName = parseStringForResponse(
-      getName(itemValue?.Description)
-    );
-    const price_per_unit = parseFloatForResponse(getPricePerUnit(itemValue));
-    const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
-    documentAnalysisResult = [
-      {
-        sanitizedName,
+    if (!productRecord) {
+      matchedProductsNotInInventory[alias.product_id] = {
         price_per_unit,
         quantity,
-      },
-    ];
-  }
-  if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
-    documentAnalysisResult =
-      result.analyzeResult.documents[0].fields.Items?.valueArray?.map(
-        (item) => {
-          if (item.type !== "object") {
-            return null;
-          }
-          const itemValue = item.valueObject;
-          const sanitizedName = parseStringForResponse(
-            getName(itemValue?.Description)
-          );
-          const price_per_unit = parseFloatForResponse(
-            getPricePerUnit(itemValue)
-          );
-          const quantity = parseFloatForResponse(
-            getQuantity(itemValue?.Quantity)
-          );
-          return {
-            sanitizedName,
-            price_per_unit,
-            quantity,
-          };
-        }
-      ) ?? null;
-  }
-
-  // this is extremely inefficient and we should find a better solution
-  const matchAliasesToRecognizedData = productRecordData.reduce(
-    (acc, productRecord) => {
-      const product_id = productRecord.product_id;
-      const record_id = productRecord.id;
-
-      const matchedAliases = productAliasData.filter(
-        (alias) => alias.product_id === product_id
-      );
-
-      if (isEmpty(matchedAliases)) {
-        return { ...acc };
-      }
-
-      const matchedDocumentData = documentAnalysisResult?.filter(
-        (documentItem) =>
-          matchedAliases.some(
-            (matchedAlias) => documentItem?.sanitizedName === matchedAlias.alias
-          )
-      );
-
-      if (matchedDocumentData == null) {
-        return { ...acc };
-      }
-
-      const price_per_unit = Math.max(
-        ...matchedDocumentData.map(
-          (item) => item?.price_per_unit ?? productRecord?.price_per_unit ?? 0
-        )
-      );
-
-      const quantity =
-        matchedDocumentData.reduce(
-          (sum, item) => sum + (item?.quantity ?? 0),
-          0
-        ) + productRecord.quantity;
-
-      return {
-        recognized: {
-          ...acc.recognized,
-          [String(record_id)]: {
-            product_id,
-            price_per_unit: price_per_unit
-              ? parseFloatForResponse(price_per_unit)
-              : // temporary until null handling/merging is figured out in the app
-                0,
-            quantity: quantity
-              ? parseFloatForResponse(quantity)
-              : // temporary until null handling/merging is figured out in the app
-                0,
-          },
-        },
-        recognizedAliases: [
-          ...acc.recognizedAliases,
-          ...matchedAliases.map((a) => a.alias),
-        ],
       };
-    },
-    { recognized: {}, recognizedAliases: [] } as {
-      recognized: Record<
-        string,
-        {
-          product_id: number;
-          price_per_unit: number | null;
-          quantity: number | null;
-        }
-      >;
-      recognizedAliases: string[];
+      continue;
     }
-  );
 
-  // we want them unique
-  const unmatchedAliases = [
-    ...new Set(
-      documentAnalysisResult
-        ?.filter(
-          (analysis) =>
-            !matchAliasesToRecognizedData.recognizedAliases.some(
-              (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
-            )
-        )
-        .map((item) => item?.sanitizedName) ?? []
-    ),
-  ];
-
-  const unmatched = documentAnalysisResult
-    ?.filter(
-      (analysis) =>
-        !matchAliasesToRecognizedData.recognizedAliases.some(
-          (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
-        )
-    )
-    .reduce(
-      (acc, item) => {
-        if (item?.sanitizedName == null) return acc;
-
-        return {
-          ...acc,
-          [item.sanitizedName]: {
-            price_per_unit: item?.price_per_unit ?? null,
-            quantity: item?.quantity ?? null,
-          },
-        };
-      },
-      {} as Record<
-        string,
-        {
-          price_per_unit: number | null;
-          quantity: number | null;
-        }
-      >
-    );
+    matchedProductRecords[alias.product_id] = {
+      record_id: productRecord.id,
+      price_per_unit,
+      quantity,
+    };
+  }
 
   return new Response(
     JSON.stringify({
-      form: matchAliasesToRecognizedData.recognized,
-      unmatchedAliases,
-      unmatched,
+      matchedProductRecords,
+      matchedProductsNotInInventory,
+      unmatchedRows,
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -421,5 +380,3 @@ Deno.serve(async (req) => {
 // curl -v 'http://127.0.0.1:54321/functions/v1/scan-doc' \
 //   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
 // --data '{"inventory_id":10,"image":{"data":""}}'
-
-// const mockResponse =

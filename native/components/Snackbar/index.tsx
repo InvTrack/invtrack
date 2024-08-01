@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createStyles } from "../../theme/useStyles";
 
 import { snackbarAction } from "../../redux/snackbarSlice";
-import { Typography } from "../Typography";
+import { Typography } from "../common/Typography";
 import { useSnackbar } from "./hooks";
 import { SnackbarItem } from "./types";
 

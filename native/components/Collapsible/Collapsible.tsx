@@ -2,9 +2,9 @@ import React, { ReactElement, useState } from "react";
 
 import { SectionList, StyleSheet } from "react-native";
 import { createStyles } from "../../theme/useStyles";
-import { Card } from "../Card";
 import { ExpandMoreIcon } from "../Icon";
-import { Typography } from "../Typography";
+import { Card } from "../common/Card";
+import { Typography } from "../common/Typography";
 
 type CollapsibleSection = {
   id: number;

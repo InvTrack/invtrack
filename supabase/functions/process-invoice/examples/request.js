@@ -2,17 +2,18 @@ const http = require("http");
 const fs = require("fs");
 // run this script from the directory it's in, otherwise the paths get messed up
 
-const invoiceData = fs.readFileSync("./invoice-example2.json");
+const filename = "invoice-example2"
+const invoiceData = fs.readFileSync(`./${filename}.json`);
 const invoice = JSON.parse(invoiceData);
 
 const options = {
-  hostname: "127.0.0.1",
   port: 54321,
-  path: "/functions/v1/scan-doc",
+  path: "/functions/v1/process-invoice",
   method: "POST",
   headers: {
     "Content-Type": "application/json",
     Authorization:
+      // Must be service_key to contact the db from inside the edge functions
       "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
   },
 };
@@ -25,7 +26,7 @@ const req = http.request(options, (res) => {
   });
 
   res.on("end", () => {
-    fs.writeFile("./invoice-example2-response.json", data, (err) => {
+    fs.writeFile(`./${filename}-response.json`, data, (err) => {
       if (err) throw err;
       console.log("The file has been saved!");
     });

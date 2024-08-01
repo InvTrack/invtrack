@@ -6,7 +6,7 @@ import { isAndroid } from "../constants";
 import { createStyles } from "../theme/useStyles";
 import { useBottomSheet } from "./BottomSheet";
 import { DatePickerBottomSheetContent } from "./BottomSheet/contents/DatePicker";
-import TextInputController from "./TextInputController";
+import TextInputController from "./common/TextInputController";
 
 type DateInputControllerProps<T extends FieldValues> = UseControllerProps<T> & {
   dateValue: Date;

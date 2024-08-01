@@ -1,5 +1,5 @@
 import { Linking, TouchableOpacity } from "react-native";
-import { Typography } from "./Typography";
+import { Typography } from "./common/Typography";
 
 export const PrivacyPolicy = () => {
   return (
