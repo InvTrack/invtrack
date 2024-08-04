@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { isAndroid } from "../../../constants";
 import { createStyles } from "../../../theme/useStyles";
 import { useKeyboard } from "../../../utils/useKeyboard";
 import { Button } from "../../Button";
@@ -58,7 +59,9 @@ export const ProductListBottomSheetContent = ({
       style={[
         styles.container,
         {
-          minHeight: keyboardHeight + windowHeight / 3,
+          height: isAndroid
+            ? windowHeight * 0.4
+            : keyboardHeight + windowHeight / 3,
           paddingBottom: insets.bottom + 16,
         },
       ]}
