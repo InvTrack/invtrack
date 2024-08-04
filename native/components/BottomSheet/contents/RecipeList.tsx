@@ -1,8 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { isAndroid } from "../../../constants";
 import { useListRecipes } from "../../../db/hooks/useListRecipes";
 import { createStyles } from "../../../theme/useStyles";
+import { useKeyboard } from "../../../utils/useKeyboard";
 import { Button } from "../../Button";
 import { Typography } from "../../Typography";
 
@@ -19,12 +21,18 @@ export const RecipesListBottomSheetContent = ({
 }) => {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
+  const {
+    coordinates: {
+      end: { height: keyboardHeight },
+    },
+  } = useKeyboard();
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={[
         styles.container,
         {
+          height: isAndroid ? undefined : keyboardHeight + 156,
           paddingBottom: insets.bottom + 16,
         },
       ]}
@@ -50,7 +58,7 @@ export const RecipesListBottomSheetContent = ({
           </Button>
         ))}
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
