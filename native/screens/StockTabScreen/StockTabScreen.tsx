@@ -29,7 +29,7 @@ export default function StockTabScreen({
   const styles = useStockTabStyles();
 
   const { isConnected } = useNetInfo();
-  const inventoryId = route.params?.id;
+  const stockId = route.params?.id;
   const stockType = route.params?.stockType;
 
   const { recordsFromInvoice, recordsFromSalesRaport, aliasForm } =
@@ -38,7 +38,7 @@ export default function StockTabScreen({
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
 
-  const { data: inventoryName } = useGetInventoryName(+inventoryId);
+  const { data: inventoryName } = useGetInventoryName(+stockId);
 
   const {
     productRecords,
@@ -58,8 +58,8 @@ export default function StockTabScreen({
   }, [recordsFromSalesRaport]);
 
   useEffect(() => {
-    setStockId(inventoryId);
-  }, [inventoryId]);
+    setStockId(stockId);
+  }, [stockId]);
 
   const {
     productsIsSuccess,
@@ -69,19 +69,19 @@ export default function StockTabScreen({
   } = useProductRecords();
 
   const { data: recipeList, isSuccess: recipesIsSuccess } =
-    useListRecipesWithRecords(inventoryId);
+    useListRecipesWithRecords(stockId);
 
   const {
     mutate,
     isSuccess: isUpdateSuccess,
     isError: isUpdateError,
-  } = useUpdateRecords(+inventoryId);
+  } = useUpdateRecords(+stockId);
   const { mutate: createProductNameAliases } = useCreateProductNameAlias();
   const { mutate: createRecipeNameAliases } = useCreateRecipeNameAlias();
 
   useEffect(() => {
     navigation.setOptions({ headerTitle: inventoryName });
-  }, [inventoryId, inventoryName, navigation]);
+  }, [stockId, inventoryName, navigation]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -94,10 +94,18 @@ export default function StockTabScreen({
     }
   }, [isUpdateSuccess, isUpdateError]);
 
+  console.log({
+    p: route.params,
+    // stockId,
+    // productsIsSuccess,
+    // categorizedIsSuccess,
+    // recipesIsSuccess,
+  });
+
   if (
     !productsIsSuccess ||
     !categorizedIsSuccess ||
-    !inventoryId ||
+    !stockId ||
     !recipesIsSuccess
   )
     return (
@@ -127,7 +135,7 @@ export default function StockTabScreen({
                 onPress={() => {
                   // necessary hack, handled by parent navigator - be cautious
                   navigation.navigate("DocumentScannerModal" as any, {
-                    stockId: inventoryId,
+                    stockId: stockId,
                     stockType,
                   });
                 }}
@@ -159,7 +167,7 @@ export default function StockTabScreen({
                 onPress={() => {
                   // necessary hack, handled by parent navigator - be cautious
                   navigation.navigate("BarcodeModal" as any, {
-                    inventoryId,
+                    inventoryId: stockId,
                     navigateTo: "StockTab",
                   });
                 }}
@@ -167,8 +175,8 @@ export default function StockTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
-            <IDListCardAddProduct inventoryId={inventoryId} />
-            <IDListCardAddRecord inventoryId={inventoryId} />
+            <IDListCardAddProduct inventoryId={stockId} />
+            <IDListCardAddRecord inventoryId={stockId} />
             {/* <Button type="primary" size="l" fullWidth>
               {recordsFromInvoice
                 ? Object.keys(recordsFromInvoice).toString()
@@ -177,7 +185,7 @@ export default function StockTabScreen({
             {recipeList?.map((recipe) => (
               <RecipeCard
                 key={recipe?.id}
-                inventoryId={inventoryId}
+                inventoryId={stockId}
                 name={recipe.name}
                 recipePart={recipe.recipe_part}
                 recipeId={recipe.id}
@@ -190,8 +198,8 @@ export default function StockTabScreen({
                   key={product.id}
                   recordId={product.record_id!}
                   productId={product.id!}
-                  inventoryId={inventoryId}
-                  id={+inventoryId}
+                  inventoryId={stockId}
+                  id={+stockId}
                   quantity={product.quantity}
                   unit={product.unit!}
                   name={product.name}
@@ -211,8 +219,8 @@ export default function StockTabScreen({
                 key={product.id}
                 recordId={product.record_id!}
                 productId={product.id!}
-                inventoryId={inventoryId}
-                id={+inventoryId}
+                inventoryId={stockId}
+                id={+stockId}
                 quantity={product.quantity}
                 unit={product.unit!}
                 name={product.name}

@@ -50,7 +50,7 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
     });
   const {
     mutate,
-    data: inventory,
+    data: stock,
     isSuccess,
     isLoading,
     isError,
@@ -59,24 +59,13 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
   const is_delivery = watch("is_delivery");
 
   useEffect(() => {
-    if (isSuccess && inventory) {
-      if (is_delivery) {
-        navigation.navigate("Tabs", {
-          screen: "StockTab",
-          params: {
-            id: inventory.id,
-          },
-        });
-        return;
-      }
-      navigation.navigate("Tabs", {
-        screen: "StockTab",
-        params: {
-          id: inventory.id,
-        },
+    if (isSuccess && stock && !!stock.id) {
+      navigation.navigate("StockTabScreen" as any, {
+        id: stock.id,
+        stockType: is_delivery ? "delivery" : "inventory",
       });
     }
-  }, [navigation, isSuccess, inventory, is_delivery]);
+  }, [navigation, isSuccess, stock]);
 
   useEffect(() => {
     if (isError) {
