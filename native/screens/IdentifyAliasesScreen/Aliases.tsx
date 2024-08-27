@@ -20,7 +20,10 @@ import {
 } from "../../db/types";
 import { IdentifyAliasesScreenNavigationProp } from "../../navigation/types";
 import { IDListCardAddProduct } from "../StockTabScreen/IDListCard/IDListCardAddProduct";
-import { ProductRecordsByProductId } from "../StockTabScreen/StockContext/types";
+import {
+  ProductRecordsByProductId,
+  RecipeRecordsByRecipeId,
+} from "../StockTabScreen/StockContext/types";
 import { useAliasesStyles } from "./styles";
 import { AliasForm } from "./types";
 
@@ -119,10 +122,7 @@ export const IdentifyAliasesComponent = ({
   //   data: resolvedAliases,
   // } = useCreateProductNameAlias();
 
-  const unmatchedRows =
-    stockType === "delivery"
-      ? documentResponse?.unmatchedRows
-      : documentResponse?.unmatchedAliases.map((a) => ({ name: a }));
+  const unmatchedRows = documentResponse?.unmatchedRows;
 
   // const { data: productRecords } = useListProductRecords(stockId);
   const { data: products } = useListExistingProducts();
@@ -181,6 +181,29 @@ export const IdentifyAliasesComponent = ({
             id: stockId,
             stockType,
             recordsFromInvoice: merged,
+            aliasForm: getValues(),
+          });
+        }
+        if (stockType === "inventory" && products && documentResponse) {
+          // const newMatchedProducts = getNewMatched(
+          //   documentResponse,
+          //   data.productAliases,
+          //   products
+          // );
+
+          const merged: RecipeRecordsByRecipeId = {
+            ...documentResponse.matchedRecipieRecords,
+            ...documentResponse.matchedRecipiesNotInInventory,
+            // order is important, newMatchedProducts should be last, because it is the result of the user selection
+            // or is it?
+            // ...newMatchedProducts,
+          };
+
+          // "necessery hack"? idk how navigation works
+          navigation.navigate("StockTabScreen" as any, {
+            id: stockId,
+            stockType,
+            recordsFromSalesRaport: merged,
             aliasForm: getValues(),
           });
         }

@@ -9,7 +9,7 @@ export type ProductRecordsByProductId = {
 };
 
 export type RecipeRecordByRecipeIdValue = {
-  // record_id: number | null;
+  record_id?: number | null;
   quantity: number;
 };
 

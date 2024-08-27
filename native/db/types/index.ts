@@ -87,10 +87,19 @@ export type ProcessInvoiceResponse = {
 } | null;
 
 export type ProcessSalesRaportResponse = {
-  form: {
-    [recipe_id: string]: {
+  matchedRecipieRecords: {
+    [recipe_id: number]: {
+      record_id: number;
       quantity: number;
     };
   };
-  unmatchedAliases: string[];
+  matchedRecipiesNotInInventory: {
+    [recipe_id: number]: {
+      quantity: number;
+    };
+  };
+  unmatchedRows: {
+    name: string;
+    quantity: number;
+  }[];
 } | null;

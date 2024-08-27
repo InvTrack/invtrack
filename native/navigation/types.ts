@@ -9,7 +9,10 @@ import {
   ProcessSalesRaportResponse,
 } from "../db/types";
 import { AliasForm } from "../screens/IdentifyAliasesScreen/types";
-import { ProductRecordsByProductId } from "../screens/StockTabScreen/StockContext/types";
+import {
+  ProductRecordsByProductId,
+  RecipeRecordsByRecipeId,
+} from "../screens/StockTabScreen/StockContext/types";
 
 /**
  * Update Required Stack
@@ -81,6 +84,7 @@ export type StockStackParamList = {
     id: number;
     stockType: "delivery" | "inventory";
     recordsFromInvoice?: ProductRecordsByProductId;
+    recordsFromSalesRaport?: RecipeRecordsByRecipeId;
     aliasForm?: AliasForm;
   };
   RecordScreen: {

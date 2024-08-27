@@ -13,28 +13,42 @@ INSERT INTO "public"."product_category" ("id", "name", "company_id", "display_or
 	(2, 'Owoce', 2, 3);
 
 INSERT INTO "public"."product" ("id", "name", "unit", "company_id", "notification_threshold", "category_id", "display_order", "deleted_at") VALUES
-	(1, 'Gofry Emix',      'Szt.', 2, 0, 1, 0, NULL),
-	(2, 'Śmietana',        'szt.', 2, 0, 1, 0, NULL),
-	(3, 'Ananas',          'szt.', 2, 0, 2, 0, NULL),
-	(4, 'Nutella',         'szt.', 2, 0, 1, 0, NULL),
-	(5, 'Sos Czekoladowy', 'szt.', 2, 0, 1, 0, NULL),
-	(6, 'Maliny w żelu',   'szt.', 2, 0, 2, 0, NULL),
-	(7, 'Olej rzepakowy',  'szt.', 2, 0, NULL, 0, NULL);
+	(11, 'Gofry Emix',      'Szt.', 2, 0, 1, 0, NULL),
+	(12, 'Śmietana',        'szt.', 2, 0, 1, 0, NULL),
+	(13, 'Ananas',          'szt.', 2, 0, 2, 0, NULL),
+	(14, 'Nutella',         'szt.', 2, 0, 1, 0, NULL),
+	(15, 'Sos Czekoladowy', 'szt.', 2, 0, 1, 0, NULL),
+	(16, 'Maliny w żelu',   'szt.', 2, 0, 2, 0, NULL),
+	(17, 'Olej rzepakowy',  'szt.', 2, 0, NULL, 0, NULL);
 
 INSERT INTO "public"."inventory" ("id", "name", "date", "company_id", "last_product_record_updated_at", "low_quantity_notification_sent", "is_delivery") VALUES
-	(1, '3 lipiec', '2024-07-03 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, true);
+	(1, '3 lipiec', '2024-07-03 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, true),
+	(2, '4 lipiec', '2024-07-04 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, false);
 
-DELETE FROM "public"."product_record" WHERE product_id = 3;
-DELETE FROM "public"."product_record" WHERE product_id = 4;
+DELETE FROM "public"."product_record" WHERE product_id = 13;
+DELETE FROM "public"."product_record" WHERE product_id = 14;
 
-INSERT INTO "public"."recipe" ("id", "created_at", "name", "company_id") VALUES
-	(1, '2024-04-18 15:12:53.215491+00', 'Pizza Salami Pikante', 2);
+INSERT INTO "public"."recipe" ("id", "name", "company_id") VALUES
+	(21, 'Gofry ze śmietaną', 2),
+	(22, 'Gofry z malinami', 2),
+	(23, 'Gofry z nutellą i czekoladą', 2);
+
+INSERT INTO "public"."recipe_part" ("quantity", "product_id", "recipe_id") VALUES
+	(1, 11, 21),
+	(2, 12, 21),
+	(1, 11, 22),
+	(2, 16, 22),
+	(1, 11, 23),
+	(1, 14, 23),
+	(1, 15, 23);
 
 INSERT INTO "public"."name_alias" ("alias", "recipe_id", "product_id", "company_id") VALUES
-	('Gofry Emix 5kg', NULL, 1, 2),
-	('Deserowa UHT Bieruńska 33% 5 lit.', NULL, 2, 2),
-	('Ananas Kostka Sandra 565g', NULL, 3, 2),
-	('Nutella 825 g', NULL, 4, 2);
+	('Gofry Emix 5kg', NULL, 11, 2),
+	('Deserowa UHT Bieruńska 33% 5 lit.', NULL, 12, 2),
+	('Ananas Kostka Sandra 565g', NULL, 13, 2),
+	('Nutella 825 g', NULL, 14, 2),
+	('GOFER ŚMIETANOWY', 21, NULL, 2),
+	('GOFER CZEKOLADA', 22, NULL, 2);
 
 RESET ALL;
 

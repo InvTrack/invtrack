@@ -32,18 +32,34 @@ export default function StockTabScreen({
   const inventoryId = route.params?.id;
   const stockType = route.params?.stockType;
 
-  const { recordsFromInvoice, aliasForm } = route.params;
+  const { recordsFromInvoice, recordsFromSalesRaport, aliasForm } =
+    route.params;
 
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
 
+  const {
+    productRecords,
+    recipeRecords,
+    setRecordsFromInvoice,
+    setRecordsFromSalesRaport,
+    setStockId,
+  } = useStockContext();
+
   useEffect(() => {
     if (!!recordsFromInvoice) setRecordsFromInvoice(recordsFromInvoice);
   }, [recordsFromInvoice]);
 
-  const { productRecords, setRecordsFromInvoice } = useStockContext();
+  useEffect(() => {
+    if (!!recordsFromSalesRaport)
+      setRecordsFromSalesRaport(recordsFromSalesRaport);
+  }, [recordsFromSalesRaport]);
+
+  useEffect(() => {
+    setStockId(inventoryId);
+  }, [inventoryId]);
 
   const {
     productsIsSuccess,
@@ -125,7 +141,7 @@ export default function StockTabScreen({
                 fullWidth
                 labelStyle={styles.saveButtonLabel}
                 onPress={() => {
-                  mutate({ productRecords, recipeRecords: {} });
+                  mutate({ productRecords, recipeRecords });
                   if (aliasForm) {
                     createProductNameAliases(aliasForm);
                     createRecipeNameAliases(aliasForm);

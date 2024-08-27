@@ -2,13 +2,19 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { StockData } from "../../screens/StockTabScreen/StockContext/types";
 import { supabase } from "../supabase";
+import { useGetCurrentCompanyId } from "./useGetCurrentCompanyId";
 
-const updateRecordsForm = async (stock: StockData, inventoryId: number) => {
-  if (
-    Object.keys(stock.productRecords).length &&
-    Object.keys(stock.recipeRecords).length
-  )
-    return;
+const updateRecordsForm = async (
+  stock: StockData,
+  inventoryId: number,
+  companyId: number | undefined | null
+) => {
+  // if (
+  //   Object.keys(stock.productRecords).length &&
+  //   Object.keys(stock.recipeRecords).length
+  // )
+  //   return;
+  if (!companyId) return;
 
   const data = await Promise.all([
     (
@@ -42,14 +48,32 @@ const updateRecordsForm = async (stock: StockData, inventoryId: number) => {
     ).map((it) => it.data),
     (
       await Promise.all(
-        Object.entries(stock.recipeRecords).map(([record_id, { quantity }]) => {
-          return supabase
-            .from("recipe_record")
-            .update({ quantity })
-            .eq("id", Number(record_id))
-            .select()
-            .single();
-        })
+        Object.entries(stock.recipeRecords)
+          .filter(([_, { record_id }]) => !!record_id)
+          .map(([recipe_id, { quantity }]) => {
+            return supabase
+              .from("recipe_record")
+              .update({ quantity })
+              .eq("inventory_id", inventoryId)
+              .eq("product_id", recipe_id)
+              .select()
+              .single();
+          })
+      )
+    ).map((it) => it.data),
+    (
+      await Promise.all(
+        Object.entries(stock.recipeRecords)
+          .filter(([_, { record_id }]) => !record_id)
+          .map(([recipe_id, { quantity }]) => {
+            return supabase.from("recipe_record").insert({
+              quantity,
+              recipe_id: parseInt(recipe_id),
+              // TODO remove company_id from recripe_record table and from this function (updateRecordsForm)
+              company_id: companyId,
+              inventory_id: inventoryId,
+            });
+          })
       )
     ).map((it) => it.data),
   ]);
@@ -57,10 +81,12 @@ const updateRecordsForm = async (stock: StockData, inventoryId: number) => {
 };
 
 export const useUpdateRecords = (inventoryId: number) => {
+  const { data: companyId } = useGetCurrentCompanyId();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (stock) => await updateRecordsForm(stock, inventoryId),
+    mutationFn: async (stock) =>
+      await updateRecordsForm(stock, inventoryId, companyId?.id),
     onMutate: async (stock: StockData) => {
       const recordsIterable = Object.entries(stock.productRecords);
       await Promise.all(

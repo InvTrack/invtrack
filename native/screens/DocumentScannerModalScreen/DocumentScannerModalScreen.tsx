@@ -43,7 +43,7 @@ export const DocumentScannerModalScreen = ({
 
   useEffect(() => {
     if (stockType === "inventory" && processedSalesReport != null) {
-      if (stockId && !isEmpty(processedSalesReport?.unmatchedAliases)) {
+      if (stockId && !isEmpty(processedSalesReport?.unmatchedRows)) {
         navigation.replace("IdentifyAliasesScreen", {
           stockId,
           processedInvoice: null,

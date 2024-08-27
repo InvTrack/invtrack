@@ -5,10 +5,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View } from "react-native";
 import { DeliveryIcon, InventoryIcon, ListIcon } from "../components/Icon";
 
-import { isEmpty } from "lodash";
 import { TabBar } from "../components/TabBar";
-import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
-import { useListInventories } from "../db";
+// import { isEmpty } from "lodash";
+// import { EmptyScreenTemplate } from "../components/common/EmptyScreenTemplate";
+// import { useListInventories } from "../db";
 
 import { AddRecordScreen } from "../screens/AddRecordScreen";
 import { ListTab } from "../screens/ListTabScreen/ListTabScreen";
@@ -28,37 +28,38 @@ const StockStack = createNativeStackNavigator<StockStackParamList>();
 
 const StockStackNavigator = ({ route }: StockTabProps) => {
   const theme = useTheme();
-  const routeDeliveryId = route.params?.id;
+  const stockId = route.params?.id;
+  // const routeDeliveryId = route.params?.id;
 
-  const { data } = useListInventories();
-  const latestDeliveryId = data?.find((item) => item.is_delivery)?.id;
+  // const { data } = useListInventories();
+  // const latestDeliveryId = data?.find((item) => item.is_delivery)?.id;
 
-  const deliveryId = routeDeliveryId ?? latestDeliveryId;
+  // const deliveryId = routeDeliveryId ?? latestDeliveryId;
 
-  const noDeliveries = !latestDeliveryId && !isEmpty(data);
+  // const noDeliveries = !latestDeliveryId && !isEmpty(data);
 
-  if (noDeliveries)
-    return (
-      <EmptyScreenTemplate>
-        Brak dostaw. Dodaj nową dostawę z ekranu listy!
-      </EmptyScreenTemplate>
-    );
+  // if (noDeliveries)
+  //   return (
+  //     <EmptyScreenTemplate>
+  //       Brak dostaw. Dodaj nową dostawę z ekranu listy!
+  //     </EmptyScreenTemplate>
+  //   );
 
-  if (!deliveryId)
-    return (
-      <EmptyScreenTemplate>
-        Błąd - brak identyfikatora dostawy. Zrestartuj aplikację i spróbuj
-        ponownie.
-      </EmptyScreenTemplate>
-    );
+  // if (!deliveryId)
+  //   return (
+  //     <EmptyScreenTemplate>
+  //       Błąd - brak identyfikatora dostawy. Zrestartuj aplikację i spróbuj
+  //       ponownie.
+  //     </EmptyScreenTemplate>
+  //   );
 
   return (
-    <StockContextProvider stockId={deliveryId}>
+    <StockContextProvider stockId={stockId}>
       <StockStack.Navigator screenOptions={{ headerShown: true }}>
         <StockStack.Screen
           name="StockTabScreen"
           component={StockTabScreen}
-          initialParams={{ id: deliveryId }}
+          initialParams={{ id: stockId }}
           options={{
             headerBackground: () => (
               <View

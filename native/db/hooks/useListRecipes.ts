@@ -16,9 +16,7 @@ const listRecipesOfStock = async (stockId: number) => {
   return data;
 };
 
-const listAllRecipes = async (inventoryId?: number) => {
-  if (inventoryId == null)
-    throw new Error("useListRecipes - inventoryId is null, should be defined");
+const listAllRecipes = async () => {
   const { data, error } = await supabase
     .from("recipe")
     .select("id, name, recipe_part(quantity, product_id)")

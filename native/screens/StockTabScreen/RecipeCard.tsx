@@ -138,14 +138,12 @@ export const RecipeCard = ({
 
         const productId = ram.product_id;
 
-        const oldRecordValues = productRecords[productId];
+        const oldQuantity = productRecords[productId]?.quantity || 0;
 
         const dMultiplied = roundFloat(delta * ram.multiplier);
-        const newRecordQuantity = roundFloat(
-          oldRecordValues.quantity - dMultiplied
-        );
+        const newRecordQuantity = roundFloat(oldQuantity + dMultiplied);
 
-        if (newRecordQuantity < 0) {
+        if (ram.multiplier < 0) {
           showInfo(
             "Niektóre składniki receptury mają ilość równą 0, zostały pominięte"
           );

@@ -11,6 +11,10 @@ import isEmpty from "lodash/isEmpty";
 import { isNil } from "../_shared/isNil.ts";
 import { createClient } from "@supabase/supabase-js@2";
 import { Database } from "../_shared/database.types.ts";
+import mockDocumentAnalysisResult from "./documentAnalysisResult.mock.json" with {type: "json"};
+// import mockDocumentAnalysisResult from "./documentAnalysisResult.mock.json";
+
+const test = false;
 
 const DocumentIntelligenceEndpoint = Deno.env.get(
   "DOCUMENT_INTELLIGENCE_ENDPOINT"
@@ -127,32 +131,27 @@ Deno.serve(async (req) => {
     { global: { headers: { Authorization: authHeader } } }
   );
 
-  const { data: productRecordDataRaw, error: productRecordError } =
-    await supabase
-      .from("product_record")
-      .select("product_id")
-      .eq("inventory_id", requestBody.inventory_id);
+  const { data: recipeAliasData, error: recipeAliasError } = await supabase
+    .from("name_alias")
+    .select("alias, recipe_id")
+    .is("product_id", null);
 
-  if (productRecordError) {
-    console.error("Error fetching table data - productRecordError");
+  if (recipeAliasError) {
+    console.error("Error fetching name_alias table data");
     return new Response("Error fetching table data", { status: 500 });
   }
 
-  // fetches possibly incomplete recipes, we don't need products that do not occurr in the current inventory
-  const { data: recipeDataRaw, error: recipeError } = await supabase
-    .from("recipe")
-    .select("id, name, recipe_part(quantity, product_id), name_alias(alias)")
-    .in(
-      "recipe_part.product_id",
-      productRecordDataRaw.map((pr) => pr.product_id)
-    )
-    .order("name", { ascending: true });
+  const recipeIds = recipeAliasData?.map((item) => item.recipe_id);
+  const { data: recipeRecordData, error: recipeRecordError } = await supabase
+    .from("recipe_record")
+    .select("id, recipe_id, quantity")
+    .eq("inventory_id", requestBody.inventory_id)
+    .in("recipe_id", recipeIds);
 
-  if (recipeError) {
-    console.error("Error fetching table data - recipeError");
+  if (recipeRecordError) {
+    console.error("Error fetching recipe_record table data");
     return new Response("Error fetching table data", { status: 500 });
   }
-  const recipeData = recipeDataRaw.filter((r) => r.recipe_part.length !== 0);
 
   let documentAnalysisResult:
     | ({
@@ -161,169 +160,166 @@ Deno.serve(async (req) => {
       } | null)[]
     | null = null;
 
-  if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
-    console.error("Environment variables are not set up correctly");
-    return new Response("Environment variables are not set up correctly.", {
-      status: 500,
+  if (test) {
+    documentAnalysisResult = mockDocumentAnalysisResult;
+  } else {
+    if (!DocumentIntelligenceEndpoint || !DocumentIntelligenceApiKey) {
+      console.error("Environment variables are not set up correctly");
+      return new Response("Environment variables are not set up correctly.", {
+        status: 500,
+      });
+    }
+
+    const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
+      key: DocumentIntelligenceApiKey,
     });
-  }
+    const initialResponse = await client
+      .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
+      .post({
+        contentType: "application/json",
+        body: {
+          base64Source: requestBody.image.data,
+        },
+      });
 
-  const client = DocumentIntelligence(DocumentIntelligenceEndpoint, {
-    key: DocumentIntelligenceApiKey,
-  });
-  const initialResponse = await client
-    .path("/documentModels/{modelId}:analyze", "prebuilt-invoice")
-    .post({
-      contentType: "application/json",
-      body: {
-        base64Source: requestBody.image.data,
-      },
-    });
+    const poller = await getLongRunningPoller(client, initialResponse);
+    const result = (await poller.pollUntilDone())
+      .body as AnalyzeResultOperationOutput;
 
-  const poller = await getLongRunningPoller(client, initialResponse);
-  const result = (await poller.pollUntilDone())
-    .body as AnalyzeResultOperationOutput;
+    // to mock, copy a json from examples
+    // const result = mockResponse;
 
-  // to mock, copy a json from examples
-  // const result = mockResponse;
+    // analyzeResult?.documents?.[0].fields contents are defined here
+    // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
+    if (
+      !result.analyzeResult ||
+      isEmpty(result.analyzeResult?.documents) ||
+      !result.analyzeResult?.documents
+    ) {
+      console.error(
+        `No useful data found during processing, status ${
+          result.status
+        }, ${JSON.stringify(result.error, null, 2)}`
+      );
+      return new Response(`No useful data found during processing`, {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
 
-  // analyzeResult?.documents?.[0].fields contents are defined here
-  // https://learn.microsoft.com/en-gb/azure/ai-services/document-intelligence/concept-invoice?view=doc-intel-4.0.0#line-items
-  if (
-    !result.analyzeResult ||
-    isEmpty(result.analyzeResult?.documents) ||
-    !result.analyzeResult?.documents
-  ) {
-    console.error(
-      `No useful data found during processing, status ${
-        result.status
-      }, ${JSON.stringify(result.error, null, 2)}`
-    );
-    return new Response(`No useful data found during processing`, {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
+    if (result.analyzeResult.documents.length > 1) {
+      console.error("More than one page in document");
+      return new Response("More than one page in document", {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
 
-  if (result.analyzeResult.documents.length > 1) {
-    console.error("More than one page in document");
-    return new Response("More than one page in document", {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
+    if (
+      isEmpty(result.analyzeResult?.documents[0].fields) ||
+      !result.analyzeResult.documents[0].fields
+    ) {
+      console.error("No data extracted from document");
+      return new Response("No data extracted from document", {
+        status: 400,
+        headers: { ...corsHeaders },
+      });
+    }
 
-  if (
-    isEmpty(result.analyzeResult?.documents[0].fields) ||
-    !result.analyzeResult.documents[0].fields
-  ) {
-    console.error("No data extracted from document");
-    return new Response("No data extracted from document", {
-      status: 400,
-      headers: { ...corsHeaders },
-    });
-  }
-
-  if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
-    const itemValue =
-      result.analyzeResult.documents[0].fields.Items.valueObject;
-    const sanitizedName = parseStringForResponse(
-      getName(itemValue?.Description)
-    );
-    const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
-    documentAnalysisResult = [
-      {
-        sanitizedName,
-        quantity,
-      },
-    ];
-  }
-  if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
-    documentAnalysisResult =
-      result.analyzeResult.documents[0].fields.Items.valueArray?.map((item) => {
-        if (item.type !== "object") {
-          return null;
-        }
-        const itemValue = item.valueObject;
-        const sanitizedName = parseStringForResponse(
-          getName(itemValue?.Description)
-        );
-        const quantity = parseFloatForResponse(
-          getQuantity(itemValue?.Quantity)
-        );
-        return {
+    if (result.analyzeResult.documents[0].fields.Items?.type === "object") {
+      const itemValue =
+        result.analyzeResult.documents[0].fields.Items.valueObject;
+      const sanitizedName = parseStringForResponse(
+        getName(itemValue?.Description)
+      );
+      const quantity = parseFloatForResponse(getQuantity(itemValue?.Quantity));
+      documentAnalysisResult = [
+        {
           sanitizedName,
           quantity,
-        };
-      }) ?? null;
-  }
-  const recipeResponsePart = recipeData.reduce(
-    (acc, recipe) => {
-      const recognizedDataMatchedToRecipeAliases =
-        documentAnalysisResult?.filter(
-          (dar) =>
-            dar != null &&
-            dar.sanitizedName != null &&
-            dar.quantity != null &&
-            recipe.name_alias.includes({
-              alias: dar.sanitizedName,
-            })
-        ) as { sanitizedName: string; quantity: number }[];
-
-      const quantity =
-        recognizedDataMatchedToRecipeAliases?.reduce(
-          (sum, it) => sum + (it.quantity ?? 0),
-          0
-        ) ?? 0;
-
-      return {
-        ...acc,
-        recognized: {
-          ...acc.recognized,
-          [String(recipe.id)]: {
-            quantity: parseFloatForResponse(quantity),
-          },
         },
-        recognizedAliases: [
-          ...acc.recognizedAliases,
-          ...recognizedDataMatchedToRecipeAliases?.map(
-            (it) => it?.sanitizedName
-          ),
-        ],
-      };
-    },
-    {
-      recognized: {},
-      recognizedAliases: [],
-    } as {
-      recognized: Record<
-        string,
-        {
-          quantity: number | null;
-        }
-      >;
-      recognizedAliases: string[];
+      ];
     }
-  );
+    if (result.analyzeResult.documents[0].fields.Items?.type === "array") {
+      documentAnalysisResult =
+        result.analyzeResult.documents[0].fields.Items.valueArray?.map(
+          (item) => {
+            if (item.type !== "object") {
+              return null;
+            }
+            const itemValue = item.valueObject;
+            const sanitizedName = parseStringForResponse(
+              getName(itemValue?.Description)
+            );
+            const quantity = parseFloatForResponse(
+              getQuantity(itemValue?.Quantity)
+            );
+            return {
+              sanitizedName,
+              quantity,
+            };
+          }
+        ) ?? null;
+    }
+  }
+  const matchedRecipieRecords: {
+    [recipe_id: number]: {
+      record_id: number;
+      quantity: number;
+    };
+  } = {};
+  const matchedRecipiesNotInInventory: {
+    [recipe_id: number]: {
+      quantity: number;
+    };
+  } = {};
+  const unmatchedRows: {
+    name: string;
+    quantity: number;
+  }[] = [];
 
-  // we want them unique
-  const unmatchedAliases = [
-    ...new Set(
-      documentAnalysisResult
-        ?.filter(
-          (analysis) =>
-            !recipeResponsePart.recognizedAliases.some(
-              (recognizedAlias) => recognizedAlias === analysis?.sanitizedName
-            )
-        )
-        .map((item) => item?.sanitizedName) ?? []
-    ),
-  ];
+  if (!documentAnalysisResult) {
+    console.error("No analysis result");
+    return new Response("No analysis result", { status: 500 });
+  }
+
+  for (const row of documentAnalysisResult) {
+    if (!row || !row.sanitizedName || !row.quantity)
+      continue;
+    const quantity = row.quantity;
+
+    const alias = recipeAliasData.find((a) => a.alias === row?.sanitizedName);
+
+    if (!alias) {
+      unmatchedRows.push({ name: row.sanitizedName, quantity });
+      continue;
+    }
+
+    const recipeRecord = recipeRecordData.find(
+      (r) => r.recipe_id === alias.recipe_id
+    );
+
+    // TODO: add functionality for products
+    if (!alias.recipe_id) continue;
+
+    if (!recipeRecord) {
+      matchedRecipiesNotInInventory[alias.recipe_id] = {
+        quantity,
+      };
+      continue;
+    }
+
+    matchedRecipieRecords[alias.recipe_id] = {
+      record_id: recipeRecord.id,
+      quantity,
+    };
+  }
 
   return new Response(
     JSON.stringify({
-      form: recipeResponsePart.recognized,
-      unmatchedAliases,
+      matchedRecipieRecords,
+      matchedRecipiesNotInInventory,
+      unmatchedRows,
     }),
     {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
