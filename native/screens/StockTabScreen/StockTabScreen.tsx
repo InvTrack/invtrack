@@ -94,14 +94,6 @@ export default function StockTabScreen({
     }
   }, [isUpdateSuccess, isUpdateError]);
 
-  console.log({
-    p: route.params,
-    // stockId,
-    // productsIsSuccess,
-    // categorizedIsSuccess,
-    // recipesIsSuccess,
-  });
-
   if (
     !productsIsSuccess ||
     !categorizedIsSuccess ||

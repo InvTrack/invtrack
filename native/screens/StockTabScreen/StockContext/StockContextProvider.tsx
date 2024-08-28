@@ -6,8 +6,12 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { useListInventories } from "../../../db/hooks/useListInventories";
 import { useListProductRecords } from "../../../db/hooks/useListProductRecords";
 import { useListRecipeRecords } from "../../../db/hooks/useListRecipeRecords";
+import { useListRecipesWithRecords } from "../../../db/hooks/useListRecipes";
+import { roundFloat } from "../../../utils";
+import { mergeRawAndScannedRecords } from "./mergeRawAndScanned";
 import {
   ProductRecordByProductIdValue,
   ProductRecordsByProductId,
@@ -56,13 +60,15 @@ const StockContext = createContext<StockContextType>({
 
 export const StockContextProvider = ({
   children,
-  // TODO delete
-  stockId: inStockId,
+  stockId: routeStockId,
 }: {
   children: ReactNode;
   stockId: number | undefined;
 }) => {
-  const [stockId, setStockId] = useState(inStockId || 0);
+  const { data: stocks } = useListInventories();
+  const latestStockId = stocks?.[0]?.id || -1;
+
+  const [stockId, setStockId] = useState(routeStockId ?? latestStockId);
 
   const [recordsFromSalesRaport, setRecordsFromSalesRaport] =
     useState<RecipeRecordsByRecipeId>({});
@@ -75,11 +81,7 @@ export const StockContextProvider = ({
   const [productRecords, setProductRecords] =
     useState<ProductRecordsByProductId>({});
 
-  // console.log(stockId);
-
-  //@ts-ignore
   const { data: recipeRecordsRaw } = useListRecipeRecords(stockId);
-  //@ts-ignore
   const { data: productRecordsRaw } = useListProductRecords(stockId);
 
   // Whenever stockId or fetched data changes, update the records
@@ -112,14 +114,15 @@ export const StockContextProvider = ({
       : {};
 
     setProductRecords(defaultProductRecords);
-  }, [stockId]);
 
-  // console.log({ stockId, recipeRecords, productRecords });
+    // Reset scanner state on navigation to another stock
+    setRecordsFromSalesRaport({});
+    setRecordsFromInvoice({});
+  }, [stockId, productRecordsRaw, recipeRecordsRaw]);
 
   return (
     <StockContext.Provider
       value={{
-        //@ts-ignore
         stockId,
         setStockId,
         // stockType,
@@ -138,45 +141,10 @@ export const StockContextProvider = ({
   );
 };
 
-const mergeRawAndInvoiceProductRecords = (
-  raw: ProductRecordsByProductId,
-  invoice: ProductRecordsByProductId
-) => {
-  const ret: ProductRecordsByProductId = JSON.parse(JSON.stringify(raw));
-
-  for (const product_id in invoice) {
-    const { quantity, price_per_unit } = invoice[product_id];
-    if (product_id in ret) {
-      ret[product_id].quantity = ret[product_id].quantity + quantity;
-      ret[product_id].price_per_unit = price_per_unit;
-    } else {
-      ret[product_id] = { quantity, price_per_unit };
-    }
-  }
-
-  return ret;
-};
-
-const mergeRawAndSalesRaportRecipeRecords = (
-  raw: RecipeRecordsByRecipeId,
-  invoice: RecipeRecordsByRecipeId
-) => {
-  const ret: RecipeRecordsByRecipeId = JSON.parse(JSON.stringify(raw));
-
-  for (const recipe_id in invoice) {
-    const { quantity } = invoice[recipe_id];
-    if (recipe_id in ret) {
-      ret[recipe_id].quantity = ret[recipe_id].quantity + quantity;
-    } else {
-      ret[recipe_id] = { quantity, record_id: null };
-    }
-  }
-
-  return ret;
-};
-
 export const useStockContext = () => {
   const context = useContext(StockContext);
+
+  const { data: recipeList } = useListRecipesWithRecords(context.stockId);
 
   const setProductRecord = (
     productId: number,
@@ -198,29 +166,54 @@ export const useStockContext = () => {
     }));
   };
 
-  const productRecords = useMemo(
-    () =>
-      mergeRawAndInvoiceProductRecords(
-        context.productRecords,
-        context.recordsFromInvoice
-      ),
-    [context.productRecords, context.recordsFromInvoice]
-  );
+  // TODO: Consider doing this non destructively, similarely to scanning
+  const setRecipeQuantityWithProductQuantities =
+    (recipeId: number) => (value: number) => {
+      const recipe = context.recipeRecords[recipeId];
+      const oldQuantity = recipe?.quantity || 0;
+      const delta = value - oldQuantity;
+      const recipeParts = recipeList?.find(
+        (r) => r.id === recipeId
+      )?.recipe_part;
+      if (!recipeParts || delta === 0 || value < 0) return;
 
-  const recipeRecords = useMemo(
+      recipeParts.forEach((part) => {
+        const oldQuantity =
+          context.productRecords[part.product_id]?.quantity || 0;
+        const dMultiplied = roundFloat(delta * part.quantity);
+        const newRecordQuantity = roundFloat(oldQuantity + dMultiplied);
+
+        setProductRecord(part.product_id, { quantity: newRecordQuantity });
+      });
+
+      setRecipeRecord(recipeId, { quantity: value });
+      return;
+    };
+
+  const { mergedProductRecords, mergedRecipeRecords } = useMemo(
     () =>
-      mergeRawAndSalesRaportRecipeRecords(
+      mergeRawAndScannedRecords(
         context.recipeRecords,
-        context.recordsFromSalesRaport
+        context.recordsFromSalesRaport,
+        context.productRecords,
+        context.recordsFromInvoice,
+        recipeList
       ),
-    [context.recipeRecords, context.recordsFromSalesRaport]
+    [
+      context.recipeRecords,
+      context.recordsFromSalesRaport,
+      context.productRecords,
+      context.recordsFromInvoice,
+      recipeList,
+    ]
   );
 
   return {
     ...context,
-    productRecords,
-    recipeRecords,
+    productRecords: mergedProductRecords,
+    recipeRecords: mergedRecipeRecords,
     setProductRecord,
     setRecipeRecord,
+    setRecipeQuantityWithProductQuantities,
   };
 };
