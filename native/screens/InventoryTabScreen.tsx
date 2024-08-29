@@ -16,11 +16,14 @@ import { IDListCardAddRecord } from "../components/IDListCardAddRecord";
 import { RecipeCard } from "../components/RecipeCard";
 import { useSnackbar } from "../components/Snackbar/hooks";
 import { StockForm } from "../components/StockFormContext/types";
+import TextInputController from "../components/TextInputController";
+import { useListProductRecords } from "../db";
 import { useGetInventoryName } from "../db/hooks/useGetInventoryName";
 import { useListCategorizedProductRecords } from "../db/hooks/useListCategorizedProductRecords";
 import { useListRecipes } from "../db/hooks/useListRecipes";
 import { useListUncategorizedProductRecords } from "../db/hooks/useListUncategorizedProductRecords";
 import { useUpdateRecords } from "../db/hooks/useUpdateRecords";
+import { useSearchInput } from "../hooks/useSearchInput";
 import { InventoryTabScreenProps } from "../navigation/types";
 import { createStyles } from "../theme/useStyles";
 
@@ -43,6 +46,9 @@ export default function InventoryTabScreen({
 
   const inventoryForm = useFormContext<StockForm>();
   const inventoryFormValues = inventoryForm.watch();
+
+  const { data: productRecordsList } = useListProductRecords(inventoryId);
+  const { control: searchInputControl, searchText, reset } = useSearchInput();
 
   const {
     mutate,
@@ -85,7 +91,16 @@ export default function InventoryTabScreen({
       }
     )();
   };
-
+  const sortedRecords = React.useMemo(
+    () =>
+      productRecordsList?.sort((a, b) => {
+        if (!a.name || !b.name) return 0;
+        const x = a.name.toLowerCase();
+        const y = b.name.toLowerCase();
+        return x.localeCompare(y);
+      }),
+    [productRecordsList]
+  );
   if (!uncategorizedIsSuccess || !categorizedIsSuccess || !recipesIsSuccess)
     return (
       <SafeAreaView edges={["left", "right"]}>
@@ -101,63 +116,29 @@ export default function InventoryTabScreen({
       </SafeAreaView>
     );
   return (
-    <SafeAreaView edges={["left", "right"]}>
-      <Collapsible
-        ListHeaderComponent={
-          <ScrollView style={styles.scroll}>
-            <View style={styles.doubleButtonContainer}>
-              <Button
-                containerStyle={styles.barcodeIconContainer}
-                size="l"
-                type="primary"
-                onPress={() => {
-                  // necessary hack, handled by parent navigator - be cautious
-                  navigation.navigate("DocumentScannerModal" as any, {
-                    isScanningSalesRaport: true,
-                  });
-                }}
-              >
-                <DocumentScannerIcon size={34} color="lightGrey" />
-              </Button>
-              <Button
-                containerStyle={styles.saveButtonContainer}
-                size="xl"
-                type="primary"
-                fullWidth
-                labelStyle={styles.saveButtonLabel}
-                onPress={handlePress}
-                disabled={!isConnected}
-              >
-                Zapisz zmiany
-              </Button>
-              <Button
-                containerStyle={styles.barcodeIconContainer}
-                size="l"
-                type="primary"
-                disabled
-                onPress={() => {
-                  // necessary hack, handled by parent navigator - be cautious
-                  navigation.navigate("BarcodeModal" as any, {
-                    inventoryId,
-                    navigateTo: "InventoryTab",
-                  });
-                }}
-              >
-                <ScanBarcodeIcon size={34} color="lightGrey" />
-              </Button>
-            </View>
-            <IDListCardAddProduct inventoryId={inventoryId} />
-            <IDListCardAddRecord inventoryId={inventoryId} />
-            {recipeList?.map((recipe) => (
-              <RecipeCard
-                key={recipe?.id}
-                inventoryId={inventoryId}
-                name={recipe.name}
-                recipePart={recipe.recipe_part}
-                recipeRecordId={recipe.recipe_record?.[0]?.id}
-              />
-            ))}
-            {uncategorizedRecordList?.map((record) =>
+    <SafeAreaView
+      edges={["left", "right"]}
+      style={[styles.scroll, styles.rootContainer]}
+    >
+      <TextInputController
+        control={searchInputControl}
+        name="searchText"
+        textInputProps={{
+          containerStyle: { marginHorizontal: 16, marginTop: 8 },
+          placeholder: "Wyszukaj",
+        }}
+      />
+      {searchText ? (
+        <ScrollView
+          style={[styles.scroll, { minHeight: "100%", marginHorizontal: 16 }]}
+        >
+          {sortedRecords
+            ?.filter((p) =>
+              p.name
+                ?.toLowerCase()
+                .includes(searchText ? searchText.toLowerCase() : "")
+            )
+            .map((record) =>
               record ? (
                 <IDListCard
                   key={record.id}
@@ -173,42 +154,122 @@ export default function InventoryTabScreen({
                   }
                   unit={record.unit!}
                   name={record.name!}
+                  onNavigate={reset}
                 />
               ) : (
                 <></>
               )
             )}
-          </ScrollView>
-        }
-        sections={categorizedRecordList?.map(({ title, data }, i) => ({
-          id: i + 1,
-          title: title,
-          data: data.map((record) =>
-            record ? (
-              <IDListCard
-                key={record.id}
-                recordId={record.id!}
-                productId={record.product_id!}
-                inventoryId={inventoryId}
-                id={+inventoryId}
-                quantity={
-                  record.id
-                    ? inventoryFormValues.product_records[record.id]
-                        ?.quantity ?? record.quantity
-                    : null
-                }
-                unit={record.unit!}
-                name={record.name!}
-                borderBottom={data![data.length - 1]?.id === record.id}
-                borderLeft
-                borderRight
-              />
-            ) : (
-              <></>
-            )
-          ),
-        }))}
-      />
+        </ScrollView>
+      ) : (
+        <Collapsible
+          ListHeaderComponent={
+            <ScrollView style={styles.scroll}>
+              <View style={styles.doubleButtonContainer}>
+                <Button
+                  containerStyle={styles.barcodeIconContainer}
+                  size="l"
+                  type="primary"
+                  onPress={() => {
+                    // necessary hack, handled by parent navigator - be cautious
+                    navigation.navigate("DocumentScannerModal" as any, {
+                      isScanningSalesRaport: true,
+                    });
+                  }}
+                >
+                  <DocumentScannerIcon size={34} color="lightGrey" />
+                </Button>
+                <Button
+                  containerStyle={styles.saveButtonContainer}
+                  size="xl"
+                  type="primary"
+                  fullWidth
+                  labelStyle={styles.saveButtonLabel}
+                  onPress={handlePress}
+                  disabled={!isConnected}
+                >
+                  Zapisz zmiany
+                </Button>
+                <Button
+                  containerStyle={styles.barcodeIconContainer}
+                  size="l"
+                  type="primary"
+                  disabled
+                  onPress={() => {
+                    // necessary hack, handled by parent navigator - be cautious
+                    navigation.navigate("BarcodeModal" as any, {
+                      inventoryId,
+                      navigateTo: "InventoryTab",
+                    });
+                  }}
+                >
+                  <ScanBarcodeIcon size={34} color="lightGrey" />
+                </Button>
+              </View>
+              <IDListCardAddProduct inventoryId={inventoryId} />
+              <IDListCardAddRecord inventoryId={inventoryId} />
+              {recipeList?.map((recipe) => (
+                <RecipeCard
+                  key={recipe?.id}
+                  inventoryId={inventoryId}
+                  name={recipe.name}
+                  recipePart={recipe.recipe_part}
+                  recipeRecordId={recipe.recipe_record?.[0]?.id}
+                />
+              ))}
+              {uncategorizedRecordList?.map((record) =>
+                record ? (
+                  <IDListCard
+                    key={record.id}
+                    recordId={record.id!}
+                    productId={record.product_id!}
+                    inventoryId={inventoryId}
+                    id={+inventoryId}
+                    quantity={
+                      record.id
+                        ? inventoryFormValues.product_records[record.id]
+                            ?.quantity ?? record.quantity
+                        : null
+                    }
+                    unit={record.unit!}
+                    name={record.name!}
+                  />
+                ) : (
+                  <></>
+                )
+              )}
+            </ScrollView>
+          }
+          sections={categorizedRecordList?.map(({ title, data }, i) => ({
+            id: i + 1,
+            title: title,
+            data: data.map((record) =>
+              record ? (
+                <IDListCard
+                  key={record.id}
+                  recordId={record.id!}
+                  productId={record.product_id!}
+                  inventoryId={inventoryId}
+                  id={+inventoryId}
+                  quantity={
+                    record.id
+                      ? inventoryFormValues.product_records[record.id]
+                          ?.quantity ?? record.quantity
+                      : null
+                  }
+                  unit={record.unit!}
+                  name={record.name!}
+                  borderBottom={data![data.length - 1]?.id === record.id}
+                  borderLeft
+                  borderRight
+                />
+              ) : (
+                <></>
+              )
+            ),
+          }))}
+        />
+      )}
     </SafeAreaView>
   );
 }
@@ -217,6 +278,9 @@ const useStyles = createStyles((theme) =>
   StyleSheet.create({
     container: {
       backgroundColor: theme.colors.darkBlue,
+    },
+    rootContainer: {
+      paddingBottom: theme.spacing * 3,
     },
     scroll: {
       backgroundColor: theme.colors.darkBlue,
@@ -234,7 +298,6 @@ const useStyles = createStyles((theme) =>
       flexDirection: "row",
       justifyContent: "space-between",
       marginBottom: theme.spacing,
-      marginTop: theme.spacing * 2,
       gap: theme.spacing,
     },
     skeletonDate: {

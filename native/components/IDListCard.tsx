@@ -22,6 +22,10 @@ type IDListCardProps = {
   borderLeft?: boolean;
   borderRight?: boolean;
   borderBottom?: boolean;
+  /**
+   * executed after navigation
+   */
+  onNavigate?: () => void;
 };
 // TODO - to be refined
 const getQuantityDelta = (
@@ -49,6 +53,7 @@ export const IDListCard = ({
   borderLeft = false,
   borderRight = false,
   borderBottom = false,
+  onNavigate,
 }: IDListCardProps) => {
   const styles = useStyles();
   const navigation = useNavigation<any>();
@@ -86,14 +91,15 @@ export const IDListCard = ({
           color="mediumBlue"
           style={styles.card}
           padding="none"
-          onPress={() =>
+          onPress={() => {
             // bypass screen type check, handled by either (Inventory || Delivery)TabScreen navigator,
             // no need to specify, as they both contain the Record route, with these params
             navigation.navigate("RecordScreen", {
               recordId,
               id,
-            })
-          }
+            });
+            onNavigate?.();
+          }}
         >
           <Typography
             color="lightGrey"
