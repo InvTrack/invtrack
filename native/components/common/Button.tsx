@@ -31,6 +31,7 @@ type ButtonProps = {
   fullWidth?: boolean;
   children?: React.ReactNode;
   isLoading?: boolean;
+  testID?: string;
 };
 
 const BORDER_WIDTH = 2;
@@ -55,6 +56,7 @@ export const Button = ({
   fullWidth = false,
   children,
   isLoading = false,
+  testID,
 }: ButtonProps) => {
   const styles = useStyles();
   const isStringChildren = typeof children === "string";
@@ -72,6 +74,7 @@ export const Button = ({
       ]}
       disabled={disabled}
       activeOpacity={0.8}
+      testID={testID}
     >
       {isLoading ? (
         <LoadingSpinner />

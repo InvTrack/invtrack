@@ -181,7 +181,7 @@ export const useStockContext = () => {
         const oldQuantity =
           context.productRecords[part.product_id]?.quantity || 0;
         const dMultiplied = roundFloat(delta * part.quantity);
-        const newRecordQuantity = roundFloat(oldQuantity + dMultiplied);
+        const newRecordQuantity = roundFloat(oldQuantity - dMultiplied);
 
         setProductRecord(part.product_id, { quantity: newRecordQuantity });
       });

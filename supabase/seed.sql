@@ -9,46 +9,49 @@ INSERT INTO "public"."company" ("id", "name") VALUES
 	(2, 'Testowa lokalna');
 
 INSERT INTO "public"."product_category" ("id", "name", "company_id", "display_order") VALUES
-	(1, 'Cukiernicze', 2, 0),
-	(2, 'Owoce', 2, 3);
+	(1, 'Podstawowe',	2, 0),
+	(2, 'Dodatki',   	2, 3);
 
 INSERT INTO "public"."product" ("id", "name", "unit", "company_id", "notification_threshold", "category_id", "display_order", "deleted_at") VALUES
-	(11, 'Gofry Emix',      'Szt.', 2, 0, 1, 0, NULL),
-	(12, 'Śmietana',        'szt.', 2, 0, 1, 0, NULL),
-	(13, 'Ananas',          'szt.', 2, 0, 2, 0, NULL),
-	(14, 'Nutella',         'szt.', 2, 0, 1, 0, NULL),
-	(15, 'Sos Czekoladowy', 'szt.', 2, 0, 1, 0, NULL),
-	(16, 'Maliny w żelu',   'szt.', 2, 0, 2, 0, NULL),
-	(17, 'Olej rzepakowy',  'szt.', 2, 0, NULL, 0, NULL);
+	(11, 'Mąka',            'kg.',  2, 0, 1,    0, NULL),
+	(12, 'Jajka',           'szt.', 2, 0, 1,    0, NULL),
+	(13, 'Mleko',           'szt.', 2, 0, 1,    0, NULL),
+	(14, 'Nutella',         'szt.', 2, 0, 2,    0, NULL),
+	(15, 'Truskawki',       'szt.', 2, 0, 2,    0, NULL),
+	(16, 'Serwetki',        'szt.',	2, 0, NULL, 0, NULL);
 
-INSERT INTO "public"."inventory" ("id", "name", "date", "company_id", "last_product_record_updated_at", "low_quantity_notification_sent", "is_delivery") VALUES
-	(1, '3 lipiec', '2024-07-03 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, true),
-	(2, '4 lipiec', '2024-07-04 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, false);
+-- INSERT INTO "public"."inventory" ("id", "name", "date", "company_id", "last_product_record_updated_at", "low_quantity_notification_sent", "is_delivery") VALUES
+-- 	(1, '3 lipiec', '2024-07-03 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, true),
+-- 	(2, '4 lipiec', '2024-07-04 14:35:47+00', 2, '2024-07-10 10:20:11.885395+00', false, false);
 
-DELETE FROM "public"."product_record" WHERE product_id = 13;
-DELETE FROM "public"."product_record" WHERE product_id = 14;
+-- DELETE FROM "public"."product_record" WHERE product_id = 13;
+-- DELETE FROM "public"."product_record" WHERE product_id = 14;
 
 INSERT INTO "public"."recipe" ("id", "name", "company_id") VALUES
-	(21, 'Gofry ze śmietaną', 2),
-	(22, 'Gofry z malinami', 2),
-	(23, 'Gofry z nutellą i czekoladą', 2);
+	(21, 'Naleśniki z Nutellą', 2),
+	(22, 'Naleśniki z Truskawkami', 2),
+	(23, 'Omlet', 2),
+	(24, 'Kluski', 2);
 
-INSERT INTO "public"."recipe_part" ("quantity", "product_id", "recipe_id") VALUES
-	(1, 11, 21),
-	(2, 12, 21),
-	(1, 11, 22),
-	(2, 16, 22),
-	(1, 11, 23),
-	(1, 14, 23),
-	(1, 15, 23);
+INSERT INTO "public"."recipe_part" ("recipe_id", "product_id", "quantity") VALUES
+	(21, 11, 1),
+	(21, 12, 1),
+	(21, 13, 1),
+	(21, 14, 1),
+	(22, 11, 1),
+	(22, 12, 1),
+	(22, 13, 1),
+	(22, 15, 1),
+	(23, 12, 1),
+	(23, 13, 1),
+	(24, 11, 1),
+	(24, 12, 1);
 
 INSERT INTO "public"."name_alias" ("alias", "recipe_id", "product_id", "company_id") VALUES
-	('Gofry Emix 5kg', NULL, 11, 2),
-	('Deserowa UHT Bieruńska 33% 5 lit.', NULL, 12, 2),
-	('Ananas Kostka Sandra 565g', NULL, 13, 2),
-	('Nutella 825 g', NULL, 14, 2),
-	('GOFER ŚMIETANOWY', 21, NULL, 2),
-	('GOFER CZEKOLADA', 22, NULL, 2);
+	('Mąka 1kg',			NULL,	11,		2),
+	('NUTELLA 825 G',		NULL,	14,		2),
+	('Naleśniki z Nutellą',	21, 	NULL, 	2),
+	('Omlet',				23, 	NULL, 	2);
 
 RESET ALL;
 

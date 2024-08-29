@@ -1,0 +1,16 @@
+appId: app.invtrack.invtrack
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    text: .*^http.*
+- tapOn: "Continue"
+- tapOn:
+    point: "50%,15%"
+- tapOn: "Zaloguj się"
+- tapOn: "E-mail"
+- inputText: "adam@example.com"
+- tapOn: "Hasło"
+- inputText: "aaaaaa"
+- tapOn: "Zaloguj się"
+- assertNotVisible: "Zaloguj się"

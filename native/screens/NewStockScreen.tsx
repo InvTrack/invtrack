@@ -102,7 +102,11 @@ export function NewStockScreen({ navigation }: NewStockScreenProps) {
           marginBottom: isAndroid ? 0 : 16,
         }}
       >
-        <ToggleController control={control} name="is_delivery" />
+        <ToggleController
+          control={control}
+          name="is_delivery"
+          toggleProps={{ testID: "toggleIsDelivery" }}
+        />
         <Typography
           variant="l"
           color="lightGrey"

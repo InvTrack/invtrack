@@ -56,7 +56,7 @@ export const mergeRawAndScannedRecords = (
       const dMultiplied = roundFloat(quantity * part.quantity);
       if (product_id in mergedProductRecords) {
         const oldQuantity = mergedProductRecords[product_id].quantity;
-        const newRecordQuantity = roundFloat(oldQuantity + dMultiplied);
+        const newRecordQuantity = roundFloat(oldQuantity - dMultiplied);
         mergedProductRecords[product_id].quantity = newRecordQuantity;
       } else {
         mergedProductRecords[product_id] = {

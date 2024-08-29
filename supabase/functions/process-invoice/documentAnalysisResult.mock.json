@@ -1,132 +1,32 @@
 [
   {
-    "sanitizedName": "Gofry Emix 5kg",
-    "price_per_unit": 44.44,
-    "quantity": 17
+    "sanitizedName": "Mąka 1kg",
+    "price_per_unit": 6.44,
+    "quantity": 5
   },
   {
-    "sanitizedName": "Deserowa UHT Bieruńska 33% 5 lit.",
-    "price_per_unit": 58.51,
-    "quantity": 10
+    "sanitizedName": "Jajka opakowanie 10szt.",
+    "price_per_unit": 10.51,
+    "quantity": 5
+  },
+  {
+    "sanitizedName": "Mleko 1l",
+    "price_per_unit": 4.29,
+    "quantity": 5
   },
   {
     "sanitizedName": "Nutella 825 g",
     "price_per_unit": 21.85,
-    "quantity": 12
+    "quantity": 5
   },
   {
-    "sanitizedName": "Ananas Kostka Sandra 565g",
+    "sanitizedName": "Truskawki koszyk 565g",
+    "price_per_unit": 22.3,
+    "quantity": 5
+  },
+  {
+    "sanitizedName": "Serwetki opakowanie",
     "price_per_unit": 5.3,
-    "quantity": 6
-  },
-  {
-    "sanitizedName": "Sos Czekoladowy Dijo 1kg",
-    "price_per_unit": 17.64,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Sos Czekolada Biała Dijo 1",
-    "price_per_unit": 19.38,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Sos Adwokatowy Dijo 1kg",
-    "price_per_unit": 17.24,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Sos Truskawkowy Dijo 1kg",
-    "price_per_unit": 16.8,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Sos Toffi Dijo 1kg",
-    "price_per_unit": 16.44,
     "quantity": 5
-  },
-  {
-    "sanitizedName": "Sos Mix Jagodowy Dijo 1kg",
-    "price_per_unit": 18.13,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Sos Wiśniowy Dijo 1kg",
-    "price_per_unit": 16.44,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Sos Malinowy Dijo 1kg",
-    "price_per_unit": 18.13,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Maliny w Żelu Prospona 3,2kg",
-    "price_per_unit": 107.52,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Jagody w Żelu Prospona 3,2kg",
-    "price_per_unit": 91.2,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Brzoskwinie Kostka Regularna Sandra 4250g",
-    "price_per_unit": 35.65,
-    "quantity": 2
-  },
-  {
-    "sanitizedName": "Posypka Kolorowa Dijo 1kg",
-    "price_per_unit": 16.39,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Posypka o Smaku Kakaowym Dijo 1kg Wafle Rożek Włoski Madren(35) 546",
-    "price_per_unit": 3.77,
-    "quantity": 3
-  },
-  {
-    "sanitizedName": "Wafle Kubek Kanadyjski Duży Madren(05) 450",
-    "price_per_unit": 63.08,
-    "quantity": 2
-  },
-  {
-    "sanitizedName": "Olej Rzepakowy Uniwersalny 51",
-    "price_per_unit": 25.45,
-    "quantity": 9
-  },
-  {
-    "sanitizedName": "Brzoskwinie Połówki Sandra 820g",
-    "price_per_unit": 7.22,
-    "quantity": 4
-  },
-  {
-    "sanitizedName": "Wiśnie w Żelu Prospona 3,2kg",
-    "price_per_unit": 47,
-    "quantity": 5
-  },
-  {
-    "sanitizedName": "Wafle Kubek Kanadyjski Średni Madren(04) 450",
-    "price_per_unit": 59.42,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Jabłko Zielone w Żelu Prospona 3,1kg",
-    "price_per_unit": 44.34,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Truskawki w Żelu Dijo 3,2kg",
-    "price_per_unit": 60.35,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Maliny w Żelu Dijo 3,2kg",
-    "price_per_unit": 60.35,
-    "quantity": 1
-  },
-  {
-    "sanitizedName": "Mleko Mlekovita UHT 3,2% 1L",
-    "price_per_unit": 2.98,
-    "quantity": 12
   }
 ]

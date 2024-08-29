@@ -17,7 +17,7 @@ export type ToggleProps = Omit<NativeToggleProps, "onValueChange" | "value"> & {
 
 export const Toggle = forwardRef<NativeToggle, ToggleProps>(
   (
-    { value = true, onChange, disabled, style }: ToggleProps,
+    { value = true, onChange, disabled, style, testID }: ToggleProps,
     ref: React.Ref<NativeToggle>
   ) => {
     const theme = useTheme();
@@ -38,6 +38,7 @@ export const Toggle = forwardRef<NativeToggle, ToggleProps>(
         value={value}
         disabled={disabled}
         style={style}
+        testID={testID}
       />
     );
   }

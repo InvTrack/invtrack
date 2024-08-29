@@ -1,0 +1,67 @@
+appId: app.invtrack.invtrack
+---
+# Dodaj inwentaryzację
+- tapOn:
+    id: "addNewStock"
+- tapOn:
+    id: "toggleIsDelivery"
+- assertVisible: "Inwentaryzacja"
+- tapOn: "Nazwa"
+- inputText: "Inw 1"
+- tapOn: "Dodaj"
+
+# Dodaj produkty
+- scrollUntilVisible:
+    element:
+      text: "Podstawowe"
+- tapOn: "Podstawowe"
+- scrollUntilVisible:
+    element:
+      text: "Dodatki"
+- tapOn: "Dodatki"
+
+- tapOn: "Serwetki"
+- tapOn: "+10"
+- tapOn:
+    id: "goBack"
+
+- tapOn: "Mąka"
+- tapOn: "+10"
+- tapOn: "+10"
+- tapOn:
+    id: "goBack"
+
+- tapOn: "Jajka"
+- tapOn: "+10"
+- tapOn:
+    id: "goBack"
+
+- tapOn: "Mleko"
+- tapOn: "+10"
+- tapOn:
+    id: "goBack"
+
+- scrollUntilVisible:
+    element:
+      text: "Truskawki"
+
+- tapOn: "Nutella"
+- tapOn: "+5"
+- tapOn:
+    id: "goBack"
+
+- tapOn: "Truskawki"
+- tapOn: "+5"
+- tapOn:
+    id: "goBack"
+
+- scrollUntilVisible:
+    direction: UP
+    element:
+      text: "Zapisz zmiany"
+- tapOn: "Zapisz zmiany"
+- assertVisible: "Zmiany zostały zapisane"
+- assertNotVisible: "Zmiany zostały zapisane"
+- tapOn:
+    id: "goBack"
+- assertVisible: "Inw 1"

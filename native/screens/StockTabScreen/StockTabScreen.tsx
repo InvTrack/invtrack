@@ -8,6 +8,7 @@ import { DocumentScannerIcon, ScanBarcodeIcon } from "../../components/Icon";
 import { Skeleton } from "../../components/Skeleton";
 import { useSnackbar } from "../../components/Snackbar/hooks";
 import { Button } from "../../components/common/Button";
+import { Typography } from "../../components/common/Typography";
 import { useCreateProductNameAlias } from "../../db/hooks/useCreateProductNameAlias";
 import { useCreateRecipeNameAlias } from "../../db/hooks/useCreateRecipeNameAlias";
 import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
@@ -131,6 +132,7 @@ export default function StockTabScreen({
                     stockType,
                   });
                 }}
+                testID="documentScanner"
               >
                 <DocumentScannerIcon size={34} color="lightGrey" />
               </Button>
@@ -174,16 +176,34 @@ export default function StockTabScreen({
                 ? Object.keys(recordsFromInvoice).toString()
                 : "No invoice"}
             </Button> */}
-            {recipeList?.map((recipe) => (
-              <RecipeCard
-                key={recipe?.id}
-                inventoryId={stockId}
-                name={recipe.name}
-                recipePart={recipe.recipe_part}
-                recipeId={recipe.id}
-                recipeRecordId={recipe.recipe_record?.[0]?.id}
-              />
-            ))}
+            {stockType === "inventory" ? (
+              <>
+                <Typography
+                  variant="lBold"
+                  color="lightGrey"
+                  style={styles.sectionHeader}
+                >
+                  Ubyło dań:
+                </Typography>
+                {recipeList?.map((recipe) => (
+                  <RecipeCard
+                    key={recipe?.id}
+                    inventoryId={stockId}
+                    name={recipe.name}
+                    recipePart={recipe.recipe_part}
+                    recipeId={recipe.id}
+                    recipeRecordId={recipe.recipe_record?.[0]?.id}
+                  />
+                ))}
+              </>
+            ) : null}
+            <Typography
+              variant="lBold"
+              color="lightGrey"
+              style={styles.sectionHeader}
+            >
+              Produkty:
+            </Typography>
             {uncategorizedProducts?.map((product) =>
               product && product.id ? (
                 <IDListCard

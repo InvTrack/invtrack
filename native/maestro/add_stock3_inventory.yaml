@@ -1,0 +1,14 @@
+appId: app.invtrack.invtrack
+---
+# Dodaj dostawę
+- tapOn:
+    id: "addNewStock"
+- tapOn:
+    id: "toggleIsDelivery"
+- assertVisible: "Inwentaryzacja"
+- tapOn: "Nazwa"
+- inputText: "Inw 2"
+- tapOn: "Dodaj"
+- tapOn:
+    id: "goBack"
+- assertVisible: "Inw 2"

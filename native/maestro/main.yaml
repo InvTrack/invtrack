@@ -1,0 +1,6 @@
+appId: app.invtrack.invtrack
+---
+- runFlow: "clean_login.yaml"
+- runFlow: "add_stock1_inventory.yaml"
+- runFlow: "add_stock2_delivery.yaml"
+- runFlow: "add_stock3_inventory.yaml"

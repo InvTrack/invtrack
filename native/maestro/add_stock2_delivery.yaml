@@ -1,0 +1,27 @@
+appId: app.invtrack.invtrack
+---
+# Dodaj dostawę
+- tapOn:
+    id: "addNewStock"
+- assertVisible: "Dostawa"
+- tapOn: "Nazwa"
+- inputText: "Dost 1"
+- tapOn: "Dodaj"
+- tapOn:
+    id: "documentScanner"
+- tapOn:
+    point: "50%,90%"
+- tapOn: "Wyślij"
+- tapOn: "Jajka opakowanie 10szt."
+- tapOn: "Jajka"
+- tapOn: "Mleko 1l"
+- tapOn: "Mleko"
+- tapOn: "Truskawki koszyk 565g"
+- tapOn: "Truskawki"
+- tapOn: "Serwetki opakowanie"
+- tapOn: "Serwetki"
+- tapOn: "Zapisz Zmiany"
+- tapOn: "Zapisz Zmiany"
+- tapOn:
+    id: "goBack"
+- assertVisible: "Dost 1"

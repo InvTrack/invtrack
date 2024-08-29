@@ -73,6 +73,7 @@ export const Header = ({ route }: NativeStackHeaderProps) => {
           size={32}
           onPress={navigation.goBack}
           color="darkGrey"
+          testID="goBack"
         />
       ) : (
         <View />

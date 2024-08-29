@@ -33,45 +33,74 @@ const setAlias =
   (
     setValue: UseFormSetValue<AliasForm>,
     getValues: UseFormGetValues<AliasForm>,
-    showInfo: ReturnType<typeof useSnackbar>["showInfo"]
+    showInfo: ReturnType<typeof useSnackbar>["showInfo"],
+    entityType: "product" | "recipe"
   ) =>
-  (product_id: string, alias: string) => {
-    const productAliases = getValues(`productAliases.${product_id}`);
-
-    if (aliasSet.has(alias)) {
-      const entireFormValues = getValues();
-      for (const product_id in entireFormValues) {
-        if (
-          entireFormValues.productAliases[product_id]?.some(
-            (usedAlias) => usedAlias === alias
-          )
-        ) {
-          setValue(`productAliases.${product_id}`, [
-            ...(productAliases?.filter((ua) => ua === alias) || []),
-            alias,
-          ]);
-          showInfo("Alias został już ustalony dla innego produktu, nadpisano.");
-          return void this;
+  (entityId: string, alias: string) => {
+    if (entityType === "product") {
+      const productAliases = getValues(`productAliases.${entityId}`);
+      if (aliasSet.has(alias)) {
+        const entireFormValues = getValues();
+        for (const product_id in entireFormValues) {
+          if (
+            entireFormValues.productAliases[product_id]?.some(
+              (usedAlias) => usedAlias === alias
+            )
+          ) {
+            setValue(`productAliases.${product_id}`, [
+              ...(productAliases?.filter((ua) => ua === alias) || []),
+              alias,
+            ]);
+            showInfo(
+              "Alias został już ustalony dla innego produktu, nadpisano."
+            );
+            return void this;
+          }
         }
+        return void this;
       }
-      return void this;
+      setValue(`productAliases.${entityId}`, [
+        ...(productAliases || []),
+        alias,
+      ]);
+      aliasSet.add(alias);
+      setValue("usedAliases", [...aliasSet]);
+    } else if (entityType === "recipe") {
+      const recipeAliases = getValues(`recipeAliases.${entityId}`);
+      if (aliasSet.has(alias)) {
+        const entireFormValues = getValues();
+        for (const recipe_id in entireFormValues) {
+          if (
+            entireFormValues.recipeAliases[recipe_id]?.some(
+              (usedAlias) => usedAlias === alias
+            )
+          ) {
+            setValue(`recipeAliases.${recipe_id}`, [
+              ...(recipeAliases?.filter((ua) => ua === alias) || []),
+              alias,
+            ]);
+            showInfo(
+              "Alias został już ustalony dla innego produktu, nadpisano."
+            );
+            return void this;
+          }
+        }
+        return void this;
+      }
+      setValue(`recipeAliases.${entityId}`, [...(recipeAliases || []), alias]);
+      aliasSet.add(alias);
+      setValue("usedAliases", [...aliasSet]);
     }
-    setValue(`productAliases.${product_id}`, [
-      ...(productAliases || []),
-      alias,
-    ]);
-    aliasSet.add(alias);
-    setValue("usedAliases", [...aliasSet]);
   };
 
-const getNewMatched = (
+// TODO merge these two
+const getNewMatchedProducts = (
   documentResponse: ProcessInvoiceResponse,
   productAliases: AliasForm["productAliases"],
   products: { id: number }[]
 ) => {
   if (!documentResponse) return null;
   let newMatched: ProductRecordsByProductId = {};
-  // const productAliases = getValues(`productAliases`);
 
   for (const row of documentResponse.unmatchedRows) {
     const { price_per_unit, quantity, name } = row;
@@ -92,7 +121,34 @@ const getNewMatched = (
     };
   }
   return newMatched;
-  // navigation.goBack();
+};
+
+const getNewMatchedRecipes = (
+  documentResponse: ProcessSalesRaportResponse,
+  recipeAliases: AliasForm["recipeAliases"],
+  recipes: { id: number }[]
+) => {
+  if (!documentResponse) return null;
+  let newMatched: RecipeRecordsByRecipeId = {};
+
+  for (const row of documentResponse.unmatchedRows) {
+    const { quantity, name } = row;
+
+    const recipe_id = Object.entries(recipeAliases).find(
+      ([_, aliases]) => !!aliases?.find((alias) => alias === name)
+    )?.[0];
+
+    if (!recipe_id) continue;
+
+    const recipe = recipes?.find((p) => p.id === parseInt(recipe_id));
+    if (!recipe || !recipe.id) continue;
+
+    newMatched[recipe.id] = {
+      quantity,
+      record_id: null,
+    };
+  }
+  return newMatched;
 };
 
 export const IdentifyAliasesComponent = ({
@@ -162,7 +218,7 @@ export const IdentifyAliasesComponent = ({
       (data) => {
         // WIP
         if (stockType === "delivery" && products && documentResponse) {
-          const newMatchedProducts = getNewMatched(
+          const newMatchedProducts = getNewMatchedProducts(
             documentResponse,
             data.productAliases,
             products
@@ -184,19 +240,19 @@ export const IdentifyAliasesComponent = ({
             aliasForm: getValues(),
           });
         }
-        if (stockType === "inventory" && products && documentResponse) {
-          // const newMatchedProducts = getNewMatched(
-          //   documentResponse,
-          //   data.productAliases,
-          //   products
-          // );
+        if (stockType === "inventory" && recipes && documentResponse) {
+          const newMatchedRecipes = getNewMatchedRecipes(
+            documentResponse,
+            data.recipeAliases,
+            recipes
+          );
 
           const merged: RecipeRecordsByRecipeId = {
             ...documentResponse.matchedRecipieRecords,
             ...documentResponse.matchedRecipiesNotInInventory,
             // order is important, newMatchedProducts should be last, because it is the result of the user selection
             // or is it?
-            // ...newMatchedProducts,
+            ...newMatchedRecipes,
           };
 
           // "necessery hack"? idk how navigation works
@@ -280,10 +336,16 @@ export const IdentifyAliasesComponent = ({
             onPress={() =>
               openBottomSheet(() => (
                 <ProductListBottomSheetContent
-                  products={products!}
+                  products={stockType === "delivery" ? products! : recipes!}
+                  // products={recipes!}
                   alias={row.name}
                   closeBottomSheet={closeBottomSheet}
-                  setValue={setAlias(setValue, getValues, showInfo)}
+                  setValue={setAlias(
+                    setValue,
+                    getValues,
+                    showInfo,
+                    stockType === "delivery" ? "product" : "recipe"
+                  )}
                 />
               ))
             }

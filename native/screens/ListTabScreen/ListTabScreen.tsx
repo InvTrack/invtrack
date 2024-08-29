@@ -113,6 +113,7 @@ export const ListTab = ({ navigation }: ListTabScreenProps) => {
           onPress={() => {
             navigation.navigate("NewStockScreen" as any);
           }}
+          testID="addNewStock"
         >
           Dodaj pierwszy wpis!
         </Button>

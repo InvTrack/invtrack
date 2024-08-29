@@ -40,5 +40,6 @@ export const useStockTabStyles = createStyles((theme) =>
       marginBottom: theme.spacing * 2,
       height: 45,
     },
+    sectionHeader: {},
   })
 );

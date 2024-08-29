@@ -28,6 +28,7 @@ export const ToggleController = <T extends FieldValues>({
       ref={ref}
       onChange={onChange}
       value={toggleProps?.value || value}
+      testID={toggleProps?.testID}
     />
   );
 };

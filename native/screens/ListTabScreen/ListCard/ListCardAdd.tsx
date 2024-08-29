@@ -19,6 +19,7 @@ export const ListCardAdd = () => {
       onPress={() => {
         navigation.navigate("NewStockScreen");
       }}
+      testID="addNewStock"
     >
       <PlusIcon size={25} color="lightGrey" />
     </Button>

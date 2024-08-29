@@ -22,6 +22,7 @@ export interface InternalIconProps {
   containerStyle?: StyleProp<ViewStyle>;
   size?: number;
   disabled?: boolean;
+  testID?: string;
 }
 
 export type IconProps = Omit<InternalIconProps, "source">;
@@ -34,6 +35,7 @@ const Icon = ({
   containerStyle,
   size = 16,
   disabled,
+  testID,
 }: InternalIconProps) => {
   const theme = useTheme();
   return onPress ? (
@@ -42,6 +44,7 @@ const Icon = ({
       style={containerStyle}
       disabled={disabled}
       activeOpacity={0.4}
+      testID={testID}
     >
       <Image
         source={source}
