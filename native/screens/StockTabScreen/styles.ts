@@ -3,6 +3,10 @@ import { createStyles } from "../../theme/useStyles";
 
 export const useStockTabStyles = createStyles((theme) =>
   StyleSheet.create({
+    screen: {
+      backgroundColor: theme.colors.darkBlue,
+      height: "100%",
+    },
     container: {
       backgroundColor: theme.colors.darkBlue,
     },

@@ -102,7 +102,7 @@ export default function StockTabScreen({
     !recipesIsSuccess
   )
     return (
-      <SafeAreaView edges={["left", "right"]}>
+      <SafeAreaView edges={["left", "right"]} style={styles.screen}>
         <View style={styles.scroll}>
           <View style={styles.skeletonDate}></View>
           <View style={styles.barcodeIconContainer}>

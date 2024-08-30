@@ -48,10 +48,10 @@ INSERT INTO "public"."recipe_part" ("recipe_id", "product_id", "quantity") VALUE
 	(24, 12, 1);
 
 INSERT INTO "public"."name_alias" ("alias", "recipe_id", "product_id", "company_id") VALUES
-	('Mąka 1kg',			NULL,	11,		2),
-	('NUTELLA 825 G',		NULL,	14,		2),
-	('Naleśniki z Nutellą',	21, 	NULL, 	2),
-	('Omlet',				23, 	NULL, 	2);
+	('Mąka 1kg',                NULL, 11,   2),
+	('NUTELLA 825 G',           NULL, 14,   2),
+	('Naleśniki Czekoladowe',   21,   NULL, 2),
+	('Omlet jajeczny',          23,   NULL, 2);
 
 RESET ALL;
 

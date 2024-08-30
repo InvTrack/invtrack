@@ -159,7 +159,7 @@ export const BottomTabNavigation = ({}: BottomTabProps) => {
         component={StockStackNavigator}
         options={{
           // VISUAL
-          title: "Stock",
+          title: "Wpis",
           tabBarShowLabel: false,
           tabBarActiveTintColor: theme.colors.highlight,
           // VISUAL

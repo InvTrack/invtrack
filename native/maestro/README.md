@@ -1,6 +1,5 @@
 ### Prerequisites for running e2e tests
 
-
 Install the `maestro` e2e tool on your system.
 Clean the db with `npm run reset-db` in project root.
 

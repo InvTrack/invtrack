@@ -9,6 +9,17 @@ appId: app.invtrack.invtrack
 - tapOn: "Nazwa"
 - inputText: "Inw 2"
 - tapOn: "Dodaj"
+
 - tapOn:
-    id: "goBack"
-- assertVisible: "Inw 2"
+    id: "documentScanner"
+- tapOn:
+    point: "50%,90%"
+- tapOn: "Wyślij"
+
+- tapOn: "Naleśniki Truskawkowe"
+- tapOn: "Naleśniki z Truskawkami"
+- tapOn: "Kluski knedle"
+- tapOn: "Kluski"
+# - tapOn:
+#     id: "goBack"
+# - assertVisible: "Inw 2"

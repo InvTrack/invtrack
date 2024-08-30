@@ -122,13 +122,6 @@ export const ListTab = ({ navigation }: ListTabScreenProps) => {
     );
   }
 
-  console.log(
-    months.map(([mn, days]) =>
-      days.map(([dn, invs]) =>
-        invs.map((i) => mn + " " + dn + " " + (i?.id?.toString() || "und"))
-      )
-    )
-  );
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.screen}>
       <ScrollView
