@@ -43,9 +43,6 @@ export const mergeRawAndScannedRecords = (
     }
 
     // Adjust merged product records according to scanned recipe records
-    //
-    // WIP: Differentiate the behaviour based on wether in delivery or inventory mode.
-    //      (subtract product records when in inventory mode)
     const recipeParts = recipeList?.find(
       (r) => r.id.toString() === recipe_id
     )?.recipe_part;

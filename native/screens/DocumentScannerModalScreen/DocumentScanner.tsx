@@ -37,9 +37,6 @@ export const DocumentScanner = ({
       isPreviewShown: !s.isPreviewShown,
       isTakingPhoto: false,
     }));
-    // dispatch(documentScannerAction.PHOTO_TAKE({ photo }));
-    // dispatch(documentScannerAction.SWITCH_PREVIEW());
-    // dispatch(documentScannerAction.PHOTO_END());
     return;
   };
 

@@ -39,7 +39,7 @@ export default function StockTabScreen({
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
 
-  const { data: inventoryName } = useGetInventoryName(+stockId);
+  const { data: inventoryName } = useGetInventoryName(stockId);
 
   const {
     productRecords,

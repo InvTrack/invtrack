@@ -11,8 +11,9 @@ const getInventoryName = async (inventoryId: number) => {
   return res.data?.name ?? "";
 };
 
-export const useGetInventoryName = (inventoryId: number) =>
+export const useGetInventoryName = (inventoryId?: number) =>
   useQuery({
     queryKey: ["inventoryName", inventoryId],
-    queryFn: async () => await getInventoryName(inventoryId),
+    queryFn: async () => await getInventoryName(inventoryId!),
+    enabled: !!inventoryId,
   });

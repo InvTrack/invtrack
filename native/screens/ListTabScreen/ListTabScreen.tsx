@@ -35,6 +35,7 @@ const groupByDay = (data: ReturnType<typeof useListInventories>["data"]) => {
   if (!data) return null;
   const days: { [key: string]: typeof data } = {};
   data.forEach((item) => {
+    if (!item || !item.date) return;
     const day = new Date(item.date).toLocaleString("pl-PL", {
       day: "numeric",
       month: "numeric",
@@ -121,6 +122,13 @@ export const ListTab = ({ navigation }: ListTabScreenProps) => {
     );
   }
 
+  console.log(
+    months.map(([mn, days]) =>
+      days.map(([dn, invs]) =>
+        invs.map((i) => mn + " " + dn + " " + (i?.id?.toString() || "und"))
+      )
+    )
+  );
   return (
     <SafeAreaView edges={["left", "right"]} style={styles.screen}>
       <ScrollView

@@ -29,6 +29,8 @@ export const useListRecipes = () => {
   return useQuery(["recipeList"], () => listAllRecipes());
 };
 
-export const useListRecipesWithRecords = (stockId: number) => {
-  return useQuery(["recipeList", stockId], () => listRecipesOfStock(stockId));
+export const useListRecipesWithRecords = (stockId?: number) => {
+  return useQuery(["recipeList", stockId], () => listRecipesOfStock(stockId!), {
+    enabled: !!stockId,
+  });
 };

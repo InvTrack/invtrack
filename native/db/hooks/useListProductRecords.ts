@@ -11,9 +11,11 @@ const listRecords = async (inventoryId: number) => {
   if (error) throw new Error(error.message);
   return data;
 };
-export const useListProductRecords = (inventoryId: number) => {
-  const query = useQuery(["recordsList", inventoryId], () =>
-    listRecords(inventoryId)
+export const useListProductRecords = (stockId?: number) => {
+  const query = useQuery(
+    ["recordsList", stockId],
+    () => listRecords(stockId!),
+    { enabled: !!stockId }
   );
   return query;
 };

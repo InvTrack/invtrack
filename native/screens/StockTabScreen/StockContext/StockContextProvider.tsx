@@ -25,8 +25,8 @@ const initialProductRecords: ProductRecordsByProductId = {};
 const initialRecipeRecords: RecipeRecordsByRecipeId = {};
 
 type StockContextType = StockData & {
-  stockId: number;
-  setStockId: React.Dispatch<React.SetStateAction<number>>;
+  stockId?: number;
+  setStockId: React.Dispatch<React.SetStateAction<number | undefined>>;
   // stockType: "inventory" | "delivery";
   setProductRecords: React.Dispatch<
     React.SetStateAction<ProductRecordsByProductId>
@@ -66,7 +66,7 @@ export const StockContextProvider = ({
   stockId: number | undefined;
 }) => {
   const { data: stocks } = useListInventories();
-  const latestStockId = stocks?.[0]?.id || -1;
+  const latestStockId = stocks?.[0]?.id;
 
   const [stockId, setStockId] = useState(routeStockId ?? latestStockId);
 

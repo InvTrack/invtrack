@@ -10,15 +10,16 @@ const listRecipeRecords = async (inventoryId: number) => {
   if (error) throw new Error(error.message);
   return data;
 };
-export const useListRecipeRecords = (inventoryId: number) => {
+export const useListRecipeRecords = (stockId?: number) => {
   const queryClient = useQueryClient();
   const query = useQuery({
-    queryKey: ["recipeRecordsList", inventoryId],
-    queryFn: () => listRecipeRecords(inventoryId),
+    queryKey: ["recipeRecordsList", stockId],
+    queryFn: () => listRecipeRecords(stockId!),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: ["recipeRecord"],
       }),
+    enabled: !!stockId,
   });
   return query;
 };

@@ -54,7 +54,6 @@ export const PhotoPreview = ({
                       photo: null,
                       isPreviewShown: false,
                     }))
-              // () => dispatch(documentScannerAction.PHOTO_RETAKE())
             }
             size="s"
             type="primary"
