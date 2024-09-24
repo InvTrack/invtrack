@@ -15,8 +15,7 @@ export const useRecordPanel = ({
   inventoryId: number;
   productId: number;
 }) => {
-  const { productRecords, setProductRecords, setProductRecord } =
-    useStockContext();
+  const { productRecords, setProductRecord } = useStockContext();
   const { quantity, price_per_unit } = productRecords[productId];
 
   const productResult = useGetProduct(productId);
@@ -29,7 +28,7 @@ export const useRecordPanel = ({
       setProductRecord(productId, { quantity: roundedQuantity });
       return;
     },
-    [setProductRecords, productId, quantity]
+    [setProductRecord, productId, quantity]
   );
 
   const setPrice = useCallback(
@@ -39,7 +38,7 @@ export const useRecordPanel = ({
       setProductRecord(productId, { price_per_unit: roundedPrice });
       return;
     },
-    [setProductRecords, productId, price_per_unit]
+    [setProductRecord, productId, price_per_unit]
   );
 
   const stepperFunction = useCallback(
@@ -56,7 +55,7 @@ export const useRecordPanel = ({
         },
         step,
       } as const),
-    [quantity, productId, setProductRecords]
+    [quantity, productId, setProductRecord]
   );
 
   if (!isSuccess || !product || !product.steps)

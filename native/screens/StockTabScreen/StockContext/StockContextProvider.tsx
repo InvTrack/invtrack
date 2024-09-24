@@ -3,7 +3,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { useListInventories } from "../../../db/hooks/useListInventories";
@@ -11,7 +10,6 @@ import { useListProductRecords } from "../../../db/hooks/useListProductRecords";
 import { useListRecipeRecords } from "../../../db/hooks/useListRecipeRecords";
 import { useListRecipesWithRecords } from "../../../db/hooks/useListRecipes";
 import { roundFloat } from "../../../utils";
-import { mergeRawAndScannedRecords } from "./mergeRawAndScanned";
 import {
   ProductRecordByProductIdValue,
   ProductRecordsByProductId,
@@ -28,12 +26,16 @@ type StockContextType = StockData & {
   stockId?: number;
   setStockId: React.Dispatch<React.SetStateAction<number | undefined>>;
   // stockType: "inventory" | "delivery";
-  setProductRecords: React.Dispatch<
-    React.SetStateAction<ProductRecordsByProductId>
-  >;
-  setRecipeRecords: React.Dispatch<
-    React.SetStateAction<RecipeRecordsByRecipeId>
-  >;
+  // setProductRecords: React.Dispatch<
+  //   React.SetStateAction<ProductRecordsByProductId>
+  // >;
+  // setRecipeRecords: React.Dispatch<
+  //   React.SetStateAction<RecipeRecordsByRecipeId>
+  // >;
+  setProductRecord: (
+    productId: number,
+    value: Partial<ProductRecordByProductIdValue>
+  ) => void;
   recordsFromInvoice: ProductRecordsByProductId;
   setRecordsFromInvoice: React.Dispatch<
     React.SetStateAction<ProductRecordsByProductId>
@@ -42,6 +44,10 @@ type StockContextType = StockData & {
   setRecordsFromSalesRaport: React.Dispatch<
     React.SetStateAction<RecipeRecordsByRecipeId>
   >;
+  setRecipeQuantityWithProductQuantities: (
+    recipeId: number
+  ) => (value: number) => void;
+  unsavedChanges: boolean;
 };
 
 const StockContext = createContext<StockContextType>({
@@ -49,13 +55,16 @@ const StockContext = createContext<StockContextType>({
   stockId: initialStockId,
   setStockId: () => null,
   productRecords: initialProductRecords,
-  setProductRecords: () => null,
+  // setProductRecords: () => null,
   recipeRecords: initialRecipeRecords,
-  setRecipeRecords: () => null,
+  setProductRecord: () => {},
+  // setRecipeRecords: () => null,
   recordsFromInvoice: initialProductRecords,
   setRecordsFromInvoice: () => null,
   recordsFromSalesRaport: initialRecipeRecords,
   setRecordsFromSalesRaport: () => null,
+  setRecipeQuantityWithProductQuantities: () => () => {},
+  unsavedChanges: false,
 });
 
 export const StockContextProvider = ({
@@ -69,6 +78,8 @@ export const StockContextProvider = ({
   const latestStockId = stocks?.[0]?.id;
 
   const [stockId, setStockId] = useState(routeStockId ?? latestStockId);
+
+  const [unsavedChanges, setUnsavedChanges] = useState(false);
 
   const [recordsFromSalesRaport, setRecordsFromSalesRaport] =
     useState<RecipeRecordsByRecipeId>({});
@@ -86,90 +97,69 @@ export const StockContextProvider = ({
 
   // Whenever stockId or fetched data changes, update the records
   useEffect(() => {
-    const defaultRecipeRecords = recipeRecordsRaw
-      ? Object.fromEntries(
-          recipeRecordsRaw.map((record) => [
-            record.recipe_id,
-            {
-              record_id: record.id,
-              quantity: record.quantity,
-            },
-          ])
-        )
-      : {};
+    if (!unsavedChanges) {
+      const defaultRecipeRecords = recipeRecordsRaw
+        ? Object.fromEntries(
+            recipeRecordsRaw.map((record) => [
+              record.recipe_id,
+              {
+                record_id: record.id,
+                quantity: record.quantity,
+              },
+            ])
+          )
+        : {};
 
-    setRecipeRecords(defaultRecipeRecords);
+      setRecipeRecords(defaultRecipeRecords);
 
-    const defaultProductRecords = productRecordsRaw
-      ? Object.fromEntries(
-          productRecordsRaw.map((record) => [
-            record.product_id,
-            {
-              record_id: record.id,
-              quantity: record.quantity,
-              price_per_unit: record.price_per_unit,
-            },
-          ])
-        )
-      : {};
+      const defaultProductRecords = productRecordsRaw
+        ? Object.fromEntries(
+            productRecordsRaw.map((record) => [
+              record.product_id,
+              {
+                record_id: record.id,
+                quantity: record.quantity,
+                price_per_unit: record.price_per_unit,
+              },
+            ])
+          )
+        : {};
 
-    setProductRecords(defaultProductRecords);
+      setProductRecords(defaultProductRecords);
 
-    // Reset scanner state on navigation to another stock
-    setRecordsFromSalesRaport({});
-    setRecordsFromInvoice({});
+      // Reset scanner state on navigation to another stock
+      setRecordsFromSalesRaport({});
+      setRecordsFromInvoice({});
+    }
   }, [stockId, productRecordsRaw, recipeRecordsRaw]);
 
-  return (
-    <StockContext.Provider
-      value={{
-        stockId,
-        setStockId,
-        // stockType,
-        productRecords,
-        setProductRecords,
-        recipeRecords,
-        setRecipeRecords,
-        recordsFromInvoice,
-        setRecordsFromInvoice,
-        recordsFromSalesRaport,
-        setRecordsFromSalesRaport,
-      }}
-    >
-      {children}
-    </StockContext.Provider>
-  );
-};
-
-export const useStockContext = () => {
-  const context = useContext(StockContext);
-
-  const { data: recipeList } = useListRecipesWithRecords(context.stockId);
+  const { data: recipeList } = useListRecipesWithRecords(stockId);
 
   const setProductRecord = (
     productId: number,
     value: Partial<ProductRecordByProductIdValue>
   ) => {
-    context.setProductRecords((r) => ({
+    setProductRecords((r) => ({
       ...r,
       [productId]: { ...r[productId], ...value },
     }));
+    setUnsavedChanges(true);
   };
 
   const setRecipeRecord = (
     recipeId: number,
     value: Partial<RecipeRecordByRecipeIdValue>
   ) => {
-    context.setRecipeRecords((r) => ({
+    setRecipeRecords((r) => ({
       ...r,
       [recipeId]: { ...r[recipeId], ...value },
     }));
+    setUnsavedChanges(true);
   };
 
-  // TODO: Consider doing this non destructively, similarely to scanning
   const setRecipeQuantityWithProductQuantities =
     (recipeId: number) => (value: number) => {
-      const recipe = context.recipeRecords[recipeId];
+      const recipe = recipeRecords[recipeId];
       const oldQuantity = recipe?.quantity || 0;
       const delta = value - oldQuantity;
       const recipeParts = recipeList?.find(
@@ -178,8 +168,7 @@ export const useStockContext = () => {
       if (!recipeParts || delta === 0 || value < 0) return;
 
       recipeParts.forEach((part) => {
-        const oldQuantity =
-          context.productRecords[part.product_id]?.quantity || 0;
+        const oldQuantity = productRecords[part.product_id]?.quantity || 0;
         const dMultiplied = roundFloat(delta * part.quantity);
         const newRecordQuantity = roundFloat(oldQuantity - dMultiplied);
 
@@ -190,30 +179,52 @@ export const useStockContext = () => {
       return;
     };
 
-  const { mergedProductRecords, mergedRecipeRecords } = useMemo(
-    () =>
-      mergeRawAndScannedRecords(
-        context.recipeRecords,
-        context.recordsFromSalesRaport,
-        context.productRecords,
-        context.recordsFromInvoice,
-        recipeList
-      ),
-    [
-      context.recipeRecords,
-      context.recordsFromSalesRaport,
-      context.productRecords,
-      context.recordsFromInvoice,
-      recipeList,
-    ]
-  );
+  useEffect(() => {
+    if (!!recordsFromInvoice) {
+      for (const product_id in recordsFromInvoice) {
+        setProductRecord(parseInt(product_id), recordsFromInvoice[product_id]);
+      }
+    }
+  }, [recordsFromInvoice]);
 
-  return {
-    ...context,
-    productRecords: mergedProductRecords,
-    recipeRecords: mergedRecipeRecords,
-    setProductRecord,
-    setRecipeRecord,
-    setRecipeQuantityWithProductQuantities,
-  };
+  useEffect(() => {
+    if (!!recordsFromSalesRaport) {
+      for (const recipe_id in recordsFromSalesRaport) {
+        setRecipeQuantityWithProductQuantities(parseInt(recipe_id))(
+          recordsFromSalesRaport[recipe_id].quantity
+        );
+      }
+    }
+  }, [recordsFromSalesRaport]);
+
+  // const unsavedChanges =
+  //   Object.keys(productRecords).length > 0 ||
+  //   Object.keys(recipeRecords).length > 0;
+
+  return (
+    <StockContext.Provider
+      value={{
+        stockId,
+        setStockId,
+        // stockType,
+        productRecords,
+        setProductRecord,
+        // setProductRecords,
+        recipeRecords,
+        // setRecipeRecords,
+        recordsFromInvoice,
+        setRecordsFromInvoice,
+        recordsFromSalesRaport,
+        setRecordsFromSalesRaport,
+        setRecipeQuantityWithProductQuantities,
+        unsavedChanges,
+      }}
+    >
+      {children}
+    </StockContext.Provider>
+  );
+};
+
+export const useStockContext = () => {
+  return useContext(StockContext);
 };

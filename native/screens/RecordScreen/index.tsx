@@ -11,7 +11,6 @@ import {
 import { Button } from "../../components/common/Button";
 import { Typography } from "../../components/common/Typography";
 import { useRecordPanel } from "../../db";
-import { useListProductRecordIds } from "../../db/hooks/useListProductRecordIds";
 import { createStyles } from "../../theme/useStyles";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -117,8 +116,6 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   const product = productResult?.data;
 
   const { data: inventoryName } = useGetInventoryName(+inventoryId);
-  const { data: recordIds } = useListProductRecordIds(inventoryId);
-  // const { data: productRecords } = useListProductRecords(inventoryId);
   const { data: previousQuantity } = useGetPreviousRecordQuantity(
     inventoryId,
     product?.id
@@ -128,8 +125,8 @@ export function RecordScreen({ route, navigation }: RecordScreenProps) {
   // TODO: after removing recordId here, it can probably be removed from everywhere
   //       else in the form, for example in the IDListCard, etc.
   const { isFirst, isLast, nextRecord, prevRecord } = useRecordPagination(
-    recordId,
-    recordIds
+    inventoryId,
+    recordId
   );
 
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();

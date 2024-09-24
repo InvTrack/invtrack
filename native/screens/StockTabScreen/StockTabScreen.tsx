@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 
 import { useNetInfo } from "@react-native-community/netinfo";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,9 +15,7 @@ import { useGetInventoryName } from "../../db/hooks/useGetInventoryName";
 import { useListRecipesWithRecords } from "../../db/hooks/useListRecipes";
 import { useUpdateRecords } from "../../db/hooks/useUpdateRecords";
 import { StockTabScreenProps } from "../../navigation/types";
-import { IDListCard } from "./IDListCard/IDListCard";
-import { IDListCardAddProduct } from "./IDListCard/IDListCardAddProduct";
-import { IDListCardAddRecord } from "./IDListCard/IDListCardAddRecord";
+import { IDListCard, IDListCardHeader } from "./IDListCard/IDListCard";
 import { RecipeCard } from "./RecipeCard";
 import { useStockContext } from "./StockContext/StockContextProvider";
 import { useStockTabStyles } from "./styles";
@@ -33,8 +31,7 @@ export default function StockTabScreen({
   const stockId = route.params?.id;
   const stockType = route.params?.stockType;
 
-  const { recordsFromInvoice, recordsFromSalesRaport, aliasForm } =
-    route.params;
+  const { recordsFromInvoice, aliasForm } = route.params;
 
   // const { showError, showInfo, showSuccess } = useSnackbar();
   const { showError, showSuccess } = useSnackbar();
@@ -44,33 +41,68 @@ export default function StockTabScreen({
   const {
     productRecords,
     recipeRecords,
-    setRecordsFromInvoice,
-    setRecordsFromSalesRaport,
+    // setRecipeQuantityWithProductQuantities,
+    // setProductRecord,
     setStockId,
+    unsavedChanges,
   } = useStockContext();
 
-  useEffect(() => {
-    if (!!recordsFromInvoice) setRecordsFromInvoice(recordsFromInvoice);
-  }, [recordsFromInvoice]);
+  // useEffect(() => {
+  //   if (!!recordsFromInvoice) {
+  //     for (const product_id in recordsFromInvoice) {
+  //       if (product_id in productRecords) {
+  //         const { quantity, price_per_unit } = recordsFromInvoice[product_id];
+  //         setProductRecord(parseInt(product_id), {
+  //           quantity: productRecords[product_id].quantity + quantity,
+  //           price_per_unit,
+  //         });
+  //       } else {
+  //         setProductRecord(
+  //           parseInt(product_id),
+  //           recordsFromInvoice[product_id]
+  //         );
+  //       }
+  //     }
+  //   }
+  // }, [recordsFromInvoice]);
 
-  useEffect(() => {
-    if (!!recordsFromSalesRaport)
-      setRecordsFromSalesRaport(recordsFromSalesRaport);
-  }, [recordsFromSalesRaport]);
+  // useEffect(() => {
+  //   if (!!recordsFromSalesRaport) {
+  //     for (const recipe_id in recordsFromSalesRaport) {
+  //       // if (recipe_id in recipeRecords) {
+  //       //   const { quantity } = recordsFromSalesRaport[recipe_id];
+  //       //   setProductRecord(parseInt(recipe_id), {
+  //       //     quantity: recipeRecords[recipe_id].quantity + quantity,
+  //       //   });
+  //       // } else {
+  //       //   setRecipeQuantityWithProductQuantities(parseInt(recipe_id))(
+  //       //     recordsFromSalesRaport[recipe_id].quantity
+  //       //   );
+  //       // }
+  //       setRecipeQuantityWithProductQuantities(parseInt(recipe_id))(
+  //         recordsFromSalesRaport[recipe_id].quantity
+  //       );
+  //     }
+  //   }
+  // }, [recordsFromSalesRaport]);
 
   useEffect(() => {
     setStockId(stockId);
   }, [stockId]);
 
   const {
-    productsIsSuccess,
+    // productsIsSuccess,
     categorizedIsSuccess,
-    categorizedProducts,
-    uncategorizedProducts,
+    // categorizedProducts,
+    // uncategorizedProducts,
+    allProducts,
   } = useProductRecords();
 
   const { data: recipeList, isSuccess: recipesIsSuccess } =
     useListRecipesWithRecords(stockId);
+
+  // const { data: products, isSuccess: productsIsSuccess } =
+  //   useListExistingProducts();
 
   const {
     mutate,
@@ -95,8 +127,17 @@ export default function StockTabScreen({
     }
   }, [isUpdateSuccess, isUpdateError]);
 
+  // const documents = [3, -1].map((d) =>
+  //   Object.fromEntries(
+  //     allProducts.map((p) => [p.id, false ? null : p.quantity * d])
+  //   )
+  // );
+  const documents = [recordsFromInvoice].filter((x) => !!x);
+
+  // console.log(recordsFromInvoice, recordsFromSalesRaport);
+
   if (
-    !productsIsSuccess ||
+    // !productsIsSuccess ||
     !categorizedIsSuccess ||
     !stockId ||
     !recipesIsSuccess
@@ -119,7 +160,7 @@ export default function StockTabScreen({
     <SafeAreaView edges={["left", "right"]}>
       <Collapsible
         ListHeaderComponent={
-          <ScrollView style={styles.scroll}>
+          <View style={styles.scroll}>
             <View style={styles.doubleButtonContainer}>
               <Button
                 containerStyle={styles.barcodeIconContainer}
@@ -149,9 +190,9 @@ export default function StockTabScreen({
                     createRecipeNameAliases(aliasForm);
                   }
                 }}
-                disabled={!isConnected}
+                disabled={!isConnected || !unsavedChanges}
               >
-                Zapisz zmiany
+                {unsavedChanges ? "Zapisz zmiany" : "Brak zmian do zapisania"}
               </Button>
               <Button
                 containerStyle={styles.barcodeIconContainer}
@@ -169,8 +210,8 @@ export default function StockTabScreen({
                 <ScanBarcodeIcon size={34} color="lightGrey" />
               </Button>
             </View>
-            <IDListCardAddProduct inventoryId={stockId} />
-            <IDListCardAddRecord inventoryId={stockId} />
+            {/* <IDListCardAddProduct inventoryId={stockId} /> */}
+            {/* <IDListCardAddRecord inventoryId={stockId} /> */}
             {/* <Button type="primary" size="l" fullWidth>
               {recordsFromInvoice
                 ? Object.keys(recordsFromInvoice).toString()
@@ -204,7 +245,8 @@ export default function StockTabScreen({
             >
               Produkty:
             </Typography>
-            {uncategorizedProducts?.map((product) =>
+            <IDListCardHeader documents={documents} />
+            {allProducts?.map((product) =>
               product && product.id ? (
                 <IDListCard
                   key={product.id}
@@ -213,6 +255,9 @@ export default function StockTabScreen({
                   inventoryId={stockId}
                   id={+stockId}
                   quantity={product.quantity}
+                  documents={documents.map((d) =>
+                    d && product.id in d ? d[product.id].quantity : null
+                  )}
                   unit={product.unit!}
                   name={product.name}
                 />
@@ -220,31 +265,35 @@ export default function StockTabScreen({
                 <></>
               )
             )}
-          </ScrollView>
+          </View>
         }
-        sections={categorizedProducts?.map((category, i) => ({
-          id: i + 1,
-          title: category.name,
-          data: category.products.map((product, j) =>
-            product && product.id ? (
-              <IDListCard
-                key={product.id}
-                recordId={product.record_id!}
-                productId={product.id!}
-                inventoryId={stockId}
-                id={+stockId}
-                quantity={product.quantity}
-                unit={product.unit!}
-                name={product.name}
-                borderBottom={category.products.length === j + 1}
-                borderLeft
-                borderRight
-              />
-            ) : (
-              <></>
-            )
-          ),
-        }))}
+        sections={
+          []
+          //   categorizedProducts?.map((category, i) => ({
+          //   id: i + 1,
+          //   title: category.name,
+          //   data: category.products.map((product, j) =>
+          //     product && product.id ? (
+          //       <IDListCard
+          //         key={product.id}
+          //         recordId={product.record_id!}
+          //         productId={product.id!}
+          //         inventoryId={stockId}
+          //         id={+stockId}
+          //         quantity={product.quantity}
+          //         documents={[]}
+          //         unit={product.unit!}
+          //         name={product.name}
+          //         borderBottom={category.products.length === j + 1}
+          //         borderLeft
+          //         borderRight
+          //       />
+          //     ) : (
+          //       <></>
+          //     )
+          //   ),
+          // }))
+        }
       />
     </SafeAreaView>
   );

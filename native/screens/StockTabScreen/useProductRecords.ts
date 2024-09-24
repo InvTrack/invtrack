@@ -30,10 +30,18 @@ export const useProductRecords = () => {
       })),
   }));
 
+  const allProducts =
+    products?.map((p) => ({
+      ...productRecords[p.id],
+      ...p,
+      record_id: p.id in productRecords ? productRecords[p.id].record_id : null,
+    })) || [];
+
   return {
     uncategorizedProducts,
     categorizedProducts,
     productsIsSuccess,
     categorizedIsSuccess,
+    allProducts,
   };
 };

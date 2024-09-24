@@ -1,5 +1,9 @@
 import { roundFloat } from "../../../utils";
-import { ProductRecordsByProductId, RecipeRecordsByRecipeId } from "./types";
+import {
+  ProductRecordByProductIdValue,
+  ProductRecordsByProductId,
+  RecipeRecordsByRecipeId,
+} from "./types";
 
 // Non-destructive merging of scanner results and raw stock data.
 export const mergeRawAndScannedRecords = (
@@ -65,4 +69,32 @@ export const mergeRawAndScannedRecords = (
   }
 
   return { mergedProductRecords, mergedRecipeRecords };
+};
+
+export const applyScannedRecords = (
+  // rawRecipeRecords: RecipeRecordsByRecipeId,
+  scannedRecipeRecords: RecipeRecordsByRecipeId,
+  // rawProductRecords: ProductRecordsByProductId,
+  scannedProductRecords: ProductRecordsByProductId,
+  setProductRecord: (
+    productId: number,
+    value: Partial<ProductRecordByProductIdValue>
+  ) => void,
+  setRecipeQuantityWithProductQuantities: (
+    recipeId: number
+  ) => (value: number) => void
+  // recipeList?: {
+  //   id: number;
+  //   recipe_part: { quantity: number; product_id: number }[];
+  // }[]
+) => {
+  for (const product_id in scannedProductRecords) {
+    setProductRecord(parseInt(product_id), scannedProductRecords[product_id]);
+  }
+
+  for (const recipe_id in scannedRecipeRecords) {
+    setRecipeQuantityWithProductQuantities(parseInt(recipe_id))(
+      scannedRecipeRecords[recipe_id].quantity
+    );
+  }
 };

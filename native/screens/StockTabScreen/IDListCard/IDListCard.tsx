@@ -18,6 +18,7 @@ type IDListCardProps = {
   productId: number;
   inventoryId: number;
   quantity: number | null;
+  documents: (number | null)[];
   unit: string;
   borderLeft?: boolean;
   borderRight?: boolean;
@@ -45,6 +46,7 @@ export const IDListCard = ({
   productId,
   inventoryId,
   quantity,
+  documents,
   unit,
   borderLeft = false,
   borderRight = false,
@@ -58,6 +60,8 @@ export const IDListCard = ({
     productId
   );
   const stock = useStockContext();
+
+  const documentsLength = documents.length;
 
   if (!name) {
     return null;
@@ -87,8 +91,6 @@ export const IDListCard = ({
           style={styles.card}
           padding="none"
           onPress={() =>
-            // bypass screen type check, handled by either (Inventory || Delivery)TabScreen navigator,
-            // no need to specify, as they both contain the Record route, with these params
             navigation.navigate("RecordScreen", {
               recordId,
               productId,
@@ -105,12 +107,32 @@ export const IDListCard = ({
           >
             {name}
           </Typography>
+          {documentsLength > 0 ? (
+            <Typography
+              color="lightGrey"
+              variant={"lBold"}
+              style={{ flex: 1, borderRightWidth: 1, textAlign: "center" }}
+            >
+              {quantity === null ? "..." : quantity}
+            </Typography>
+          ) : null}
+          {documents.map((q) => (
+            <Typography
+              color="lightGrey"
+              variant={"lBold"}
+              style={{ flex: 1, borderRightWidth: 1, textAlign: "center" }}
+            >
+              {q === null ? "" : q}
+            </Typography>
+          ))}
           <Typography
             color="lightGrey"
             variant={"lBold"}
             style={styles.textRight}
           >
-            {(quantity === null ? "..." : quantity) + " " + unit}
+            {documents.reduce((x, a) => (x || 0) + (a || 0), quantity || 0) +
+              " " +
+              unit}
           </Typography>
           {/* TODO - to be refined */}
           <QuantityBadge
@@ -122,6 +144,56 @@ export const IDListCard = ({
     </>
   );
 };
+
+export const IDListCardHeader = ({ documents }: { documents: any[] }) => {
+  const styles = useStyles();
+
+  const documentsLength = documents.length;
+
+  return (
+    <>
+      <View>
+        <Card color="mediumBlue" style={styles.card} padding="none">
+          <Typography
+            color="lightGrey"
+            variant="l"
+            numberOfLines={2}
+            textProps={{ lineBreakMode: "tail", ellipsizeMode: "tail" }}
+            style={styles.textLeft}
+          >
+            Nazwa
+          </Typography>
+          {documentsLength > 0 ? (
+            <Typography
+              color="lightGrey"
+              variant={"lBold"}
+              style={{ flex: 1, borderRightWidth: 1, textAlign: "center" }}
+            >
+              Ilość
+            </Typography>
+          ) : null}
+          {documents.map((_, i) => (
+            <Typography
+              color="lightGrey"
+              variant={"lBold"}
+              style={{ flex: 1, borderRightWidth: 1, textAlign: "center" }}
+            >
+              Dok. {i + 1}
+            </Typography>
+          ))}
+          <Typography
+            color="lightGrey"
+            variant={"lBold"}
+            style={styles.textRight}
+          >
+            {documentsLength > 0 ? "Suma" : "Ilość"}
+          </Typography>
+        </Card>
+      </View>
+    </>
+  );
+};
+
 const useStyles = createStyles((theme) =>
   StyleSheet.create({
     borderLeft: {
@@ -147,14 +219,16 @@ const useStyles = createStyles((theme) =>
       justifyContent: "space-between",
       paddingLeft: theme.spacing * 2,
       paddingRight: theme.spacing * 2,
-      marginBottom: theme.spacing,
-      marginTop: theme.spacing,
+      marginBottom: 2,
+      marginTop: 2,
       height: 45,
       borderRadius: theme.borderRadiusSmall,
     },
-    textLeft: { flex: 1 },
+    textLeft: { flex: 2 },
     textRight: {
+      flex: 1,
       marginLeft: theme.spacing,
+      textAlign: "center",
     },
     previousQuantityBadge: {
       position: "absolute",

@@ -144,7 +144,7 @@ const useStyles = createStyles((theme) =>
       paddingRight: theme.spacing * 2,
       marginBottom: theme.spacing,
       marginTop: theme.spacing,
-      height: 90,
+      // height: 90,
       borderRadius: theme.borderRadiusSmall,
     },
     textLeft: { flex: 1 },

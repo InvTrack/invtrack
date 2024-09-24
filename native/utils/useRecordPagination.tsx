@@ -1,19 +1,36 @@
-import { useListProductRecordIds } from "../db/hooks/useListProductRecordIds";
+import { useMemo } from "react";
+import { useListProductRecords } from "../db";
 
-type LocalRecordType = ReturnType<
-  typeof useListProductRecordIds
->["data"][number];
+const getIds = (
+  uncategorizedRecordList: ReturnType<typeof useListProductRecords>["data"]
+) =>
+  [
+    ...(uncategorizedRecordList?.map((uncategorizedRecord) => ({
+      id: uncategorizedRecord?.id,
+      product_id: uncategorizedRecord?.product_id,
+    })) || []),
+  ] as {
+    id: number;
+    product_id: number;
+  }[];
+
+type LocalRecordType = {
+  id: number;
+  product_id: number;
+};
 
 export const useRecordPagination = (
-  recordId: number | undefined,
-  records: LocalRecordType[]
+  inventoryId: number,
+  recordId: number | undefined
 ): {
   nextRecord: LocalRecordType | undefined;
   prevRecord: LocalRecordType | undefined;
   isLast: boolean;
   isFirst: boolean;
 } => {
-  if (!records || records.length === 0) {
+  const { data: records } = useListProductRecords(inventoryId);
+  const recordIds = useMemo(() => getIds(records), [inventoryId, records]);
+  if (!recordIds || recordIds.length === 0) {
     return {
       nextRecord: undefined,
       prevRecord: undefined,
@@ -22,12 +39,12 @@ export const useRecordPagination = (
     };
   }
 
-  const index = records.findIndex((r) => r.id === recordId);
-  const isLast = index === records.length - 1;
+  const index = recordIds.findIndex((r) => r.id === recordId);
+  const isLast = index === recordIds.length - 1;
   const isFirst = index === 0;
 
-  const nextRecord = isLast ? undefined : records[index + 1];
-  const prevRecord = isFirst ? undefined : records[index - 1];
+  const nextRecord = isLast ? undefined : recordIds[index + 1];
+  const prevRecord = isFirst ? undefined : recordIds[index - 1];
 
   return {
     nextRecord,

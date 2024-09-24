@@ -57,13 +57,29 @@ export const DocumentScannerModalScreen = ({
       return;
     }
     if (processedInvoice != null)
-      if (stockId && !isEmpty(processedInvoice?.unmatchedRows)) {
-        navigation.replace("IdentifyAliasesScreen", {
-          stockId,
-          processedInvoice,
-          processedSalesReport: null,
-          stockType,
-        });
+      if (stockId) {
+        if (!isEmpty(processedInvoice?.unmatchedRows)) {
+          navigation.replace("IdentifyAliasesScreen", {
+            stockId,
+            processedInvoice,
+            processedSalesReport: null,
+            stockType,
+          });
+        } else {
+          navigation.navigate("StockTabScreen" as any, {
+            id: stockId,
+            stockType,
+            recordsFromInvoice: processedInvoice.matchedProductRecords,
+            processedSalesReport: null,
+            // aliasForm: getValues(),
+          });
+          // navigation.replace("StockTabScreen", {
+          //   stockId,
+          //   processedInvoice,
+          //   processedSalesReport: null,
+          //   stockType,
+          // });
+        }
       } else {
         navigation.goBack();
       }

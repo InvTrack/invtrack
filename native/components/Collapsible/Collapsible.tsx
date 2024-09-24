@@ -84,8 +84,8 @@ const useStyles = createStyles((theme) =>
       width: "100%",
       height: "100%",
       backgroundColor: theme.colors.darkBlue,
-      padding: theme.spacing * 2,
-      marginBottom: theme.spacing * 40,
+      // padding: theme.spacing * 2,
+      // marginBottom: theme.spacing * 40,
     },
     bottomPadding: {
       paddingBottom: theme.spacing * 8,
